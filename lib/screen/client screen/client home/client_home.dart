@@ -9,7 +9,8 @@ import '../client profile/client_profile.dart';
 import 'client_home_screen.dart';
 
 class ClientHome extends StatefulWidget {
-  const ClientHome({Key? key}) : super(key: key);
+  int? currentPage;
+  ClientHome({super.key, this.currentPage});
 
   @override
   State<ClientHome> createState() => _ClientHomeState();
@@ -27,30 +28,18 @@ class _ClientHomeState extends State<ClientHome> {
   ];
 
   @override
+  void initState() {
+    super.initState();
+
+    _currentPage = widget.currentPage ?? 0;
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: kWhite,
       body: _widgetOptions.elementAt(_currentPage),
       bottomNavigationBar: Container(
-        padding: const EdgeInsets.all(8.0),
-        decoration: const BoxDecoration(
-            color: kWhite,
-            borderRadius: BorderRadius.only(
-              topRight: Radius.circular(30.0),
-              topLeft: Radius.circular(30.0),
-            ),
-            boxShadow: [
-              BoxShadow(
-                  color: kDarkWhite,
-                  blurRadius: 5.0,
-                  spreadRadius: 3.0,
-                  offset: Offset(0, -2))
-            ]),
         child: BottomNavigationBar(
-          elevation: 0.0,
-          selectedItemColor: kPrimaryColor,
-          unselectedItemColor: kLightNeutralColor,
-          backgroundColor: kWhite,
           showUnselectedLabels: true,
           type: BottomNavigationBarType.fixed,
           items: const [

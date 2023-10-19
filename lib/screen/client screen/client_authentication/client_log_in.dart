@@ -136,7 +136,7 @@ class _ClientLogInState extends State<ClientLogIn> {
                     borderRadius: BorderRadius.circular(30.0),
                   ),
                   onPressed: () {
-                    const ClientHome().launch(context);
+                    ClientHome().launch(context);
                   },
                   buttonTextColor: kWhite),
               const SizedBox(height: 20.0),

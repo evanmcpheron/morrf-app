@@ -891,7 +891,7 @@ class _ReviewSubmittedPopUpState extends State<ReviewSubmittedPopUp> {
                 onPressed: () {
                   setState(() {
                     finish(context);
-                    const SellerHome().launch(context);
+                    SellerHome().launch(context);
                   });
                 },
                 buttonTextColor: kWhite),

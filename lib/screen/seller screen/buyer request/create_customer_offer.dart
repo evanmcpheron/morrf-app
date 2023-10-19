@@ -89,7 +89,7 @@ class _CreateCustomerOfferState extends State<CreateCustomerOffer> {
                 color: kPrimaryColor,
                 borderRadius: BorderRadius.circular(30.0)),
             onPressed: () {
-              const SellerHome().launch(context);
+              SellerHome().launch(context);
             },
             buttonTextColor: kWhite),
       ),

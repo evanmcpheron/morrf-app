@@ -136,7 +136,7 @@ class _SellerLogInState extends State<SellerLogIn> {
                     borderRadius: BorderRadius.circular(30.0),
                   ),
                   onPressed: () {
-                    const SellerHome().launch(context);
+                    SellerHome().launch(context);
                   },
                   buttonTextColor: kWhite),
               const SizedBox(height: 20.0),
