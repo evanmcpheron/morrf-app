@@ -22,6 +22,7 @@ class ThemeNotifier extends ChangeNotifier {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     if (prefs.getInt("themeMode") == null) {
       _saveToPrefs(1);
+      return;
     }
     _themeModePosition = prefs.getInt("themeMode")!;
   }

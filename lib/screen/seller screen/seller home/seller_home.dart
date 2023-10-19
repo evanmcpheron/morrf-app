@@ -9,7 +9,8 @@ import '../seller messgae/chat_list.dart';
 import '../seller services/create_service.dart';
 
 class SellerHome extends StatefulWidget {
-  const SellerHome({Key? key}) : super(key: key);
+  int? currentPage;
+  SellerHome({super.key, this.currentPage});
 
   @override
   State<SellerHome> createState() => _SellerHomeState();
@@ -27,30 +28,20 @@ class _SellerHomeState extends State<SellerHome> {
   ];
 
   @override
+  void initState() {
+    super.initState();
+
+    _currentPage = widget.currentPage != null ? widget.currentPage! : 0;
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: kWhite,
       body: _widgetOptions.elementAt(_currentPage),
       bottomNavigationBar: Container(
         padding: const EdgeInsets.all(8.0),
-        decoration: const BoxDecoration(
-            color: kWhite,
-            borderRadius: BorderRadius.only(
-              topRight: Radius.circular(30.0),
-              topLeft: Radius.circular(30.0),
-            ),
-            boxShadow: [
-              BoxShadow(
-                  color: kDarkWhite,
-                  blurRadius: 5.0,
-                  spreadRadius: 3.0,
-                  offset: Offset(0, -2))
-            ]),
         child: BottomNavigationBar(
           elevation: 0.0,
-          selectedItemColor: kPrimaryColor,
-          unselectedItemColor: kLightNeutralColor,
-          backgroundColor: kWhite,
           showUnselectedLabels: true,
           type: BottomNavigationBarType.fixed,
           items: const [

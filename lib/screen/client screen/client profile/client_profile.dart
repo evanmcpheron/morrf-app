@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
+import 'package:get/get.dart';
+import 'package:morrf/screen/client%20screen/client%20home/client_home.dart';
+import 'package:morrf/screen/widgets/theme_switcher.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../../widgets/constant.dart';
@@ -41,7 +44,8 @@ class _ClientProfileState extends State<ClientProfile> {
             decoration: const BoxDecoration(
               shape: BoxShape.circle,
               color: kDarkWhite,
-              image: DecorationImage(image: AssetImage('images/profile1.png'), fit: BoxFit.cover),
+              image: DecorationImage(
+                  image: AssetImage('images/profile1.png'), fit: BoxFit.cover),
             ),
           ),
           title: Text(
@@ -69,7 +73,7 @@ class _ClientProfileState extends State<ClientProfile> {
         padding: const EdgeInsets.only(top: 30.0),
         child: Container(
           padding: const EdgeInsets.only(left: 20.0, right: 20.0),
-          width: context.width(),
+          width: MediaQuery.of(context).size.width,
           decoration: const BoxDecoration(
             color: kWhite,
             borderRadius: BorderRadius.only(
@@ -374,6 +378,7 @@ class _ClientProfileState extends State<ClientProfile> {
                       color: Color(0xFFFF7A00),
                     ),
                   ),
+                  onTap: () => Get.off(() => ClientHome()),
                   title: Text(
                     'Log Out',
                     overflow: TextOverflow.ellipsis,
@@ -385,6 +390,7 @@ class _ClientProfileState extends State<ClientProfile> {
                     color: kLightNeutralColor,
                   ),
                 ),
+                const ThemeSwitcher()
               ],
             ),
           ),

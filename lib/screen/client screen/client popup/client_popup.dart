@@ -184,7 +184,7 @@ class _UploadCompletePopUpState extends State<UploadCompletePopUp> {
               buttonText: 'Done',
               textColor: kWhite,
               onPressed: () {
-                const ClientHome().launch(context);
+                ClientHome().launch(context);
               },
             )
           ],
