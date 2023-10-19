@@ -2,7 +2,6 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:adapty_flutter/adapty_flutter.dart';
-import 'package:morrf/screen/splash%20screen/mt_splash_screen.dart';
 import 'utils/constants/routes.dart';
 import 'dart:convert';
 
@@ -52,6 +51,11 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  @override
+  void initState() {
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     final ThemeNotifier notifier = Provider.of<ThemeNotifier>(context);

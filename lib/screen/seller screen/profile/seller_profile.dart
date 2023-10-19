@@ -31,9 +31,7 @@ class _SellerProfileState extends State<SellerProfile> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: kDarkWhite,
       appBar: AppBar(
-        backgroundColor: kDarkWhite,
         elevation: 0,
         iconTheme: const IconThemeData(color: kNeutralColor),
         titleSpacing: 0,
@@ -46,25 +44,21 @@ class _SellerProfileState extends State<SellerProfile> {
             padding: const EdgeInsets.all(10.0),
             decoration: const BoxDecoration(
               shape: BoxShape.circle,
-              color: kDarkWhite,
               image: DecorationImage(
                   image: AssetImage('images/profile1.png'), fit: BoxFit.cover),
             ),
           ),
-          title: Text(
+          title: const Text(
             'Evan McPheron',
             overflow: TextOverflow.ellipsis,
             maxLines: 1,
-            style: kTextStyle.copyWith(color: kNeutralColor),
           ),
           subtitle: RichText(
-            text: TextSpan(
+            text: const TextSpan(
               text: 'Deposit Balance: ',
-              style: kTextStyle.copyWith(color: kLightNeutralColor),
               children: [
                 TextSpan(
                   text: '$currencySign 500.00',
-                  style: kTextStyle.copyWith(color: kNeutralColor),
                 ),
               ],
             ),
@@ -72,359 +66,337 @@ class _SellerProfileState extends State<SellerProfile> {
         ),
         centerTitle: true,
       ),
-      body: Padding(
-        padding: const EdgeInsets.only(top: 30.0),
-        child: Container(
-          padding: const EdgeInsets.only(left: 20.0, right: 20.0),
-          width: MediaQuery.of(context).size.width,
-          decoration: const BoxDecoration(
-            color: kWhite,
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(30.0),
-              topRight: Radius.circular(30.0),
-            ),
+      body: Container(
+        padding: const EdgeInsets.only(left: 20.0, right: 20.0),
+        width: MediaQuery.of(context).size.width,
+        decoration: const BoxDecoration(
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(30.0),
+            topRight: Radius.circular(30.0),
           ),
-          child: SingleChildScrollView(
-            physics: const BouncingScrollPhysics(),
-            child: Column(
-              children: [
-                const SizedBox(height: 20.0),
-                ListTile(
-                  onTap: () => const SellerProfileDetails().launch(context),
-                  visualDensity: const VisualDensity(vertical: -3),
-                  horizontalTitleGap: 10,
-                  contentPadding: const EdgeInsets.only(bottom: 20),
-                  leading: Container(
-                    padding: const EdgeInsets.all(10.0),
-                    decoration: const BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: Color(0xFFE2EED8),
-                    ),
-                    child: const Icon(
-                      IconlyBold.profile,
-                      color: kPrimaryColor,
-                    ),
+        ),
+        child: SingleChildScrollView(
+          physics: const BouncingScrollPhysics(),
+          child: Column(
+            children: [
+              const SizedBox(height: 20.0),
+              ListTile(
+                onTap: () => const SellerProfileDetails().launch(context),
+                visualDensity: const VisualDensity(vertical: -3),
+                horizontalTitleGap: 10,
+                contentPadding: const EdgeInsets.only(bottom: 20),
+                leading: Container(
+                  padding: const EdgeInsets.all(10.0),
+                  decoration: const BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: Color(0xFFE2EED8),
                   ),
-                  title: Text(
-                    'My Profile',
-                    overflow: TextOverflow.ellipsis,
-                    maxLines: 1,
-                    style: kTextStyle.copyWith(color: kNeutralColor),
-                  ),
-                  trailing: const Icon(
-                    FeatherIcons.chevronRight,
-                    color: kLightNeutralColor,
+                  child: const Icon(
+                    IconlyBold.profile,
+                    color: kPrimaryColor,
                   ),
                 ),
-                ListTile(
-                  onTap: () => const SellerBuyerReq().launch(context),
-                  visualDensity: const VisualDensity(vertical: -3),
-                  horizontalTitleGap: 10,
-                  contentPadding: const EdgeInsets.only(bottom: 20),
-                  leading: Container(
-                    padding: const EdgeInsets.all(10.0),
-                    decoration: const BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: Color(0xFFE3EDFF),
-                    ),
-                    child: const Icon(
-                      IconlyBold.paper,
-                      color: Color(0xFF144BD6),
-                    ),
+                title: const Text(
+                  'My Profile',
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 1,
+                ),
+                trailing: const Icon(
+                  FeatherIcons.chevronRight,
+                  color: kLightNeutralColor,
+                ),
+              ),
+              ListTile(
+                onTap: () => const SellerBuyerReq().launch(context),
+                visualDensity: const VisualDensity(vertical: -3),
+                horizontalTitleGap: 10,
+                contentPadding: const EdgeInsets.only(bottom: 20),
+                leading: Container(
+                  padding: const EdgeInsets.all(10.0),
+                  decoration: const BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: Color(0xFFE3EDFF),
                   ),
-                  title: Text(
-                    'Buyer Request',
-                    overflow: TextOverflow.ellipsis,
-                    maxLines: 1,
-                    style: kTextStyle.copyWith(color: kNeutralColor),
-                  ),
-                  trailing: const Icon(
-                    FeatherIcons.chevronRight,
-                    color: kLightNeutralColor,
+                  child: const Icon(
+                    IconlyBold.paper,
+                    color: Color(0xFF144BD6),
                   ),
                 ),
-                ListTile(
-                  onTap: () => const SellerAddPaymentMethod().launch(context),
-                  visualDensity: const VisualDensity(vertical: -3),
-                  horizontalTitleGap: 10,
-                  contentPadding: const EdgeInsets.only(bottom: 12),
-                  leading: Container(
-                    padding: const EdgeInsets.all(10.0),
-                    decoration: const BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: Color(0xFFFFE5E3),
-                    ),
-                    child: const Icon(
-                      IconlyBold.ticketStar,
-                      color: Color(0xFFFF3B30),
-                    ),
+                title: const Text(
+                  'Buyer Request',
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 1,
+                ),
+                trailing: const Icon(
+                  FeatherIcons.chevronRight,
+                  color: kLightNeutralColor,
+                ),
+              ),
+              ListTile(
+                onTap: () => const SellerAddPaymentMethod().launch(context),
+                visualDensity: const VisualDensity(vertical: -3),
+                horizontalTitleGap: 10,
+                contentPadding: const EdgeInsets.only(bottom: 12),
+                leading: Container(
+                  padding: const EdgeInsets.all(10.0),
+                  decoration: const BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: Color(0xFFFFE5E3),
                   ),
-                  title: Text(
-                    'Add Payment method',
-                    overflow: TextOverflow.ellipsis,
-                    maxLines: 1,
-                    style: kTextStyle.copyWith(color: kNeutralColor),
-                  ),
-                  trailing: const Icon(
-                    FeatherIcons.chevronRight,
-                    color: kLightNeutralColor,
+                  child: const Icon(
+                    IconlyBold.ticketStar,
+                    color: Color(0xFFFF3B30),
                   ),
                 ),
-                Theme(
-                  data: ThemeData(dividerColor: Colors.transparent),
-                  child: ExpansionTile(
-                    childrenPadding: EdgeInsets.zero,
-                    tilePadding: const EdgeInsets.only(bottom: 10),
-                    collapsedIconColor: kLightNeutralColor,
-                    iconColor: kLightNeutralColor,
-                    title: Text(
-                      'Withdraw',
-                      style: kTextStyle.copyWith(color: kNeutralColor),
-                    ),
-                    leading: Container(
-                      padding: const EdgeInsets.all(10.0),
-                      decoration: const BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: Color(0xFFFFEFE0),
-                      ),
-                      child: const Icon(
-                        IconlyBold.wallet,
-                        color: Color(0xFFFF7A00),
-                      ),
+                title: const Text(
+                  'Add Payment method',
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 1,
+                ),
+                trailing: const Icon(
+                  FeatherIcons.chevronRight,
+                  color: kLightNeutralColor,
+                ),
+              ),
+              ExpansionTile(
+                childrenPadding: EdgeInsets.zero,
+                tilePadding: const EdgeInsets.only(bottom: 10),
+                collapsedIconColor: kLightNeutralColor,
+                iconColor: kLightNeutralColor,
+                title: const Text(
+                  'Withdraw',
+                ),
+                leading: Container(
+                  padding: const EdgeInsets.all(10.0),
+                  decoration: const BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: Color(0xFFFFEFE0),
+                  ),
+                  child: const Icon(
+                    IconlyBold.wallet,
+                    color: Color(0xFFFF7A00),
+                  ),
+                ),
+                trailing: const Icon(
+                  FeatherIcons.chevronDown,
+                  color: kLightNeutralColor,
+                ),
+                children: [
+                  ListTile(
+                    visualDensity: const VisualDensity(vertical: -3),
+                    horizontalTitleGap: 10,
+                    contentPadding: const EdgeInsets.only(left: 60),
+                    title: const Text(
+                      'Withdraw Amount',
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 1,
                     ),
                     trailing: const Icon(
-                      FeatherIcons.chevronDown,
+                      FeatherIcons.chevronRight,
                       color: kLightNeutralColor,
                     ),
-                    children: [
-                      ListTile(
-                        visualDensity: const VisualDensity(vertical: -3),
-                        horizontalTitleGap: 10,
-                        contentPadding: const EdgeInsets.only(left: 60),
-                        title: Text(
-                          'Withdraw Amount',
-                          overflow: TextOverflow.ellipsis,
-                          maxLines: 1,
-                          style: kTextStyle.copyWith(color: kNeutralColor),
-                        ),
-                        trailing: const Icon(
-                          FeatherIcons.chevronRight,
-                          color: kLightNeutralColor,
-                        ),
-                        onTap: () =>
-                            const SellerWithdrawMoney().launch(context),
-                      ),
-                      ListTile(
-                        onTap: () =>
-                            const SellerWithDrawHistory().launch(context),
-                        visualDensity: const VisualDensity(vertical: -3),
-                        horizontalTitleGap: 10,
-                        contentPadding: const EdgeInsets.only(left: 60),
-                        title: Text(
-                          'Withdrawal History',
-                          overflow: TextOverflow.ellipsis,
-                          maxLines: 1,
-                          style: kTextStyle.copyWith(color: kNeutralColor),
-                        ),
-                        trailing: const Icon(
-                          FeatherIcons.chevronRight,
-                          color: kLightNeutralColor,
-                        ),
-                      ),
-                    ],
+                    onTap: () => const SellerWithdrawMoney().launch(context),
+                  ),
+                  ListTile(
+                    onTap: () => const SellerWithDrawHistory().launch(context),
+                    visualDensity: const VisualDensity(vertical: -3),
+                    horizontalTitleGap: 10,
+                    contentPadding: const EdgeInsets.only(left: 60),
+                    title: const Text(
+                      'Withdrawal History',
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 1,
+                    ),
+                    trailing: const Icon(
+                      FeatherIcons.chevronRight,
+                      color: kLightNeutralColor,
+                    ),
+                  ),
+                ],
+              ),
+              ListTile(
+                onTap: () => const SellerTransaction().launch(context),
+                visualDensity: const VisualDensity(vertical: -3),
+                horizontalTitleGap: 10,
+                contentPadding: const EdgeInsets.only(bottom: 15),
+                leading: Container(
+                  padding: const EdgeInsets.all(10.0),
+                  decoration: const BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: Color(0xFFE8E1FF),
+                  ),
+                  child: const Icon(
+                    IconlyBold.ticketStar,
+                    color: Color(0xFF7E5BFF),
                   ),
                 ),
-                ListTile(
-                  onTap: () => const SellerTransaction().launch(context),
-                  visualDensity: const VisualDensity(vertical: -3),
-                  horizontalTitleGap: 10,
-                  contentPadding: const EdgeInsets.only(bottom: 15),
-                  leading: Container(
-                    padding: const EdgeInsets.all(10.0),
-                    decoration: const BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: Color(0xFFE8E1FF),
-                    ),
-                    child: const Icon(
-                      IconlyBold.ticketStar,
-                      color: Color(0xFF7E5BFF),
-                    ),
+                title: const Text(
+                  'Transaction',
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 1,
+                ),
+                trailing: const Icon(
+                  FeatherIcons.chevronRight,
+                  color: kLightNeutralColor,
+                ),
+              ),
+              ListTile(
+                onTap: () => const SellerFavList().launch(context),
+                visualDensity: const VisualDensity(vertical: -3),
+                horizontalTitleGap: 10,
+                contentPadding: const EdgeInsets.only(bottom: 15),
+                leading: Container(
+                  padding: const EdgeInsets.all(10.0),
+                  decoration: const BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: Color(0xFFFFE5E3),
                   ),
-                  title: Text(
-                    'Transaction',
-                    overflow: TextOverflow.ellipsis,
-                    maxLines: 1,
-                    style: kTextStyle.copyWith(color: kNeutralColor),
-                  ),
-                  trailing: const Icon(
-                    FeatherIcons.chevronRight,
-                    color: kLightNeutralColor,
+                  child: const Icon(
+                    IconlyBold.heart,
+                    color: Color(0xFFFF3B30),
                   ),
                 ),
-                ListTile(
-                  onTap: () => const SellerFavList().launch(context),
-                  visualDensity: const VisualDensity(vertical: -3),
-                  horizontalTitleGap: 10,
-                  contentPadding: const EdgeInsets.only(bottom: 15),
-                  leading: Container(
-                    padding: const EdgeInsets.all(10.0),
-                    decoration: const BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: Color(0xFFFFE5E3),
-                    ),
-                    child: const Icon(
-                      IconlyBold.heart,
-                      color: Color(0xFFFF3B30),
-                    ),
+                title: const Text(
+                  'Favourite',
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 1,
+                ),
+                trailing: const Icon(
+                  FeatherIcons.chevronRight,
+                  color: kLightNeutralColor,
+                ),
+              ),
+              ListTile(
+                onTap: () => const SellerReport().launch(context),
+                visualDensity: const VisualDensity(vertical: -3),
+                horizontalTitleGap: 10,
+                contentPadding: const EdgeInsets.only(bottom: 15),
+                leading: Container(
+                  padding: const EdgeInsets.all(10.0),
+                  decoration: const BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: Color(0xFFD0F1FF),
                   ),
-                  title: Text(
-                    'Favourite',
-                    overflow: TextOverflow.ellipsis,
-                    maxLines: 1,
-                    style: kTextStyle.copyWith(color: kNeutralColor),
-                  ),
-                  trailing: const Icon(
-                    FeatherIcons.chevronRight,
-                    color: kLightNeutralColor,
+                  child: const Icon(
+                    IconlyBold.document,
+                    color: Color(0xFF06AEF3),
                   ),
                 ),
-                ListTile(
-                  onTap: () => const SellerReport().launch(context),
-                  visualDensity: const VisualDensity(vertical: -3),
-                  horizontalTitleGap: 10,
-                  contentPadding: const EdgeInsets.only(bottom: 15),
-                  leading: Container(
-                    padding: const EdgeInsets.all(10.0),
-                    decoration: const BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: Color(0xFFD0F1FF),
-                    ),
-                    child: const Icon(
-                      IconlyBold.document,
-                      color: Color(0xFF06AEF3),
-                    ),
+                title: const Text(
+                  'Seller Report',
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 1,
+                ),
+                trailing: const Icon(
+                  FeatherIcons.chevronRight,
+                  color: kLightNeutralColor,
+                ),
+              ),
+              ListTile(
+                onTap: () => const SellerInvite().launch(context),
+                visualDensity: const VisualDensity(vertical: -3),
+                horizontalTitleGap: 10,
+                contentPadding: const EdgeInsets.only(bottom: 15),
+                leading: Container(
+                  padding: const EdgeInsets.all(10.0),
+                  decoration: const BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: Color(0xFFE2EED8),
                   ),
-                  title: Text(
-                    'Seller Report',
-                    overflow: TextOverflow.ellipsis,
-                    maxLines: 1,
-                    style: kTextStyle.copyWith(color: kNeutralColor),
-                  ),
-                  trailing: const Icon(
-                    FeatherIcons.chevronRight,
-                    color: kLightNeutralColor,
+                  child: const Icon(
+                    IconlyBold.addUser,
+                    color: kPrimaryColor,
                   ),
                 ),
-                ListTile(
-                  onTap: () => const SellerInvite().launch(context),
-                  visualDensity: const VisualDensity(vertical: -3),
-                  horizontalTitleGap: 10,
-                  contentPadding: const EdgeInsets.only(bottom: 15),
-                  leading: Container(
-                    padding: const EdgeInsets.all(10.0),
-                    decoration: const BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: Color(0xFFE2EED8),
-                    ),
-                    child: const Icon(
-                      IconlyBold.addUser,
-                      color: kPrimaryColor,
-                    ),
+                title: const Text(
+                  'Invite Friends',
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 1,
+                ),
+                trailing: const Icon(
+                  FeatherIcons.chevronRight,
+                  color: kLightNeutralColor,
+                ),
+              ),
+              ListTile(
+                onTap: () => const SellerSetting().launch(context),
+                visualDensity: const VisualDensity(vertical: -3),
+                horizontalTitleGap: 10,
+                contentPadding: const EdgeInsets.only(bottom: 15),
+                leading: Container(
+                  padding: const EdgeInsets.all(10.0),
+                  decoration: const BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: Color(0xFFFFDDED),
                   ),
-                  title: Text(
-                    'Invite Friends',
-                    overflow: TextOverflow.ellipsis,
-                    maxLines: 1,
-                    style: kTextStyle.copyWith(color: kNeutralColor),
-                  ),
-                  trailing: const Icon(
-                    FeatherIcons.chevronRight,
-                    color: kLightNeutralColor,
+                  child: const Icon(
+                    IconlyBold.setting,
+                    color: Color(0xFFFF298C),
                   ),
                 ),
-                ListTile(
-                  onTap: () => const SellerSetting().launch(context),
-                  visualDensity: const VisualDensity(vertical: -3),
-                  horizontalTitleGap: 10,
-                  contentPadding: const EdgeInsets.only(bottom: 15),
-                  leading: Container(
-                    padding: const EdgeInsets.all(10.0),
-                    decoration: const BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: Color(0xFFFFDDED),
-                    ),
-                    child: const Icon(
-                      IconlyBold.setting,
-                      color: Color(0xFFFF298C),
-                    ),
+                title: const Text(
+                  'Setting',
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 1,
+                ),
+                trailing: const Icon(
+                  FeatherIcons.chevronRight,
+                  color: kLightNeutralColor,
+                ),
+              ),
+              ListTile(
+                visualDensity: const VisualDensity(vertical: -3),
+                horizontalTitleGap: 10,
+                contentPadding: const EdgeInsets.only(bottom: 15),
+                leading: Container(
+                  padding: const EdgeInsets.all(10.0),
+                  decoration: const BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: Color(0xFFE3EDFF),
                   ),
-                  title: Text(
-                    'Setting',
-                    overflow: TextOverflow.ellipsis,
-                    maxLines: 1,
-                    style: kTextStyle.copyWith(color: kNeutralColor),
-                  ),
-                  trailing: const Icon(
-                    FeatherIcons.chevronRight,
-                    color: kLightNeutralColor,
+                  child: const Icon(
+                    IconlyBold.danger,
+                    color: Color(0xFF144BD6),
                   ),
                 ),
-                ListTile(
-                  visualDensity: const VisualDensity(vertical: -3),
-                  horizontalTitleGap: 10,
-                  contentPadding: const EdgeInsets.only(bottom: 15),
-                  leading: Container(
-                    padding: const EdgeInsets.all(10.0),
-                    decoration: const BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: Color(0xFFE3EDFF),
-                    ),
-                    child: const Icon(
-                      IconlyBold.danger,
-                      color: Color(0xFF144BD6),
-                    ),
+                title: const Text(
+                  'Help & Support',
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 1,
+                ),
+                trailing: const Icon(
+                  FeatherIcons.chevronRight,
+                  color: kLightNeutralColor,
+                ),
+              ),
+              ListTile(
+                visualDensity: const VisualDensity(vertical: -3),
+                horizontalTitleGap: 10,
+                contentPadding: const EdgeInsets.only(bottom: 15),
+                leading: Container(
+                  padding: const EdgeInsets.all(10.0),
+                  decoration: const BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: Color(0xFFFFEFE0),
                   ),
-                  title: Text(
-                    'Help & Support',
-                    overflow: TextOverflow.ellipsis,
-                    maxLines: 1,
-                    style: kTextStyle.copyWith(color: kNeutralColor),
-                  ),
-                  trailing: const Icon(
-                    FeatherIcons.chevronRight,
-                    color: kLightNeutralColor,
+                  child: const Icon(
+                    IconlyBold.logout,
+                    color: Color(0xFFFF7A00),
                   ),
                 ),
-                ListTile(
-                  visualDensity: const VisualDensity(vertical: -3),
-                  horizontalTitleGap: 10,
-                  contentPadding: const EdgeInsets.only(bottom: 15),
-                  leading: Container(
-                    padding: const EdgeInsets.all(10.0),
-                    decoration: const BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: Color(0xFFFFEFE0),
-                    ),
-                    child: const Icon(
-                      IconlyBold.logout,
-                      color: Color(0xFFFF7A00),
-                    ),
-                  ),
-                  onTap: () => Get.off(() => ClientHome()),
-                  title: Text(
-                    'Log Out',
-                    overflow: TextOverflow.ellipsis,
-                    maxLines: 1,
-                    style: kTextStyle.copyWith(color: kNeutralColor),
-                  ),
-                  trailing: const Icon(
-                    FeatherIcons.chevronRight,
-                    color: kLightNeutralColor,
-                  ),
+                onTap: () => Get.off(() => ClientHome()),
+                title: const Text(
+                  'Log Out',
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 1,
                 ),
-                const ThemeSwitcher()
-              ],
-            ),
+                trailing: const Icon(
+                  FeatherIcons.chevronRight,
+                  color: kLightNeutralColor,
+                ),
+              ),
+              const ThemeSwitcher()
+            ],
           ),
         ),
       ),

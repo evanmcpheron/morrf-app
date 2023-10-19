@@ -25,6 +25,7 @@ class ThemeNotifier extends ChangeNotifier {
       return;
     }
     _themeModePosition = prefs.getInt("themeMode")!;
+    notifyListeners();
   }
 
   Future<void> _saveToPrefs(int themePosition) async {
