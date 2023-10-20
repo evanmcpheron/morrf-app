@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:morrf/screen/client%20screen/client_authentication/client_sign_up.dart';
 import 'package:morrf/screen/welcome%20screen/welcome_screen.dart';
 import 'package:morrf/utils/auth_service.dart';
+import 'package:morrf/utils/constants/special_color.dart';
 import 'package:morrf/utils/enums/font_size.dart';
 import 'package:morrf/utils/enums/severity.dart';
 import 'package:morrf/widgets/morff_text.dart';
@@ -43,11 +44,8 @@ class _ClientSignInState extends State<ClientSignIn> {
       return;
     }
     try {
-      final userCredentials = await AuthService().signin(_email, _pass);
+      await AuthService().signin(_email, _pass);
 
-      final User? user = FirebaseAuth.instance.currentUser;
-      print(user);
-      // await userCredentials.user?.sendEmailVerification();
       Get.toNamed("/");
     } on FirebaseAuthException catch (error) {
       if (error.code == 'email-already-in-use') {
@@ -218,27 +216,31 @@ class _ClientSignInState extends State<ClientSignIn> {
                   children: [
                     SocialIcon(
                       bgColor: Theme.of(context).colorScheme.onInverseSurface,
-                      iconColor: kWhite,
+                      iconColor: textLink(context),
                       icon: FontAwesomeIcons.facebookF,
-                      borderColor: Colors.transparent,
+                      borderColor:
+                          Theme.of(context).colorScheme.onPrimaryContainer,
                     ),
                     SocialIcon(
                       bgColor: Theme.of(context).colorScheme.onInverseSurface,
-                      iconColor: kNeutralColor,
+                      iconColor: textLink(context),
                       icon: FontAwesomeIcons.google,
-                      borderColor: kBorderColorTextField,
+                      borderColor:
+                          Theme.of(context).colorScheme.onPrimaryContainer,
                     ),
                     SocialIcon(
                       bgColor: Theme.of(context).colorScheme.onInverseSurface,
-                      iconColor: const Color(0xFF76A9EA),
+                      iconColor: textLink(context),
                       icon: FontAwesomeIcons.twitter,
-                      borderColor: kBorderColorTextField,
+                      borderColor:
+                          Theme.of(context).colorScheme.onPrimaryContainer,
                     ),
                     SocialIcon(
                       bgColor: Theme.of(context).colorScheme.onInverseSurface,
-                      iconColor: const Color(0xFFFF554A),
+                      iconColor: textLink(context),
                       icon: FontAwesomeIcons.instagram,
-                      borderColor: kBorderColorTextField,
+                      borderColor:
+                          Theme.of(context).colorScheme.onPrimaryContainer,
                     ),
                   ],
                 ),

@@ -43,7 +43,7 @@ class _MorrfButtonState extends State<MorrfButton> {
           backgroundColor: getSeverity(),
           fixedSize: const Size(0, 48),
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(25.0),
+            borderRadius: BorderRadius.circular(10.0),
           ),
         ),
         onPressed: widget.disabled != null && widget.disabled!

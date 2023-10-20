@@ -66,6 +66,12 @@ class _MorrfInputFieldState extends State<MorrfInputField> {
     return null;
   }
 
+  Color borderColor(BuildContext context) {
+    return Theme.of(context).brightness == Brightness.dark
+        ? const Color(0xFF144185)
+        : const Color(0xff216dde);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -85,7 +91,9 @@ class _MorrfInputFieldState extends State<MorrfInputField> {
           hintText: widget.hint ?? widget.placeholder,
           filled: widget.isFilled,
           fillColor: widget.fillColor,
-          border: const OutlineInputBorder(),
+          border: OutlineInputBorder(
+            borderSide: BorderSide(color: borderColor(context), width: 2.0),
+          ),
           suffixIcon: getSuffixIcon(),
           prefixIcon: widget.prefixIcon != null
               ? Padding(
@@ -93,17 +101,17 @@ class _MorrfInputFieldState extends State<MorrfInputField> {
                   child: widget.prefixIcon,
                 )
               : null,
-          enabledBorder: const OutlineInputBorder(
+          enabledBorder: OutlineInputBorder(
+            borderSide: BorderSide(color: borderColor(context), width: 2.0),
             borderRadius: BorderRadius.all(
-              Radius.circular(8.0),
+              Radius.circular(10.0),
             ),
-            borderSide: BorderSide(width: 2),
           ),
-          focusedBorder: const OutlineInputBorder(
+          focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.all(
-              Radius.circular(6.0),
+              Radius.circular(10.0),
             ),
-            borderSide: BorderSide(width: 2),
+            borderSide: BorderSide(color: borderColor(context), width: 2.0),
           ),
         ),
       ),
