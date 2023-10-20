@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 
-import '../../widgets/constant.dart';
-import '../../widgets/icons.dart';
+import '../../../widgets/constant.dart';
+import '../../../widgets/icons.dart';
 import '../seller popUp/seller_popup.dart';
 
 class BuyerRequestDetails extends StatefulWidget {
@@ -20,7 +20,8 @@ class _BuyerRequestDetailsState extends State<BuyerRequestDetails> {
       context: context,
       builder: (BuildContext context) {
         return StatefulBuilder(
-          builder: (BuildContext context, void Function(void Function()) setState) {
+          builder:
+              (BuildContext context, void Function(void Function()) setState) {
             return Dialog(
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(20.0),
@@ -43,7 +44,8 @@ class _BuyerRequestDetailsState extends State<BuyerRequestDetails> {
         iconTheme: const IconThemeData(color: kNeutralColor),
         title: Text(
           'Buyer Request',
-          style: kTextStyle.copyWith(color: kNeutralColor, fontWeight: FontWeight.bold),
+          style: kTextStyle.copyWith(
+              color: kNeutralColor, fontWeight: FontWeight.bold),
         ),
         centerTitle: true,
       ),
@@ -128,7 +130,9 @@ class _BuyerRequestDetailsState extends State<BuyerRequestDetails> {
                         ),
                         title: Text(
                           'Shaidul Islam',
-                          style: kTextStyle.copyWith(color: kNeutralColor, fontWeight: FontWeight.bold),
+                          style: kTextStyle.copyWith(
+                              color: kNeutralColor,
+                              fontWeight: FontWeight.bold),
                         ),
                         subtitle: Text(
                           '28 Jun 2023',
@@ -143,7 +147,8 @@ class _BuyerRequestDetailsState extends State<BuyerRequestDetails> {
                       const SizedBox(height: 10.0),
                       Text(
                         'I Need UI UX Designer',
-                        style: kTextStyle.copyWith(color: kNeutralColor, fontWeight: FontWeight.bold),
+                        style: kTextStyle.copyWith(
+                            color: kNeutralColor, fontWeight: FontWeight.bold),
                       ),
                       const SizedBox(height: 5.0),
                       Text(
@@ -152,36 +157,56 @@ class _BuyerRequestDetailsState extends State<BuyerRequestDetails> {
                       ),
                       const SizedBox(height: 20.0),
                       RichText(
-                        text: TextSpan(text: 'Category: ', style: kTextStyle.copyWith(color: kSubTitleColor, fontWeight: FontWeight.bold), children: [
-                          TextSpan(
-                            text: 'UI UX Designer',
-                            style: kTextStyle.copyWith(color: kNeutralColor),
-                          )
-                        ]),
+                        text: TextSpan(
+                            text: 'Category: ',
+                            style: kTextStyle.copyWith(
+                                color: kSubTitleColor,
+                                fontWeight: FontWeight.bold),
+                            children: [
+                              TextSpan(
+                                text: 'UI UX Designer',
+                                style:
+                                    kTextStyle.copyWith(color: kNeutralColor),
+                              )
+                            ]),
                       ),
                       const SizedBox(height: 10.0),
                       RichText(
-                        text: TextSpan(text: 'Duration: ', style: kTextStyle.copyWith(color: kSubTitleColor, fontWeight: FontWeight.bold), children: [
-                          TextSpan(
-                            text: '3 Days',
-                            style: kTextStyle.copyWith(color: kNeutralColor),
-                          )
-                        ]),
+                        text: TextSpan(
+                            text: 'Duration: ',
+                            style: kTextStyle.copyWith(
+                                color: kSubTitleColor,
+                                fontWeight: FontWeight.bold),
+                            children: [
+                              TextSpan(
+                                text: '3 Days',
+                                style:
+                                    kTextStyle.copyWith(color: kNeutralColor),
+                              )
+                            ]),
                       ),
                       const SizedBox(height: 10.0),
                       RichText(
-                        text: TextSpan(text: 'Price: ', style: kTextStyle.copyWith(color: kSubTitleColor, fontWeight: FontWeight.bold), children: [
-                          TextSpan(
-                            text: '$currencySign 50',
-                            style: kTextStyle.copyWith(color: kNeutralColor),
-                          )
-                        ]),
+                        text: TextSpan(
+                            text: 'Price: ',
+                            style: kTextStyle.copyWith(
+                                color: kSubTitleColor,
+                                fontWeight: FontWeight.bold),
+                            children: [
+                              TextSpan(
+                                text: '$currencySign 50',
+                                style:
+                                    kTextStyle.copyWith(color: kNeutralColor),
+                              )
+                            ]),
                       ),
                       const SizedBox(height: 10.0),
                       RichText(
                         text: TextSpan(
                           text: 'Offer Sent: ',
-                          style: kTextStyle.copyWith(color: kSubTitleColor, fontWeight: FontWeight.bold),
+                          style: kTextStyle.copyWith(
+                              color: kSubTitleColor,
+                              fontWeight: FontWeight.bold),
                           children: [
                             TextSpan(
                               text: '17',

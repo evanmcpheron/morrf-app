@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
-import 'package:morrf/screen/widgets/constant.dart';
+import 'package:morrf/widgets/constant.dart';
 import 'package:nb_utils/nb_utils.dart';
 import '../seller popUp/seller_popup.dart';
 import 'model/chat_model.dart';

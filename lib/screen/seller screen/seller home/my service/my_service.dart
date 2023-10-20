@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:morrf/screen/seller%20screen/seller%20home/my%20service/service_details.dart';
-import 'package:morrf/screen/widgets/constant.dart';
+import 'package:morrf/widgets/constant.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 class MyServices extends StatefulWidget {

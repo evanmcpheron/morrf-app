@@ -4,8 +4,8 @@ import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:nb_utils/nb_utils.dart';
 
-import '../../widgets/constant.dart';
-import '../../widgets/icons.dart';
+import '../../../widgets/constant.dart';
+import '../../../widgets/icons.dart';
 
 class ClientInvite extends StatefulWidget {
   const ClientInvite({Key? key}) : super(key: key);
@@ -33,7 +33,8 @@ class _ClientInviteState extends State<ClientInvite> {
         iconTheme: const IconThemeData(color: kNeutralColor),
         title: Text(
           'Invite',
-          style: kTextStyle.copyWith(color: kNeutralColor, fontWeight: FontWeight.bold),
+          style: kTextStyle.copyWith(
+              color: kNeutralColor, fontWeight: FontWeight.bold),
         ),
         centerTitle: true,
       ),
@@ -63,13 +64,18 @@ class _ClientInviteState extends State<ClientInvite> {
                   width: 120,
                   decoration: const BoxDecoration(
                     shape: BoxShape.circle,
-                    image: DecorationImage(image: AssetImage('images/refer.png'), fit: BoxFit.cover),
+                    image: DecorationImage(
+                        image: AssetImage('images/refer.png'),
+                        fit: BoxFit.cover),
                   ),
                 ),
                 const SizedBox(height: 30.0),
                 Text(
                   'Refer a friend',
-                  style: kTextStyle.copyWith(color: kNeutralColor, fontWeight: FontWeight.bold, fontSize: 18.0),
+                  style: kTextStyle.copyWith(
+                      color: kNeutralColor,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 18.0),
                 ),
                 const SizedBox(height: 10.0),
                 Text(
@@ -98,7 +104,9 @@ class _ClientInviteState extends State<ClientInvite> {
                           children: [
                             Text(
                               'AHDJAEL2021RV1',
-                              style: kTextStyle.copyWith(color: kSubTitleColor, fontWeight: FontWeight.bold),
+                              style: kTextStyle.copyWith(
+                                  color: kSubTitleColor,
+                                  fontWeight: FontWeight.bold),
                               textAlign: TextAlign.center,
                             ),
                           ],

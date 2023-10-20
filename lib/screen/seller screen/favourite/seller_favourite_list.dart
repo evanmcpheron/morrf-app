@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:nb_utils/nb_utils.dart';
 
-import '../../widgets/constant.dart';
+import '../../../widgets/constant.dart';
 import '../seller popUp/seller_popup.dart';
 
 class SellerFavList extends StatefulWidget {
@@ -20,7 +20,8 @@ class _SellerFavListState extends State<SellerFavList> {
       context: context,
       builder: (BuildContext context) {
         return StatefulBuilder(
-          builder: (BuildContext context, void Function(void Function()) setState) {
+          builder:
+              (BuildContext context, void Function(void Function()) setState) {
             return Dialog(
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(20.0),
@@ -43,7 +44,8 @@ class _SellerFavListState extends State<SellerFavList> {
         iconTheme: const IconThemeData(color: kNeutralColor),
         title: Text(
           'Favorite List',
-          style: kTextStyle.copyWith(color: kNeutralColor, fontWeight: FontWeight.bold),
+          style: kTextStyle.copyWith(
+              color: kNeutralColor, fontWeight: FontWeight.bold),
         ),
         centerTitle: true,
       ),
@@ -167,7 +169,9 @@ class _SellerFavListState extends State<SellerFavList> {
                                       width: 190,
                                       child: Text(
                                         'Mobile UI UX design or app design',
-                                        style: kTextStyle.copyWith(color: kNeutralColor, fontWeight: FontWeight.bold),
+                                        style: kTextStyle.copyWith(
+                                            color: kNeutralColor,
+                                            fontWeight: FontWeight.bold),
                                         maxLines: 2,
                                         overflow: TextOverflow.ellipsis,
                                       ),
@@ -185,22 +189,27 @@ class _SellerFavListState extends State<SellerFavList> {
                                       const SizedBox(width: 2.0),
                                       Text(
                                         '5.0',
-                                        style: kTextStyle.copyWith(color: kNeutralColor),
+                                        style: kTextStyle.copyWith(
+                                            color: kNeutralColor),
                                       ),
                                       const SizedBox(width: 2.0),
                                       Text(
                                         '(520)',
-                                        style: kTextStyle.copyWith(color: kLightNeutralColor),
+                                        style: kTextStyle.copyWith(
+                                            color: kLightNeutralColor),
                                       ),
                                       const SizedBox(width: 40),
                                       RichText(
                                         text: TextSpan(
                                           text: 'Price: ',
-                                          style: kTextStyle.copyWith(color: kLightNeutralColor),
+                                          style: kTextStyle.copyWith(
+                                              color: kLightNeutralColor),
                                           children: [
                                             TextSpan(
                                               text: '$currencySign${30}',
-                                              style: kTextStyle.copyWith(color: kPrimaryColor, fontWeight: FontWeight.bold),
+                                              style: kTextStyle.copyWith(
+                                                  color: kPrimaryColor,
+                                                  fontWeight: FontWeight.bold),
                                             )
                                           ],
                                         ),
@@ -215,24 +224,31 @@ class _SellerFavListState extends State<SellerFavList> {
                                         width: 32,
                                         decoration: const BoxDecoration(
                                           shape: BoxShape.circle,
-                                          image: DecorationImage(image: AssetImage('images/profilepic.png'), fit: BoxFit.cover),
+                                          image: DecorationImage(
+                                              image: AssetImage(
+                                                  'images/profilepic.png'),
+                                              fit: BoxFit.cover),
                                         ),
                                       ),
                                       const SizedBox(width: 5.0),
                                       Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
                                         children: [
                                           Text(
                                             'Leslie Alexander',
                                             maxLines: 1,
                                             overflow: TextOverflow.ellipsis,
-                                            style: kTextStyle.copyWith(color: kNeutralColor, fontWeight: FontWeight.bold),
+                                            style: kTextStyle.copyWith(
+                                                color: kNeutralColor,
+                                                fontWeight: FontWeight.bold),
                                           ),
                                           Text(
                                             'Seller Level - 1',
                                             maxLines: 1,
                                             overflow: TextOverflow.ellipsis,
-                                            style: kTextStyle.copyWith(color: kSubTitleColor),
+                                            style: kTextStyle.copyWith(
+                                                color: kSubTitleColor),
                                           ),
                                         ],
                                       ),

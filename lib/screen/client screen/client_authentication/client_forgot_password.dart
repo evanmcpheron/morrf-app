@@ -1,9 +1,10 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:morrf/screen/widgets/button_global.dart';
-import 'package:nb_utils/nb_utils.dart';
-
-import '../../widgets/constant.dart';
-import 'client_otp_verification.dart';
+import 'package:morrf/utils/auth_service.dart';
+import 'package:morrf/utils/enums/font_size.dart';
+import 'package:morrf/widgets/morff_text.dart';
+import 'package:morrf/widgets/morrf_button.dart';
+import 'package:morrf/widgets/morrf_input_field.dart';
 
 class ClientForgotPassword extends StatefulWidget {
   const ClientForgotPassword({Key? key}) : super(key: key);
@@ -13,15 +14,38 @@ class ClientForgotPassword extends StatefulWidget {
 }
 
 class _ClientForgotPasswordState extends State<ClientForgotPassword> {
+  final _formKey = GlobalKey<FormState>();
+  final _emailKey = GlobalKey<FormFieldState>();
+
+  String _email = "";
+
+  void _onSubmit() async {
+    if (_formKey.currentState!.validate()) {
+      _formKey.currentState!.save();
+    } else {
+      return;
+    }
+    try {
+      await AuthService().resetPassword(_email);
+
+      Navigator.pop(context);
+    } on FirebaseAuthException catch (error) {
+      ScaffoldMessenger.of(context).clearSnackBars();
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: MorrfText(
+              size: FontSize.p, text: error.message ?? "Something went wrong"),
+        ),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: kWhite,
       appBar: AppBar(
         elevation: 0,
         automaticallyImplyLeading: true,
-        iconTheme: const IconThemeData(color: kNeutralColor),
-        backgroundColor: kDarkWhite,
         shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.only(
             bottomLeft: Radius.circular(50.0),
@@ -30,47 +54,56 @@ class _ClientForgotPasswordState extends State<ClientForgotPassword> {
         ),
         toolbarHeight: 80,
         centerTitle: true,
-        title: Text(
-          'Forgot Password?',
-          style: kTextStyle.copyWith(
-              color: kNeutralColor, fontWeight: FontWeight.bold),
+        title: const MorrfText(
+          text: 'Forgot Password?',
+          size: FontSize.h4,
         ),
       ),
       body: Padding(
         padding: const EdgeInsets.all(10.0),
         child: Column(
           children: [
-            Padding(
-              padding: const EdgeInsets.all(20.0),
-              child: Text(
-                'Enter you email address and we will send you code',
-                style: kTextStyle.copyWith(color: kLightNeutralColor),
+            const Padding(
+              padding: EdgeInsets.all(20.0),
+              child: MorrfText(
+                text: 'Enter you email address and we will send you code',
+                size: FontSize.p,
                 textAlign: TextAlign.center,
               ),
             ),
             const SizedBox(height: 20.0),
-            TextFormField(
-              keyboardType: TextInputType.name,
-              cursorColor: kNeutralColor,
-              textInputAction: TextInputAction.next,
-              decoration: kInputDecoration.copyWith(
-                labelText: 'Email',
-                labelStyle: kTextStyle.copyWith(color: kNeutralColor),
-                hintText: 'Enter your email',
-                hintStyle: kTextStyle.copyWith(color: kLightNeutralColor),
-                focusColor: kNeutralColor,
-                border: const OutlineInputBorder(),
+            Form(
+              key: _formKey,
+              child: MorrfInputField(
+                key: _emailKey,
+                placeholder: "Email",
+                hint: "Enter your email",
+                inputType: TextInputType.emailAddress,
+                validator: (value) {
+                  if (value == null ||
+                      value.trim().isEmpty ||
+                      !value.contains('@')) {
+                    return 'Please enter a valid email address.';
+                  }
+                  return null;
+                },
+                onSaved: (value) {
+                  setState(() {
+                    _email = value.toString();
+                  });
+                },
               ),
             ),
             const Spacer(),
-            ButtonGlobalWithoutIcon(
-              buttontext: 'Reset Password',
-              buttonDecoration:
-                  kButtonDecoration.copyWith(color: kPrimaryColor),
-              onPressed: () {
-                const ClientOtpVerification().launch(context);
-              },
-              buttonTextColor: kWhite,
+            SafeArea(
+              child: MorrfElevatedButton(
+                onPressed: () {
+                  _onSubmit();
+                },
+                fullWidth: true,
+                child:
+                    const MorrfText(text: 'Reset Password', size: FontSize.h5),
+              ),
             ),
           ],
         ),

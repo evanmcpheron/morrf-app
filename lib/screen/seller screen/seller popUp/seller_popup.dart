@@ -5,12 +5,12 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:morrf/screen/seller%20screen/profile/seller_profile.dart';
 import 'package:morrf/screen/seller%20screen/seller%20authentication/verification.dart';
 import 'package:morrf/screen/seller%20screen/seller%20home/seller_home.dart';
-import 'package:morrf/screen/widgets/button_global.dart';
+import 'package:morrf/widgets/button_global.dart';
 import 'package:nb_utils/nb_utils.dart';
 
-import '../../client screen/client_authentication/client_log_in.dart';
-import '../../widgets/constant.dart';
-import '../../widgets/icons.dart';
+import '../../client screen/client_authentication/client_sign_in.dart';
+import '../../../widgets/constant.dart';
+import '../../../widgets/icons.dart';
 import '../buyer request/create_customer_offer.dart';
 import '../seller authentication/seller_log_in.dart';
 
@@ -391,7 +391,7 @@ class _SaveProfilePopUpState extends State<SaveProfilePopUp> {
                   finish(context);
                   isFreelancer
                       ? const SellerLogIn().launch(context)
-                      : const ClientLogIn().launch(context);
+                      : ClientSignIn().launch(context);
                 });
               },
             )

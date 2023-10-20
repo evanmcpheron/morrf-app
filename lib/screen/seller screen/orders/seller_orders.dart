@@ -3,7 +3,7 @@ import 'package:morrf/screen/seller%20screen/orders/seller_order_details.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:slide_countdown/slide_countdown.dart';
 
-import '../../widgets/constant.dart';
+import '../../../widgets/constant.dart';
 
 class SellerOrderList extends StatefulWidget {
   const SellerOrderList({Key? key}) : super(key: key);

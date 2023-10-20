@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
-import 'package:morrf/screen/widgets/button_global.dart';
+import 'package:morrf/widgets/button_global.dart';
 import 'package:nb_utils/nb_utils.dart';
 
-import '../../widgets/constant.dart';
+import '../../../widgets/constant.dart';
 
 class DepositHistory extends StatefulWidget {
   const DepositHistory({Key? key}) : super(key: key);

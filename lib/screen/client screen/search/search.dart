@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:morrf/screen/widgets/constant.dart';
+import 'package:morrf/widgets/constant.dart';
 
 class CustomSearchDelegate extends SearchDelegate {
   List<String> searchItems = [

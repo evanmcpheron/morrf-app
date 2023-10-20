@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:nb_utils/nb_utils.dart';
 
-import '../../widgets/constant.dart';
+import '../../../widgets/constant.dart';
 
 class ClientTransaction extends StatefulWidget {
   const ClientTransaction({Key? key}) : super(key: key);
@@ -15,7 +15,11 @@ class _ClientTransactionState extends State<ClientTransaction> {
   DateTime selectedDate = DateTime.now();
 
   Future<void> _selectDate(BuildContext context) async {
-    final DateTime? picked = await showDatePicker(context: context, initialDate: selectedDate, firstDate: DateTime(2015, 8), lastDate: DateTime(2101));
+    final DateTime? picked = await showDatePicker(
+        context: context,
+        initialDate: selectedDate,
+        firstDate: DateTime(2015, 8),
+        lastDate: DateTime(2101));
     if (picked != null && picked != selectedDate) {
       setState(() {
         selectedDate = picked;
@@ -33,7 +37,8 @@ class _ClientTransactionState extends State<ClientTransaction> {
         iconTheme: const IconThemeData(color: kNeutralColor),
         title: Text(
           'Transaction',
-          style: kTextStyle.copyWith(color: kNeutralColor, fontWeight: FontWeight.bold),
+          style: kTextStyle.copyWith(
+              color: kNeutralColor, fontWeight: FontWeight.bold),
         ),
         centerTitle: true,
       ),
@@ -61,7 +66,8 @@ class _ClientTransactionState extends State<ClientTransaction> {
                   children: [
                     Text(
                       'Transactions',
-                      style: kTextStyle.copyWith(color: kNeutralColor, fontWeight: FontWeight.bold),
+                      style: kTextStyle.copyWith(
+                          color: kNeutralColor, fontWeight: FontWeight.bold),
                     ),
                     const Spacer(),
                     GestureDetector(
@@ -110,26 +116,33 @@ class _ClientTransactionState extends State<ClientTransaction> {
                               width: 44,
                               decoration: const BoxDecoration(
                                 shape: BoxShape.circle,
-                                image: DecorationImage(image: AssetImage('images/usericon.png'), fit: BoxFit.cover),
+                                image: DecorationImage(
+                                    image: AssetImage('images/usericon.png'),
+                                    fit: BoxFit.cover),
                               ),
                             ),
                             title: Text(
                               'Marvin McKinney',
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
-                              style: kTextStyle.copyWith(color: kNeutralColor, fontWeight: FontWeight.bold),
+                              style: kTextStyle.copyWith(
+                                  color: kNeutralColor,
+                                  fontWeight: FontWeight.bold),
                             ),
                             subtitle: Text(
                               '10 Jun 2023',
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
-                              style: kTextStyle.copyWith(color: kLightNeutralColor),
+                              style: kTextStyle.copyWith(
+                                  color: kLightNeutralColor),
                             ),
                             trailing: Text(
                               '$currencySign 5,000',
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
-                              style: kTextStyle.copyWith(color: kNeutralColor, fontWeight: FontWeight.bold),
+                              style: kTextStyle.copyWith(
+                                  color: kNeutralColor,
+                                  fontWeight: FontWeight.bold),
                             ),
                           ),
                         ),

@@ -2,11 +2,11 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
-import 'package:morrf/screen/widgets/constant.dart';
+import 'package:morrf/widgets/constant.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
-import '../../../widgets/review.dart';
+import '../../../../widgets/review.dart';
 
 class ServiceDetails extends StatefulWidget {
   const ServiceDetails({Key? key}) : super(key: key);

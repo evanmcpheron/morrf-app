@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:morrf/screen/widgets/button_global.dart';
+import 'package:morrf/widgets/button_global.dart';
 import 'package:pinput/pinput.dart';
 
-import '../../widgets/constant.dart';
+import '../../../widgets/constant.dart';
 import '../setup seller profile/setup_profile.dart';
 
 class OtpVerification extends StatefulWidget {

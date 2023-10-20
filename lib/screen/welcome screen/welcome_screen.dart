@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:morrf/screen/client%20screen/client_authentication/client_log_in.dart';
+import 'package:morrf/screen/client%20screen/client_authentication/client_sign_in.dart';
 import 'package:morrf/screen/seller%20screen/seller%20authentication/seller_log_in.dart';
-import 'package:morrf/screen/widgets/constant.dart';
+import 'package:morrf/widgets/constant.dart';
 
 import '../client screen/client_authentication/client_sign_up.dart';
 import '../seller screen/seller authentication/seller_sign_up.dart';
-import '../widgets/button_global.dart';
+import '../../widgets/button_global.dart';
 
 class WelcomeScreen extends StatefulWidget {
   const WelcomeScreen({Key? key}) : super(key: key);
@@ -206,7 +206,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                       : Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => const ClientSignUp(),
+                            builder: (context) => ClientSignUp(),
                           ),
                         );
                 },
@@ -227,7 +227,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                           : Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => const ClientLogIn(),
+                                builder: (context) => ClientSignIn(),
                               ),
                             );
                     });
@@ -238,7 +238,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                       style: kTextStyle.copyWith(color: kSubTitleColor),
                       children: [
                         TextSpan(
-                          text: 'Log In',
+                          text: 'Sign In',
                           style: kTextStyle.copyWith(
                               color: kPrimaryColor,
                               fontWeight: FontWeight.bold),

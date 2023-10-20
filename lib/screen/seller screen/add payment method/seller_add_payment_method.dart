@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:morrf/screen/seller%20screen/add%20payment%20method/seller_add_paypal.dart';
 import 'package:nb_utils/nb_utils.dart';
 
-import '../../widgets/constant.dart';
+import '../../../widgets/constant.dart';
 import 'add_credit_card.dart';
 
 class SellerAddPaymentMethod extends StatefulWidget {

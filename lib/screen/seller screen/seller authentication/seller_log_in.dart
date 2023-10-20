@@ -4,9 +4,9 @@ import 'package:morrf/screen/seller%20screen/seller%20authentication/seller_forg
 import 'package:morrf/screen/welcome%20screen/welcome_screen.dart';
 import 'package:nb_utils/nb_utils.dart';
 
-import '../../widgets/button_global.dart';
-import '../../widgets/constant.dart';
-import '../../widgets/icons.dart';
+import '../../../widgets/button_global.dart';
+import '../../../widgets/constant.dart';
+import '../../../widgets/icons.dart';
 import '../seller home/seller_home.dart';
 
 class SellerLogIn extends StatefulWidget {
@@ -68,7 +68,7 @@ class _SellerLogInState extends State<SellerLogIn> {
               const SizedBox(height: 20.0),
               Center(
                 child: Text(
-                  'Log In Your Account',
+                  'Sign In Your Account',
                   style: kTextStyle.copyWith(
                       color: kNeutralColor,
                       fontWeight: FontWeight.bold,
@@ -130,7 +130,7 @@ class _SellerLogInState extends State<SellerLogIn> {
               ),
               const SizedBox(height: 20.0),
               ButtonGlobalWithoutIcon(
-                  buttontext: 'Log In',
+                  buttontext: 'Sign In',
                   buttonDecoration: kButtonDecoration.copyWith(
                     color: kPrimaryColor,
                     borderRadius: BorderRadius.circular(30.0),

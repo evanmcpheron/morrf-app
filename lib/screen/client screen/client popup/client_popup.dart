@@ -5,8 +5,8 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:morrf/screen/client%20screen/client%20home/client_home.dart';
 import 'package:nb_utils/nb_utils.dart';
 
-import '../../widgets/constant.dart';
-import '../../widgets/icons.dart';
+import '../../../widgets/constant.dart';
+import '../../../widgets/icons.dart';
 
 class ProcessingPopUp extends StatefulWidget {
   const ProcessingPopUp({Key? key}) : super(key: key);

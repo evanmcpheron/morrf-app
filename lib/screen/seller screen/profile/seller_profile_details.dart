@@ -3,8 +3,8 @@ import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:morrf/screen/seller%20screen/profile/seller_edit_profile_details.dart';
 import 'package:nb_utils/nb_utils.dart';
 
-import '../../widgets/constant.dart';
-import '../../widgets/data.dart';
+import '../../../widgets/constant.dart';
+import '../../../widgets/data.dart';
 
 class SellerProfileDetails extends StatefulWidget {
   const SellerProfileDetails({Key? key}) : super(key: key);
@@ -64,7 +64,7 @@ class _SellerProfileDetailsState extends State<SellerProfileDetails> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Shaidulislam',
+                          'Evan McPheron',
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: kTextStyle.copyWith(

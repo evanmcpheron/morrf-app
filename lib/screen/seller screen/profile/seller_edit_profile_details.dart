@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:morrf/screen/seller%20screen/profile/seller_profile_details.dart';
-import 'package:morrf/screen/widgets/button_global.dart';
+import 'package:morrf/widgets/button_global.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:step_progress_indicator/step_progress_indicator.dart';
 
-import '../../widgets/constant.dart';
-import '../../widgets/data.dart';
+import '../../../widgets/constant.dart';
+import '../../../widgets/data.dart';
 import '../seller popUp/seller_popup.dart';
 
 class SellerEditProfile extends StatefulWidget {
@@ -285,7 +285,7 @@ class _SellerEditProfileState extends State<SellerEditProfile> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  'Shaidulislam',
+                                  'Evan McPheron',
                                   maxLines: 1,
                                   overflow: TextOverflow.ellipsis,
                                   style: kTextStyle.copyWith(

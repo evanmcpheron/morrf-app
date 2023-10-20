@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:morrf/screen/seller%20screen/seller%20home/seller_home_screen.dart';
-import 'package:morrf/screen/widgets/constant.dart';
 
 import '../orders/seller_orders.dart';
 import '../profile/seller_profile.dart';

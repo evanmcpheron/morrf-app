@@ -3,11 +3,11 @@ import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:morrf/screen/seller%20screen/profile/seller_profile.dart';
 import 'package:morrf/screen/seller%20screen/seller%20home/my%20service/service_details.dart';
-import 'package:morrf/screen/widgets/constant.dart';
+import 'package:morrf/widgets/constant.dart';
 import 'package:nb_utils/nb_utils.dart';
 
-import '../../widgets/chart.dart';
-import '../../widgets/data.dart';
+import '../../../widgets/chart.dart';
+import '../../../widgets/data.dart';
 import '../notification/seller_notification.dart';
 import 'my service/my_service.dart';
 

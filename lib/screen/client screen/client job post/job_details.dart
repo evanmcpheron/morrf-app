@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
-import 'package:morrf/screen/widgets/button_global.dart';
+import 'package:morrf/widgets/button_global.dart';
 import 'package:nb_utils/nb_utils.dart';
 
-import '../../widgets/constant.dart';
+import '../../../widgets/constant.dart';
 import '../client popup/client_popup.dart';
 
 class JobDetails extends StatefulWidget {

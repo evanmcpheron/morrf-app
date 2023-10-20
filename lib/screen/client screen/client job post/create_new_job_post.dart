@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:morrf/screen/client%20screen/client%20job%20post/client_job_post.dart';
-import 'package:morrf/screen/widgets/button_global.dart';
+import 'package:morrf/widgets/button_global.dart';
 import 'package:nb_utils/nb_utils.dart';
 
-import '../../widgets/constant.dart';
+import '../../../widgets/constant.dart';
 
 class CreateNewJobPost extends StatefulWidget {
   const CreateNewJobPost({Key? key}) : super(key: key);

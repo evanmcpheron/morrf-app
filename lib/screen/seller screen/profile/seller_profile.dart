@@ -6,10 +6,11 @@ import 'package:morrf/screen/client%20screen/client%20home/client_home.dart';
 import 'package:morrf/screen/client%20screen/client%20profile/client_profile.dart';
 import 'package:morrf/screen/seller%20screen/main_screens.dart';
 import 'package:morrf/screen/seller%20screen/profile/seller_profile_details.dart';
-import 'package:morrf/screen/widgets/theme_switcher.dart';
+import 'package:morrf/utils/auth_service.dart';
+import 'package:morrf/widgets/theme_switcher.dart';
 import 'package:nb_utils/nb_utils.dart';
 
-import '../../widgets/constant.dart';
+import '../../../widgets/constant.dart';
 import '../add payment method/seller_add_payment_method.dart';
 import '../buyer request/seller_buyer_request.dart';
 import '../favourite/seller_favourite_list.dart';
@@ -384,7 +385,8 @@ class _SellerProfileState extends State<SellerProfile> {
                     color: Color(0xFFFF7A00),
                   ),
                 ),
-                onTap: () => Get.off(() => ClientHome()),
+                onTap: () =>
+                    {AuthService().signout(), Get.off(() => ClientHome())},
                 title: const Text(
                   'Log Out',
                   overflow: TextOverflow.ellipsis,

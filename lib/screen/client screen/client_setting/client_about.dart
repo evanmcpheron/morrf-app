@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 
-import '../../widgets/constant.dart';
+import '../../../widgets/constant.dart';
 
 class ClientAbout extends StatefulWidget {
   const ClientAbout({Key? key}) : super(key: key);
@@ -21,7 +21,8 @@ class _ClientAboutState extends State<ClientAbout> {
         iconTheme: const IconThemeData(color: kNeutralColor),
         title: Text(
           'About Us',
-          style: kTextStyle.copyWith(color: kNeutralColor, fontWeight: FontWeight.bold),
+          style: kTextStyle.copyWith(
+              color: kNeutralColor, fontWeight: FontWeight.bold),
         ),
         centerTitle: true,
       ),
@@ -46,7 +47,8 @@ class _ClientAboutState extends State<ClientAbout> {
               const SizedBox(height: 15.0),
               Text(
                 'Our History',
-                style: kTextStyle.copyWith(color: kNeutralColor, fontWeight: FontWeight.bold),
+                style: kTextStyle.copyWith(
+                    color: kNeutralColor, fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 10.0),
               Text(

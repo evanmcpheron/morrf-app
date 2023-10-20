@@ -6,7 +6,7 @@ import 'package:morrf/screen/client%20screen/client%20home/recently_view.dart';
 import 'package:morrf/screen/client%20screen/client%20home/top_seller.dart';
 import 'package:nb_utils/nb_utils.dart';
 
-import '../../widgets/constant.dart';
+import '../../../widgets/constant.dart';
 import '../client notification/client_notification.dart';
 import '../client service details/client_service_details.dart';
 import '../search/search.dart';
@@ -48,7 +48,7 @@ class _ClientHomeScreenState extends State<ClientHomeScreen> {
               ),
             ),
             title: Text(
-              'Shaidulislam',
+              'Evan McPheron',
               style: kTextStyle.copyWith(
                   color: kNeutralColor, fontWeight: FontWeight.bold),
             ),

@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:nb_utils/nb_utils.dart';
 
-import '../../widgets/button_global.dart';
-import '../../widgets/constant.dart';
+import '../../../widgets/button_global.dart';
+import '../../../widgets/constant.dart';
 import 'client_add_card.dart';
 
 class ClientOrder extends StatefulWidget {
@@ -39,7 +39,8 @@ class _ClientOrderState extends State<ClientOrder> {
         iconTheme: const IconThemeData(color: kNeutralColor),
         title: Text(
           'Order',
-          style: kTextStyle.copyWith(color: kNeutralColor, fontWeight: FontWeight.bold),
+          style: kTextStyle.copyWith(
+              color: kNeutralColor, fontWeight: FontWeight.bold),
         ),
       ),
       bottomNavigationBar: Container(
@@ -166,7 +167,9 @@ class _ClientOrderState extends State<ClientOrder> {
                                 width: 190,
                                 child: Text(
                                   'Mobile UI UX design or app UI UX design.',
-                                  style: kTextStyle.copyWith(color: kNeutralColor, fontWeight: FontWeight.bold),
+                                  style: kTextStyle.copyWith(
+                                      color: kNeutralColor,
+                                      fontWeight: FontWeight.bold),
                                   maxLines: 2,
                                   overflow: TextOverflow.ellipsis,
                                 ),
@@ -184,12 +187,14 @@ class _ClientOrderState extends State<ClientOrder> {
                                 const SizedBox(width: 2.0),
                                 Text(
                                   '5.0',
-                                  style: kTextStyle.copyWith(color: kNeutralColor),
+                                  style:
+                                      kTextStyle.copyWith(color: kNeutralColor),
                                 ),
                                 const SizedBox(width: 2.0),
                                 Text(
                                   '(520)',
-                                  style: kTextStyle.copyWith(color: kLightNeutralColor),
+                                  style: kTextStyle.copyWith(
+                                      color: kLightNeutralColor),
                                 ),
                               ],
                             ),
@@ -197,11 +202,14 @@ class _ClientOrderState extends State<ClientOrder> {
                             RichText(
                               text: TextSpan(
                                 text: 'Price: ',
-                                style: kTextStyle.copyWith(color: kLightNeutralColor),
+                                style: kTextStyle.copyWith(
+                                    color: kLightNeutralColor),
                                 children: [
                                   TextSpan(
                                     text: '$currencySign${30}',
-                                    style: kTextStyle.copyWith(color: kPrimaryColor, fontWeight: FontWeight.bold),
+                                    style: kTextStyle.copyWith(
+                                        color: kPrimaryColor,
+                                        fontWeight: FontWeight.bold),
                                   )
                                 ],
                               ),
@@ -215,7 +223,8 @@ class _ClientOrderState extends State<ClientOrder> {
                 const SizedBox(height: 15.0),
                 Text(
                   'Order Details',
-                  style: kTextStyle.copyWith(color: kNeutralColor, fontWeight: FontWeight.bold),
+                  style: kTextStyle.copyWith(
+                      color: kNeutralColor, fontWeight: FontWeight.bold),
                 ),
                 const SizedBox(height: 15.0),
                 Row(
@@ -290,7 +299,8 @@ class _ClientOrderState extends State<ClientOrder> {
                 const SizedBox(height: 20.0),
                 Text(
                   'Payment Method',
-                  style: kTextStyle.copyWith(color: kNeutralColor, fontWeight: FontWeight.bold),
+                  style: kTextStyle.copyWith(
+                      color: kNeutralColor, fontWeight: FontWeight.bold),
                 ),
                 const SizedBox(height: 20.0),
                 ListView.builder(
@@ -323,7 +333,9 @@ class _ClientOrderState extends State<ClientOrder> {
                             width: 50.0,
                             decoration: BoxDecoration(
                               shape: BoxShape.circle,
-                              image: DecorationImage(image: AssetImage(imageList[i]), fit: BoxFit.cover),
+                              image: DecorationImage(
+                                  image: AssetImage(imageList[i]),
+                                  fit: BoxFit.cover),
                             ),
                           ),
                           title: Text(
@@ -331,8 +343,12 @@ class _ClientOrderState extends State<ClientOrder> {
                             style: kTextStyle.copyWith(color: kNeutralColor),
                           ),
                           trailing: Icon(
-                            selectedPaymentMethod == paymentMethod[i] ? Icons.radio_button_checked_rounded : Icons.radio_button_off_rounded,
-                            color: selectedPaymentMethod == paymentMethod[i] ? kPrimaryColor : kSubTitleColor,
+                            selectedPaymentMethod == paymentMethod[i]
+                                ? Icons.radio_button_checked_rounded
+                                : Icons.radio_button_off_rounded,
+                            color: selectedPaymentMethod == paymentMethod[i]
+                                ? kPrimaryColor
+                                : kSubTitleColor,
                           ),
                         ),
                       ),
@@ -342,7 +358,8 @@ class _ClientOrderState extends State<ClientOrder> {
                 const SizedBox(height: 20.0),
                 Text(
                   'Order Summary',
-                  style: kTextStyle.copyWith(color: kNeutralColor, fontWeight: FontWeight.bold),
+                  style: kTextStyle.copyWith(
+                      color: kNeutralColor, fontWeight: FontWeight.bold),
                 ),
                 const SizedBox(height: 20.0),
                 Row(
@@ -377,12 +394,18 @@ class _ClientOrderState extends State<ClientOrder> {
                   children: [
                     Text(
                       'Total',
-                      style: kTextStyle.copyWith(color: kNeutralColor, fontWeight: FontWeight.bold, fontSize: 18.0),
+                      style: kTextStyle.copyWith(
+                          color: kNeutralColor,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18.0),
                     ),
                     const Spacer(),
                     Text(
                       '$currencySign${35.50}',
-                      style: kTextStyle.copyWith(color: kNeutralColor, fontWeight: FontWeight.bold, fontSize: 18.0),
+                      style: kTextStyle.copyWith(
+                          color: kNeutralColor,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18.0),
                     ),
                   ],
                 ),

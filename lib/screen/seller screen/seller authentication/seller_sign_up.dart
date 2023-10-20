@@ -2,11 +2,11 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:morrf/screen/seller%20screen/seller%20authentication/verification.dart';
-import 'package:morrf/screen/widgets/button_global.dart';
+import 'package:morrf/widgets/button_global.dart';
 import 'package:nb_utils/nb_utils.dart';
 
-import '../../widgets/constant.dart';
-import '../../widgets/icons.dart';
+import '../../../widgets/constant.dart';
+import '../../../widgets/icons.dart';
 
 class SellerSignUp extends StatefulWidget {
   const SellerSignUp({Key? key}) : super(key: key);
@@ -283,7 +283,7 @@ class _SellerSignUpState extends State<SellerSignUp> {
                       style: kTextStyle.copyWith(color: kSubTitleColor),
                       children: [
                         TextSpan(
-                          text: 'Log In',
+                          text: 'Sign In',
                           style: kTextStyle.copyWith(
                               color: kPrimaryColor,
                               fontWeight: FontWeight.bold),

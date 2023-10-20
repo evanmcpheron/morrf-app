@@ -3,7 +3,7 @@ import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:nb_utils/nb_utils.dart';
 
-import '../../widgets/constant.dart';
+import '../../../widgets/constant.dart';
 import '../client service details/client_service_details.dart';
 
 class PopularServices extends StatefulWidget {
@@ -33,7 +33,8 @@ class _PopularServicesState extends State<PopularServices> {
         iconTheme: const IconThemeData(color: kNeutralColor),
         title: Text(
           'Popular Services',
-          style: kTextStyle.copyWith(color: kNeutralColor, fontWeight: FontWeight.bold),
+          style: kTextStyle.copyWith(
+              color: kNeutralColor, fontWeight: FontWeight.bold),
         ),
         actions: const [
           Padding(
@@ -75,13 +76,17 @@ class _PopularServicesState extends State<PopularServices> {
                         child: Container(
                           padding: const EdgeInsets.all(10),
                           decoration: BoxDecoration(
-                            color: selectedServiceList == serviceList[i] ? kPrimaryColor : kDarkWhite,
+                            color: selectedServiceList == serviceList[i]
+                                ? kPrimaryColor
+                                : kDarkWhite,
                             borderRadius: BorderRadius.circular(40.0),
                           ),
                           child: Text(
                             serviceList[i],
                             style: kTextStyle.copyWith(
-                              color: selectedServiceList == serviceList[i] ? kWhite : kNeutralColor,
+                              color: selectedServiceList == serviceList[i]
+                                  ? kWhite
+                                  : kNeutralColor,
                             ),
                           ),
                         ),
@@ -100,7 +105,8 @@ class _PopularServicesState extends State<PopularServices> {
                       return Padding(
                         padding: const EdgeInsets.only(bottom: 10.0),
                         child: GestureDetector(
-                          onTap: () => const ClientServiceDetails().launch(context),
+                          onTap: () =>
+                              const ClientServiceDetails().launch(context),
                           child: Container(
                             height: 120,
                             decoration: BoxDecoration(
@@ -184,7 +190,8 @@ class _PopularServicesState extends State<PopularServices> {
                                 Padding(
                                   padding: const EdgeInsets.all(5.0),
                                   child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     mainAxisSize: MainAxisSize.min,
                                     children: [
                                       Flexible(
@@ -192,7 +199,9 @@ class _PopularServicesState extends State<PopularServices> {
                                           width: 190,
                                           child: Text(
                                             'modern unique business logo design',
-                                            style: kTextStyle.copyWith(color: kNeutralColor, fontWeight: FontWeight.bold),
+                                            style: kTextStyle.copyWith(
+                                                color: kNeutralColor,
+                                                fontWeight: FontWeight.bold),
                                             maxLines: 2,
                                             overflow: TextOverflow.ellipsis,
                                           ),
@@ -200,7 +209,8 @@ class _PopularServicesState extends State<PopularServices> {
                                       ),
                                       const SizedBox(height: 5.0),
                                       Row(
-                                        mainAxisAlignment: MainAxisAlignment.start,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
                                         children: [
                                           const Icon(
                                             IconlyBold.star,
@@ -210,22 +220,28 @@ class _PopularServicesState extends State<PopularServices> {
                                           const SizedBox(width: 2.0),
                                           Text(
                                             '5.0',
-                                            style: kTextStyle.copyWith(color: kNeutralColor),
+                                            style: kTextStyle.copyWith(
+                                                color: kNeutralColor),
                                           ),
                                           const SizedBox(width: 2.0),
                                           Text(
                                             '(520)',
-                                            style: kTextStyle.copyWith(color: kLightNeutralColor),
+                                            style: kTextStyle.copyWith(
+                                                color: kLightNeutralColor),
                                           ),
                                           const SizedBox(width: 40),
                                           RichText(
                                             text: TextSpan(
                                               text: 'Price: ',
-                                              style: kTextStyle.copyWith(color: kLightNeutralColor),
+                                              style: kTextStyle.copyWith(
+                                                  color: kLightNeutralColor),
                                               children: [
                                                 TextSpan(
                                                   text: '$currencySign${30}',
-                                                  style: kTextStyle.copyWith(color: kPrimaryColor, fontWeight: FontWeight.bold),
+                                                  style: kTextStyle.copyWith(
+                                                      color: kPrimaryColor,
+                                                      fontWeight:
+                                                          FontWeight.bold),
                                                 )
                                               ],
                                             ),
@@ -240,24 +256,32 @@ class _PopularServicesState extends State<PopularServices> {
                                             width: 32,
                                             decoration: const BoxDecoration(
                                               shape: BoxShape.circle,
-                                              image: DecorationImage(image: AssetImage('images/profilepic2.png'), fit: BoxFit.cover),
+                                              image: DecorationImage(
+                                                  image: AssetImage(
+                                                      'images/profilepic2.png'),
+                                                  fit: BoxFit.cover),
                                             ),
                                           ),
                                           const SizedBox(width: 5.0),
                                           Column(
-                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
                                             children: [
                                               Text(
                                                 'William Liam',
                                                 maxLines: 1,
                                                 overflow: TextOverflow.ellipsis,
-                                                style: kTextStyle.copyWith(color: kNeutralColor, fontWeight: FontWeight.bold),
+                                                style: kTextStyle.copyWith(
+                                                    color: kNeutralColor,
+                                                    fontWeight:
+                                                        FontWeight.bold),
                                               ),
                                               Text(
                                                 'Seller Level - 1',
                                                 maxLines: 1,
                                                 overflow: TextOverflow.ellipsis,
-                                                style: kTextStyle.copyWith(color: kSubTitleColor),
+                                                style: kTextStyle.copyWith(
+                                                    color: kSubTitleColor),
                                               ),
                                             ],
                                           ),

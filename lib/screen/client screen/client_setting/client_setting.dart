@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:nb_utils/nb_utils.dart';
 
-import '../../widgets/constant.dart';
+import '../../../widgets/constant.dart';
 import 'client_about.dart';
 import 'client_language.dart';
 import 'client_policy.dart';
@@ -28,7 +28,8 @@ class _ClientSettingState extends State<ClientSetting> {
         iconTheme: const IconThemeData(color: kNeutralColor),
         title: Text(
           'Setting',
-          style: kTextStyle.copyWith(color: kNeutralColor, fontWeight: FontWeight.bold),
+          style: kTextStyle.copyWith(
+              color: kNeutralColor, fontWeight: FontWeight.bold),
         ),
         centerTitle: true,
       ),

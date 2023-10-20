@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
-import 'package:morrf/screen/widgets/button_global.dart';
+import 'package:morrf/widgets/button_global.dart';
 import 'package:nb_utils/nb_utils.dart';
 
-import '../../widgets/constant.dart';
+import '../../../widgets/constant.dart';
 import 'client_edit_profile_details.dart';
 
 class ClientProfileDetails extends StatefulWidget {
@@ -78,7 +78,7 @@ class _ClientProfileDetailsState extends State<ClientProfileDetails> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Shaidulislam',
+                          'Evan McPheron',
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: kTextStyle.copyWith(

@@ -91,6 +91,8 @@ flutter:
    - assets/images/cards/visa.svg
    - assets/images/cards/discover.svg
    - assets/images/cards/mastercard.svg
+   - assets/images/color-logo.png
+   - assets/images/grey-logo.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

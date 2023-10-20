@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 
-import '../../widgets/constant.dart';
-import '../../widgets/icons.dart';
+import '../../../widgets/constant.dart';
+import '../../../widgets/icons.dart';
 import '../seller popUp/seller_popup.dart';
 import 'buyer_request_details.dart';
 
@@ -14,7 +14,6 @@ class SellerBuyerReq extends StatefulWidget {
 }
 
 class _SellerBuyerReqState extends State<SellerBuyerReq> {
-
   //__________send_Offer_PopUp________________________________________________
   void sendOfferPopUp() {
     showDialog(
@@ -22,7 +21,8 @@ class _SellerBuyerReqState extends State<SellerBuyerReq> {
       context: context,
       builder: (BuildContext context) {
         return StatefulBuilder(
-          builder: (BuildContext context, void Function(void Function()) setState) {
+          builder:
+              (BuildContext context, void Function(void Function()) setState) {
             return Dialog(
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(20.0),
@@ -45,7 +45,8 @@ class _SellerBuyerReqState extends State<SellerBuyerReq> {
         iconTheme: const IconThemeData(color: kNeutralColor),
         title: Text(
           'Buyer Request',
-          style: kTextStyle.copyWith(color: kNeutralColor, fontWeight: FontWeight.bold),
+          style: kTextStyle.copyWith(
+              color: kNeutralColor, fontWeight: FontWeight.bold),
         ),
         centerTitle: true,
       ),
@@ -74,7 +75,8 @@ class _SellerBuyerReqState extends State<SellerBuyerReq> {
                     return Padding(
                       padding: const EdgeInsets.only(bottom: 10.0),
                       child: GestureDetector(
-                        onTap: () => const BuyerRequestDetails().launch(context),
+                        onTap: () =>
+                            const BuyerRequestDetails().launch(context),
                         child: Container(
                           padding: const EdgeInsets.all(10.0),
                           decoration: BoxDecoration(
@@ -108,11 +110,14 @@ class _SellerBuyerReqState extends State<SellerBuyerReq> {
                                 ),
                                 title: Text(
                                   'Shaidul Islam',
-                                  style: kTextStyle.copyWith(color: kNeutralColor, fontWeight: FontWeight.bold),
+                                  style: kTextStyle.copyWith(
+                                      color: kNeutralColor,
+                                      fontWeight: FontWeight.bold),
                                 ),
                                 subtitle: Text(
                                   '28 Jun 2023',
-                                  style: kTextStyle.copyWith(color: kSubTitleColor),
+                                  style: kTextStyle.copyWith(
+                                      color: kSubTitleColor),
                                 ),
                               ),
                               const Divider(
@@ -123,12 +128,15 @@ class _SellerBuyerReqState extends State<SellerBuyerReq> {
                               const SizedBox(height: 10.0),
                               Text(
                                 'I Need UI UX Designer',
-                                style: kTextStyle.copyWith(color: kNeutralColor, fontWeight: FontWeight.bold),
+                                style: kTextStyle.copyWith(
+                                    color: kNeutralColor,
+                                    fontWeight: FontWeight.bold),
                               ),
                               const SizedBox(height: 5.0),
                               ReadMoreText(
                                 'Lorem ipsum dolor sit amet consectetur. Elementum nulla quis nunc Lorem ipsum dolor sit amet consectetur. O rci pulvinar sit nec donec pellentesque ve nenatis nunc vel pretium. Dictumst bib en dum pharetra hendrerit tortor nisl. Nulla accumsan ',
-                                style: kTextStyle.copyWith(color: kLightNeutralColor),
+                                style: kTextStyle.copyWith(
+                                    color: kLightNeutralColor),
                                 trimLines: 2,
                                 colorClickableText: kPrimaryColor,
                                 trimMode: TrimMode.Line,
@@ -137,12 +145,18 @@ class _SellerBuyerReqState extends State<SellerBuyerReq> {
                               ),
                               const SizedBox(height: 10.0),
                               RichText(
-                                text: TextSpan(text: 'Category: ', style: kTextStyle.copyWith(color: kNeutralColor, fontWeight: FontWeight.bold), children: [
-                                  TextSpan(
-                                    text: 'UI UX Designer',
-                                    style: kTextStyle.copyWith(color: kSubTitleColor),
-                                  )
-                                ]),
+                                text: TextSpan(
+                                    text: 'Category: ',
+                                    style: kTextStyle.copyWith(
+                                        color: kNeutralColor,
+                                        fontWeight: FontWeight.bold),
+                                    children: [
+                                      TextSpan(
+                                        text: 'UI UX Designer',
+                                        style: kTextStyle.copyWith(
+                                            color: kSubTitleColor),
+                                      )
+                                    ]),
                               ),
                               const SizedBox(height: 10.0),
                               Row(

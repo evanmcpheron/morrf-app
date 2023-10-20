@@ -13,9 +13,7 @@ const kWhite = Color(0xFFFFFFFF);
 const kBorderColorTextField = Color(0xFFE3E3E3);
 const ratingBarColor = Color(0xFFFFB33E);
 
-final kTextStyle = GoogleFonts.inter(
-  color: kNeutralColor,
-);
+final kTextStyle = GoogleFonts.inter();
 
 const kButtonDecoration = BoxDecoration(
   color: kPrimaryColor,
@@ -25,20 +23,18 @@ const kButtonDecoration = BoxDecoration(
 );
 
 InputDecoration kInputDecoration = const InputDecoration(
-  hintStyle: TextStyle(color: kSubTitleColor),
   filled: true,
-  fillColor: Colors.white70,
   enabledBorder: OutlineInputBorder(
     borderRadius: BorderRadius.all(
       Radius.circular(8.0),
     ),
-    borderSide: BorderSide(color: kBorderColorTextField, width: 2),
+    borderSide: BorderSide(width: 2),
   ),
   focusedBorder: OutlineInputBorder(
     borderRadius: BorderRadius.all(
       Radius.circular(6.0),
     ),
-    borderSide: BorderSide(color: kNeutralColor, width: 2),
+    borderSide: BorderSide(width: 2),
   ),
 );
 
@@ -89,7 +85,6 @@ List<String> catIcon = [
   'images/p.png',
   'images/l.png'
 ];
-
 
 //__________Language List_______________________________________________
 List<String> language = [
@@ -246,7 +241,6 @@ List<String> currency = [
 ];
 
 String selectedCurrency = 'USD';
-
 
 List<Color> colorList = [
   const Color(0xFF69B22A),

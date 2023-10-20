@@ -2,10 +2,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
-import 'package:morrf/screen/widgets/button_global.dart';
+import 'package:morrf/widgets/button_global.dart';
 
 import '../../seller screen/seller popUp/seller_popup.dart';
-import '../../widgets/constant.dart';
+import '../../../widgets/constant.dart';
 
 class ClientCreateProfile extends StatefulWidget {
   const ClientCreateProfile({Key? key}) : super(key: key);

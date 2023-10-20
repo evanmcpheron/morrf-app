@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:nb_utils/nb_utils.dart';
 
-import '../../widgets/constant.dart';
+import '../../../widgets/constant.dart';
 
 class TopSeller extends StatefulWidget {
   const TopSeller({Key? key}) : super(key: key);
@@ -32,7 +32,8 @@ class _TopSellerState extends State<TopSeller> {
         iconTheme: const IconThemeData(color: kNeutralColor),
         title: Text(
           'Top Sellers',
-          style: kTextStyle.copyWith(color: kNeutralColor, fontWeight: FontWeight.bold),
+          style: kTextStyle.copyWith(
+              color: kNeutralColor, fontWeight: FontWeight.bold),
         ),
       ),
       body: Padding(
@@ -65,13 +66,17 @@ class _TopSellerState extends State<TopSeller> {
                         child: Container(
                           padding: const EdgeInsets.all(10),
                           decoration: BoxDecoration(
-                            color: selectedServiceList == serviceList[i] ? kPrimaryColor : kDarkWhite,
+                            color: selectedServiceList == serviceList[i]
+                                ? kPrimaryColor
+                                : kDarkWhite,
                             borderRadius: BorderRadius.circular(40.0),
                           ),
                           child: Text(
                             serviceList[i],
                             style: kTextStyle.copyWith(
-                              color: selectedServiceList == serviceList[i] ? kWhite : kNeutralColor,
+                              color: selectedServiceList == serviceList[i]
+                                  ? kWhite
+                                  : kNeutralColor,
                             ),
                           ),
                         ),
@@ -130,7 +135,9 @@ class _TopSellerState extends State<TopSeller> {
                                 children: [
                                   Text(
                                     'William Liam',
-                                    style: kTextStyle.copyWith(color: kNeutralColor, fontWeight: FontWeight.bold),
+                                    style: kTextStyle.copyWith(
+                                        color: kNeutralColor,
+                                        fontWeight: FontWeight.bold),
                                     maxLines: 1,
                                     overflow: TextOverflow.ellipsis,
                                   ),
@@ -146,12 +153,14 @@ class _TopSellerState extends State<TopSeller> {
                                       const SizedBox(width: 2.0),
                                       Text(
                                         '5.0',
-                                        style: kTextStyle.copyWith(color: kNeutralColor),
+                                        style: kTextStyle.copyWith(
+                                            color: kNeutralColor),
                                       ),
                                       const SizedBox(width: 2.0),
                                       Text(
                                         '(520 review)',
-                                        style: kTextStyle.copyWith(color: kLightNeutralColor),
+                                        style: kTextStyle.copyWith(
+                                            color: kLightNeutralColor),
                                       ),
                                     ],
                                   ),
@@ -159,11 +168,13 @@ class _TopSellerState extends State<TopSeller> {
                                   RichText(
                                     text: TextSpan(
                                       text: 'Seller Level - ',
-                                      style: kTextStyle.copyWith(color: kNeutralColor),
+                                      style: kTextStyle.copyWith(
+                                          color: kNeutralColor),
                                       children: [
                                         TextSpan(
                                           text: '2',
-                                          style: kTextStyle.copyWith(color: kLightNeutralColor),
+                                          style: kTextStyle.copyWith(
+                                              color: kLightNeutralColor),
                                         )
                                       ],
                                     ),

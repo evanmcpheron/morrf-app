@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 
-import '../../widgets/constant.dart';
-import '../../widgets/data.dart';
+import '../../../widgets/constant.dart';
+import '../../../widgets/data.dart';
 
 class ClientDashBoard extends StatefulWidget {
   const ClientDashBoard({Key? key}) : super(key: key);
@@ -22,7 +22,8 @@ class _ClientDashBoardState extends State<ClientDashBoard> {
         iconTheme: const IconThemeData(color: kNeutralColor),
         title: Text(
           'Dashboard',
-          style: kTextStyle.copyWith(color: kNeutralColor, fontWeight: FontWeight.bold),
+          style: kTextStyle.copyWith(
+              color: kNeutralColor, fontWeight: FontWeight.bold),
         ),
         centerTitle: true,
       ),
@@ -104,17 +105,17 @@ class _ClientDashBoardState extends State<ClientDashBoard> {
               const SizedBox(height: 20),
               Text(
                 'Latest Transactions',
-                style: kTextStyle.copyWith(color: kNeutralColor, fontWeight: FontWeight.bold),
+                style: kTextStyle.copyWith(
+                    color: kNeutralColor, fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 10),
               Container(
                 padding: const EdgeInsets.all(10.0),
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10.0),
-                  border: Border.all(
-                    color: kBorderColorTextField,
-                  )
-                ),
+                    borderRadius: BorderRadius.circular(10.0),
+                    border: Border.all(
+                      color: kBorderColorTextField,
+                    )),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -133,14 +134,16 @@ class _ClientDashBoardState extends State<ClientDashBoard> {
                             children: [
                               Text(
                                 ':',
-                                style: kTextStyle.copyWith(color: kSubTitleColor),
+                                style:
+                                    kTextStyle.copyWith(color: kSubTitleColor),
                               ),
                               const SizedBox(
                                 width: 20,
                               ),
                               Text(
                                 'Seller',
-                                style: kTextStyle.copyWith(color: kSubTitleColor),
+                                style:
+                                    kTextStyle.copyWith(color: kSubTitleColor),
                               ),
                             ],
                           ),
@@ -163,14 +166,16 @@ class _ClientDashBoardState extends State<ClientDashBoard> {
                             children: [
                               Text(
                                 ':',
-                                style: kTextStyle.copyWith(color: kSubTitleColor),
+                                style:
+                                    kTextStyle.copyWith(color: kSubTitleColor),
                               ),
                               const SizedBox(
                                 width: 20,
                               ),
                               Text(
                                 '24 Jun 2023',
-                                style: kTextStyle.copyWith(color: kSubTitleColor),
+                                style:
+                                    kTextStyle.copyWith(color: kSubTitleColor),
                               ),
                             ],
                           ),
@@ -193,14 +198,16 @@ class _ClientDashBoardState extends State<ClientDashBoard> {
                             children: [
                               Text(
                                 ':',
-                                style: kTextStyle.copyWith(color: kSubTitleColor),
+                                style:
+                                    kTextStyle.copyWith(color: kSubTitleColor),
                               ),
                               const SizedBox(
                                 width: 20,
                               ),
                               Text(
                                 '$currencySign${3000.00}',
-                                style: kTextStyle.copyWith(color: kSubTitleColor),
+                                style:
+                                    kTextStyle.copyWith(color: kSubTitleColor),
                               ),
                             ],
                           ),
@@ -223,14 +230,16 @@ class _ClientDashBoardState extends State<ClientDashBoard> {
                             children: [
                               Text(
                                 ':',
-                                style: kTextStyle.copyWith(color: kSubTitleColor),
+                                style:
+                                    kTextStyle.copyWith(color: kSubTitleColor),
                               ),
                               const SizedBox(
                                 width: 20,
                               ),
                               Text(
                                 'Paid',
-                                style: kTextStyle.copyWith(color: kSubTitleColor),
+                                style:
+                                    kTextStyle.copyWith(color: kSubTitleColor),
                               ),
                             ],
                           ),

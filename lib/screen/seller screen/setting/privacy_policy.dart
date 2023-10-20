@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 
-import '../../widgets/constant.dart';
+import '../../../widgets/constant.dart';
 
 class Policy extends StatefulWidget {
   const Policy({Key? key}) : super(key: key);
@@ -21,7 +21,8 @@ class _PolicyState extends State<Policy> {
         iconTheme: const IconThemeData(color: kNeutralColor),
         title: Text(
           'Privacy Policy',
-          style: kTextStyle.copyWith(color: kNeutralColor, fontWeight: FontWeight.bold),
+          style: kTextStyle.copyWith(
+              color: kNeutralColor, fontWeight: FontWeight.bold),
         ),
         centerTitle: true,
       ),
@@ -47,7 +48,8 @@ class _PolicyState extends State<Policy> {
                 const SizedBox(height: 15.0),
                 Text(
                   'Disclosures of Your Information',
-                  style: kTextStyle.copyWith(color: kNeutralColor, fontWeight: FontWeight.bold),
+                  style: kTextStyle.copyWith(
+                      color: kNeutralColor, fontWeight: FontWeight.bold),
                 ),
                 const SizedBox(height: 10.0),
                 Text(
@@ -57,7 +59,8 @@ class _PolicyState extends State<Policy> {
                 const SizedBox(height: 20.0),
                 Text(
                   'Legal Disclaimer',
-                  style: kTextStyle.copyWith(color: kNeutralColor, fontWeight: FontWeight.bold),
+                  style: kTextStyle.copyWith(
+                      color: kNeutralColor, fontWeight: FontWeight.bold),
                 ),
                 const SizedBox(height: 10.0),
                 Text(

@@ -5,7 +5,7 @@ import 'package:morrf/screen/seller%20screen/setting/privacy_policy.dart';
 import 'package:morrf/screen/seller%20screen/setting/seller_about.dart';
 import 'package:nb_utils/nb_utils.dart';
 
-import '../../widgets/constant.dart';
+import '../../../widgets/constant.dart';
 import 'language.dart';
 
 class SellerSetting extends StatefulWidget {

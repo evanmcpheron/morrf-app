@@ -3,7 +3,7 @@ import 'package:nb_utils/nb_utils.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 import '../welcome screen/welcome_screen.dart';
-import '../widgets/constant.dart';
+import '../../widgets/constant.dart';
 
 class OnBoard extends StatefulWidget {
   const OnBoard({
@@ -22,17 +22,20 @@ class _OnBoardState extends State<OnBoard> {
   List<Map<String, dynamic>> sliderList = [
     {
       "title": 'Find Interesting Projects',
-      "description": 'Lorem ipsum dolor sit amet consectetur. Ornare diam feugiat netus ultrices accumsan turpis nisi',
+      "description":
+          'Lorem ipsum dolor sit amet consectetur. Ornare diam feugiat netus ultrices accumsan turpis nisi',
       "icon": 'images/onboard1.png',
     },
     {
       "title": 'Freelance Work on Demand',
-      "description": 'Lorem ipsum dolor sit amet consectetur. Ornare diam feugiat netus ultrices accumsan turpis nisi',
+      "description":
+          'Lorem ipsum dolor sit amet consectetur. Ornare diam feugiat netus ultrices accumsan turpis nisi',
       "icon": 'images/onboard2.png',
     },
     {
       "title": 'Get Started Free',
-      "description": 'Lorem ipsum dolor sit amet consectetur. Ornare diam feugiat netus ultrices accumsan turpis nisi',
+      "description":
+          'Lorem ipsum dolor sit amet consectetur. Ornare diam feugiat netus ultrices accumsan turpis nisi',
       "icon": 'images/onboard3.png',
     },
   ];
@@ -51,7 +54,8 @@ class _OnBoardState extends State<OnBoard> {
           itemCount: sliderList.length,
           physics: const PageScrollPhysics(),
           controller: pageController,
-          onPageChanged: (int index) => setState(() => currentIndexPage = index),
+          onPageChanged: (int index) =>
+              setState(() => currentIndexPage = index),
           itemBuilder: (_, i) {
             return Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -74,15 +78,12 @@ class _OnBoardState extends State<OnBoard> {
                 ),
                 Container(
                   width: context.width(),
-                  decoration: const BoxDecoration(color: kWhite,
-
-                  boxShadow: [
+                  decoration: const BoxDecoration(color: kWhite, boxShadow: [
                     BoxShadow(
-                      color: kDarkWhite,
-                      spreadRadius: 4.0,
-                      blurRadius: 10.0,
-                      offset: Offset(0, -20)
-                    )
+                        color: kDarkWhite,
+                        spreadRadius: 4.0,
+                        blurRadius: 10.0,
+                        offset: Offset(0, -20))
                   ]),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -93,7 +94,10 @@ class _OnBoardState extends State<OnBoard> {
                       Text(
                         sliderList[i]['title'].toString(),
                         textAlign: TextAlign.center,
-                        style: kTextStyle.copyWith(color: kNeutralColor, fontWeight: FontWeight.bold, fontSize: 18.0),
+                        style: kTextStyle.copyWith(
+                            color: kNeutralColor,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 18.0),
                       ),
                       const SizedBox(height: 10.0),
                       Padding(
@@ -114,11 +118,15 @@ class _OnBoardState extends State<OnBoard> {
                             () {
                               currentIndexPage < 2;
                               currentIndexPage < 2
-                                  ? pageController.nextPage(duration: const Duration(microseconds: 3000), curve: Curves.bounceInOut)
+                                  ? pageController.nextPage(
+                                      duration:
+                                          const Duration(microseconds: 3000),
+                                      curve: Curves.bounceInOut)
                                   : Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                        builder: (context) => const WelcomeScreen(),
+                                        builder: (context) =>
+                                            const WelcomeScreen(),
                                       ),
                                     );
                             },
@@ -173,9 +181,27 @@ class BottomShapeClipper extends CustomClipper<Path> {
     //   size.height - 300,
     // );
     path_0.moveTo(size.width * 0.09109896, size.height * 0.05714286);
-    path_0.cubicTo(size.width * 0.09109896, size.height * 0.05714286, size.width * 0.08902899, size.height * 0.1457143, size.width * 0.2287578, size.height * 0.1523810);
-    path_0.cubicTo(size.width * 0.4402692, size.height * 0.1624724, size.width * 0.5516894, size.height * 0.1628571, size.width * 0.7162588, size.height * 0.1523810);
-    path_0.cubicTo(size.width * 0.8773395, size.height * 0.1421269, size.width * 0.8673747, size.height * 0.05714286, size.width * 0.8673747, size.height * 0.05714286);
+    path_0.cubicTo(
+        size.width * 0.09109896,
+        size.height * 0.05714286,
+        size.width * 0.08902899,
+        size.height * 0.1457143,
+        size.width * 0.2287578,
+        size.height * 0.1523810);
+    path_0.cubicTo(
+        size.width * 0.4402692,
+        size.height * 0.1624724,
+        size.width * 0.5516894,
+        size.height * 0.1628571,
+        size.width * 0.7162588,
+        size.height * 0.1523810);
+    path_0.cubicTo(
+        size.width * 0.8773395,
+        size.height * 0.1421269,
+        size.width * 0.8673747,
+        size.height * 0.05714286,
+        size.width * 0.8673747,
+        size.height * 0.05714286);
     path_0.lineTo(size.width * 0.8673747, size.height * 0.8514286);
     path_0.lineTo(size.width * 0.09109896, size.height * 0.8514286);
     path_0.lineTo(size.width * 0.09109896, size.height * 0.05714286);

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:morrf/screen/seller%20screen/seller%20authentication/verification.dart';
-import 'package:morrf/screen/widgets/button_global.dart';
+import 'package:morrf/widgets/button_global.dart';
 import 'package:nb_utils/nb_utils.dart';
 
-import '../../widgets/constant.dart';
+import '../../../widgets/constant.dart';
 
 class SellerForgotPassword extends StatefulWidget {
   const SellerForgotPassword({Key? key}) : super(key: key);

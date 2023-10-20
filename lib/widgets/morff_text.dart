@@ -41,7 +41,7 @@ class _MorrfTextState extends State<MorrfText> {
   Widget build(BuildContext context) {
     if (widget.size == FontSize.p) {
       return DefaultTextStyle.merge(
-        style: const TextStyle(fontSize: 16, fontWeight: FontWeight.normal)
+        style: const TextStyle(fontSize: 14, fontWeight: FontWeight.normal)
             .apply(fontSizeFactor: getFontSize()),
         child: Text(
           widget.text,
@@ -52,7 +52,7 @@ class _MorrfTextState extends State<MorrfText> {
       );
     } else {
       return DefaultTextStyle.merge(
-        style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold)
+        style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold)
             .apply(fontSizeFactor: getFontSize()),
         child: Text(
           widget.text,

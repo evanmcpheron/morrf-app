@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 
-import '../../widgets/constant.dart';
+import '../../../widgets/constant.dart';
 
 class ClientLanguage extends StatefulWidget {
   const ClientLanguage({Key? key}) : super(key: key);
@@ -31,7 +31,8 @@ class _ClientLanguageState extends State<ClientLanguage> {
         iconTheme: const IconThemeData(color: kNeutralColor),
         title: Text(
           'Language',
-          style: kTextStyle.copyWith(color: kNeutralColor, fontWeight: FontWeight.bold),
+          style: kTextStyle.copyWith(
+              color: kNeutralColor, fontWeight: FontWeight.bold),
         ),
         centerTitle: true,
       ),
