@@ -5,14 +5,16 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:morrf/screen/client%20screen/client_authentication/client_sign_in.dart';
 import 'package:morrf/utils/auth_service.dart';
+import 'package:morrf/utils/constants/special_color.dart';
+import 'package:morrf/utils/enums/severity.dart';
 import 'package:morrf/widgets/button_global.dart';
 import 'package:morrf/widgets/morff_text.dart';
 import 'package:morrf/utils/enums/font_size.dart';
-import 'package:nb_utils/nb_utils.dart';
+import 'package:morrf/widgets/morrf_button.dart';
+import 'package:morrf/widgets/morrf_input_field.dart';
 
 import '../../../widgets/constant.dart';
 import '../../../widgets/icons.dart';
-import 'client_otp_verification.dart';
 
 class ClientSignUp extends StatefulWidget {
   bool isHome;
@@ -26,32 +28,28 @@ class _ClientSignUpState extends State<ClientSignUp> {
   bool hidePassword = true;
   bool isCheck = true;
 
-  final nameController = TextEditingController();
-  final lastNameController = TextEditingController();
-  final emailController = TextEditingController();
-  final passwordController = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
+  final _nameKey = GlobalKey<FormFieldState>();
+  final _lastNameKey = GlobalKey<FormFieldState>();
+  final _emailKey = GlobalKey<FormFieldState>();
+  final _passKey = GlobalKey<FormFieldState>();
 
-  @override
-  void dispose() {
-    // Clean up the controller when the widget is disposed.
-    nameController.dispose();
-    lastNameController.dispose();
-    emailController.dispose();
-    passwordController.dispose();
-    super.dispose();
-  }
+  String _name = "";
+  String _lastName = "";
+  String _email = "";
+  String _pass = "";
 
   void _onSubmit() async {
     try {
-      print(emailController.text);
-      final userCredentials = await AuthService().signup(
-          emailController.text,
-          passwordController.text,
-          nameController.text + " " + lastNameController.text);
+      if (_formKey.currentState!.validate()) {
+        _formKey.currentState!.save();
+      } else {
+        return;
+      }
+      final userCredentials =
+          await AuthService().signup(_email, _pass, "$_name $_lastName");
 
-      final User? user = FirebaseAuth.instance.currentUser;
-      print(user);
-      // await userCredentials.user?.sendEmailVerification();
+      await userCredentials.user?.sendEmailVerification();
       Get.toNamed("/");
     } on FirebaseAuthException catch (error) {
       if (error.code == 'email-already-in-use') {
@@ -73,6 +71,7 @@ class _ClientSignUpState extends State<ClientSignUp> {
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
+        backgroundColor: Theme.of(context).cardColor,
         automaticallyImplyLeading: false,
         shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.only(
@@ -80,13 +79,13 @@ class _ClientSignUpState extends State<ClientSignUp> {
             bottomRight: Radius.circular(50.0),
           ),
         ),
-        toolbarHeight: 200,
+        toolbarHeight: 180,
         flexibleSpace: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             widget.isHome
-                ? SizedBox()
+                ? const SizedBox()
                 : GestureDetector(
                     onTap: () => Navigator.pop(context),
                     child: const Padding(
@@ -113,72 +112,85 @@ class _ClientSignUpState extends State<ClientSignUp> {
         child: SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
           child: Form(
+            key: _formKey,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const Center(
-                  child: Text(
-                    'Create a New Account',
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  child: MorrfText(
+                    text: 'Create a New Account',
+                    size: FontSize.h5,
                   ),
                 ),
                 const SizedBox(height: 20.0),
-                TextFormField(
-                  controller: nameController,
-                  keyboardType: TextInputType.name,
-                  textInputAction: TextInputAction.next,
-                  decoration: kInputDecoration.copyWith(
-                    labelText: 'First Name',
-                    hintText: 'Enter your first name',
-                    border: const OutlineInputBorder(),
-                  ),
+                MorrfInputField(
+                  key: _nameKey,
+                  placeholder: "First Name*",
+                  hint: "Enter your First Name",
+                  inputType: TextInputType.name,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Your first name is required';
+                    }
+                    return null;
+                  },
+                  onSaved: (value) {
+                    setState(() {
+                      _name = value.toString();
+                    });
+                  },
                 ),
                 const SizedBox(height: 20.0),
-                TextFormField(
-                  controller: lastNameController,
-                  keyboardType: TextInputType.name,
-                  textInputAction: TextInputAction.next,
-                  decoration: kInputDecoration.copyWith(
-                    labelText: 'Last Name',
-                    hintText: 'Enter your last name',
-                    border: const OutlineInputBorder(),
-                  ),
+                MorrfInputField(
+                  key: _lastNameKey,
+                  placeholder: "Last Name",
+                  hint: "Enter your Last Name",
+                  inputType: TextInputType.name,
+                  onSaved: (value) {
+                    setState(() {
+                      _lastName = value.toString();
+                    });
+                  },
                 ),
                 const SizedBox(height: 20.0),
-                TextFormField(
-                  keyboardType: TextInputType.emailAddress,
-                  controller: emailController,
-                  textInputAction: TextInputAction.next,
-                  decoration: kInputDecoration.copyWith(
-                    labelText: 'Email',
-                    hintText: 'Enter your email',
-                    hintStyle: kTextStyle.copyWith(color: kSubTitleColor),
-                    border: const OutlineInputBorder(),
-                  ),
+                MorrfInputField(
+                  key: _emailKey,
+                  placeholder: "Email*",
+                  hint: "Enter your email",
+                  inputType: TextInputType.emailAddress,
+                  validator: (value) {
+                    if (value == null ||
+                        value.trim().isEmpty ||
+                        !value.contains('@')) {
+                      return 'Please enter a valid email address.';
+                    }
+
+                    return null;
+                  },
+                  onSaved: (value) {
+                    setState(() {
+                      _email = value.toString();
+                    });
+                  },
                 ),
                 const SizedBox(height: 20.0),
-                TextFormField(
-                  keyboardType: TextInputType.emailAddress,
-                  controller: passwordController,
-                  obscureText: hidePassword,
-                  textInputAction: TextInputAction.done,
-                  decoration: kInputDecoration.copyWith(
-                    border: const OutlineInputBorder(),
-                    labelText: 'Password*',
-                    hintText: 'Please enter your password',
-                    hintStyle: kTextStyle.copyWith(color: kLightNeutralColor),
-                    suffixIcon: IconButton(
-                      onPressed: () {
-                        setState(() {
-                          hidePassword = !hidePassword;
-                        });
-                      },
-                      icon: Icon(
-                        hidePassword ? Icons.visibility_off : Icons.visibility,
-                        color: kLightNeutralColor,
-                      ),
-                    ),
-                  ),
+                MorrfInputField(
+                  key: _passKey,
+                  placeholder: "Password*",
+                  hint: "Enter your password",
+                  inputType: TextInputType.name,
+                  isSecure: true,
+                  validator: (value) {
+                    if (value == null || value.isEmpty || value.length < 6) {
+                      return 'Enter a password longer than 6 characters';
+                    }
+                    return null;
+                  },
+                  onSaved: (value) {
+                    setState(() {
+                      _pass = value.toString();
+                    });
+                  },
                 ),
                 const SizedBox(height: 20.0),
                 Row(
@@ -186,7 +198,7 @@ class _ClientSignUpState extends State<ClientSignUp> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Checkbox(
-                        activeColor: kPrimaryColor,
+                        activeColor: textLink(context),
                         visualDensity: const VisualDensity(horizontal: -4),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(2.0),
@@ -198,41 +210,43 @@ class _ClientSignUpState extends State<ClientSignUp> {
                           });
                         }),
                     Row(children: [
-                      const Text("Yes, I understand and agree to the "),
-                      Text(
-                        "Terms of service",
-                        style: kTextStyle.copyWith(
-                            color: kPrimaryColor, fontWeight: FontWeight.bold),
-                      )
+                      const MorrfText(
+                          text: "Yes, I understand and agree to the ",
+                          size: FontSize.p),
+                      GestureDetector(
+                          onTap: () => Get.to(() =>
+                              ClientSignIn()), //TODO: MAKE TERMS OF SERVICE PAGE
+                          child: const MorrfText(
+                            text: "Terms of service",
+                            size: FontSize.h6,
+                            isLink: true,
+                          )),
                     ])
                   ],
                 ),
                 const SizedBox(height: 20.0),
-                ButtonGlobalWithoutIcon(
-                    buttontext: 'Sign Up',
-                    buttonDecoration: kButtonDecoration.copyWith(
-                      color: kPrimaryColor,
-                      borderRadius: BorderRadius.circular(30.0),
-                    ),
-                    onPressed: () {
-                      // const ClientOtpVerification().launch(context);
-                      print(isCheck);
-                      if (isCheck) {
-                        _onSubmit();
-                      } else {
-                        Get.snackbar(
-                          "You must agree to the Terms of service",
-                          "",
-                          snackPosition: SnackPosition.BOTTOM,
-                          borderRadius: 20,
-                          margin: EdgeInsets.all(15),
-                          duration: Duration(seconds: 4),
-                          isDismissible: true,
-                          forwardAnimationCurve: Curves.easeOutBack,
-                        );
-                      }
-                    },
-                    buttonTextColor: kWhite),
+                MorrfButton(
+                  fullWidth: true,
+                  severity: Severity.success,
+                  onPressed: () {
+                    // const ClientOtpVerification().launch(context);
+                    if (isCheck) {
+                      _onSubmit();
+                    } else {
+                      Get.snackbar(
+                        "You must agree to the Terms of service",
+                        "",
+                        snackPosition: SnackPosition.BOTTOM,
+                        borderRadius: 20,
+                        margin: const EdgeInsets.all(15),
+                        duration: const Duration(seconds: 4),
+                        isDismissible: true,
+                        forwardAnimationCurve: Curves.easeOutBack,
+                      );
+                    }
+                  },
+                  child: const MorrfText(text: 'Sign Up', size: FontSize.h5),
+                ),
                 const SizedBox(height: 20.0),
                 Row(
                   children: const [
@@ -243,9 +257,8 @@ class _ClientSignUpState extends State<ClientSignUp> {
                     ),
                     Padding(
                       padding: EdgeInsets.only(left: 10.0, right: 10.0),
-                      child: Text(
-                        'Or Sign up with',
-                      ),
+                      child:
+                          MorrfText(text: 'Or Sign up with', size: FontSize.p),
                     ),
                     Expanded(
                       child: Divider(
@@ -259,53 +272,56 @@ class _ClientSignUpState extends State<ClientSignUp> {
                   padding: const EdgeInsets.only(left: 20.0, right: 20.0),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: const [
+                    children: [
                       SocialIcon(
-                        bgColor: kNeutralColor,
-                        iconColor: kWhite,
+                        bgColor: Theme.of(context).colorScheme.onInverseSurface,
+                        iconColor: textLink(context),
                         icon: FontAwesomeIcons.facebookF,
-                        borderColor: Colors.transparent,
+                        borderColor:
+                            Theme.of(context).colorScheme.onPrimaryContainer,
                       ),
                       SocialIcon(
-                        bgColor: kWhite,
-                        iconColor: kNeutralColor,
+                        bgColor: Theme.of(context).colorScheme.onInverseSurface,
+                        iconColor: textLink(context),
                         icon: FontAwesomeIcons.google,
-                        borderColor: kBorderColorTextField,
+                        borderColor:
+                            Theme.of(context).colorScheme.onPrimaryContainer,
                       ),
                       SocialIcon(
-                        bgColor: kWhite,
-                        iconColor: Color(0xFF76A9EA),
+                        bgColor: Theme.of(context).colorScheme.onInverseSurface,
+                        iconColor: textLink(context),
                         icon: FontAwesomeIcons.twitter,
-                        borderColor: kBorderColorTextField,
+                        borderColor:
+                            Theme.of(context).colorScheme.onPrimaryContainer,
                       ),
                       SocialIcon(
-                        bgColor: kWhite,
-                        iconColor: Color(0xFFFF554A),
+                        bgColor: Theme.of(context).colorScheme.onInverseSurface,
+                        iconColor: textLink(context),
                         icon: FontAwesomeIcons.instagram,
-                        borderColor: kBorderColorTextField,
+                        borderColor:
+                            Theme.of(context).colorScheme.onPrimaryContainer,
                       ),
                     ],
                   ),
                 ),
                 const SizedBox(height: 20.0),
-                GestureDetector(
-                  onTap: () => Get.to(() => ClientSignIn()),
-                  child: Center(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        const Text(
-                          'Already have an account? ',
+                Center(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      const MorrfText(
+                          text: "Already have an account? ", size: FontSize.p),
+                      GestureDetector(
+                        onTap: () => Get.to(() => ClientSignIn()),
+                        child: const MorrfText(
+                          text: "Sign In",
+                          size: FontSize.h6,
+                          isLink: true,
                         ),
-                        Text(
-                          'Sign In',
-                          style: kTextStyle.copyWith(
-                              color: kPrimaryColor,
-                              fontWeight: FontWeight.bold),
-                        ),
-                      ],
-                    ),
+                      ),
+                      const MorrfText(text: ".", size: FontSize.p),
+                    ],
                   ),
                 ),
               ],

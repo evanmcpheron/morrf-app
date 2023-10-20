@@ -247,21 +247,23 @@ class _ClientSignInState extends State<ClientSignIn> {
               ),
               const SizedBox(height: 20.0),
               Center(
-                child: GestureDetector(
-                    onTap: () => Get.to(() => ClientSignUp()),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: const [
-                        MorrfText(
-                            text: "Don't have an account? ", size: FontSize.p),
-                        MorrfText(
-                          text: "Create An Account",
-                          size: FontSize.p,
-                          isLink: true,
-                        ),
-                        MorrfText(text: ".", size: FontSize.p),
-                      ],
-                    )),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    const MorrfText(
+                        text: "Don't have an account? ", size: FontSize.p),
+                    GestureDetector(
+                      onTap: () => Get.to(() => ClientSignUp()),
+                      child: const MorrfText(
+                        text: "Sign Up",
+                        size: FontSize.h6,
+                        isLink: true,
+                      ),
+                    ),
+                    const MorrfText(text: ".", size: FontSize.p),
+                  ],
+                ),
               ),
             ],
           ),
