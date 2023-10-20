@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:morrf/screen/client%20screen/client_authentication/client_sign_up.dart';
 import 'package:morrf/screen/welcome%20screen/welcome_screen.dart';
 import 'package:morrf/utils/auth_service.dart';
+import 'package:morrf/utils/constants/special_color.dart';
 import 'package:morrf/utils/enums/font_size.dart';
 import 'package:morrf/utils/enums/severity.dart';
 import 'package:morrf/widgets/morff_text.dart';
@@ -30,8 +31,8 @@ class _ClientSignInState extends State<ClientSignIn> {
   bool hidePassword = false;
 
   final _formKey = GlobalKey<FormState>();
-  var _emailKey = GlobalKey<FormFieldState>();
-  var _passKey = GlobalKey<FormFieldState>();
+  final _emailKey = GlobalKey<FormFieldState>();
+  final _passKey = GlobalKey<FormFieldState>();
 
   String _email = "";
   String _pass = "";
@@ -43,11 +44,8 @@ class _ClientSignInState extends State<ClientSignIn> {
       return;
     }
     try {
-      final userCredentials = await AuthService().signin(_email, _pass);
+      await AuthService().signin(_email, _pass);
 
-      final User? user = FirebaseAuth.instance.currentUser;
-      print(user);
-      // await userCredentials.user?.sendEmailVerification();
       Get.toNamed("/");
     } on FirebaseAuthException catch (error) {
       if (error.code == 'email-already-in-use') {
@@ -69,6 +67,7 @@ class _ClientSignInState extends State<ClientSignIn> {
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
+        backgroundColor: Theme.of(context).cardColor,
         automaticallyImplyLeading: false,
         shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.only(
@@ -82,7 +81,7 @@ class _ClientSignInState extends State<ClientSignIn> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             widget.isHome
-                ? SizedBox()
+                ? const SizedBox()
                 : GestureDetector(
                     onTap: () => Navigator.pop(context),
                     child: const Padding(
@@ -173,22 +172,22 @@ class _ClientSignInState extends State<ClientSignIn> {
                 children: [
                   GestureDetector(
                     onTap: () => const ClientForgotPassword().launch(context),
-                    child: const Text(
-                      'Forgot Password?',
-                      textAlign: TextAlign.end,
-                    ),
+                    child: const MorrfText(
+                        text: 'Forgot Password?',
+                        textAlign: TextAlign.end,
+                        isLink: true,
+                        size: FontSize.p),
                   ),
                 ],
               ),
               const SizedBox(height: 20.0),
               MorrfButton(
-                child: MorrfText(text: 'Sign In', size: FontSize.h5),
                 fullWidth: true,
                 severity: Severity.success,
                 onPressed: () {
-                  // Validate returns true if the form is valid, or false otherwise.
                   _onSubmit();
                 },
+                child: const MorrfText(text: 'Sign In', size: FontSize.h5),
               ),
               const SizedBox(height: 20.0),
               Row(
@@ -214,30 +213,34 @@ class _ClientSignInState extends State<ClientSignIn> {
                 padding: const EdgeInsets.only(left: 20.0, right: 20.0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: const [
+                  children: [
                     SocialIcon(
-                      bgColor: kNeutralColor,
-                      iconColor: kWhite,
+                      bgColor: Theme.of(context).colorScheme.onInverseSurface,
+                      iconColor: textLink(context),
                       icon: FontAwesomeIcons.facebookF,
-                      borderColor: Colors.transparent,
+                      borderColor:
+                          Theme.of(context).colorScheme.onPrimaryContainer,
                     ),
                     SocialIcon(
-                      bgColor: kWhite,
-                      iconColor: kNeutralColor,
+                      bgColor: Theme.of(context).colorScheme.onInverseSurface,
+                      iconColor: textLink(context),
                       icon: FontAwesomeIcons.google,
-                      borderColor: kBorderColorTextField,
+                      borderColor:
+                          Theme.of(context).colorScheme.onPrimaryContainer,
                     ),
                     SocialIcon(
-                      bgColor: kWhite,
-                      iconColor: Color(0xFF76A9EA),
+                      bgColor: Theme.of(context).colorScheme.onInverseSurface,
+                      iconColor: textLink(context),
                       icon: FontAwesomeIcons.twitter,
-                      borderColor: kBorderColorTextField,
+                      borderColor:
+                          Theme.of(context).colorScheme.onPrimaryContainer,
                     ),
                     SocialIcon(
-                      bgColor: kWhite,
-                      iconColor: Color(0xFFFF554A),
+                      bgColor: Theme.of(context).colorScheme.onInverseSurface,
+                      iconColor: textLink(context),
                       icon: FontAwesomeIcons.instagram,
-                      borderColor: kBorderColorTextField,
+                      borderColor:
+                          Theme.of(context).colorScheme.onPrimaryContainer,
                     ),
                   ],
                 ),
@@ -245,21 +248,20 @@ class _ClientSignInState extends State<ClientSignIn> {
               const SizedBox(height: 20.0),
               Center(
                 child: GestureDetector(
-                  onTap: () => Get.to(() => ClientSignUp()),
-                  child: RichText(
-                    text: TextSpan(
-                      text: 'Don’t have an account? ',
-                      children: [
-                        TextSpan(
-                          text: 'Create New Account',
-                          style: kTextStyle.copyWith(
-                              color: kPrimaryColor,
-                              fontWeight: FontWeight.bold),
+                    onTap: () => Get.to(() => ClientSignUp()),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: const [
+                        MorrfText(
+                            text: "Don't have an account? ", size: FontSize.p),
+                        MorrfText(
+                          text: "Create An Account",
+                          size: FontSize.p,
+                          isLink: true,
                         ),
+                        MorrfText(text: ".", size: FontSize.p),
                       ],
-                    ),
-                  ),
-                ),
+                    )),
               ),
             ],
           ),

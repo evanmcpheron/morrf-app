@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:morrf/utils/constants/special_color.dart';
 import 'package:morrf/utils/enums/font_size.dart';
+import 'package:morrf/utils/enums/severity.dart';
 
 class MorrfText extends StatefulWidget {
   final String text;
@@ -7,8 +9,9 @@ class MorrfText extends StatefulWidget {
   final TextStyle? style;
   final bool? softWrap;
   final TextAlign? textAlign;
-  final maxLines;
-  final overflow;
+  final int? maxLines;
+  final TextOverflow? overflow;
+  final bool isLink;
   const MorrfText(
       {super.key,
       required this.text,
@@ -17,7 +20,8 @@ class MorrfText extends StatefulWidget {
       this.textAlign = TextAlign.left,
       required this.size,
       this.maxLines,
-      this.overflow});
+      this.overflow,
+      this.isLink = false});
 
   @override
   State<MorrfText> createState() => _MorrfTextState();
@@ -45,30 +49,22 @@ class _MorrfTextState extends State<MorrfText> {
 
   @override
   Widget build(BuildContext context) {
-    if (widget.size == FontSize.p) {
-      return DefaultTextStyle.merge(
-        style: const TextStyle(fontSize: 14, fontWeight: FontWeight.normal)
-            .apply(fontSizeFactor: getFontSize()),
-        child: Text(
-          widget.text,
-          style: widget.style,
-          softWrap: widget.softWrap,
-          textAlign: widget.textAlign,
-          maxLines: widget.maxLines,
-          overflow: widget.overflow,
-        ),
-      );
-    } else {
-      return DefaultTextStyle.merge(
-        style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold)
-            .apply(fontSizeFactor: getFontSize()),
-        child: Text(
-          widget.text,
-          style: widget.style,
-          softWrap: widget.softWrap,
-          textAlign: widget.textAlign,
-        ),
-      );
-    }
+    return DefaultTextStyle.merge(
+      style: TextStyle(
+              fontSize: 14,
+              fontWeight: widget.size == FontSize.p
+                  ? FontWeight.normal
+                  : FontWeight.bold,
+              color: widget.isLink ? textLink(context) : null)
+          .apply(fontSizeFactor: getFontSize()),
+      child: Text(
+        widget.text,
+        style: widget.style,
+        softWrap: widget.softWrap,
+        textAlign: widget.textAlign,
+        maxLines: widget.maxLines,
+        overflow: widget.overflow,
+      ),
+    );
   }
 }
