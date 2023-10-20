@@ -7,13 +7,17 @@ class MorrfText extends StatefulWidget {
   final TextStyle? style;
   final bool? softWrap;
   final TextAlign? textAlign;
+  final maxLines;
+  final overflow;
   const MorrfText(
       {super.key,
       required this.text,
       this.style,
       this.softWrap,
       this.textAlign = TextAlign.left,
-      required this.size});
+      required this.size,
+      this.maxLines,
+      this.overflow});
 
   @override
   State<MorrfText> createState() => _MorrfTextState();
@@ -32,6 +36,8 @@ class _MorrfTextState extends State<MorrfText> {
         return 1.4;
       case FontSize.h5:
         return 1.2;
+      case FontSize.h6:
+        return 1.1;
       default:
         return 1.0;
     }
@@ -48,6 +54,8 @@ class _MorrfTextState extends State<MorrfText> {
           style: widget.style,
           softWrap: widget.softWrap,
           textAlign: widget.textAlign,
+          maxLines: widget.maxLines,
+          overflow: widget.overflow,
         ),
       );
     } else {

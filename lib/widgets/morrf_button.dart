@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:morrf/utils/enums/severity.dart';
 
-class MorrfElevatedButton extends StatefulWidget {
+class MorrfButton extends StatefulWidget {
   final void Function() onPressed;
   final Widget child;
   final bool? fullWidth;
   final Severity? severity;
   bool? disabled;
 
-  MorrfElevatedButton(
+  MorrfButton(
       {super.key,
       required this.onPressed,
       required this.child,
@@ -17,10 +17,10 @@ class MorrfElevatedButton extends StatefulWidget {
       this.severity});
 
   @override
-  State<MorrfElevatedButton> createState() => _MorrfElevatedButtonState();
+  State<MorrfButton> createState() => _MorrfButtonState();
 }
 
-class _MorrfElevatedButtonState extends State<MorrfElevatedButton> {
+class _MorrfButtonState extends State<MorrfButton> {
   Color getSeverity() {
     switch (widget.severity) {
       case Severity.success:
@@ -41,7 +41,7 @@ class _MorrfElevatedButtonState extends State<MorrfElevatedButton> {
           minimumSize:
               widget.fullWidth != null ? const Size.fromHeight(50) : null,
           backgroundColor: getSeverity(),
-          // fixedSize: const Size(0, 48),
+          fixedSize: const Size(0, 48),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(25.0),
           ),

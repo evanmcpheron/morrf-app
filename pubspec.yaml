@@ -74,25 +74,10 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
    - images/
-   - assets/light_theme.json
+   - assets/
    - assets/dark_theme.json 
-   - assets/dark.json
-   - assets/images/1.jpg
-   - assets/images/2.jpg
-   - assets/images/3.jpg
-   - assets/images/4.jpg
-   - assets/images/user_profile.jpg
-   - assets/images/morrf_splash_screen.png
-   - assets/images/chat.png
-   - assets/images/dark_mode.png
-   - assets/images/light_mode.png
-   - assets/images/system_theme.png
-   - assets/images/cards/amex.svg
-   - assets/images/cards/visa.svg
-   - assets/images/cards/discover.svg
-   - assets/images/cards/mastercard.svg
-   - assets/images/color-logo.png
-   - assets/images/grey-logo.png
+   - assets/light_theme.json
+   - assets/images/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

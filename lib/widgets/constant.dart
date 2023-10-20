@@ -16,7 +16,6 @@ const ratingBarColor = Color(0xFFFFB33E);
 final kTextStyle = GoogleFonts.inter();
 
 const kButtonDecoration = BoxDecoration(
-  color: kPrimaryColor,
   borderRadius: BorderRadius.all(
     Radius.circular(40.0),
   ),

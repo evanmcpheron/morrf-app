@@ -4,7 +4,7 @@
   "buttonTheme": {
     "alignedDropdown": false,
     "colorScheme": {
-      "background": "#fefbff",
+      "background": "#fdfdfd",
       "brightness": "light",
       "error": "#ba1a1a",
       "errorContainer": "#ffdad6",
@@ -29,7 +29,7 @@
       "secondary": "#5a5d72",
       "secondaryContainer": "#dfe1f9",
       "shadow": "#000000",
-      "surface": "#fefbff",
+      "surface": "#fdfdfd",
       "surfaceTint": "#4657af",
       "surfaceVariant": "#e3e1ec",
       "tertiary": "#76546d",
@@ -78,10 +78,10 @@
     },
     "textTheme": "normal"
   },
-  "canvasColor": "#fefbff",
-  "cardColor": "#fefbff",
+  "canvasColor": "#fdfdfd",
+  "cardColor": "#f3f3f3",
   "colorScheme": {
-    "background": "#fefbff",
+    "background": "#fdfdfd",
     "brightness": "light",
     "error": "#ba1a1a",
     "errorContainer": "#ffdad6",
@@ -106,13 +106,13 @@
     "secondary": "#5a5d72",
     "secondaryContainer": "#dfe1f9",
     "shadow": "#000000",
-    "surface": "#fefbff",
+    "surface": "#fdfdfd",
     "surfaceTint": "#4657af",
     "surfaceVariant": "#e3e1ec",
     "tertiary": "#76546d",
     "tertiaryContainer": "#ffd7f2"
   },
-  "dialogBackgroundColor": "#fefbff",
+  "dialogBackgroundColor": "#fdfdfd",
   "disabledColor": "#61000000",
   "dividerColor": "#1f1b1b1f",
   "focusColor": "#1f000000",
@@ -291,7 +291,7 @@
       "textBaseline": "alphabetic"
     }
   },
-  "scaffoldBackgroundColor": "#fefbff",
+  "scaffoldBackgroundColor": "#fdfdfd",
   "secondaryHeaderColor": "#e3f2fd",
   "shadowColor": "#000000",
   "splashColor": "#66c8c8c8",

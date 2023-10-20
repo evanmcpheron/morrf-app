@@ -6,7 +6,9 @@ import 'package:morrf/screen/client%20screen/client_authentication/client_sign_u
 import 'package:morrf/screen/welcome%20screen/welcome_screen.dart';
 import 'package:morrf/utils/auth_service.dart';
 import 'package:morrf/utils/enums/font_size.dart';
+import 'package:morrf/utils/enums/severity.dart';
 import 'package:morrf/widgets/morff_text.dart';
+import 'package:morrf/widgets/morrf_button.dart';
 import 'package:morrf/widgets/morrf_input_field.dart';
 import 'package:nb_utils/nb_utils.dart';
 
@@ -179,17 +181,15 @@ class _ClientSignInState extends State<ClientSignIn> {
                 ],
               ),
               const SizedBox(height: 20.0),
-              ButtonGlobalWithoutIcon(
-                  buttontext: 'Sign In',
-                  buttonDecoration: kButtonDecoration.copyWith(
-                    color: kPrimaryColor,
-                    borderRadius: BorderRadius.circular(30.0),
-                  ),
-                  onPressed: () {
-                    // Validate returns true if the form is valid, or false otherwise.
-                    _onSubmit();
-                  },
-                  buttonTextColor: kWhite),
+              MorrfButton(
+                child: MorrfText(text: 'Sign In', size: FontSize.h5),
+                fullWidth: true,
+                severity: Severity.success,
+                onPressed: () {
+                  // Validate returns true if the form is valid, or false otherwise.
+                  _onSubmit();
+                },
+              ),
               const SizedBox(height: 20.0),
               Row(
                 children: const [

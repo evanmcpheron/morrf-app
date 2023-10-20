@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:morrf/utils/auth_service.dart';
 import 'package:morrf/utils/enums/font_size.dart';
+import 'package:morrf/utils/enums/severity.dart';
 import 'package:morrf/widgets/morff_text.dart';
 import 'package:morrf/widgets/morrf_button.dart';
 import 'package:morrf/widgets/morrf_input_field.dart';
@@ -96,11 +97,12 @@ class _ClientForgotPasswordState extends State<ClientForgotPassword> {
             ),
             const Spacer(),
             SafeArea(
-              child: MorrfElevatedButton(
+              child: MorrfButton(
                 onPressed: () {
                   _onSubmit();
                 },
                 fullWidth: true,
+                severity: Severity.success,
                 child:
                     const MorrfText(text: 'Reset Password', size: FontSize.h5),
               ),

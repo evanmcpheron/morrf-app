@@ -34,7 +34,7 @@ class _ClientHomeState extends State<ClientHome> {
   static final List<Widget> _guestWidgetOptions = <Widget>[
     const ClientHomeScreen(),
     ClientSignIn(isHome: true),
-    ClientSignUp(isHome: true),
+    ClientProfile(),
   ];
 
   @override
@@ -101,7 +101,7 @@ class _ClientHomeState extends State<ClientHome> {
                   ),
                   BottomNavigationBarItem(
                     icon: Icon(IconlyBold.profile),
-                    label: "Sign Up",
+                    label: "Settings",
                   ),
                 ],
                 onTap: (int index) {
