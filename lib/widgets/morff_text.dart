@@ -42,6 +42,8 @@ class _MorrfTextState extends State<MorrfText> {
         return 1.2;
       case FontSize.h6:
         return 1.1;
+      case FontSize.lp:
+        return 1.1;
       default:
         return 1.0;
     }
@@ -52,9 +54,10 @@ class _MorrfTextState extends State<MorrfText> {
     return DefaultTextStyle.merge(
       style: TextStyle(
               fontSize: 14,
-              fontWeight: widget.size == FontSize.p
-                  ? FontWeight.normal
-                  : FontWeight.bold,
+              fontWeight:
+                  widget.size == FontSize.p || widget.size == FontSize.lp
+                      ? FontWeight.normal
+                      : FontWeight.bold,
               color: widget.isLink ? textLink(context) : null)
           .apply(fontSizeFactor: getFontSize()),
       child: Text(

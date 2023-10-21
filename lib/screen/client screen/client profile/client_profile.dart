@@ -2,12 +2,14 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:morrf/screen/client%20screen/client%20home/client_home.dart';
 import 'package:morrf/screen/client%20screen/client_authentication/client_sign_in.dart';
 import 'package:morrf/screen/client%20screen/client_authentication/client_sign_up.dart';
-import 'package:morrf/screen/seller%20screen/seller%20home/seller_home.dart';
 import 'package:morrf/utils/auth_service.dart';
+import 'package:morrf/utils/enums/font_size.dart';
+import 'package:morrf/widgets/morff_text.dart';
 import 'package:morrf/widgets/theme_switcher.dart';
 import 'package:nb_utils/nb_utils.dart';
 
@@ -41,8 +43,8 @@ class _ClientProfileState extends State<ClientProfile> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Theme.of(context).cardColor,
         elevation: 0,
-        iconTheme: const IconThemeData(color: kNeutralColor),
         titleSpacing: 24,
         title: ListTile(
           visualDensity: const VisualDensity(vertical: -4),
@@ -51,10 +53,15 @@ class _ClientProfileState extends State<ClientProfile> {
             height: 45,
             width: 45,
             padding: const EdgeInsets.all(10.0),
-            decoration: const BoxDecoration(
+            decoration: BoxDecoration(
               shape: BoxShape.circle,
               image: DecorationImage(
-                  image: AssetImage('images/profile1.png'), fit: BoxFit.cover),
+                  image: isSignedIn
+                      ? const NetworkImage(
+                          "https://randomuser.me/api/portraits/men/51.jpg")
+                      : const AssetImage('assets/images/user_profile.jpg')
+                          as ImageProvider,
+                  fit: BoxFit.cover),
             ),
           ),
           title: isSignedIn
@@ -63,17 +70,16 @@ class _ClientProfileState extends State<ClientProfile> {
                   overflow: TextOverflow.ellipsis,
                   maxLines: 1,
                 )
-              : Text("Guest"),
+              : const MorrfText(text: "Guest", size: FontSize.h6),
           subtitle: isSignedIn
-              ? RichText(
-                  text: const TextSpan(
-                    text: 'Deposit Balance: ',
-                    children: [
-                      TextSpan(
-                        text: '$currencySign 500.00',
-                      ),
-                    ],
-                  ),
+              ? Row(
+                  children: const [
+                    MorrfText(text: "Deposit Balance", size: FontSize.lp),
+                    MorrfText(
+                      text: "\$545.12",
+                      size: FontSize.h6,
+                    )
+                  ],
                 )
               : null,
         ),
@@ -100,26 +106,21 @@ class _ClientProfileState extends State<ClientProfile> {
                       horizontalTitleGap: 10,
                       contentPadding: const EdgeInsets.only(bottom: 20),
                       leading: Container(
-                        padding: const EdgeInsets.all(10.0),
-                        decoration: const BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: Color(0xFFE2EED8),
-                        ),
-                        child: const Icon(
-                          IconlyBold.profile,
-                          color: kPrimaryColor,
-                        ),
-                      ),
-                      title: const Text(
-                        'My Profile',
-                        overflow: TextOverflow.ellipsis,
-                        maxLines: 1,
-                      ),
-                      trailing: const Icon(
-                        FeatherIcons.chevronRight,
-                      ),
+                          padding: const EdgeInsets.all(10.0),
+                          decoration: const BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: Color(0xFFE2EED8),
+                          ),
+                          child: const FaIcon(FontAwesomeIcons.userAstronaut,
+                              color: kPrimaryColor)),
+                      title: const MorrfText(
+                          text: 'My Profile',
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 1,
+                          size: FontSize.lp),
+                      trailing: const FaIcon(FontAwesomeIcons.chevronRight),
                     )
-                  : SizedBox(),
+                  : const SizedBox(),
               isSignedIn
                   ? ListTile(
                       onTap: () => const ClientDashBoard().launch(context),
@@ -132,56 +133,53 @@ class _ClientProfileState extends State<ClientProfile> {
                           shape: BoxShape.circle,
                           color: Color(0xFFE3EDFF),
                         ),
-                        child: const Icon(
-                          IconlyBold.chart,
+                        child: const FaIcon(
+                          FontAwesomeIcons.chartLine,
                           color: Color(0xFF144BD6),
                         ),
                       ),
-                      title: const Text(
-                        'Dashboard',
-                        overflow: TextOverflow.ellipsis,
-                        maxLines: 1,
-                      ),
-                      trailing: const Icon(
-                        FeatherIcons.chevronRight,
-                      ),
+                      title: const MorrfText(
+                          text: 'Dashboard',
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 1,
+                          size: FontSize.lp),
+                      trailing: const FaIcon(FontAwesomeIcons.chevronRight),
                     )
-                  : SizedBox(),
+                  : const SizedBox(),
               isSignedIn
                   ? ExpansionTile(
                       childrenPadding: EdgeInsets.zero,
                       tilePadding: const EdgeInsets.only(bottom: 10),
                       collapsedIconColor: kLightNeutralColor,
                       iconColor: kLightNeutralColor,
-                      title: const Text(
-                        'Deposit',
-                      ),
+                      title:
+                          const MorrfText(text: 'Deposit', size: FontSize.lp),
                       leading: Container(
                         padding: const EdgeInsets.all(10.0),
                         decoration: const BoxDecoration(
                           shape: BoxShape.circle,
                           color: Color(0xFFFFEFE0),
                         ),
-                        child: const Icon(
-                          IconlyBold.wallet,
+                        child: const FaIcon(
+                          FontAwesomeIcons.wallet,
                           color: Color(0xFFFF7A00),
                         ),
                       ),
-                      trailing: const Icon(
-                        FeatherIcons.chevronDown,
+                      trailing: const FaIcon(
+                        FontAwesomeIcons.chevronDown,
                       ),
                       children: [
                         ListTile(
                           visualDensity: const VisualDensity(vertical: -3),
                           horizontalTitleGap: 10,
                           contentPadding: const EdgeInsets.only(left: 60),
-                          title: const Text(
-                            'Add Deposit',
-                            overflow: TextOverflow.ellipsis,
-                            maxLines: 1,
-                          ),
-                          trailing: const Icon(
-                            FeatherIcons.chevronRight,
+                          title: const MorrfText(
+                              text: 'Add Deposit',
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 1,
+                              size: FontSize.lp),
+                          trailing: const FaIcon(
+                            FontAwesomeIcons.chevronRight,
                           ),
                           onTap: () => const AddDeposit().launch(context),
                         ),
@@ -190,18 +188,18 @@ class _ClientProfileState extends State<ClientProfile> {
                           visualDensity: const VisualDensity(vertical: -3),
                           horizontalTitleGap: 10,
                           contentPadding: const EdgeInsets.only(left: 60),
-                          title: const Text(
-                            'Deposit History',
-                            overflow: TextOverflow.ellipsis,
-                            maxLines: 1,
-                          ),
-                          trailing: const Icon(
-                            FeatherIcons.chevronRight,
+                          title: const MorrfText(
+                              text: 'Deposit History',
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 1,
+                              size: FontSize.lp),
+                          trailing: const FaIcon(
+                            FontAwesomeIcons.chevronRight,
                           ),
                         ),
                       ],
                     )
-                  : SizedBox(),
+                  : const SizedBox(),
               isSignedIn
                   ? ListTile(
                       onTap: () => const ClientTransaction().launch(context),
@@ -214,21 +212,19 @@ class _ClientProfileState extends State<ClientProfile> {
                           shape: BoxShape.circle,
                           color: Color(0xFFFFE5E3),
                         ),
-                        child: const Icon(
-                          IconlyBold.ticketStar,
+                        child: const FaIcon(
+                          FontAwesomeIcons.fileInvoice,
                           color: Color(0xFFFF3B30),
                         ),
                       ),
-                      title: const Text(
-                        'Transaction',
-                        overflow: TextOverflow.ellipsis,
-                        maxLines: 1,
-                      ),
-                      trailing: const Icon(
-                        FeatherIcons.chevronRight,
-                      ),
+                      title: const MorrfText(
+                          text: 'Transaction History',
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 1,
+                          size: FontSize.lp),
+                      trailing: const FaIcon(FontAwesomeIcons.chevronRight),
                     )
-                  : SizedBox(),
+                  : const SizedBox(),
               isSignedIn
                   ? ListTile(
                       onTap: () => const ClientFavList().launch(context),
@@ -241,21 +237,19 @@ class _ClientProfileState extends State<ClientProfile> {
                           shape: BoxShape.circle,
                           color: Color(0xFFE8E1FF),
                         ),
-                        child: const Icon(
-                          IconlyBold.heart,
+                        child: const FaIcon(
+                          FontAwesomeIcons.solidHeart,
                           color: Color(0xFF7E5BFF),
                         ),
                       ),
-                      title: const Text(
-                        'Favorite',
-                        overflow: TextOverflow.ellipsis,
-                        maxLines: 1,
-                      ),
-                      trailing: const Icon(
-                        FeatherIcons.chevronRight,
-                      ),
+                      title: const MorrfText(
+                          text: 'Favorites',
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 1,
+                          size: FontSize.lp),
+                      trailing: const FaIcon(FontAwesomeIcons.chevronRight),
                     )
-                  : SizedBox(),
+                  : const SizedBox(),
               isSignedIn
                   ? ListTile(
                       onTap: () => const ClientReport().launch(context),
@@ -268,45 +262,40 @@ class _ClientProfileState extends State<ClientProfile> {
                           shape: BoxShape.circle,
                           color: Color(0xFFD0F1FF),
                         ),
-                        child: const Icon(
-                          IconlyBold.document,
+                        child: const FaIcon(
+                          FontAwesomeIcons.solidFile,
                           color: Color(0xFF06AEF3),
                         ),
                       ),
-                      title: const Text(
-                        'Seller Report',
-                        overflow: TextOverflow.ellipsis,
-                        maxLines: 1,
-                      ),
-                      trailing: const Icon(
-                        FeatherIcons.chevronRight,
-                      ),
+                      title: const MorrfText(
+                          text: 'Report Seller',
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 1,
+                          size: FontSize.lp),
+                      trailing: const FaIcon(FontAwesomeIcons.chevronRight),
                     )
-                  : SizedBox(),
+                  : const SizedBox(),
               ListTile(
-                onTap: () => const ClientSetting().launch(context),
+                onTap: () => Get.to(() => const ClientSetting()),
                 visualDensity: const VisualDensity(vertical: -3),
                 horizontalTitleGap: 10,
                 contentPadding: const EdgeInsets.only(bottom: 15),
                 leading: Container(
-                  padding: const EdgeInsets.all(10.0),
-                  decoration: const BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: Color(0xFFFFDDED),
-                  ),
-                  child: const Icon(
-                    IconlyBold.setting,
-                    color: Color(0xFFFF298C),
-                  ),
-                ),
-                title: const Text(
-                  'Settings',
-                  overflow: TextOverflow.ellipsis,
-                  maxLines: 1,
-                ),
-                trailing: const Icon(
-                  FeatherIcons.chevronRight,
-                ),
+                    padding: const EdgeInsets.all(10.0),
+                    decoration: const BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: Color(0xFFFFDDED),
+                    ),
+                    child: const FaIcon(
+                      FontAwesomeIcons.gear,
+                      color: Color(0xFFFF298C),
+                    )),
+                title: const MorrfText(
+                    text: 'Settings',
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 1,
+                    size: FontSize.lp),
+                trailing: const FaIcon(FontAwesomeIcons.chevronRight),
               ),
               isSignedIn
                   ? ListTile(
@@ -321,20 +310,18 @@ class _ClientProfileState extends State<ClientProfile> {
                           color: Color(0xFFE2EED8),
                         ),
                         child: const Icon(
-                          IconlyBold.addUser,
+                          FontAwesomeIcons.userPlus,
                           color: kPrimaryColor,
                         ),
                       ),
-                      title: const Text(
-                        'Invite Friends',
-                        overflow: TextOverflow.ellipsis,
-                        maxLines: 1,
-                      ),
-                      trailing: const Icon(
-                        FeatherIcons.chevronRight,
-                      ),
+                      title: const MorrfText(
+                          text: 'Invite Friends',
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 1,
+                          size: FontSize.lp),
+                      trailing: const FaIcon(FontAwesomeIcons.chevronRight),
                     )
-                  : SizedBox(),
+                  : const SizedBox(),
               ListTile(
                 visualDensity: const VisualDensity(vertical: -3),
                 horizontalTitleGap: 10,
@@ -345,19 +332,15 @@ class _ClientProfileState extends State<ClientProfile> {
                     shape: BoxShape.circle,
                     color: Color(0xFFE3EDFF),
                   ),
-                  child: const Icon(
-                    IconlyBold.danger,
-                    color: Color(0xFF144BD6),
-                  ),
+                  child: const FaIcon(FontAwesomeIcons.triangleExclamation,
+                      color: Color(0xFF144BD6)),
                 ),
-                title: const Text(
-                  'Help & Support',
-                  overflow: TextOverflow.ellipsis,
-                  maxLines: 1,
-                ),
-                trailing: const Icon(
-                  FeatherIcons.chevronRight,
-                ),
+                title: const MorrfText(
+                    text: 'Help & Support',
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 1,
+                    size: FontSize.lp),
+                trailing: const FaIcon(FontAwesomeIcons.chevronRight),
               ),
               isSignedIn
                   ? ListTile(
@@ -370,8 +353,8 @@ class _ClientProfileState extends State<ClientProfile> {
                           shape: BoxShape.circle,
                           color: Color(0xFFFFEFE0),
                         ),
-                        child: const Icon(
-                          IconlyBold.logout,
+                        child: const FaIcon(
+                          FontAwesomeIcons.rightFromBracket,
                           color: Color(0xFFFF7A00),
                         ),
                       ),
@@ -379,39 +362,33 @@ class _ClientProfileState extends State<ClientProfile> {
                         AuthService().signout(),
                         Get.off(() => ClientHome())
                       },
-                      title: const Text(
-                        'Log Out',
-                        overflow: TextOverflow.ellipsis,
-                        maxLines: 1,
-                      ),
-                      trailing: const Icon(
-                        FeatherIcons.chevronRight,
-                      ),
+                      title: const MorrfText(
+                          text: 'Log Out',
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 1,
+                          size: FontSize.lp),
+                      trailing: const FaIcon(FontAwesomeIcons.chevronRight),
                     )
                   : ListTile(
                       visualDensity: const VisualDensity(vertical: -3),
                       horizontalTitleGap: 10,
                       contentPadding: const EdgeInsets.only(bottom: 15),
                       leading: Container(
-                        padding: const EdgeInsets.all(10.0),
-                        decoration: const BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: Color(0xFFFFEFE0),
-                        ),
-                        child: const Icon(
-                          IconlyBold.login,
-                          color: Color(0xFFFF7A00),
-                        ),
-                      ),
+                          padding: const EdgeInsets.all(10.0),
+                          decoration: const BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: Color(0xFFFFEFE0),
+                          ),
+                          child: const FaIcon(
+                              FontAwesomeIcons.arrowRightToBracket,
+                              color: Color(0xFFFF7A00))),
                       onTap: () => Get.to(() => ClientSignIn()),
-                      title: const Text(
-                        'Sign In',
-                        overflow: TextOverflow.ellipsis,
-                        maxLines: 1,
-                      ),
-                      trailing: const Icon(
-                        FeatherIcons.chevronRight,
-                      ),
+                      title: const MorrfText(
+                          text: 'Sign In',
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 1,
+                          size: FontSize.lp),
+                      trailing: const FaIcon(FontAwesomeIcons.chevronRight),
                     ),
               isSignedIn
                   ? const SizedBox()
@@ -420,25 +397,20 @@ class _ClientProfileState extends State<ClientProfile> {
                       horizontalTitleGap: 10,
                       contentPadding: const EdgeInsets.only(bottom: 15),
                       leading: Container(
-                        padding: const EdgeInsets.all(10.0),
-                        decoration: const BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: Color(0xFFFFE5E3),
-                        ),
-                        child: const Icon(
-                          IconlyBold.login,
-                          color: Color(0xFFFF3B30),
-                        ),
-                      ),
+                          padding: const EdgeInsets.all(10.0),
+                          decoration: const BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: Color(0xFFFFE5E3),
+                          ),
+                          child: const FaIcon(FontAwesomeIcons.userPlus,
+                              color: Color(0xFFFF3B30))),
                       onTap: () => Get.to(() => ClientSignUp()),
-                      title: const Text(
-                        'Sign Up',
-                        overflow: TextOverflow.ellipsis,
-                        maxLines: 1,
-                      ),
-                      trailing: const Icon(
-                        FeatherIcons.chevronRight,
-                      ),
+                      title: const MorrfText(
+                          text: 'Sign Up',
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 1,
+                          size: FontSize.lp),
+                      trailing: const FaIcon(FontAwesomeIcons.chevronRight),
                     ),
               const ThemeSwitcher()
             ],

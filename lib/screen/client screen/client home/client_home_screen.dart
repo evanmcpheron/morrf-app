@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:morrf/screen/client%20screen/client%20home/popular_services.dart';
 import 'package:morrf/screen/client%20screen/client%20home/recently_view.dart';
 import 'package:morrf/screen/client%20screen/client%20home/top_seller.dart';
@@ -46,7 +47,8 @@ class _ClientHomeScreenState extends State<ClientHomeScreen> {
                   shape: BoxShape.circle,
                   image: DecorationImage(
                       image: isSignedIn
-                          ? NetworkImage(user!.photoURL!)
+                          ? NetworkImage(
+                              "https://randomuser.me/api/portraits/men/51.jpg")
                           : const AssetImage('assets/images/user_profile.jpg')
                               as ImageProvider,
                       fit: BoxFit.cover),
@@ -65,9 +67,7 @@ class _ClientHomeScreenState extends State<ClientHomeScreen> {
                 shape: BoxShape.circle,
                 border: Border.all(),
               ),
-              child: const Icon(
-                IconlyLight.notification,
-              ),
+              child: FaIcon(FontAwesomeIcons.solidBell),
             ),
           ),
         ),

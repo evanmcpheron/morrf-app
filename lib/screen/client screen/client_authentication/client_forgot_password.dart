@@ -46,24 +46,51 @@ class _ClientForgotPasswordState extends State<ClientForgotPassword> {
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
-        automaticallyImplyLeading: true,
+        backgroundColor: Theme.of(context).cardColor,
+        automaticallyImplyLeading: false,
         shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.only(
             bottomLeft: Radius.circular(50.0),
             bottomRight: Radius.circular(50.0),
           ),
         ),
-        toolbarHeight: 80,
-        centerTitle: true,
-        title: const MorrfText(
-          text: 'Forgot Password?',
-          size: FontSize.h4,
+        toolbarHeight: 180,
+        flexibleSpace: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            GestureDetector(
+              onTap: () => Navigator.pop(context),
+              child: const Padding(
+                padding: EdgeInsets.only(left: 10.0),
+                child: Icon(Icons.arrow_back),
+              ),
+            ),
+            Center(
+              child: Container(
+                height: 100,
+                width: 85,
+                decoration: const BoxDecoration(
+                  image: DecorationImage(
+                      image: AssetImage('assets/images/grey-logo.png'),
+                      fit: BoxFit.cover),
+                ),
+              ),
+            )
+          ],
         ),
       ),
       body: Padding(
         padding: const EdgeInsets.all(10.0),
         child: Column(
           children: [
+            const SizedBox(height: 20.0),
+            const Center(
+              child: MorrfText(
+                text: 'Forgot Password',
+                size: FontSize.h5,
+              ),
+            ),
             const Padding(
               padding: EdgeInsets.all(20.0),
               child: MorrfText(

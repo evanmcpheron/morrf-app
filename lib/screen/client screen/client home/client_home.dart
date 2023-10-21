@@ -1,9 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:morrf/screen/client%20screen/client_authentication/client_sign_in.dart';
 import 'package:morrf/screen/client%20screen/client_authentication/client_sign_up.dart';
-import 'package:morrf/widgets/constant.dart';
 
 import '../../seller screen/seller messgae/chat_list.dart';
 import '../client job post/client_job_post.dart';
@@ -34,7 +34,8 @@ class _ClientHomeState extends State<ClientHome> {
   static final List<Widget> _guestWidgetOptions = <Widget>[
     const ClientHomeScreen(),
     ClientSignIn(isHome: true),
-    ClientProfile(),
+    ClientSignUp(isHome: true),
+    const ClientProfile(),
   ];
 
   @override
@@ -54,57 +55,61 @@ class _ClientHomeState extends State<ClientHome> {
         child: isSignedIn
             ? BottomNavigationBar(
                 showUnselectedLabels: true,
+                backgroundColor: Theme.of(context).cardColor,
                 type: BottomNavigationBarType.fixed,
                 items: const [
                   BottomNavigationBarItem(
-                    icon: Icon(IconlyBold.home),
+                    icon: FaIcon(FontAwesomeIcons.house),
                     label: "Home",
                   ),
                   BottomNavigationBarItem(
-                    icon: Icon(IconlyBold.chat),
+                    icon: FaIcon(FontAwesomeIcons.solidMessage),
                     label: "Message",
                   ),
                   BottomNavigationBarItem(
-                    icon: Icon(IconlyBold.paperPlus),
+                    icon: FaIcon(FontAwesomeIcons.fileCirclePlus),
                     label: "Job Apply",
                   ),
                   BottomNavigationBarItem(
-                    icon: Icon(IconlyBold.document),
+                    icon: FaIcon(FontAwesomeIcons.solidFileLines),
                     label: "Orders",
                   ),
                   BottomNavigationBarItem(
-                    icon: Icon(IconlyBold.profile),
+                    icon: FaIcon(FontAwesomeIcons.userAstronaut),
                     label: "Profile",
                   ),
                 ],
                 onTap: (int index) {
                   setState(() => {
-                        if (!isSignedIn && (index == 2 || index == 3))
-                          {_currentPage = 0}
-                        else
-                          {_currentPage = index}
+                        {_currentPage = index}
                       });
                 },
                 currentIndex: _currentPage,
               )
             : BottomNavigationBar(
+                backgroundColor: Theme.of(context).cardColor,
                 showUnselectedLabels: true,
                 type: BottomNavigationBarType.fixed,
                 items: const [
                   BottomNavigationBarItem(
-                    icon: Icon(IconlyBold.home),
+                    icon: FaIcon(FontAwesomeIcons.house),
                     label: "Home",
                   ),
                   BottomNavigationBarItem(
-                    icon: Icon(IconlyBold.login),
+                    icon: FaIcon(FontAwesomeIcons.arrowRightToBracket),
                     label: "Sign In",
                   ),
                   BottomNavigationBarItem(
-                    icon: Icon(IconlyBold.profile),
+                    icon: FaIcon(FontAwesomeIcons.userPlus),
+                    label: "Sign Up",
+                  ),
+                  BottomNavigationBarItem(
+                    icon: FaIcon(FontAwesomeIcons.gear),
                     label: "Settings",
                   ),
                 ],
                 onTap: (int index) {
+                  print(index);
                   setState(() => {_currentPage = index});
                 },
                 currentIndex: _currentPage,
