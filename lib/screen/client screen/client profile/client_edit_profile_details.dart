@@ -57,7 +57,6 @@ class _ClientEditProfileState extends ConsumerState<ClientEditProfile> {
     );
     if (pickedImage == null) return;
 
-    print(pickedImage);
     setState(() {
       pickedImageFile = File(pickedImage.path);
     });
