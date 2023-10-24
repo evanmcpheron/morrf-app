@@ -7,14 +7,11 @@ import 'package:morrf/screen/client%20screen/client_authentication/client_sign_i
 import 'package:morrf/utils/auth_service.dart';
 import 'package:morrf/utils/constants/special_color.dart';
 import 'package:morrf/utils/enums/severity.dart';
-import 'package:morrf/widgets/button_global.dart';
+import 'package:morrf/widgets/icons.dart';
 import 'package:morrf/widgets/morff_text.dart';
 import 'package:morrf/utils/enums/font_size.dart';
 import 'package:morrf/widgets/morrf_button.dart';
 import 'package:morrf/widgets/morrf_input_field.dart';
-
-import '../../../widgets/constant.dart';
-import '../../../widgets/icons.dart';
 
 class ClientSignUp extends StatefulWidget {
   bool isHome;
@@ -47,7 +44,7 @@ class _ClientSignUpState extends State<ClientSignUp> {
         return;
       }
       final userCredentials =
-          await AuthService().signup(_email, _pass, "$_name $_lastName");
+          await AuthService().signup(_email, _pass, _name, _lastName);
 
       await userCredentials.user?.sendEmailVerification();
       Get.toNamed("/");

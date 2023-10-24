@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:morrf/models/user/user_model.dart';
+import 'package:morrf/models/user/morrf_user.dart';
 import 'package:morrf/utils/auth_service.dart';
 
 class FirestoreService {
@@ -14,15 +14,22 @@ class FirestoreService {
 
       final result = await FirebaseFunctions.instance
           .httpsCallable('createStripeCustomer')
-          .call(<String, dynamic>{'name': user.fullName, 'email': user.email});
-
+          .call(<String, dynamic>{
+        'name': user.fullName,
+        'email': user.email.toLowerCase()
+      });
+      print(result.data);
       await _usersCollectionReference.doc(_uid).set({
         'id': _uid,
+        'firstName': user.firstName,
+        'lastName': user.lastName,
         'fullName': user.fullName,
         'birthday': null,
         'gender': null,
-        'imageUrl': null,
+        'photoUrl': user.photoURL,
         'email': user.email.toLowerCase(),
+        'products': user.products,
+        'orders': user.orders,
         'userWish': [],
         'userCart': [],
         'stripe': result.data['payload'],
@@ -33,7 +40,7 @@ class FirestoreService {
     }
   }
 
-  Future getCurrentMorrfUser() async {
+  Future<MorrfUser?> getCurrentMorrfUser() async {
     User? user = FirebaseAuth.instance.currentUser;
     try {
       if (user != null) {
@@ -44,7 +51,7 @@ class FirestoreService {
           final data = doc.data() as Map<String, dynamic>;
           MorrfUser morrfUser = MorrfUser.fromData(data);
           AuthService().setCurrentMorrfUser(morrfUser);
-          return;
+          return morrfUser;
         });
       } else {
         AuthService().setCurrentMorrfUser(null);
@@ -52,5 +59,6 @@ class FirestoreService {
     } catch (e) {
       rethrow;
     }
+    return null;
   }
 }

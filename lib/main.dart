@@ -1,7 +1,9 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:adapty_flutter/adapty_flutter.dart';
+import 'package:morrf/providers/theme_provider.dart';
 import 'utils/constants/routes.dart';
 import 'dart:convert';
 
@@ -35,22 +37,24 @@ Future<void> main() async {
   final darkThemeJson = jsonDecode(darkThemeStr);
   final darkTheme = ThemeDecoder.decodeThemeData(darkThemeJson)!;
 
-  return runApp(ChangeNotifierProvider<ThemeNotifier>(
-      create: (_) => ThemeNotifier(),
-      child: MyApp(lightTheme: lightTheme, darkTheme: darkTheme)));
+  // return runApp(ChangeNotifierProvider<ThemeNotifier>(
+  //     create: (_) => ThemeNotifier(),
+  //     child: MyApp(lightTheme: lightTheme, darkTheme: darkTheme)));
+  return runApp(ProviderScope(
+      child: MyApp(darkTheme: darkTheme, lightTheme: lightTheme)));
 }
 
-class MyApp extends StatefulWidget {
+class MyApp extends ConsumerStatefulWidget {
   final ThemeData lightTheme;
   final ThemeData darkTheme;
 
   const MyApp({super.key, required this.lightTheme, required this.darkTheme});
 
   @override
-  State<MyApp> createState() => _MyAppState();
+  ConsumerState<MyApp> createState() => _MyAppState();
 }
 
-class _MyAppState extends State<MyApp> {
+class _MyAppState extends ConsumerState<MyApp> {
   @override
   void initState() {
     super.initState();
@@ -58,12 +62,14 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    final ThemeNotifier notifier = Provider.of<ThemeNotifier>(context);
+    // final ThemeNotifier notifier = Provider.of<ThemeNotifier>(context);
+    var darkMode = ref.watch(darkModeProvider);
+    print("ThemeMode: $darkMode");
     return GetMaterialApp(
       title: 'Morrf',
       defaultTransition: Transition.noTransition,
       initialRoute: "/",
-      themeMode: notifier.themeMode,
+      themeMode: darkMode,
       darkTheme: widget.darkTheme,
       theme: widget.lightTheme,
       getPages: routes,

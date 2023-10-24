@@ -1,12 +1,12 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_feather_icons/flutter_feather_icons.dart';
-import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:morrf/screen/client%20screen/client%20home/client_home.dart';
 import 'package:morrf/screen/client%20screen/client_authentication/client_sign_in.dart';
 import 'package:morrf/screen/client%20screen/client_authentication/client_sign_up.dart';
+import 'package:morrf/screen/seller%20screen/add%20payment%20method/seller_add_payment_method.dart';
 import 'package:morrf/utils/auth_service.dart';
 import 'package:morrf/utils/enums/font_size.dart';
 import 'package:morrf/widgets/morff_text.dart';
@@ -32,16 +32,25 @@ class ClientProfile extends StatefulWidget {
 }
 
 class _ClientProfileState extends State<ClientProfile> {
-  bool isSignedIn = FirebaseAuth.instance.currentUser != null;
-
+  User? user;
+  bool isExpandedPayment = false;
+  bool isExpandedDeposit = false;
   @override
   void initState() {
     super.initState();
+    user = FirebaseAuth.instance.currentUser;
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    bool isSignedIn = FirebaseAuth.instance.currentUser != null;
     return Scaffold(
+      key: UniqueKey(),
       appBar: AppBar(
         backgroundColor: Theme.of(context).cardColor,
         elevation: 0,
@@ -57,16 +66,16 @@ class _ClientProfileState extends State<ClientProfile> {
               shape: BoxShape.circle,
               image: DecorationImage(
                   image: isSignedIn
-                      ? const NetworkImage(
-                          "https://randomuser.me/api/portraits/men/51.jpg")
+                      ? NetworkImage(user!.photoURL!)
                       : const AssetImage('assets/images/user_profile.jpg')
                           as ImageProvider,
                   fit: BoxFit.cover),
             ),
           ),
           title: isSignedIn
-              ? const Text(
-                  'Evan McPheron',
+              ? MorrfText(
+                  text: user!.displayName!,
+                  size: FontSize.h6,
                   overflow: TextOverflow.ellipsis,
                   maxLines: 1,
                 )
@@ -122,6 +131,68 @@ class _ClientProfileState extends State<ClientProfile> {
                     )
                   : const SizedBox(),
               isSignedIn
+                  ? ExpansionTile(
+                      childrenPadding: EdgeInsets.zero,
+                      tilePadding: const EdgeInsets.only(bottom: 10),
+                      collapsedIconColor: kLightNeutralColor,
+                      iconColor: kLightNeutralColor,
+                      onExpansionChanged: (bool expanded) {
+                        setState(() => isExpandedPayment = expanded);
+                      },
+                      title: const MorrfText(
+                          text: 'Payment Method', size: FontSize.lp),
+                      leading: Container(
+                        padding: const EdgeInsets.all(10.0),
+                        decoration: const BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: Color(0xFFFFE5E3),
+                        ),
+                        child: const FaIcon(
+                          FontAwesomeIcons.creditCard,
+                          color: Color(0xFFFF3B30),
+                        ),
+                      ),
+                      trailing: isExpandedPayment
+                          ? const FaIcon(
+                              FontAwesomeIcons.chevronDown,
+                            )
+                          : const FaIcon(
+                              FontAwesomeIcons.chevronRight,
+                            ),
+                      children: [
+                        ListTile(
+                          visualDensity: const VisualDensity(vertical: -3),
+                          horizontalTitleGap: 10,
+                          contentPadding: const EdgeInsets.only(left: 60),
+                          title: const MorrfText(
+                              text: 'Add Card',
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 1,
+                              size: FontSize.lp),
+                          trailing: const FaIcon(
+                            FontAwesomeIcons.chevronRight,
+                          ),
+                          onTap: () =>
+                              Get.to(() => const SellerAddPaymentMethod()),
+                        ),
+                        ListTile(
+                          onTap: () => const SellerAddPaymentMethod(),
+                          visualDensity: const VisualDensity(vertical: -3),
+                          horizontalTitleGap: 10,
+                          contentPadding: const EdgeInsets.only(left: 60),
+                          title: const MorrfText(
+                              text: 'Billing Address',
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 1,
+                              size: FontSize.lp),
+                          trailing: const FaIcon(
+                            FontAwesomeIcons.chevronRight,
+                          ),
+                        ),
+                      ],
+                    )
+                  : const SizedBox(),
+              isSignedIn
                   ? ListTile(
                       onTap: () => const ClientDashBoard().launch(context),
                       visualDensity: const VisualDensity(vertical: -3),
@@ -165,9 +236,16 @@ class _ClientProfileState extends State<ClientProfile> {
                           color: Color(0xFFFF7A00),
                         ),
                       ),
-                      trailing: const FaIcon(
-                        FontAwesomeIcons.chevronDown,
-                      ),
+                      onExpansionChanged: (bool expanded) {
+                        setState(() => isExpandedDeposit = expanded);
+                      },
+                      trailing: isExpandedDeposit
+                          ? const FaIcon(
+                              FontAwesomeIcons.chevronDown,
+                            )
+                          : const FaIcon(
+                              FontAwesomeIcons.chevronRight,
+                            ),
                       children: [
                         ListTile(
                           visualDensity: const VisualDensity(vertical: -3),

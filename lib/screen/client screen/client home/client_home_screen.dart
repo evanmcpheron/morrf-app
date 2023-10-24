@@ -18,7 +18,7 @@ import '../search/search.dart';
 import 'client_all_categories.dart';
 
 class ClientHomeScreen extends StatefulWidget {
-  const ClientHomeScreen({Key? key}) : super(key: key);
+  const ClientHomeScreen({super.key});
 
   @override
   State<ClientHomeScreen> createState() => _ClientHomeScreenState();
@@ -27,6 +27,16 @@ class ClientHomeScreen extends StatefulWidget {
 class _ClientHomeScreenState extends State<ClientHomeScreen> {
   User? user = FirebaseAuth.instance.currentUser;
   late bool isSignedIn = user != null;
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -47,8 +57,7 @@ class _ClientHomeScreenState extends State<ClientHomeScreen> {
                   shape: BoxShape.circle,
                   image: DecorationImage(
                       image: isSignedIn
-                          ? NetworkImage(
-                              "https://randomuser.me/api/portraits/men/51.jpg")
+                          ? NetworkImage(user!.photoURL!)
                           : const AssetImage('assets/images/user_profile.jpg')
                               as ImageProvider,
                       fit: BoxFit.cover),
@@ -73,7 +82,7 @@ class _ClientHomeScreenState extends State<ClientHomeScreen> {
         ),
       ),
       body: Container(
-        width: context.width(),
+        width: MediaQuery.of(context).size.width,
         child: SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
           child: Column(

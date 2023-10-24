@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 class MorrfInputField extends StatefulWidget {
   final String placeholder;
+  final TextEditingController? controller;
   final String? hint;
   final bool isSecure;
   final TextInputType? inputType;
@@ -14,9 +15,13 @@ class MorrfInputField extends StatefulWidget {
   final String? initialValue;
   final Widget? prefixIcon;
   final void Function(String?)? onSaved;
+  final int? minLines;
+  final int? maxLines;
+  final bool expands;
 
   const MorrfInputField(
       {super.key,
+      this.controller,
       required this.placeholder,
       this.isSecure = false,
       this.onTap,
@@ -29,7 +34,10 @@ class MorrfInputField extends StatefulWidget {
       this.prefixIcon,
       this.onSaved,
       this.enabled,
-      this.initialValue});
+      this.initialValue,
+      this.maxLines,
+      this.minLines,
+      this.expands = false});
 
   @override
   State<MorrfInputField> createState() => _MorrfInputFieldState();
@@ -52,11 +60,9 @@ class _MorrfInputFieldState extends State<MorrfInputField> {
     } else if (widget.isSecure) {
       return IconButton(
         icon: Icon(
-          // Based on passwordVisible state choose the icon
           _passwordVisible ? Icons.visibility : Icons.visibility_off,
         ),
         onPressed: () {
-          // Update the state i.e. toogle the state of passwordVisible variable
           setState(() {
             _passwordVisible = !_passwordVisible;
           });
@@ -77,18 +83,24 @@ class _MorrfInputFieldState extends State<MorrfInputField> {
     return Padding(
       padding: const EdgeInsets.fromLTRB(0, 8, 0, 8),
       child: TextFormField(
+        controller: widget.controller,
         enabled: widget.enabled,
         keyboardType: widget.inputType,
+        minLines: null,
+        maxLines: widget.inputType == TextInputType.multiline ? null : 1,
         validator: widget.validator,
         onSaved: widget.onSaved,
+        expands: widget.expands,
         textInputAction: TextInputAction.done,
-        onTap: widget.onTap,
+        onTap: widget.onTap, textAlign: TextAlign.start,
+        textAlignVertical: TextAlignVertical.top,
         initialValue: widget.initialValue,
         obscureText: widget.isSecure &&
             !_passwordVisible, //This will obscure text dynamically
         decoration: InputDecoration(
           labelText: widget.placeholder,
           hintText: widget.hint ?? widget.placeholder,
+          alignLabelWithHint: true,
           filled: widget.isFilled,
           fillColor: widget.fillColor,
           border: OutlineInputBorder(
@@ -103,16 +115,17 @@ class _MorrfInputFieldState extends State<MorrfInputField> {
               : null,
           enabledBorder: OutlineInputBorder(
             borderSide: BorderSide(color: borderColor(context), width: 2.0),
-            borderRadius: BorderRadius.all(
+            borderRadius: const BorderRadius.all(
               Radius.circular(10.0),
             ),
           ),
           focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.all(
+            borderRadius: const BorderRadius.all(
               Radius.circular(10.0),
             ),
             borderSide: BorderSide(color: borderColor(context), width: 2.0),
           ),
+          floatingLabelAlignment: FloatingLabelAlignment.start,
         ),
       ),
     );

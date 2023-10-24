@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:get/get.dart';
+import 'package:morrf/screen/client%20screen/client%20home/client_home.dart';
 import 'package:morrf/screen/seller%20screen/seller%20home/seller_home_screen.dart';
 
 import '../orders/seller_orders.dart';
@@ -37,39 +40,42 @@ class _SellerHomeState extends State<SellerHome> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: _widgetOptions.elementAt(_currentPage),
-      bottomNavigationBar: Container(
-        padding: const EdgeInsets.all(8.0),
-        child: BottomNavigationBar(
-          elevation: 0.0,
-          showUnselectedLabels: true,
-          type: BottomNavigationBarType.fixed,
-          items: const [
-            BottomNavigationBarItem(
-              icon: Icon(IconlyBold.home),
-              label: "Home",
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(IconlyBold.chat),
-              label: "Message",
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(IconlyBold.paperPlus),
-              label: "Service",
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(IconlyBold.document),
-              label: "Orders",
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(IconlyBold.profile),
-              label: "Profile",
-            ),
-          ],
-          onTap: (int index) {
-            setState(() => _currentPage = index);
-          },
-          currentIndex: _currentPage,
-        ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Get.off(() => ClientHome());
+        },
+        child: const FaIcon(FontAwesomeIcons.cartShopping),
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        elevation: 0.0,
+        showUnselectedLabels: true,
+        type: BottomNavigationBarType.fixed,
+        items: const [
+          BottomNavigationBarItem(
+            icon: FaIcon(FontAwesomeIcons.house),
+            label: "Home",
+          ),
+          BottomNavigationBarItem(
+            icon: FaIcon(FontAwesomeIcons.solidMessage),
+            label: "Message",
+          ),
+          BottomNavigationBarItem(
+            icon: FaIcon(FontAwesomeIcons.fileCirclePlus),
+            label: "Service",
+          ),
+          BottomNavigationBarItem(
+            icon: FaIcon(FontAwesomeIcons.solidFileLines),
+            label: "Orders",
+          ),
+          BottomNavigationBarItem(
+            icon: FaIcon(FontAwesomeIcons.userAstronaut),
+            label: "Profile",
+          ),
+        ],
+        onTap: (int index) {
+          setState(() => _currentPage = index);
+        },
+        currentIndex: _currentPage,
       ),
     );
   }

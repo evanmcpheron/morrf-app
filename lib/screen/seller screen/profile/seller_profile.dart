@@ -3,10 +3,10 @@ import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:get/get.dart';
 import 'package:morrf/screen/client%20screen/client%20home/client_home.dart';
-import 'package:morrf/screen/client%20screen/client%20profile/client_profile.dart';
-import 'package:morrf/screen/seller%20screen/main_screens.dart';
 import 'package:morrf/screen/seller%20screen/profile/seller_profile_details.dart';
 import 'package:morrf/utils/auth_service.dart';
+import 'package:morrf/utils/enums/font_size.dart';
+import 'package:morrf/widgets/morff_text.dart';
 import 'package:morrf/widgets/theme_switcher.dart';
 import 'package:nb_utils/nb_utils.dart';
 
@@ -22,7 +22,7 @@ import '../withdraw_money/seller_withdraw_history.dart';
 import '../withdraw_money/seller_withdraw_money.dart';
 
 class SellerProfile extends StatefulWidget {
-  const SellerProfile({Key? key}) : super(key: key);
+  const SellerProfile({super.key});
 
   @override
   State<SellerProfile> createState() => _SellerProfileState();
@@ -30,41 +30,46 @@ class SellerProfile extends StatefulWidget {
 
 class _SellerProfileState extends State<SellerProfile> {
   @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Theme.of(context).cardColor,
         elevation: 0,
-        iconTheme: const IconThemeData(color: kNeutralColor),
-        titleSpacing: 0,
+        titleSpacing: 24,
         title: ListTile(
-          visualDensity: const VisualDensity(vertical: -4),
-          contentPadding: EdgeInsets.zero,
-          leading: Container(
-            height: 45,
-            width: 45,
-            padding: const EdgeInsets.all(10.0),
-            decoration: const BoxDecoration(
-              shape: BoxShape.circle,
-              image: DecorationImage(
-                  image: AssetImage('images/profile1.png'), fit: BoxFit.cover),
+            visualDensity: const VisualDensity(vertical: -4),
+            contentPadding: EdgeInsets.zero,
+            leading: Container(
+              height: 45,
+              width: 45,
+              padding: const EdgeInsets.all(10.0),
+              decoration: const BoxDecoration(
+                shape: BoxShape.circle,
+                image: DecorationImage(
+                    image: NetworkImage(
+                        "https://randomuser.me/api/portraits/men/51.jpg"),
+                    fit: BoxFit.cover),
+              ),
             ),
-          ),
-          title: const Text(
-            'Evan McPheron',
-            overflow: TextOverflow.ellipsis,
-            maxLines: 1,
-          ),
-          subtitle: RichText(
-            text: const TextSpan(
-              text: 'Deposit Balance: ',
-              children: [
-                TextSpan(
-                  text: '$currencySign 500.00',
-                ),
+            title: const Text(
+              'Evan McPheron',
+              overflow: TextOverflow.ellipsis,
+              maxLines: 1,
+            ),
+            subtitle: Row(
+              children: const [
+                MorrfText(text: "Deposit Balance", size: FontSize.lp),
+                MorrfText(
+                  text: "\$545.12",
+                  size: FontSize.h6,
+                )
               ],
-            ),
-          ),
-        ),
+            )),
         centerTitle: true,
       ),
       body: Container(

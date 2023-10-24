@@ -60,19 +60,17 @@ const String currencySign = '\$';
 
 //__________Gender______________________________________________________
 List<String> gender = [
+  "",
   'Male',
   'Female',
 ];
-String selectedGender = 'Male';
+String selectedGender = '';
 
 List<String> catName = [
-  'Graphics Design',
-  'Video Editing',
-  'Digital Marketing',
-  'Business',
-  'Writing & Translation',
-  'Programming',
-  'Lifestyle'
+  'Personal Trainer',
+  'Nutritionist',
+  'Life Coach',
+  '',
 ];
 
 List<String> catIcon = [
@@ -88,7 +86,6 @@ List<String> catIcon = [
 //__________Language List_______________________________________________
 List<String> language = [
   'English',
-  'Bengali',
 ];
 String selectedLanguage = 'English';
 

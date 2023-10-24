@@ -1,13 +1,21 @@
-// import 'package:country_code_picker/country_code_picker.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
-import 'package:morrf/widgets/button_global.dart';
+import 'package:get/get.dart';
+import 'package:moment_dart/moment_dart.dart';
+import 'package:morrf/screen/client%20screen/client%20home/client_home.dart';
+import 'package:morrf/screen/client%20screen/client_authentication/client_confirm_sign_in.dart';
+import 'package:morrf/screen/seller%20screen/seller%20popUp/seller_popup.dart';
+import 'package:morrf/screen/splash%20screen/loading_screen.dart';
+import 'package:morrf/utils/enums/font_size.dart';
+import 'package:morrf/widgets/constant.dart';
+import 'package:morrf/widgets/morff_text.dart';
+import 'package:morrf/widgets/morrf_button.dart';
+import 'package:morrf/widgets/morrf_input_field.dart';
+import 'package:morrf/widgets/morrf_scaffold.dart';
 import 'package:nb_utils/nb_utils.dart';
-
-import '../../seller screen/seller popUp/seller_popup.dart';
-import '../../../widgets/constant.dart';
-import 'client_profile_details.dart';
 
 class ClientEditProfile extends StatefulWidget {
   const ClientEditProfile({Key? key}) : super(key: key);
@@ -17,31 +25,69 @@ class ClientEditProfile extends StatefulWidget {
 }
 
 class _ClientEditProfileState extends State<ClientEditProfile> {
-  //__________Language List____________________________________________________
-  DropdownButton<String> getLanguage() {
-    List<DropdownMenuItem<String>> dropDownItems = [];
-    for (String des in language) {
-      var item = DropdownMenuItem(
-        value: des,
-        child: Text(des),
-      );
-      dropDownItems.add(item);
+  final User user = FirebaseAuth.instance.currentUser!;
+
+  final _formKey = GlobalKey<FormState>();
+  final _firstNameKey = GlobalKey<FormFieldState>();
+  final _lastNameKey = GlobalKey<FormFieldState>();
+  final _birthdayKey = GlobalKey<FormFieldState>();
+  final _emailKey = GlobalKey<FormFieldState>();
+  final _phoneKey = GlobalKey<FormFieldState>();
+  final _aboutMeKey = GlobalKey<FormFieldState>();
+  TextEditingController birthdayController = TextEditingController();
+
+  String _firstName = "";
+  String _lastName = "";
+  DateTime? _birthday;
+  String _email = "";
+  String _phoneNumber = "";
+  String _selectedGender = "";
+  String _aboutMe = "";
+
+  void _onSubmit(String? gender) async {
+    if (_formKey.currentState!.validate()) {
+      _formKey.currentState!.save();
+    } else {
+      return;
     }
-    return DropdownButton(
-      icon: const Icon(FeatherIcons.chevronDown),
-      items: dropDownItems,
-      value: selectedLanguage,
-      style: kTextStyle.copyWith(color: kSubTitleColor),
-      onChanged: (value) {
-        setState(() {
-          selectedLanguage = value!;
-        });
-      },
-    );
+    try {
+      String displayName = "$_firstName $_lastName";
+      await FirebaseFirestore.instance
+          .collection("users")
+          .doc(user.uid)
+          .update({
+        'firstName': _firstName,
+        'lastName': _lastName,
+        'birthday': _birthday,
+        'fullName': "$_firstName $_lastName",
+        'email': _email,
+        'phoneNumber': _phoneNumber,
+        'gender': _selectedGender == "" ? gender : _selectedGender,
+        'aboutMe': _aboutMe
+      }).then((value) => {
+                user.updateDisplayName(displayName),
+                user.updateEmail(_email),
+                Get.back()
+              });
+
+      // ignore: use_build_context_synchronously
+    } on FirebaseAuthException catch (error) {
+      if (error.code == 'email-already-in-use') {
+        // ...
+      }
+      ScaffoldMessenger.of(context).clearSnackBars();
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: MorrfText(
+              size: FontSize.p,
+              text: error.message ?? 'Authentication failed.'),
+        ),
+      );
+    }
   }
 
   //__________gender___________________________________________________________
-  DropdownButton<String> getGender() {
+  DropdownButton<String> getGender(String? selectedGender) {
     List<DropdownMenuItem<String>> dropDownItems = [];
     for (String des in gender) {
       var item = DropdownMenuItem(
@@ -53,33 +99,11 @@ class _ClientEditProfileState extends State<ClientEditProfile> {
     return DropdownButton(
       icon: const Icon(FeatherIcons.chevronDown),
       items: dropDownItems,
-      value: selectedGender,
-      style: kTextStyle.copyWith(color: kSubTitleColor),
+      value: _selectedGender == "" ? selectedGender : _selectedGender,
       onChanged: (value) {
         setState(() {
-          selectedGender = value!;
+          _selectedGender = value!;
         });
-      },
-    );
-  }
-
-  //__________Add_Language popup________________________________________________
-  void showLanguagePopUp() {
-    showDialog(
-      barrierDismissible: false,
-      context: context,
-      builder: (BuildContext context) {
-        return StatefulBuilder(
-          builder:
-              (BuildContext context, void Function(void Function()) setState) {
-            return Dialog(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(20.0),
-              ),
-              child: const SellerAddLanguagePopUp(),
-            );
-          },
-        );
       },
     );
   }
@@ -103,6 +127,18 @@ class _ClientEditProfileState extends State<ClientEditProfile> {
         );
       },
     );
+  }
+
+  //__________Confirmation Login________________________________________________
+  void showImportSignIn(String? gender) {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return ClientConfirmSignIn();
+        }).then((val) {
+      _onSubmit(gender);
+    });
+    ;
   }
 
   //__________Import_Profile_picture_popup_____________________________________
@@ -147,273 +183,293 @@ class _ClientEditProfileState extends State<ClientEditProfile> {
     );
   }
 
+  Color borderColor(BuildContext context) {
+    return Theme.of(context).brightness == Brightness.dark
+        ? const Color(0xFF144185)
+        : const Color(0xff216dde);
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: kDarkWhite,
-      appBar: AppBar(
-        backgroundColor: kDarkWhite,
-        elevation: 0,
-        iconTheme: const IconThemeData(color: kNeutralColor),
-        title: Text(
-          'Edit Profile',
-          style: kTextStyle.copyWith(
-              color: kNeutralColor, fontWeight: FontWeight.bold),
-        ),
-        centerTitle: true,
-      ),
-      body: Padding(
-        padding: const EdgeInsets.only(top: 20.0),
-        child: Container(
-          padding: const EdgeInsets.only(left: 20.0, right: 20.0),
-          width: context.width(),
-          decoration: const BoxDecoration(
-            color: kWhite,
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(30.0),
-              topRight: Radius.circular(30.0),
-            ),
-          ),
-          child: SingleChildScrollView(
-            physics: const BouncingScrollPhysics(),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const SizedBox(height: 20.0),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const SizedBox(height: 15.0),
-                    Row(
-                      children: [
-                        Stack(
-                          alignment: Alignment.bottomRight,
-                          children: [
-                            Container(
-                              height: 80,
-                              width: 80,
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                border: Border.all(color: kPrimaryColor),
-                                image: const DecorationImage(
-                                  image: AssetImage('images/profile3.png'),
+    return MorrfScaffold(
+        title: "Edit Profile",
+        body: FutureBuilder(
+            future: FirebaseFirestore.instance
+                .collection("users")
+                .doc(user.uid)
+                .get(),
+            builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+              if (snapshot.hasData) {
+                var morrfUser = snapshot.data.data();
+                String? gender = morrfUser['gender'];
+                String? aboutMe = morrfUser['aboutMe'];
+                String? firstName = morrfUser['firstName'];
+                String? lastName = morrfUser['lastName'];
+                String? email = morrfUser['email'];
+                String? phoneNumber = morrfUser['phoneNumber'];
+                Timestamp? birthday = morrfUser['birthday'];
+
+                String getBirthdayTextValue() {
+                  if (_birthday != null) {
+                    return "${_birthday!.toMoment().month.toString()}-${_birthday!.toMoment().day.toString()}-${_birthday!.toMoment().year.toString()}";
+                  } else if (birthday != null) {
+                    _birthday = birthday.toDate();
+                    return "${birthday.toDate().month.toString()}-${birthday.toDate().day.toString()}-${birthday.toDate().year.toString()}";
+                  } else if (birthday != null && _birthday != null) {
+                    return "${birthday.toDate().month.toString()}-${birthday.toDate().day.toString()}-${birthday.toDate().year.toString()}";
+                  } else {
+                    return "";
+                  }
+                }
+
+                birthdayController.text = getBirthdayTextValue();
+
+                return SingleChildScrollView(
+                  physics: const BouncingScrollPhysics(),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Form(
+                            key: _formKey,
+                            child: Column(
+                              children: [
+                                Row(
+                                  children: [
+                                    Stack(
+                                      alignment: Alignment.bottomRight,
+                                      children: [
+                                        Container(
+                                          height: 80,
+                                          width: 80,
+                                          decoration: BoxDecoration(
+                                            shape: BoxShape.circle,
+                                            border: Border.all(
+                                                color: kPrimaryColor),
+                                            image: DecorationImage(
+                                              image:
+                                                  NetworkImage(user.photoURL!),
+                                            ),
+                                          ),
+                                        ),
+                                        GestureDetector(
+                                          onTap: () {
+                                            showImportProfilePopUp();
+                                          },
+                                          child: Container(
+                                            padding: const EdgeInsets.all(5),
+                                            decoration: BoxDecoration(
+                                              color: kWhite,
+                                              shape: BoxShape.circle,
+                                              border: Border.all(
+                                                  color: kPrimaryColor),
+                                            ),
+                                            child: const Icon(
+                                              IconlyBold.camera,
+                                              color: kPrimaryColor,
+                                              size: 18,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    const SizedBox(width: 10.0),
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          user.displayName!,
+                                          maxLines: 1,
+                                          overflow: TextOverflow.ellipsis,
+                                          style: kTextStyle.copyWith(
+                                              color: kNeutralColor,
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 18.0),
+                                        ),
+                                        Text(
+                                          user.email!,
+                                          maxLines: 1,
+                                          overflow: TextOverflow.ellipsis,
+                                          style: kTextStyle.copyWith(
+                                              color: kSubTitleColor),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
                                 ),
-                              ),
-                            ),
-                            GestureDetector(
-                              onTap: () {
-                                showImportProfilePopUp();
-                              },
-                              child: Container(
-                                padding: const EdgeInsets.all(5),
-                                decoration: BoxDecoration(
-                                  color: kWhite,
-                                  shape: BoxShape.circle,
-                                  border: Border.all(color: kPrimaryColor),
+                                const SizedBox(height: 30.0),
+                                MorrfInputField(
+                                  key: _firstNameKey,
+                                  inputType: TextInputType.name,
+                                  placeholder: "First Name*",
+                                  hint: "Enter your first name",
+                                  initialValue: firstName,
+                                  validator: (value) {
+                                    if (value == null || value.isEmpty) {
+                                      return 'You must have at least a first name.';
+                                    }
+                                    return null;
+                                  },
+                                  onSaved: (value) {
+                                    setState(() {
+                                      _firstName = value.toString();
+                                    });
+                                  },
                                 ),
-                                child: const Icon(
-                                  IconlyBold.camera,
-                                  color: kPrimaryColor,
-                                  size: 18,
+                                const SizedBox(height: 20.0),
+                                MorrfInputField(
+                                  key: _lastNameKey,
+                                  inputType: TextInputType.name,
+                                  placeholder: "Last Name",
+                                  hint: "Enter your first name",
+                                  initialValue: lastName,
+                                  onSaved: (value) {
+                                    setState(() {
+                                      _lastName = value.toString();
+                                    });
+                                  },
                                 ),
-                              ),
+                                const SizedBox(height: 20.0),
+                                MorrfInputField(
+                                  key: _emailKey,
+                                  placeholder: "Email",
+                                  hint: "Enter your email",
+                                  initialValue: email,
+                                  inputType: TextInputType.emailAddress,
+                                  validator: (value) {
+                                    if (value == null ||
+                                        value.trim().isEmpty ||
+                                        !value.contains('@')) {
+                                      return 'Please enter a valid email address.';
+                                    }
+
+                                    return null;
+                                  },
+                                  onSaved: (value) {
+                                    setState(() {
+                                      _email = value.toString();
+                                    });
+                                  },
+                                ),
+                                const SizedBox(height: 20.0),
+                                MorrfInputField(
+                                  key: _phoneKey,
+                                  inputType: TextInputType.phone,
+                                  placeholder: "Phone Number",
+                                  hint: "Enter your phone number",
+                                  initialValue: phoneNumber?.replaceAllMapped(
+                                      RegExp(r'(\d{3})(\d{3})(\d+)'),
+                                      (Match m) => "(${m[1]}) ${m[2]}-${m[3]}"),
+                                  onSaved: (value) {
+                                    setState(() {
+                                      _phoneNumber = value
+                                          .toString()
+                                          .replaceAllMapped(
+                                              RegExp(r'(\d{3})(\d{3})(\d+)'),
+                                              (Match m) =>
+                                                  "(${m[1]}) ${m[2]}-${m[3]}");
+                                    });
+                                  },
+                                ),
+                                const SizedBox(height: 10.0),
+                                MorrfInputField(
+                                  key: _birthdayKey,
+                                  controller: birthdayController,
+                                  inputType: TextInputType.datetime,
+                                  placeholder: "Birthday",
+                                  hint: "Enter your birthday",
+                                  onTap: () async {
+                                    FocusScope.of(context)
+                                        .requestFocus(FocusNode());
+                                    DateTime? picked = await showDatePicker(
+                                        context: context,
+                                        initialDate: DateTime.now(),
+                                        firstDate: DateTime(1901),
+                                        lastDate: DateTime(2030));
+                                    if (picked != null) {
+                                      setState(() => {
+                                            birthdayController.text =
+                                                "${picked.toMoment().month.toString()}-${picked.toMoment().day.toString()}-${picked.toMoment().year.toString()}",
+                                            _birthday = picked
+                                          });
+                                    }
+                                  },
+                                ),
+                                const SizedBox(height: 20.0),
+                                FormField(
+                                  initialValue: selectedGender,
+                                  builder: (FormFieldState<dynamic> field) {
+                                    return InputDecorator(
+                                      decoration: InputDecoration(
+                                        filled: true,
+                                        constraints:
+                                            const BoxConstraints(maxHeight: 56),
+                                        enabledBorder: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                              color: borderColor(context),
+                                              width: 2.0),
+                                          borderRadius: const BorderRadius.all(
+                                            Radius.circular(10.0),
+                                          ),
+                                        ),
+                                        focusedBorder: OutlineInputBorder(
+                                          borderRadius: const BorderRadius.all(
+                                            Radius.circular(10.0),
+                                          ),
+                                          borderSide: BorderSide(
+                                              color: borderColor(context),
+                                              width: 2.0),
+                                        ),
+                                      ),
+                                      child: DropdownButtonHideUnderline(
+                                          child: getGender(gender)),
+                                    );
+                                  },
+                                ),
+                                const SizedBox(height: 20.0),
+                                SizedBox(
+                                  height: 150,
+                                  child: MorrfInputField(
+                                    key: _aboutMeKey,
+                                    onSaved: (value) {
+                                      setState(() {
+                                        _aboutMe = value.toString();
+                                      });
+                                    },
+                                    initialValue: aboutMe,
+                                    inputType: TextInputType.multiline,
+                                    maxLines: null,
+                                    expands: true,
+                                    placeholder: 'About Me',
+                                  ),
+                                ),
+                                const SizedBox(height: 10.0),
+                              ],
                             ),
-                          ],
-                        ),
-                        const SizedBox(width: 10.0),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'Evan McPheron',
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                              style: kTextStyle.copyWith(
-                                  color: kNeutralColor,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 18.0),
-                            ),
-                            Text(
-                              'shaidulislamma@gmail.com',
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                              style: kTextStyle.copyWith(color: kSubTitleColor),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 30.0),
-                    TextFormField(
-                      keyboardType: TextInputType.name,
-                      cursorColor: kNeutralColor,
-                      textInputAction: TextInputAction.next,
-                      decoration: kInputDecoration.copyWith(
-                        labelText: 'User Name',
-                        labelStyle: kTextStyle.copyWith(color: kNeutralColor),
-                        hintText: 'Enter user name',
-                        hintStyle: kTextStyle.copyWith(color: kSubTitleColor),
-                        focusColor: kNeutralColor,
-                        border: const OutlineInputBorder(),
-                      ),
-                    ),
-                    const SizedBox(height: 20.0),
-                    TextFormField(
-                      keyboardType: TextInputType.emailAddress,
-                      cursorColor: kNeutralColor,
-                      textInputAction: TextInputAction.next,
-                      decoration: kInputDecoration.copyWith(
-                        hintText: 'Enter Phone No.',
-                        hintStyle: kTextStyle.copyWith(color: kSubTitleColor),
-                        focusColor: kNeutralColor,
-                        border: const OutlineInputBorder(),
-                        // prefixIcon: CountryCodePicker(
-                        //   padding: EdgeInsets.zero,
-                        //   onChanged: print,
-                        //   initialSelection: 'BD',
-                        //   showFlag: true,
-                        //   showDropDownButton: true,
-                        //   alignLeft: false,
-                        // ),
-                      ),
-                    ),
-                    const SizedBox(height: 20.0),
-                    FormField(
-                      builder: (FormFieldState<dynamic> field) {
-                        return InputDecorator(
-                          decoration: InputDecoration(
-                            enabledBorder: const OutlineInputBorder(
-                              borderRadius: BorderRadius.all(
-                                Radius.circular(8.0),
-                              ),
-                              borderSide: BorderSide(
-                                  color: kBorderColorTextField, width: 2),
-                            ),
-                            contentPadding: const EdgeInsets.all(7.0),
-                            floatingLabelBehavior: FloatingLabelBehavior.always,
-                            labelText: 'Select Language',
-                            labelStyle:
-                                kTextStyle.copyWith(color: kNeutralColor),
                           ),
-                          child:
-                              DropdownButtonHideUnderline(child: getLanguage()),
-                        );
-                      },
-                    ),
-                    const SizedBox(height: 20.0),
-                    TextFormField(
-                      keyboardType: TextInputType.name,
-                      cursorColor: kNeutralColor,
-                      textInputAction: TextInputAction.next,
-                      decoration: kInputDecoration.copyWith(
-                        labelText: 'Country',
-                        labelStyle: kTextStyle.copyWith(color: kNeutralColor),
-                        hintText: 'Enter Country Name',
-                        hintStyle: kTextStyle.copyWith(color: kSubTitleColor),
-                        focusColor: kNeutralColor,
-                        border: const OutlineInputBorder(),
+                        ],
                       ),
-                    ),
-                    const SizedBox(height: 20.0),
-                    TextFormField(
-                      keyboardType: TextInputType.name,
-                      cursorColor: kNeutralColor,
-                      textInputAction: TextInputAction.next,
-                      decoration: kInputDecoration.copyWith(
-                        labelText: 'Street Address (won’t show on profile)',
-                        labelStyle: kTextStyle.copyWith(color: kNeutralColor),
-                        hintText: 'Enter street address',
-                        hintStyle: kTextStyle.copyWith(color: kSubTitleColor),
-                        focusColor: kNeutralColor,
-                        border: const OutlineInputBorder(),
+                      const SizedBox(height: 10.0),
+                      SafeArea(
+                        child: MorrfButton(
+                          onPressed: () {
+                            showImportSignIn(gender);
+                            // _onSubmit(gender);
+                          },
+                          fullWidth: true,
+                          child: const MorrfText(
+                              text: 'Update Profile', size: FontSize.p),
+                        ),
                       ),
-                    ),
-                    const SizedBox(height: 20.0),
-                    TextFormField(
-                      keyboardType: TextInputType.name,
-                      cursorColor: kNeutralColor,
-                      textInputAction: TextInputAction.next,
-                      decoration: kInputDecoration.copyWith(
-                        labelText: 'City',
-                        labelStyle: kTextStyle.copyWith(color: kNeutralColor),
-                        hintText: 'Enter city',
-                        hintStyle: kTextStyle.copyWith(color: kSubTitleColor),
-                        focusColor: kNeutralColor,
-                        border: const OutlineInputBorder(),
-                      ),
-                    ),
-                    const SizedBox(height: 20.0),
-                    TextFormField(
-                      keyboardType: TextInputType.name,
-                      cursorColor: kNeutralColor,
-                      textInputAction: TextInputAction.next,
-                      decoration: kInputDecoration.copyWith(
-                        labelText: 'State',
-                        labelStyle: kTextStyle.copyWith(color: kNeutralColor),
-                        hintText: 'Enter state',
-                        hintStyle: kTextStyle.copyWith(color: kSubTitleColor),
-                        focusColor: kNeutralColor,
-                        border: const OutlineInputBorder(),
-                      ),
-                    ),
-                    const SizedBox(height: 20.0),
-                    TextFormField(
-                      keyboardType: TextInputType.name,
-                      cursorColor: kNeutralColor,
-                      textInputAction: TextInputAction.next,
-                      decoration: kInputDecoration.copyWith(
-                        labelText: 'ZIP/Postal Code',
-                        labelStyle: kTextStyle.copyWith(color: kNeutralColor),
-                        hintText: 'Enter zip/post code',
-                        hintStyle: kTextStyle.copyWith(color: kSubTitleColor),
-                        focusColor: kNeutralColor,
-                        border: const OutlineInputBorder(),
-                      ),
-                    ),
-                    const SizedBox(height: 20.0),
-                    FormField(
-                      builder: (FormFieldState<dynamic> field) {
-                        return InputDecorator(
-                          decoration: kInputDecoration.copyWith(
-                            enabledBorder: const OutlineInputBorder(
-                              borderRadius: BorderRadius.all(
-                                Radius.circular(8.0),
-                              ),
-                              borderSide: BorderSide(
-                                  color: kBorderColorTextField, width: 2),
-                            ),
-                            contentPadding: const EdgeInsets.all(7.0),
-                            floatingLabelBehavior: FloatingLabelBehavior.always,
-                            labelText: 'Select Gender',
-                            labelStyle:
-                                kTextStyle.copyWith(color: kNeutralColor),
-                          ),
-                          child:
-                              DropdownButtonHideUnderline(child: getGender()),
-                        );
-                      },
-                    ),
-                    const SizedBox(height: 10.0),
-                  ],
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
-      bottomNavigationBar: Container(
-        decoration: const BoxDecoration(color: kWhite),
-        child: ButtonGlobalWithoutIcon(
-            buttontext: 'Update Profile',
-            buttonDecoration: kButtonDecoration.copyWith(
-              color: kPrimaryColor,
-              borderRadius: BorderRadius.circular(30.0),
-            ),
-            onPressed: () {
-              const ClientProfileDetails().launch(context);
-            },
-            buttonTextColor: kWhite),
-      ),
-    );
+                    ],
+                  ),
+                );
+              } else {
+                return LoadingPage();
+              }
+            }));
   }
 }

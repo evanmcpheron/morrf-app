@@ -1,8 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:morrf/models/user/user_model.dart';
-import 'package:morrf/models/stripe/stripe_model.dart';
+import 'package:morrf/models/user/morrf_user.dart';
 import 'package:morrf/utils/firestore_service.dart';
 
 class AuthService extends ChangeNotifier {
@@ -44,17 +42,20 @@ class AuthService extends ChangeNotifier {
   Future<UserCredential> signup(
     String email,
     String password,
-    String displayName,
+    String firstName,
+    String lastName,
   ) async {
+    String displayName = "$firstName $lastName";
     try {
       UserCredential user = await FirebaseAuth.instance
           .createUserWithEmailAndPassword(email: email, password: password);
 
       User addedUser = FirebaseAuth.instance.currentUser!;
-
+      await addedUser.updatePhotoURL(
+          "https://firebasestorage.googleapis.com/v0/b/mickiefitness.appspot.com/o/user_profile.jpg?alt=media&token=deba737f-c8c1-4a2e-bec5-a4474913e102&_gl=1*mvlre7*_ga*MjkyNzM5ODM3LjE2ODkyNzc3MjY.*_ga_CW55HF8NVT*MTY5ODAyMDYyNC41My4xLjE2OTgwMjE0MTEuNTcuMC4w");
       await addedUser.updateDisplayName(displayName);
 
-      createUser(addedUser, displayName);
+      createUser(addedUser, firstName, lastName);
 
       return user;
     } catch (e) {
@@ -62,7 +63,12 @@ class AuthService extends ChangeNotifier {
     }
   }
 
-  Future createUser(User user, String displayName) async {
+  Future createUser(
+    User user,
+    String firstName,
+    String lastName,
+  ) async {
+    String displayName = "$firstName $lastName";
     try {
       MorrfUser morrfUser = MorrfUser(
           id: user.uid,
@@ -70,7 +76,14 @@ class AuthService extends ChangeNotifier {
           email: user.email!,
           gender: null,
           birthday: null,
-          photoURL: null);
+          photoURL:
+              "https://firebasestorage.googleapis.com/v0/b/mickiefitness.appspot.com/o/user_profile.jpg?alt=media&token=deba737f-c8c1-4a2e-bec5-a4474913e102&_gl=1*mvlre7*_ga*MjkyNzM5ODM3LjE2ODkyNzc3MjY.*_ga_CW55HF8NVT*MTY5ODAyMDYyNC41My4xLjE2OTgwMjE0MTEuNTcuMC4w",
+          firstName: firstName,
+          lastName: lastName,
+          stripe: "",
+          products: [],
+          orders: [],
+          aboutMe: null);
       FirestoreService().createUser(morrfUser);
       currentMorrfUser = morrfUser;
     } catch (e) {
@@ -79,7 +92,6 @@ class AuthService extends ChangeNotifier {
   }
 
   Future<void> resetPassword(String email) async {
-    print(email);
     try {
       await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
     } catch (e) {

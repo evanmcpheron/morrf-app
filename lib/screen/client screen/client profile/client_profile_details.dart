@@ -1,9 +1,13 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_iconly/flutter_iconly.dart';
-import 'package:morrf/widgets/button_global.dart';
-import 'package:nb_utils/nb_utils.dart';
+import 'package:get/get.dart';
+import 'package:morrf/screen/splash%20screen/loading_screen.dart';
+import 'package:morrf/utils/enums/font_size.dart';
+import 'package:morrf/widgets/morff_text.dart';
+import 'package:morrf/widgets/morrf_button.dart';
+import 'package:morrf/widgets/morrf_scaffold.dart';
 
-import '../../../widgets/constant.dart';
 import 'client_edit_profile_details.dart';
 
 class ClientProfileDetails extends StatefulWidget {
@@ -15,517 +19,365 @@ class ClientProfileDetails extends StatefulWidget {
 
 class _ClientProfileDetailsState extends State<ClientProfileDetails> {
   @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: kDarkWhite,
-      appBar: AppBar(
-        backgroundColor: kDarkWhite,
-        elevation: 0,
-        iconTheme: const IconThemeData(color: kNeutralColor),
-        title: Text(
-          'My Profile',
-          style: kTextStyle.copyWith(
-              color: kNeutralColor, fontWeight: FontWeight.bold),
-        ),
-        centerTitle: true,
-      ),
-      bottomNavigationBar: ButtonGlobalWithIcon(
-        buttontext: 'Edit Profile',
-        buttonDecoration: kButtonDecoration.copyWith(
-          color: kPrimaryColor,
-          borderRadius: BorderRadius.circular(30.0),
-        ),
-        onPressed: () {
-          setState(() {
-            const ClientEditProfile().launch(context);
-          });
-        },
-        buttonTextColor: kWhite,
-        buttonIcon: IconlyBold.edit,
-      ),
-      body: Padding(
-        padding: const EdgeInsets.only(top: 30.0),
-        child: Container(
-          padding: const EdgeInsets.only(left: 15.0, right: 15.0, bottom: 15.0),
-          width: context.width(),
-          decoration: const BoxDecoration(
-            color: kWhite,
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(30.0),
-              topRight: Radius.circular(30.0),
-            ),
-          ),
-          child: SingleChildScrollView(
-            physics: const BouncingScrollPhysics(),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+    User user = FirebaseAuth.instance.currentUser!;
+    return MorrfScaffold(
+      title: "My Profile",
+      body: FutureBuilder(
+        future:
+            FirebaseFirestore.instance.collection("users").doc(user!.uid).get(),
+        builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+          if (snapshot.hasData) {
+            var morrfUser = snapshot.data.data();
+            String? gender = morrfUser['gender'];
+            String? aboutMe = morrfUser['aboutMe'];
+            String? phoneNumber = morrfUser['phoneNumber'];
+            String? birthday = morrfUser['birthday'];
+            return Column(
               children: [
-                const SizedBox(height: 15.0),
-                Row(
-                  children: [
-                    Container(
-                      height: 80,
-                      width: 80,
-                      decoration: const BoxDecoration(
-                        shape: BoxShape.circle,
-                        image: DecorationImage(
-                          image: AssetImage('images/profile3.png'),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(width: 10.0),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Evan McPheron',
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: kTextStyle.copyWith(
-                              color: kNeutralColor,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 18.0),
-                        ),
-                        Text(
-                          'shaidulislamma@gmail.com',
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: kTextStyle.copyWith(color: kLightNeutralColor),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 20.0),
-                Text(
-                  'Client Information',
-                  style: kTextStyle.copyWith(
-                      color: kNeutralColor, fontWeight: FontWeight.bold),
-                ),
-                const SizedBox(height: 15.0),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Expanded(
-                      flex: 2,
-                      child: Text(
-                        'First Name',
-                        style: kTextStyle.copyWith(color: kSubTitleColor),
-                      ),
-                    ),
-                    Expanded(
-                      flex: 4,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                SingleChildScrollView(
+                  key: UniqueKey(),
+                  physics: const BouncingScrollPhysics(),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.max,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const SizedBox(height: 15.0),
+                      Row(
                         children: [
-                          Text(
-                            ':',
-                            style: kTextStyle.copyWith(color: kSubTitleColor),
+                          Container(
+                            height: 80,
+                            width: 80,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              image: DecorationImage(
+                                image: NetworkImage(user!.photoURL!),
+                              ),
+                            ),
                           ),
                           const SizedBox(width: 10.0),
-                          Flexible(
-                            child: Text(
-                              'Shahidul',
-                              style: kTextStyle.copyWith(color: kSubTitleColor),
-                              overflow: TextOverflow.ellipsis,
-                              maxLines: 2,
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              MorrfText(
+                                  text: user!.displayName!,
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                  size: FontSize.h5),
+                              MorrfText(
+                                  text: user!.email!,
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                  size: FontSize.p),
+                            ],
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 20.0),
+                      const MorrfText(
+                        text: 'Client Information',
+                        size: FontSize.lp,
+                      ),
+                      const SizedBox(height: 15.0),
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Expanded(
+                            flex: 2,
+                            child: MorrfText(
+                              text: 'First Name',
+                              size: FontSize.h6,
+                            ),
+                          ),
+                          Expanded(
+                            flex: 4,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const MorrfText(
+                                  text: ':',
+                                  size: FontSize.p,
+                                ),
+                                const SizedBox(width: 10.0),
+                                Flexible(
+                                  child: MorrfText(
+                                    text: user!.displayName!.split(" ")[0],
+                                    size: FontSize.p,
+                                    overflow: TextOverflow.ellipsis,
+                                    maxLines: 2,
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
                         ],
                       ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 10.0),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Expanded(
-                      flex: 2,
-                      child: Text(
-                        'Last Name',
-                        style: kTextStyle.copyWith(color: kSubTitleColor),
-                      ),
-                    ),
-                    Expanded(
-                      flex: 4,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
+                      const SizedBox(width: 5.0),
+                      const Divider(),
+                      const SizedBox(width: 5.0),
+                      Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
-                            ':',
-                            style: kTextStyle.copyWith(color: kSubTitleColor),
+                          const Expanded(
+                            flex: 2,
+                            child: MorrfText(
+                              text: 'Last Name',
+                              size: FontSize.h6,
+                            ),
                           ),
-                          const SizedBox(width: 10.0),
-                          Flexible(
-                            child: Text(
-                              'Islam',
-                              style: kTextStyle.copyWith(color: kSubTitleColor),
-                              overflow: TextOverflow.ellipsis,
-                              maxLines: 2,
+                          Expanded(
+                            flex: 4,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const MorrfText(text: ':', size: FontSize.p),
+                                const SizedBox(width: 10.0),
+                                Flexible(
+                                  child: MorrfText(
+                                    text: user!.displayName!.split(" ")[1] == ""
+                                        ? "---"
+                                        : user!.displayName!.split(" ")[1],
+                                    size: FontSize.p,
+                                    overflow: TextOverflow.ellipsis,
+                                    maxLines: 2,
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
                         ],
                       ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 10.0),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Expanded(
-                      flex: 2,
-                      child: Text(
-                        'User Name',
-                        style: kTextStyle.copyWith(color: kSubTitleColor),
-                      ),
-                    ),
-                    Expanded(
-                      flex: 4,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
+                      const SizedBox(width: 5.0),
+                      const Divider(),
+                      const SizedBox(width: 5.0),
+                      Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
-                            ':',
-                            style: kTextStyle.copyWith(color: kSubTitleColor),
+                          const Expanded(
+                            flex: 2,
+                            child:
+                                MorrfText(text: 'Full Name', size: FontSize.h6),
                           ),
-                          const SizedBox(width: 10.0),
-                          Flexible(
-                            child: Text(
-                              'shaidulislam',
-                              style: kTextStyle.copyWith(color: kSubTitleColor),
-                              overflow: TextOverflow.ellipsis,
-                              maxLines: 2,
+                          Expanded(
+                            flex: 4,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const MorrfText(text: ':', size: FontSize.p),
+                                const SizedBox(width: 10.0),
+                                Flexible(
+                                  child: MorrfText(
+                                    text: user!.displayName!,
+                                    size: FontSize.p,
+                                    overflow: TextOverflow.ellipsis,
+                                    maxLines: 2,
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
                         ],
                       ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 10.0),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Expanded(
-                      flex: 2,
-                      child: Text(
-                        'Email',
-                        style: kTextStyle.copyWith(color: kSubTitleColor),
-                      ),
-                    ),
-                    Expanded(
-                      flex: 4,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
+                      const SizedBox(width: 5.0),
+                      const Divider(),
+                      const SizedBox(width: 5.0),
+                      Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
-                            ':',
-                            style: kTextStyle.copyWith(color: kSubTitleColor),
+                          const Expanded(
+                            flex: 2,
+                            child: MorrfText(
+                              text: 'Email',
+                              size: FontSize.h6,
+                            ),
                           ),
-                          const SizedBox(width: 10.0),
-                          Flexible(
-                            child: Text(
-                              'shaidulislam@gmail.com',
-                              style: kTextStyle.copyWith(color: kSubTitleColor),
-                              overflow: TextOverflow.ellipsis,
-                              maxLines: 2,
+                          Expanded(
+                            flex: 4,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const MorrfText(text: ':', size: FontSize.p),
+                                const SizedBox(width: 10.0),
+                                Flexible(
+                                  child: MorrfText(
+                                    text: user!.email!,
+                                    size: FontSize.p,
+                                    overflow: TextOverflow.ellipsis,
+                                    maxLines: 2,
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
                         ],
                       ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 10.0),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Expanded(
-                      flex: 2,
-                      child: Text(
-                        'Phone Number',
-                        style: kTextStyle.copyWith(color: kSubTitleColor),
-                      ),
-                    ),
-                    Expanded(
-                      flex: 4,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
+                      const SizedBox(width: 5.0),
+                      const Divider(),
+                      const SizedBox(width: 5.0),
+                      Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
-                            ':',
-                            style: kTextStyle.copyWith(color: kSubTitleColor),
+                          const Expanded(
+                            flex: 2,
+                            child: MorrfText(
+                              text: 'Phone Number',
+                              size: FontSize.h6,
+                            ),
                           ),
-                          const SizedBox(width: 10.0),
-                          Flexible(
-                            child: Text(
-                              '(+1) 3635 654454 548',
-                              style: kTextStyle.copyWith(color: kSubTitleColor),
-                              overflow: TextOverflow.ellipsis,
-                              maxLines: 2,
+                          Expanded(
+                            flex: 4,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const MorrfText(text: ':', size: FontSize.p),
+                                const SizedBox(width: 10.0),
+                                Flexible(
+                                  child: MorrfText(
+                                    text: phoneNumber != null
+                                        ? phoneNumber.replaceAllMapped(
+                                            RegExp(r'(\d{3})(\d{3})(\d+)'),
+                                            (Match m) =>
+                                                "(${m[1]}) ${m[2]}-${m[3]}")
+                                        : "---",
+                                    size: FontSize.p,
+                                    overflow: TextOverflow.ellipsis,
+                                    maxLines: 2,
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
                         ],
                       ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 10.0),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Expanded(
-                      flex: 2,
-                      child: Text(
-                        'Country',
-                        style: kTextStyle.copyWith(color: kSubTitleColor),
-                      ),
-                    ),
-                    Expanded(
-                      flex: 4,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
+                      const SizedBox(width: 5.0),
+                      const Divider(),
+                      const SizedBox(width: 5.0),
+                      Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
-                            ':',
-                            style: kTextStyle.copyWith(color: kSubTitleColor),
+                          const Expanded(
+                            flex: 2,
+                            child: MorrfText(
+                              text: 'Birthday',
+                              size: FontSize.h6,
+                            ),
                           ),
-                          const SizedBox(width: 10.0),
-                          Flexible(
-                            child: Text(
-                              'United States',
-                              style: kTextStyle.copyWith(color: kSubTitleColor),
-                              overflow: TextOverflow.ellipsis,
-                              maxLines: 2,
+                          Expanded(
+                            flex: 4,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const MorrfText(text: ':', size: FontSize.p),
+                                const SizedBox(width: 10.0),
+                                Flexible(
+                                  child: MorrfText(
+                                    text: birthday != null ? birthday : "---",
+                                    size: FontSize.p,
+                                    overflow: TextOverflow.ellipsis,
+                                    maxLines: 2,
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
                         ],
                       ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 10.0),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Expanded(
-                      flex: 2,
-                      child: Text(
-                        'Address',
-                        style: kTextStyle.copyWith(color: kSubTitleColor),
-                      ),
-                    ),
-                    Expanded(
-                      flex: 4,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
+                      const SizedBox(width: 5.0),
+                      const Divider(),
+                      const SizedBox(width: 5.0),
+                      Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
-                            ':',
-                            style: kTextStyle.copyWith(color: kSubTitleColor),
+                          const Expanded(
+                            flex: 2,
+                            child: MorrfText(
+                              text: 'Gender',
+                              size: FontSize.h6,
+                            ),
                           ),
-                          const SizedBox(width: 10.0),
-                          Flexible(
-                            child: Text(
-                              '5205 North Kierland Blvd. Suite 100',
-                              style: kTextStyle.copyWith(color: kSubTitleColor),
-                              overflow: TextOverflow.ellipsis,
-                              maxLines: 2,
+                          Expanded(
+                            flex: 4,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const MorrfText(text: ':', size: FontSize.p),
+                                const SizedBox(width: 10.0),
+                                Flexible(
+                                  child: MorrfText(
+                                    text: gender ?? "---",
+                                    size: FontSize.p,
+                                    overflow: TextOverflow.ellipsis,
+                                    maxLines: 2,
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
                         ],
                       ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 10.0),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Expanded(
-                      flex: 2,
-                      child: Text(
-                        'City',
-                        style: kTextStyle.copyWith(color: kSubTitleColor),
-                      ),
-                    ),
-                    Expanded(
-                      flex: 4,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
+                      const SizedBox(width: 5.0),
+                      const Divider(),
+                      const SizedBox(width: 5.0),
+                      Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
-                            ':',
-                            style: kTextStyle.copyWith(color: kSubTitleColor),
-                          ),
-                          const SizedBox(width: 10.0),
-                          Flexible(
-                            child: Text(
-                              'Scottsdale',
-                              style: kTextStyle.copyWith(color: kSubTitleColor),
-                              overflow: TextOverflow.ellipsis,
-                              maxLines: 2,
+                          const Padding(
+                            padding: EdgeInsets.only(bottom: 8.0),
+                            child: MorrfText(
+                              text: 'About Me',
+                              size: FontSize.h6,
                             ),
+                          ),
+                          MorrfText(
+                            text: aboutMe ?? "---",
+                            size: FontSize.p,
+                            maxLines: 2,
                           ),
                         ],
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-                const SizedBox(height: 10.0),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Expanded(
-                      flex: 2,
-                      child: Text(
-                        'State',
-                        style: kTextStyle.copyWith(color: kSubTitleColor),
-                      ),
-                    ),
-                    Expanded(
-                      flex: 4,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            ':',
-                            style: kTextStyle.copyWith(color: kSubTitleColor),
-                          ),
-                          const SizedBox(width: 10.0),
-                          Flexible(
-                            child: Text(
-                              'AZ',
-                              style: kTextStyle.copyWith(color: kSubTitleColor),
-                              overflow: TextOverflow.ellipsis,
-                              maxLines: 2,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 10.0),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Expanded(
-                      flex: 2,
-                      child: Text(
-                        'ZIP/Post Code',
-                        style: kTextStyle.copyWith(color: kSubTitleColor),
-                      ),
-                    ),
-                    Expanded(
-                      flex: 4,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            ':',
-                            style: kTextStyle.copyWith(color: kSubTitleColor),
-                          ),
-                          const SizedBox(width: 10.0),
-                          Flexible(
-                            child: Text(
-                              '12365',
-                              style: kTextStyle.copyWith(color: kSubTitleColor),
-                              overflow: TextOverflow.ellipsis,
-                              maxLines: 2,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 10.0),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Expanded(
-                      flex: 2,
-                      child: Text(
-                        'Language',
-                        style: kTextStyle.copyWith(color: kSubTitleColor),
-                      ),
-                    ),
-                    Expanded(
-                      flex: 4,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            ':',
-                            style: kTextStyle.copyWith(color: kSubTitleColor),
-                          ),
-                          const SizedBox(width: 10.0),
-                          Flexible(
-                            child: Text(
-                              'English',
-                              style: kTextStyle.copyWith(color: kSubTitleColor),
-                              overflow: TextOverflow.ellipsis,
-                              maxLines: 2,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 10.0),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Expanded(
-                      flex: 2,
-                      child: Text(
-                        'Gender',
-                        style: kTextStyle.copyWith(color: kSubTitleColor),
-                      ),
-                    ),
-                    Expanded(
-                      flex: 4,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            ':',
-                            style: kTextStyle.copyWith(color: kSubTitleColor),
-                          ),
-                          const SizedBox(width: 10.0),
-                          Flexible(
-                            child: Text(
-                              'Male',
-                              style: kTextStyle.copyWith(color: kSubTitleColor),
-                              overflow: TextOverflow.ellipsis,
-                              maxLines: 2,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
+                Expanded(child: Container()),
+                SafeArea(
+                  child: MorrfButton(
+                    fullWidth: true,
+                    child:
+                        const MorrfText(text: 'Edit Profile', size: FontSize.p),
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const ClientEditProfile()),
+                      ).then((value) => setState(() {
+                            user = FirebaseAuth.instance.currentUser!;
+                          }));
+                    },
+                  ),
                 ),
               ],
-            ),
-          ),
-        ),
+            );
+          } else {
+            return LoadingPage();
+          }
+        },
       ),
     );
   }
