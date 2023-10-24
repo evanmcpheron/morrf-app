@@ -1,7 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
+import 'package:morrf/providers/user_provider.dart';
 import 'package:morrf/screen/client%20screen/client_authentication/client_sign_up.dart';
 import 'package:morrf/screen/welcome%20screen/welcome_screen.dart';
 import 'package:morrf/utils/auth_service.dart';
@@ -16,15 +18,15 @@ import 'package:nb_utils/nb_utils.dart';
 
 import 'client_forgot_password.dart';
 
-class ClientSignIn extends StatefulWidget {
+class ClientSignIn extends ConsumerStatefulWidget {
   bool isHome;
   ClientSignIn({super.key, this.isHome = false});
 
   @override
-  State<ClientSignIn> createState() => _ClientSignInState();
+  ConsumerState<ClientSignIn> createState() => _ClientSignInState();
 }
 
-class _ClientSignInState extends State<ClientSignIn> {
+class _ClientSignInState extends ConsumerState<ClientSignIn> {
   bool hidePassword = false;
 
   final _formKey = GlobalKey<FormState>();
@@ -42,7 +44,7 @@ class _ClientSignInState extends State<ClientSignIn> {
     }
     try {
       await AuthService().signin(_email, _pass);
-
+      ref.read(morrfUserProvider.notifier).getUser();
       Get.toNamed("/");
     } on FirebaseAuthException catch (error) {
       if (error.code == 'email-already-in-use') {

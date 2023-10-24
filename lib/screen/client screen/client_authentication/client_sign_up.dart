@@ -1,8 +1,10 @@
 // import 'package:country_code_picker/country_code_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
+import 'package:morrf/providers/user_provider.dart';
 import 'package:morrf/screen/client%20screen/client_authentication/client_sign_in.dart';
 import 'package:morrf/utils/auth_service.dart';
 import 'package:morrf/utils/constants/special_color.dart';
@@ -13,15 +15,15 @@ import 'package:morrf/utils/enums/font_size.dart';
 import 'package:morrf/widgets/morrf_button.dart';
 import 'package:morrf/widgets/morrf_input_field.dart';
 
-class ClientSignUp extends StatefulWidget {
+class ClientSignUp extends ConsumerStatefulWidget {
   bool isHome;
   ClientSignUp({super.key, this.isHome = false});
 
   @override
-  State<ClientSignUp> createState() => _ClientSignUpState();
+  ConsumerState<ClientSignUp> createState() => _ClientSignUpState();
 }
 
-class _ClientSignUpState extends State<ClientSignUp> {
+class _ClientSignUpState extends ConsumerState<ClientSignUp> {
   bool hidePassword = true;
   bool isCheck = true;
 
@@ -47,6 +49,8 @@ class _ClientSignUpState extends State<ClientSignUp> {
           await AuthService().signup(_email, _pass, _name, _lastName);
 
       await userCredentials.user?.sendEmailVerification();
+
+      ref.read(morrfUserProvider.notifier).getUser();
       Get.toNamed("/");
     } on FirebaseAuthException catch (error) {
       if (error.code == 'email-already-in-use') {

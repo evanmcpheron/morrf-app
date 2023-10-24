@@ -26,7 +26,7 @@ class FirestoreService {
         'fullName': user.fullName,
         'birthday': null,
         'gender': null,
-        'photoUrl': user.photoURL,
+        'photoURL': user.photoURL,
         'email': user.email.toLowerCase(),
         'products': user.products,
         'orders': user.orders,

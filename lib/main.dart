@@ -4,14 +4,13 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:adapty_flutter/adapty_flutter.dart';
 import 'package:morrf/providers/theme_provider.dart';
+import 'package:morrf/providers/user_provider.dart';
 import 'utils/constants/routes.dart';
 import 'dart:convert';
 
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:json_theme/json_theme.dart';
-import 'package:morrf/theme/theme.dart';
-import 'package:provider/provider.dart';
 
 import 'firebase_options.dart';
 
@@ -37,9 +36,6 @@ Future<void> main() async {
   final darkThemeJson = jsonDecode(darkThemeStr);
   final darkTheme = ThemeDecoder.decodeThemeData(darkThemeJson)!;
 
-  // return runApp(ChangeNotifierProvider<ThemeNotifier>(
-  //     create: (_) => ThemeNotifier(),
-  //     child: MyApp(lightTheme: lightTheme, darkTheme: darkTheme)));
   return runApp(ProviderScope(
       child: MyApp(darkTheme: darkTheme, lightTheme: lightTheme)));
 }
@@ -62,9 +58,9 @@ class _MyAppState extends ConsumerState<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    // final ThemeNotifier notifier = Provider.of<ThemeNotifier>(context);
     var darkMode = ref.watch(darkModeProvider);
-    print("ThemeMode: $darkMode");
+    ref.read(morrfUserProvider.notifier).getUser();
+
     return GetMaterialApp(
       title: 'Morrf',
       defaultTransition: Transition.noTransition,
@@ -74,5 +70,6 @@ class _MyAppState extends ConsumerState<MyApp> {
       theme: widget.lightTheme,
       getPages: routes,
     );
+    ;
   }
 }

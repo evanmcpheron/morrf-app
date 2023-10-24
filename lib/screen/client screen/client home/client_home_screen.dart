@@ -2,7 +2,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:morrf/providers/user_provider.dart';
 import 'package:morrf/screen/client%20screen/client%20home/popular_services.dart';
 import 'package:morrf/screen/client%20screen/client%20home/recently_view.dart';
 import 'package:morrf/screen/client%20screen/client%20home/top_seller.dart';
@@ -17,14 +19,14 @@ import '../client service details/client_service_details.dart';
 import '../search/search.dart';
 import 'client_all_categories.dart';
 
-class ClientHomeScreen extends StatefulWidget {
+class ClientHomeScreen extends ConsumerStatefulWidget {
   const ClientHomeScreen({super.key});
 
   @override
-  State<ClientHomeScreen> createState() => _ClientHomeScreenState();
+  ConsumerState<ClientHomeScreen> createState() => _ClientHomeScreenState();
 }
 
-class _ClientHomeScreenState extends State<ClientHomeScreen> {
+class _ClientHomeScreenState extends ConsumerState<ClientHomeScreen> {
   User? user = FirebaseAuth.instance.currentUser;
   late bool isSignedIn = user != null;
 
@@ -40,6 +42,8 @@ class _ClientHomeScreenState extends State<ClientHomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    var morrfUser = ref.watch(morrfUserProvider);
+    print("CLIENT HOME SCREEN: ${morrfUser.firstName}");
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -66,7 +70,7 @@ class _ClientHomeScreenState extends State<ClientHomeScreen> {
             ),
           ),
           title: isSignedIn
-              ? MorrfText(text: user!.displayName!, size: FontSize.h5)
+              ? MorrfText(text: morrfUser.fullName, size: FontSize.h5)
               : const MorrfText(text: "Guest", size: FontSize.h5),
           trailing: GestureDetector(
             onTap: () => const ClientNotification().launch(context),

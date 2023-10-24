@@ -55,7 +55,6 @@ class _ClientHomeState extends ConsumerState<ClientHome> {
 
   @override
   Widget build(BuildContext context) {
-    ref.watch(morrfUserProvider);
     return Scaffold(
       body: isSignedIn
           ? _widgetOptions.elementAt(_currentPage)

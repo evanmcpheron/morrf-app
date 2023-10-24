@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class MorrfUser {
   final String id;
   final String firstName;
@@ -5,11 +7,11 @@ class MorrfUser {
   final String fullName;
   final String email;
   String? gender;
-  DateTime? birthday;
-  String? photoURL;
+  Timestamp? birthday;
+  String photoURL;
   String stripe;
-  List<String>? products;
-  List<String>? orders;
+  List<MorrfProduct>? products;
+  List<MorrfOrder>? orders;
   String? aboutMe;
 
   MorrfUser(
@@ -20,7 +22,8 @@ class MorrfUser {
       required this.email,
       this.gender,
       this.birthday,
-      this.photoURL,
+      this.photoURL =
+          "https://firebasestorage.googleapis.com/v0/b/mickiefitness.appspot.com/o/user_profile.jpg?alt=media&token=deba737f-c8c1-4a2e-bec5-a4474913e102&_gl=1*mvlre7*_ga*MjkyNzM5ODM3LjE2ODkyNzc3MjY.*_ga_CW55HF8NVT*MTY5ODAyMDYyNC41My4xLjE2OTgwMjE0MTEuNTcuMC4w",
       this.stripe = "",
       this.products,
       this.orders,
@@ -36,8 +39,8 @@ class MorrfUser {
         birthday = data['birthday'],
         photoURL = data['photoURL'],
         stripe = data['stripe'],
-        products = data['products'],
-        orders = data['orders'],
+        products = List<MorrfProduct>.from(data['products']),
+        orders = List<MorrfOrder>.from(data['orders']),
         aboutMe = data['aboutMe'];
 
   Map<String, dynamic> toJson() {
@@ -49,7 +52,7 @@ class MorrfUser {
       'email': email,
       'gender': gender,
       'birthday': birthday,
-      'imageUrl': photoURL,
+      'photoURL': photoURL,
       'stripe': stripe,
       'orders': orders,
       'products': products,
@@ -58,11 +61,22 @@ class MorrfUser {
   }
 
   MorrfUser toMorrf(dynamic user) {
-    print(user);
     return MorrfUser(
         id: "123",
         firstName: "firstName",
         fullName: "fullName",
         email: "email");
   }
+}
+
+class MorrfProduct {
+  String title;
+
+  MorrfProduct({required this.title});
+}
+
+class MorrfOrder {
+  String title;
+
+  MorrfOrder({required this.title});
 }

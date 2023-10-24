@@ -1,8 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
+import 'package:morrf/models/user/morrf_user.dart';
+import 'package:morrf/providers/user_provider.dart';
 import 'package:morrf/screen/client%20screen/client%20home/client_home.dart';
 import 'package:morrf/screen/client%20screen/client_authentication/client_sign_in.dart';
 import 'package:morrf/screen/client%20screen/client_authentication/client_sign_up.dart';
@@ -24,21 +27,20 @@ import '../deposit/deposit_history.dart';
 import '../transaction/transaction.dart';
 import 'client_profile_details.dart';
 
-class ClientProfile extends StatefulWidget {
-  const ClientProfile({Key? key}) : super(key: key);
+class ClientProfile extends ConsumerStatefulWidget {
+  const ClientProfile({super.key});
 
   @override
-  State<ClientProfile> createState() => _ClientProfileState();
+  ConsumerState<ClientProfile> createState() => _ClientProfileState();
 }
 
-class _ClientProfileState extends State<ClientProfile> {
-  User? user;
+class _ClientProfileState extends ConsumerState<ClientProfile> {
+  User? user = FirebaseAuth.instance.currentUser;
   bool isExpandedPayment = false;
   bool isExpandedDeposit = false;
   @override
   void initState() {
     super.initState();
-    user = FirebaseAuth.instance.currentUser;
   }
 
   @override
@@ -48,6 +50,8 @@ class _ClientProfileState extends State<ClientProfile> {
 
   @override
   Widget build(BuildContext context) {
+    MorrfUser morrfUser = ref.read(morrfUserProvider);
+    print(morrfUser);
     bool isSignedIn = FirebaseAuth.instance.currentUser != null;
     return Scaffold(
       key: UniqueKey(),
@@ -66,7 +70,7 @@ class _ClientProfileState extends State<ClientProfile> {
               shape: BoxShape.circle,
               image: DecorationImage(
                   image: isSignedIn
-                      ? NetworkImage(user!.photoURL!)
+                      ? NetworkImage(morrfUser.photoURL)
                       : const AssetImage('assets/images/user_profile.jpg')
                           as ImageProvider,
                   fit: BoxFit.cover),
@@ -74,7 +78,7 @@ class _ClientProfileState extends State<ClientProfile> {
           ),
           title: isSignedIn
               ? MorrfText(
-                  text: user!.displayName!,
+                  text: morrfUser.fullName,
                   size: FontSize.h6,
                   overflow: TextOverflow.ellipsis,
                   maxLines: 1,
@@ -438,7 +442,8 @@ class _ClientProfileState extends State<ClientProfile> {
                       ),
                       onTap: () => {
                         AuthService().signout(),
-                        Get.off(() => ClientHome())
+                        Get.off(() => ClientHome()),
+                        ref.read(morrfUserProvider.notifier).getUser()
                       },
                       title: const MorrfText(
                           text: 'Log Out',
