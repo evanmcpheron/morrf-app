@@ -18,7 +18,6 @@ class FirestoreService {
         'name': user.fullName,
         'email': user.email.toLowerCase()
       });
-      print(result.data);
       await _usersCollectionReference.doc(_uid).set({
         'id': _uid,
         'firstName': user.firstName,

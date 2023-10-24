@@ -42,7 +42,6 @@ class _ClientHomeScreenState extends ConsumerState<ClientHomeScreen> {
   @override
   Widget build(BuildContext context) {
     var morrfUser = ref.watch(morrfUserProvider);
-    print("CLIENT HOME SCREEN: ${morrfUser.firstName}");
     return Scaffold(
       appBar: AppBar(
         elevation: 0,

@@ -22,7 +22,6 @@ class DarkModeNotifier extends StateNotifier<ThemeMode> {
     ThemeMode currentTheme = getThemeModeFromInt(themePosition);
     state = currentTheme;
     prefs.setInt("darkMode", themePosition);
-    print("prefs: ${prefs.getInt("darkMode")}");
   }
 
   ThemeMode getThemeModeFromInt(int position) {

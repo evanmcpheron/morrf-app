@@ -51,7 +51,6 @@ class _ClientProfileState extends ConsumerState<ClientProfile> {
   @override
   Widget build(BuildContext context) {
     MorrfUser morrfUser = ref.read(morrfUserProvider);
-    print(morrfUser);
     bool isSignedIn = FirebaseAuth.instance.currentUser != null;
     return Scaffold(
       key: UniqueKey(),
