@@ -5,19 +5,18 @@ import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:morrf/providers/user_provider.dart';
+import 'package:morrf/screen/client%20screen/client%20home/client_all_categories.dart';
 import 'package:morrf/screen/client%20screen/client%20home/popular_services.dart';
 import 'package:morrf/screen/client%20screen/client%20home/recently_view.dart';
 import 'package:morrf/screen/client%20screen/client%20home/top_seller.dart';
+import 'package:morrf/screen/client%20screen/client%20notification/client_notification.dart';
+import 'package:morrf/screen/client%20screen/client%20service%20details/client_service_details.dart';
+import 'package:morrf/screen/client%20screen/search/search.dart';
 import 'package:morrf/utils/constants/special_color.dart';
 import 'package:morrf/utils/enums/font_size.dart';
+import 'package:morrf/widgets/constant.dart';
 import 'package:morrf/widgets/morff_text.dart';
 import 'package:nb_utils/nb_utils.dart';
-
-import '../../../widgets/constant.dart';
-import '../client notification/client_notification.dart';
-import '../client service details/client_service_details.dart';
-import '../search/search.dart';
-import 'client_all_categories.dart';
 
 class ClientHomeScreen extends ConsumerStatefulWidget {
   const ClientHomeScreen({super.key});

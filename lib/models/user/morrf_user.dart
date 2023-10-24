@@ -7,6 +7,7 @@ class MorrfUser {
   final String fullName;
   final String email;
   String? gender;
+  String? phoneNumber;
   Timestamp? birthday;
   String photoURL;
   String stripe;
@@ -21,6 +22,7 @@ class MorrfUser {
       required this.fullName,
       required this.email,
       this.gender,
+      this.phoneNumber,
       this.birthday,
       this.photoURL =
           "https://firebasestorage.googleapis.com/v0/b/mickiefitness.appspot.com/o/user_profile.jpg?alt=media&token=deba737f-c8c1-4a2e-bec5-a4474913e102&_gl=1*mvlre7*_ga*MjkyNzM5ODM3LjE2ODkyNzc3MjY.*_ga_CW55HF8NVT*MTY5ODAyMDYyNC41My4xLjE2OTgwMjE0MTEuNTcuMC4w",
@@ -36,6 +38,7 @@ class MorrfUser {
         fullName = data['fullName'],
         email = data['email'],
         gender = data['gender'],
+        phoneNumber = data['phoneNumber'],
         birthday = data['birthday'],
         photoURL = data['photoURL'],
         stripe = data['stripe'],
@@ -51,6 +54,7 @@ class MorrfUser {
       'fullName': fullName,
       'email': email,
       'gender': gender,
+      'phoneNumber': phoneNumber,
       'birthday': birthday,
       'photoURL': photoURL,
       'stripe': stripe,
@@ -58,14 +62,6 @@ class MorrfUser {
       'products': products,
       'aboutMe': aboutMe
     };
-  }
-
-  MorrfUser toMorrf(dynamic user) {
-    return MorrfUser(
-        id: "123",
-        firstName: "firstName",
-        fullName: "fullName",
-        email: "email");
   }
 }
 
