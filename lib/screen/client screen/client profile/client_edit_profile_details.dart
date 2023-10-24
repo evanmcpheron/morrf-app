@@ -1,18 +1,20 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:moment_dart/moment_dart.dart';
-import 'package:morrf/models/product/products_model.dart';
 import 'package:morrf/models/user/morrf_user.dart';
 import 'package:morrf/providers/user_provider.dart';
 import 'package:morrf/screen/client%20screen/client_authentication/client_confirm_sign_in.dart';
-import 'package:morrf/screen/seller%20screen/seller%20popUp/seller_popup.dart';
-import 'package:morrf/screen/splash%20screen/loading_screen.dart';
 import 'package:morrf/utils/enums/font_size.dart';
+import 'package:uuid/uuid.dart';
 import 'package:morrf/widgets/constant.dart';
 import 'package:morrf/widgets/morff_text.dart';
 import 'package:morrf/widgets/morrf_button.dart';
@@ -46,17 +48,45 @@ class _ClientEditProfileState extends ConsumerState<ClientEditProfile> {
   String _selectedGender = "";
   String _aboutMe = "";
 
+  File? pickedImageFile;
+  void _pickImage(ImageSource source) async {
+    final pickedImage = await ImagePicker().pickImage(
+      source: source,
+      imageQuality: 50,
+      maxWidth: 150,
+    );
+    if (pickedImage == null) return;
+
+    print(pickedImage);
+    setState(() {
+      pickedImageFile = File(pickedImage.path);
+    });
+  }
+
   void _onSubmit(String? gender) async {
     MorrfUser morrfUser = ref.watch(morrfUserProvider);
     String stripeId = morrfUser.stripe;
     List<MorrfProduct>? products = morrfUser.products;
     List<MorrfOrder>? orders = morrfUser.orders;
+    String? imageUrl;
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
     } else {
       return;
     }
     try {
+      if (pickedImageFile != null) {
+        final storageRef = FirebaseStorage.instance
+            .ref()
+            .child('user_images')
+            .child('${Uuid().v4()}.jpg');
+
+        await storageRef.putFile(pickedImageFile!);
+
+        imageUrl = await storageRef.getDownloadURL();
+        user.updatePhotoURL(imageUrl);
+      }
+
       String displayName = "$_firstName $_lastName";
       await FirebaseFirestore.instance
           .collection("users")
@@ -67,6 +97,7 @@ class _ClientEditProfileState extends ConsumerState<ClientEditProfile> {
         'birthday': _birthday,
         'fullName': "$_firstName $_lastName",
         'email': _email,
+        'photoURL': imageUrl ?? user.photoURL,
         'phoneNumber': _phoneNumber,
         'gender': _selectedGender == "" ? gender : _selectedGender,
         'aboutMe': _aboutMe
@@ -78,7 +109,7 @@ class _ClientEditProfileState extends ConsumerState<ClientEditProfile> {
                   'firstName': _firstName,
                   'lastName': _lastName,
                   'birthday': _birthday,
-                  'photoURL': user.photoURL,
+                  'photoURL': imageUrl ?? user.photoURL,
                   'fullName': "$_firstName $_lastName",
                   'email': _email,
                   'phoneNumber': _phoneNumber,
@@ -129,27 +160,6 @@ class _ClientEditProfileState extends ConsumerState<ClientEditProfile> {
     );
   }
 
-  //__________Add_Skill popup________________________________________________
-  void showSkillPopUp() {
-    showDialog(
-      barrierDismissible: false,
-      context: context,
-      builder: (BuildContext context) {
-        return StatefulBuilder(
-          builder:
-              (BuildContext context, void Function(void Function()) setState) {
-            return Dialog(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(20.0),
-              ),
-              child: const SellerAddSkillPopUp(),
-            );
-          },
-        );
-      },
-    );
-  }
-
   //__________Confirmation Login________________________________________________
   void showImportSignIn(String? gender) {
     showDialog(
@@ -160,48 +170,6 @@ class _ClientEditProfileState extends ConsumerState<ClientEditProfile> {
       _onSubmit(gender);
     });
     ;
-  }
-
-  //__________Import_Profile_picture_popup_____________________________________
-  void showImportProfilePopUp() {
-    showDialog(
-      barrierDismissible: false,
-      context: context,
-      builder: (BuildContext context) {
-        return StatefulBuilder(
-          builder:
-              (BuildContext context, void Function(void Function()) setState) {
-            return Dialog(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(8.0),
-              ),
-              child: const ImportImagePopUp(),
-            );
-          },
-        );
-      },
-    );
-  }
-
-  //__________Save_Profile_success_popup_______________________________________
-  void saveProfilePopUp() {
-    showDialog(
-      barrierDismissible: false,
-      context: context,
-      builder: (BuildContext context) {
-        return StatefulBuilder(
-          builder:
-              (BuildContext context, void Function(void Function()) setState) {
-            return Dialog(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(20.0),
-              ),
-              child: const SaveProfilePopUp(),
-            );
-          },
-        );
-      },
-    );
   }
 
   Color borderColor(BuildContext context) {
@@ -236,234 +204,232 @@ class _ClientEditProfileState extends ConsumerState<ClientEditProfile> {
       title: "Edit Profile",
       body: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Form(
-                  key: _formKey,
-                  child: Column(
-                    children: [
-                      Row(
-                        children: [
-                          Stack(
-                            alignment: Alignment.bottomRight,
-                            children: [
-                              Container(
-                                height: 80,
-                                width: 80,
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  border: Border.all(color: kPrimaryColor),
-                                  image: DecorationImage(
-                                    image: NetworkImage(morrfUser.photoURL),
+        child: Padding(
+          padding: const EdgeInsets.only(top: 15),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Form(
+                    key: _formKey,
+                    child: Column(
+                      children: [
+                        Row(
+                          children: [
+                            Stack(
+                              alignment: Alignment.bottomRight,
+                              children: [
+                                CircleAvatar(
+                                  radius: 52,
+                                  backgroundColor: kPrimaryColor,
+                                  child: CircleAvatar(
+                                    radius: 50,
+                                    backgroundColor: Colors.grey,
+                                    foregroundImage: pickedImageFile != null
+                                        ? FileImage(pickedImageFile!)
+                                        : NetworkImage(morrfUser.photoURL)
+                                            as ImageProvider,
                                   ),
                                 ),
-                              ),
-                              GestureDetector(
-                                onTap: () {
-                                  showImportProfilePopUp();
-                                },
-                                child: Container(
-                                  padding: const EdgeInsets.all(5),
-                                  decoration: BoxDecoration(
-                                    color: kWhite,
-                                    shape: BoxShape.circle,
-                                    border: Border.all(color: kPrimaryColor),
-                                  ),
-                                  child: const Icon(
-                                    IconlyBold.camera,
-                                    color: kPrimaryColor,
-                                    size: 18,
+                                GestureDetector(
+                                  onTap: () => _pickImage(ImageSource.gallery),
+                                  child: Container(
+                                    padding: const EdgeInsets.all(5),
+                                    decoration: BoxDecoration(
+                                      color: kWhite,
+                                      shape: BoxShape.circle,
+                                      border: Border.all(color: kPrimaryColor),
+                                    ),
+                                    child: const Icon(
+                                      IconlyBold.camera,
+                                      color: kPrimaryColor,
+                                      size: 18,
+                                    ),
                                   ),
                                 ),
-                              ),
-                            ],
-                          ),
-                          const SizedBox(width: 10.0),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                user.displayName!,
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                                style: kTextStyle.copyWith(
-                                    color: kNeutralColor,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 18.0),
-                              ),
-                              Text(
-                                user.email!,
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                                style:
-                                    kTextStyle.copyWith(color: kSubTitleColor),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 30.0),
-                      MorrfInputField(
-                        key: _firstNameKey,
-                        inputType: TextInputType.name,
-                        placeholder: "First Name*",
-                        hint: "Enter your first name",
-                        initialValue: morrfUser.firstName,
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'You must have at least a first name.';
-                          }
-                          return null;
-                        },
-                        onSaved: (value) {
-                          setState(() {
-                            _firstName = value.toString();
-                          });
-                        },
-                      ),
-                      const SizedBox(height: 20.0),
-                      MorrfInputField(
-                        key: _lastNameKey,
-                        inputType: TextInputType.name,
-                        placeholder: "Last Name",
-                        hint: "Enter your first name",
-                        initialValue: morrfUser.lastName,
-                        onSaved: (value) {
-                          setState(() {
-                            _lastName = value.toString();
-                          });
-                        },
-                      ),
-                      const SizedBox(height: 20.0),
-                      MorrfInputField(
-                        key: _emailKey,
-                        placeholder: "Email",
-                        hint: "Enter your email",
-                        initialValue: morrfUser.email,
-                        inputType: TextInputType.emailAddress,
-                        validator: (value) {
-                          if (value == null ||
-                              value.trim().isEmpty ||
-                              !value.contains('@')) {
-                            return 'Please enter a valid email address.';
-                          }
-
-                          return null;
-                        },
-                        onSaved: (value) {
-                          setState(() {
-                            _email = value.toString();
-                          });
-                        },
-                      ),
-                      const SizedBox(height: 20.0),
-                      MorrfInputField(
-                        key: _phoneKey,
-                        inputType: TextInputType.phone,
-                        placeholder: "Phone Number",
-                        hint: "Enter your phone number",
-                        initialValue: morrfUser.phoneNumber?.replaceAllMapped(
-                            RegExp(r'(\d{3})(\d{3})(\d+)'),
-                            (Match m) => "(${m[1]}) ${m[2]}-${m[3]}"),
-                        onSaved: (value) {
-                          setState(() {
-                            _phoneNumber = value.toString().replaceAllMapped(
-                                RegExp(r'(\d{3})(\d{3})(\d+)'),
-                                (Match m) => "(${m[1]}) ${m[2]}-${m[3]}");
-                          });
-                        },
-                      ),
-                      const SizedBox(height: 10.0),
-                      MorrfInputField(
-                        key: _birthdayKey,
-                        controller: birthdayController,
-                        inputType: TextInputType.datetime,
-                        placeholder: "Birthday",
-                        hint: "Enter your birthday",
-                        onTap: () async {
-                          FocusScope.of(context).requestFocus(FocusNode());
-                          DateTime? picked = await showDatePicker(
-                              context: context,
-                              initialDate: DateTime.now(),
-                              firstDate: DateTime(1901),
-                              lastDate: DateTime(2030));
-                          if (picked != null) {
-                            setState(() => {
-                                  birthdayController.text =
-                                      "${picked.toMoment().month.toString()}-${picked.toMoment().day.toString()}-${picked.toMoment().year.toString()}",
-                                  _birthday = Timestamp.fromDate(picked)
-                                });
-                          }
-                        },
-                      ),
-                      const SizedBox(height: 20.0),
-                      FormField(
-                        initialValue: selectedGender,
-                        builder: (FormFieldState<dynamic> field) {
-                          return InputDecorator(
-                            decoration: InputDecoration(
-                              filled: true,
-                              constraints: const BoxConstraints(maxHeight: 56),
-                              enabledBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                    color: borderColor(context), width: 2.0),
-                                borderRadius: const BorderRadius.all(
-                                  Radius.circular(10.0),
-                                ),
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                borderRadius: const BorderRadius.all(
-                                  Radius.circular(10.0),
-                                ),
-                                borderSide: BorderSide(
-                                    color: borderColor(context), width: 2.0),
-                              ),
+                              ],
                             ),
-                            child: DropdownButtonHideUnderline(
-                                child: getGender(morrfUser.gender)),
-                          );
-                        },
-                      ),
-                      const SizedBox(height: 20.0),
-                      SizedBox(
-                        height: 150,
-                        child: MorrfInputField(
-                          key: _aboutMeKey,
+                            const SizedBox(width: 10.0),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                MorrfText(
+                                    text: user.displayName!,
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                    size: FontSize.h5),
+                                MorrfText(
+                                  text: user.email!,
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                  size: FontSize.p,
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 30.0),
+                        MorrfInputField(
+                          key: _firstNameKey,
+                          inputType: TextInputType.name,
+                          placeholder: "First Name*",
+                          hint: "Enter your first name",
+                          initialValue: morrfUser.firstName,
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'You must have at least a first name.';
+                            }
+                            return null;
+                          },
                           onSaved: (value) {
                             setState(() {
-                              _aboutMe = value.toString();
+                              _firstName = value.toString();
                             });
                           },
-                          initialValue: morrfUser.aboutMe,
-                          inputType: TextInputType.multiline,
-                          maxLines: null,
-                          expands: true,
-                          placeholder: 'About Me',
                         ),
-                      ),
-                      const SizedBox(height: 10.0),
-                    ],
+                        const SizedBox(height: 20.0),
+                        MorrfInputField(
+                          key: _lastNameKey,
+                          inputType: TextInputType.name,
+                          placeholder: "Last Name",
+                          hint: "Enter your first name",
+                          initialValue: morrfUser.lastName,
+                          onSaved: (value) {
+                            setState(() {
+                              _lastName = value.toString();
+                            });
+                          },
+                        ),
+                        const SizedBox(height: 20.0),
+                        MorrfInputField(
+                          key: _emailKey,
+                          placeholder: "Email",
+                          hint: "Enter your email",
+                          initialValue: morrfUser.email,
+                          inputType: TextInputType.emailAddress,
+                          validator: (value) {
+                            if (value == null ||
+                                value.trim().isEmpty ||
+                                !value.contains('@')) {
+                              return 'Please enter a valid email address.';
+                            }
+
+                            return null;
+                          },
+                          onSaved: (value) {
+                            setState(() {
+                              _email = value.toString();
+                            });
+                          },
+                        ),
+                        const SizedBox(height: 20.0),
+                        MorrfInputField(
+                          key: _phoneKey,
+                          inputType: TextInputType.phone,
+                          placeholder: "Phone Number",
+                          hint: "Enter your phone number",
+                          initialValue: morrfUser.phoneNumber?.replaceAllMapped(
+                              RegExp(r'(\d{3})(\d{3})(\d+)'),
+                              (Match m) => "(${m[1]}) ${m[2]}-${m[3]}"),
+                          onSaved: (value) {
+                            setState(() {
+                              _phoneNumber = value.toString().replaceAllMapped(
+                                  RegExp(r'(\d{3})(\d{3})(\d+)'),
+                                  (Match m) => "(${m[1]}) ${m[2]}-${m[3]}");
+                            });
+                          },
+                        ),
+                        const SizedBox(height: 10.0),
+                        MorrfInputField(
+                          key: _birthdayKey,
+                          controller: birthdayController,
+                          inputType: TextInputType.datetime,
+                          placeholder: "Birthday",
+                          hint: "Enter your birthday",
+                          onTap: () async {
+                            FocusScope.of(context).requestFocus(FocusNode());
+                            DateTime? picked = await showDatePicker(
+                                context: context,
+                                initialDate: DateTime.now(),
+                                firstDate: DateTime(1901),
+                                lastDate: DateTime(2030));
+                            if (picked != null) {
+                              setState(() => {
+                                    birthdayController.text =
+                                        "${picked.toMoment().month.toString()}-${picked.toMoment().day.toString()}-${picked.toMoment().year.toString()}",
+                                    _birthday = Timestamp.fromDate(picked)
+                                  });
+                            }
+                          },
+                        ),
+                        const SizedBox(height: 20.0),
+                        FormField(
+                          initialValue: selectedGender,
+                          builder: (FormFieldState<dynamic> field) {
+                            return InputDecorator(
+                              decoration: InputDecoration(
+                                filled: true,
+                                constraints:
+                                    const BoxConstraints(maxHeight: 56),
+                                enabledBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                      color: borderColor(context), width: 2.0),
+                                  borderRadius: const BorderRadius.all(
+                                    Radius.circular(10.0),
+                                  ),
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                  borderRadius: const BorderRadius.all(
+                                    Radius.circular(10.0),
+                                  ),
+                                  borderSide: BorderSide(
+                                      color: borderColor(context), width: 2.0),
+                                ),
+                              ),
+                              child: DropdownButtonHideUnderline(
+                                  child: getGender(morrfUser.gender)),
+                            );
+                          },
+                        ),
+                        const SizedBox(height: 20.0),
+                        SizedBox(
+                          height: 150,
+                          child: MorrfInputField(
+                            key: _aboutMeKey,
+                            onSaved: (value) {
+                              setState(() {
+                                _aboutMe = value.toString();
+                              });
+                            },
+                            initialValue: morrfUser.aboutMe,
+                            inputType: TextInputType.multiline,
+                            maxLines: null,
+                            expands: true,
+                            placeholder: 'About Me',
+                          ),
+                        ),
+                        const SizedBox(height: 10.0),
+                      ],
+                    ),
                   ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 10.0),
-            SafeArea(
-              child: MorrfButton(
-                onPressed: () {
-                  showImportSignIn(morrfUser.gender);
-                  // _onSubmit(gender);
-                },
-                fullWidth: true,
-                child:
-                    const MorrfText(text: 'Update Profile', size: FontSize.p),
+                ],
               ),
-            ),
-          ],
+              const SizedBox(height: 10.0),
+              SafeArea(
+                child: MorrfButton(
+                  onPressed: () {
+                    showImportSignIn(morrfUser.gender);
+                    // _onSubmit(gender);
+                  },
+                  fullWidth: true,
+                  child:
+                      const MorrfText(text: 'Update Profile', size: FontSize.p),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

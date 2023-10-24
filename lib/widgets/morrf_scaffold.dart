@@ -22,20 +22,10 @@ class _MorrfScaffoldState extends State<MorrfScaffold> {
         title: MorrfText(text: widget.title, size: FontSize.h5),
         centerTitle: true,
       ),
-      body: Padding(
-        padding: const EdgeInsets.only(top: 30.0),
-        child: Container(
-            padding:
-                const EdgeInsets.only(left: 15.0, right: 15.0, bottom: 15.0),
-            width: MediaQuery.of(context).size.width,
-            decoration: const BoxDecoration(
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(30.0),
-                topRight: Radius.circular(30.0),
-              ),
-            ),
-            child: widget.body),
-      ),
+      body: Container(
+          padding: const EdgeInsets.only(left: 15.0, right: 15.0, bottom: 15.0),
+          width: MediaQuery.of(context).size.width,
+          child: widget.body),
     );
   }
 }

@@ -57,15 +57,10 @@ class _ClientProfileDetailsState extends ConsumerState<ClientProfileDetails> {
                   const SizedBox(height: 15.0),
                   Row(
                     children: [
-                      Container(
-                        height: 80,
-                        width: 80,
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          image: DecorationImage(
-                            image: NetworkImage(morrfUser.photoURL),
-                          ),
-                        ),
+                      CircleAvatar(
+                        radius: 50,
+                        backgroundColor: Colors.grey,
+                        foregroundImage: NetworkImage(morrfUser.photoURL),
                       ),
                       const SizedBox(width: 10.0),
                       Column(
