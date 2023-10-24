@@ -12,7 +12,7 @@ import '../notification/seller_notification.dart';
 import 'my service/my_service.dart';
 
 class SellerHomeScreen extends StatefulWidget {
-  const SellerHomeScreen({Key? key}) : super(key: key);
+  const SellerHomeScreen({super.key});
 
   @override
   State<SellerHomeScreen> createState() => _SellerHomeScreenState();

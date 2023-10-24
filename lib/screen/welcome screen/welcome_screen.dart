@@ -8,7 +8,7 @@ import '../seller screen/seller authentication/seller_sign_up.dart';
 import '../../widgets/button_global.dart';
 
 class WelcomeScreen extends StatefulWidget {
-  const WelcomeScreen({Key? key}) : super(key: key);
+  const WelcomeScreen({super.key});
 
   @override
   State<WelcomeScreen> createState() => _WelcomeScreenState();

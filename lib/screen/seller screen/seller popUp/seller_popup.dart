@@ -15,7 +15,7 @@ import '../buyer request/create_customer_offer.dart';
 import '../seller authentication/seller_log_in.dart';
 
 class SellerAddLanguagePopUp extends StatefulWidget {
-  const SellerAddLanguagePopUp({Key? key}) : super(key: key);
+  const SellerAddLanguagePopUp({super.key});
 
   @override
   State<SellerAddLanguagePopUp> createState() => _SellerAddLanguagePopUpState();
@@ -140,7 +140,7 @@ class _SellerAddLanguagePopUpState extends State<SellerAddLanguagePopUp> {
 }
 
 class SellerAddSkillPopUp extends StatefulWidget {
-  const SellerAddSkillPopUp({Key? key}) : super(key: key);
+  const SellerAddSkillPopUp({super.key});
 
   @override
   State<SellerAddSkillPopUp> createState() => _SellerAddSkillPopUpState();
@@ -265,7 +265,7 @@ class _SellerAddSkillPopUpState extends State<SellerAddSkillPopUp> {
 }
 
 class ImportImagePopUp extends StatefulWidget {
-  const ImportImagePopUp({Key? key}) : super(key: key);
+  const ImportImagePopUp({super.key});
 
   @override
   State<ImportImagePopUp> createState() => _ImportImagePopUpState();
@@ -340,7 +340,7 @@ class _ImportImagePopUpState extends State<ImportImagePopUp> {
 }
 
 class SaveProfilePopUp extends StatefulWidget {
-  const SaveProfilePopUp({Key? key}) : super(key: key);
+  const SaveProfilePopUp({super.key});
 
   @override
   State<SaveProfilePopUp> createState() => _SaveProfilePopUpState();
@@ -403,7 +403,7 @@ class _SaveProfilePopUpState extends State<SaveProfilePopUp> {
 }
 
 class BlockingReasonPopUp extends StatefulWidget {
-  const BlockingReasonPopUp({Key? key}) : super(key: key);
+  const BlockingReasonPopUp({super.key});
 
   @override
   State<BlockingReasonPopUp> createState() => _BlockingReasonPopUpState();
@@ -474,7 +474,7 @@ class _BlockingReasonPopUpState extends State<BlockingReasonPopUp> {
 }
 
 class ImportDocumentPopUp extends StatefulWidget {
-  const ImportDocumentPopUp({Key? key}) : super(key: key);
+  const ImportDocumentPopUp({super.key});
 
   @override
   State<ImportDocumentPopUp> createState() => _ImportDocumentPopUpState();
@@ -549,7 +549,7 @@ class _ImportDocumentPopUpState extends State<ImportDocumentPopUp> {
 }
 
 class AddFAQPopUp extends StatefulWidget {
-  const AddFAQPopUp({Key? key}) : super(key: key);
+  const AddFAQPopUp({super.key});
 
   @override
   State<AddFAQPopUp> createState() => _AddFAQPopUpState();
@@ -645,7 +645,7 @@ class _AddFAQPopUpState extends State<AddFAQPopUp> {
 }
 
 class CancelReasonPopUp extends StatefulWidget {
-  const CancelReasonPopUp({Key? key}) : super(key: key);
+  const CancelReasonPopUp({super.key});
 
   @override
   State<CancelReasonPopUp> createState() => _CancelReasonPopUpState();
@@ -732,7 +732,7 @@ class _CancelReasonPopUpState extends State<CancelReasonPopUp> {
 }
 
 class OrderCompletePopUp extends StatefulWidget {
-  const OrderCompletePopUp({Key? key}) : super(key: key);
+  const OrderCompletePopUp({super.key});
 
   @override
   State<OrderCompletePopUp> createState() => _OrderCompletePopUpState();
@@ -833,7 +833,7 @@ class _OrderCompletePopUpState extends State<OrderCompletePopUp> {
 }
 
 class ReviewSubmittedPopUp extends StatefulWidget {
-  const ReviewSubmittedPopUp({Key? key}) : super(key: key);
+  const ReviewSubmittedPopUp({super.key});
 
   @override
   State<ReviewSubmittedPopUp> createState() => _ReviewSubmittedPopUpState();
@@ -903,7 +903,7 @@ class _ReviewSubmittedPopUpState extends State<ReviewSubmittedPopUp> {
 }
 
 class SendOfferPopUp extends StatefulWidget {
-  const SendOfferPopUp({Key? key}) : super(key: key);
+  const SendOfferPopUp({super.key});
 
   @override
   State<SendOfferPopUp> createState() => _SendOfferPopUpState();
@@ -1073,7 +1073,7 @@ class _SendOfferPopUpState extends State<SendOfferPopUp> {
 }
 
 class FavouriteWarningPopUp extends StatefulWidget {
-  const FavouriteWarningPopUp({Key? key}) : super(key: key);
+  const FavouriteWarningPopUp({super.key});
 
   @override
   State<FavouriteWarningPopUp> createState() => _FavouriteWarningPopUpState();
@@ -1152,7 +1152,7 @@ class _FavouriteWarningPopUpState extends State<FavouriteWarningPopUp> {
 }
 
 class VerifyPopUp extends StatefulWidget {
-  const VerifyPopUp({Key? key}) : super(key: key);
+  const VerifyPopUp({super.key});
 
   @override
   State<VerifyPopUp> createState() => _VerifyPopUpState();
@@ -1214,7 +1214,7 @@ class _VerifyPopUpState extends State<VerifyPopUp> {
 }
 
 class WithdrawAmountPopUp extends StatefulWidget {
-  const WithdrawAmountPopUp({Key? key}) : super(key: key);
+  const WithdrawAmountPopUp({super.key});
 
   @override
   State<WithdrawAmountPopUp> createState() => _WithdrawAmountPopUpState();
@@ -1333,7 +1333,7 @@ class _WithdrawAmountPopUpState extends State<WithdrawAmountPopUp> {
 }
 
 class WithdrawHistoryPopUp extends StatefulWidget {
-  const WithdrawHistoryPopUp({Key? key}) : super(key: key);
+  const WithdrawHistoryPopUp({super.key});
 
   @override
   State<WithdrawHistoryPopUp> createState() => _WithdrawHistoryPopUpState();

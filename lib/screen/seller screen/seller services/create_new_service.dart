@@ -12,7 +12,7 @@ import '../../../widgets/constant.dart';
 import 'create_service.dart';
 
 class CreateNewService extends StatefulWidget {
-  const CreateNewService({Key? key}) : super(key: key);
+  const CreateNewService({super.key});
 
   @override
   State<CreateNewService> createState() => _CreateNewServiceState();

@@ -8,7 +8,7 @@ import 'package:morrf/widgets/morrf_button.dart';
 import 'package:morrf/widgets/morrf_input_field.dart';
 
 class ClientForgotPassword extends StatefulWidget {
-  const ClientForgotPassword({Key? key}) : super(key: key);
+  const ClientForgotPassword({super.key});
 
   @override
   State<ClientForgotPassword> createState() => _ClientForgotPasswordState();

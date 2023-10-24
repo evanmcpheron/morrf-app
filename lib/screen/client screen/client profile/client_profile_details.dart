@@ -12,7 +12,7 @@ import 'package:morrf/widgets/morrf_scaffold.dart';
 import 'client_edit_profile_details.dart';
 
 class ClientProfileDetails extends ConsumerStatefulWidget {
-  const ClientProfileDetails({Key? key}) : super(key: key);
+  const ClientProfileDetails({super.key});
 
   @override
   ConsumerState<ClientProfileDetails> createState() =>

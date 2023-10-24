@@ -7,7 +7,7 @@ import 'create_new_job_post.dart';
 import 'job_details.dart';
 
 class JobPost extends StatefulWidget {
-  const JobPost({Key? key}) : super(key: key);
+  const JobPost({super.key});
 
   @override
   State<JobPost> createState() => _JobPostState();

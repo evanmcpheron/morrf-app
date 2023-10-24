@@ -4,7 +4,7 @@ import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import '../../../widgets/constant.dart';
 
 class ClientAllCategories extends StatefulWidget {
-  const ClientAllCategories({Key? key}) : super(key: key);
+  const ClientAllCategories({super.key});
 
   @override
   State<ClientAllCategories> createState() => _ClientAllCategoriesState();

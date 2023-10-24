@@ -10,7 +10,7 @@ import '../../../widgets/icons.dart';
 import '../seller home/seller_home.dart';
 
 class SellerLogIn extends StatefulWidget {
-  const SellerLogIn({Key? key}) : super(key: key);
+  const SellerLogIn({super.key});
 
   @override
   State<SellerLogIn> createState() => _SellerLogInState();

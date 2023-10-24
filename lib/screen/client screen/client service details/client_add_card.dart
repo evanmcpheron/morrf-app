@@ -11,7 +11,7 @@ import '../../../widgets/constant.dart';
 import '../client popup/client_popup.dart';
 
 class AddNewCard extends StatefulWidget {
-  const AddNewCard({Key? key}) : super(key: key);
+  const AddNewCard({super.key});
 
   @override
   State<AddNewCard> createState() => _AddNewCardState();

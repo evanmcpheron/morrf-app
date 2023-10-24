@@ -20,7 +20,7 @@ import 'package:morrf/widgets/morrf_input_field.dart';
 import 'package:morrf/widgets/morrf_scaffold.dart';
 
 class ClientEditProfile extends ConsumerStatefulWidget {
-  const ClientEditProfile({Key? key}) : super(key: key);
+  const ClientEditProfile({super.key});
 
   @override
   ConsumerState<ClientEditProfile> createState() => _ClientEditProfileState();
