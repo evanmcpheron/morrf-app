@@ -36,22 +36,12 @@ class ClientProfile extends ConsumerStatefulWidget {
 
 class _ClientProfileState extends ConsumerState<ClientProfile> {
   User? user = FirebaseAuth.instance.currentUser;
-  bool isExpandedPayment = false;
-  bool isExpandedDeposit = false;
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
+    bool isSignedIn = user != null;
+
     MorrfUser morrfUser = ref.read(morrfUserProvider);
-    bool isSignedIn = FirebaseAuth.instance.currentUser != null;
     return Scaffold(
       key: UniqueKey(),
       appBar: AppBar(
@@ -139,9 +129,6 @@ class _ClientProfileState extends ConsumerState<ClientProfile> {
                       tilePadding: const EdgeInsets.only(bottom: 10),
                       collapsedIconColor: kLightNeutralColor,
                       iconColor: kLightNeutralColor,
-                      onExpansionChanged: (bool expanded) {
-                        setState(() => isExpandedPayment = expanded);
-                      },
                       title: const MorrfText(
                           text: 'Payment Method', size: FontSize.lp),
                       leading: Container(
@@ -155,13 +142,9 @@ class _ClientProfileState extends ConsumerState<ClientProfile> {
                           color: Color(0xFFFF3B30),
                         ),
                       ),
-                      trailing: isExpandedPayment
-                          ? const FaIcon(
-                              FontAwesomeIcons.chevronDown,
-                            )
-                          : const FaIcon(
-                              FontAwesomeIcons.chevronRight,
-                            ),
+                      trailing: const FaIcon(
+                        FontAwesomeIcons.chevronRight,
+                      ),
                       children: [
                         ListTile(
                           visualDensity: const VisualDensity(vertical: -3),
@@ -239,16 +222,9 @@ class _ClientProfileState extends ConsumerState<ClientProfile> {
                           color: Color(0xFFFF7A00),
                         ),
                       ),
-                      onExpansionChanged: (bool expanded) {
-                        setState(() => isExpandedDeposit = expanded);
-                      },
-                      trailing: isExpandedDeposit
-                          ? const FaIcon(
-                              FontAwesomeIcons.chevronDown,
-                            )
-                          : const FaIcon(
-                              FontAwesomeIcons.chevronRight,
-                            ),
+                      trailing: const FaIcon(
+                        FontAwesomeIcons.chevronRight,
+                      ),
                       children: [
                         ListTile(
                           visualDensity: const VisualDensity(vertical: -3),

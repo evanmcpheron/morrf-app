@@ -40,7 +40,7 @@ class _SellerAddPaymentMethodState extends State<SellerAddPaymentMethod> {
         elevation: 0,
         iconTheme: const IconThemeData(color: kNeutralColor),
         title: Text(
-          'Add Payment Method',
+          'Add Payment Methodsss',
           style: kTextStyle.copyWith(
               color: kNeutralColor, fontWeight: FontWeight.bold),
         ),
