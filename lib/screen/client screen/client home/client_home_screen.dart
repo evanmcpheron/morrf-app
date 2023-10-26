@@ -78,7 +78,7 @@ class _ClientHomeScreenState extends ConsumerState<ClientHomeScreen> {
                 shape: BoxShape.circle,
                 border: Border.all(),
               ),
-              child: FaIcon(FontAwesomeIcons.solidBell),
+              child: const FaIcon(FontAwesomeIcons.solidBell),
             ),
           ),
         ),
@@ -202,7 +202,7 @@ class _ClientHomeScreenState extends ConsumerState<ClientHomeScreen> {
                     const EdgeInsets.only(left: 15.0, right: 15.0, top: 10),
                 child: Row(
                   children: [
-                    MorrfText(
+                    const MorrfText(
                       text: 'Popular Services',
                       size: FontSize.h5,
                     ),
@@ -297,13 +297,13 @@ class _ClientHomeScreenState extends ConsumerState<ClientHomeScreen> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
-                                  Flexible(
+                                  const Flexible(
                                     child: SizedBox(
                                       width: 190,
-                                      child: Text(
-                                        'Mobile UI UX design or app design',
-                                        style: kTextStyle.copyWith(
-                                            fontWeight: FontWeight.bold),
+                                      child: MorrfText(
+                                        text:
+                                            'Mobile UI UX design or app design',
+                                        size: FontSize.lp,
                                         maxLines: 2,
                                         overflow: TextOverflow.ellipsis,
                                       ),
@@ -319,7 +319,8 @@ class _ClientHomeScreenState extends ConsumerState<ClientHomeScreen> {
                                         size: 18.0,
                                       ),
                                       const SizedBox(width: 2.0),
-                                      MorrfText(text: '5.0', size: FontSize.p),
+                                      const MorrfText(
+                                          text: '5.0', size: FontSize.p),
                                       const SizedBox(width: 2.0),
                                       MorrfText(
                                         text: '(520)',
@@ -332,8 +333,8 @@ class _ClientHomeScreenState extends ConsumerState<ClientHomeScreen> {
                                       const SizedBox(width: 40),
                                       Row(
                                         children: [
-                                          MorrfText(
-                                              text: 'Price', size: FontSize.p),
+                                          const MorrfText(
+                                              text: 'Price ', size: FontSize.p),
                                           MorrfText(
                                               text: '$currencySign${30}',
                                               size: FontSize.p,
@@ -361,7 +362,7 @@ class _ClientHomeScreenState extends ConsumerState<ClientHomeScreen> {
                                       Column(
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
-                                        children: [
+                                        children: const [
                                           MorrfText(
                                               text: 'William Liam',
                                               maxLines: 1,
@@ -390,7 +391,7 @@ class _ClientHomeScreenState extends ConsumerState<ClientHomeScreen> {
                 padding: const EdgeInsets.only(left: 15.0, right: 15.0),
                 child: Row(
                   children: [
-                    MorrfText(
+                    const MorrfText(
                       text: 'Top Sellers',
                       size: FontSize.h5,
                     ),
@@ -501,7 +502,7 @@ class _ClientHomeScreenState extends ConsumerState<ClientHomeScreen> {
                 padding: const EdgeInsets.only(left: 15.0, right: 15.0),
                 child: Row(
                   children: [
-                    MorrfText(
+                    const MorrfText(
                       text: 'Recent Viewed',
                       size: FontSize.h5,
                     ),
