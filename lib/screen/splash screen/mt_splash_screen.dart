@@ -29,7 +29,7 @@ class _SplashScreenState extends State<SplashScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Image.asset(
-        "assets/images/morrf_splash_screen.png",
+        "images/morrf_splash_screen.png",
         fit: BoxFit.cover,
         height: double.infinity,
         width: double.infinity,

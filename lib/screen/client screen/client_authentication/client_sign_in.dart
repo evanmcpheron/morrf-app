@@ -6,7 +6,7 @@ import 'package:get/get.dart';
 import 'package:morrf/providers/user_provider.dart';
 import 'package:morrf/screen/client%20screen/client_authentication/client_sign_up.dart';
 import 'package:morrf/screen/welcome%20screen/welcome_screen.dart';
-import 'package:morrf/utils/auth_service.dart';
+import 'package:morrf/services/auth_service.dart';
 import 'package:morrf/utils/constants/special_color.dart';
 import 'package:morrf/utils/enums/font_size.dart';
 import 'package:morrf/utils/enums/severity.dart';
@@ -94,7 +94,7 @@ class _ClientSignInState extends ConsumerState<ClientSignIn> {
                 width: 85,
                 decoration: const BoxDecoration(
                   image: DecorationImage(
-                      image: AssetImage('assets/images/grey-logo.png'),
+                      image: AssetImage('images/grey-logo.png'),
                       fit: BoxFit.cover),
                 ),
               ),

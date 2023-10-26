@@ -60,7 +60,7 @@ class _ClientHomeScreenState extends ConsumerState<ClientHomeScreen> {
                   image: DecorationImage(
                       image: isSignedIn
                           ? NetworkImage(user!.photoURL!)
-                          : const AssetImage('assets/images/user_profile.jpg')
+                          : const AssetImage('images/user_profile.jpg')
                               as ImageProvider,
                       fit: BoxFit.cover),
                 ),

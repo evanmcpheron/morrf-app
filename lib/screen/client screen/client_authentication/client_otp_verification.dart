@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:morrf/screen/client%20screen/client%20home/client_home.dart';
 import 'package:morrf/widgets/button_global.dart';
+import 'package:morrf/widgets/constant.dart';
 import 'package:pinput/pinput.dart';
-
-import '../../../widgets/constant.dart';
-import 'client_create_profile.dart';
 
 class ClientOtpVerification extends StatefulWidget {
   const ClientOtpVerification({super.key});
@@ -106,7 +105,7 @@ class _ClientOtpVerificationState extends State<ClientOtpVerification> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => const ClientCreateProfile(),
+                        builder: (context) => ClientHome(),
                       ),
                     );
                   },

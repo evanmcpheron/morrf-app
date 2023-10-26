@@ -20,7 +20,7 @@ class _LoadingPageState extends State<LoadingPage> {
           decoration: const BoxDecoration(
             image: DecorationImage(
                 image: AssetImage(
-                  'assets/images/grey-logo.png',
+                  'images/grey-logo.png',
                 ),
                 fit: BoxFit.cover),
           ),

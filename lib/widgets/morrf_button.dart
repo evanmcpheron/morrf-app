@@ -39,9 +39,9 @@ class _MorrfButtonState extends State<MorrfButton> {
     return ElevatedButton(
         style: ElevatedButton.styleFrom(
           minimumSize:
-              widget.fullWidth != null ? const Size.fromHeight(50) : null,
+              widget.fullWidth != null ? const Size.fromHeight(65) : null,
           backgroundColor: getSeverity(),
-          fixedSize: const Size(0, 48),
+          // fixedSize: const Size(null, 48),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10.0),
           ),

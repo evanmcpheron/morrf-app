@@ -22,17 +22,7 @@ class _CreateServiceState extends State<CreateService> {
       appBar: AppBar(
         backgroundColor: kDarkWhite,
         elevation: 0,
-        iconTheme: const IconThemeData(color: kNeutralColor),
-        title: Text(
-          'Create Service',
-          style: kTextStyle.copyWith(
-              color: kNeutralColor, fontWeight: FontWeight.bold),
-        ),
-        centerTitle: true,
-      ),
-      floatingActionButton: Padding(
-        padding: const EdgeInsets.only(bottom: 20.0),
-        child: FloatingActionButton(
+        leading: ElevatedButton(
           onPressed: () {
             setState(
               () {
@@ -44,12 +34,18 @@ class _CreateServiceState extends State<CreateService> {
               },
             );
           },
-          backgroundColor: kPrimaryColor,
           child: const Icon(
             FeatherIcons.plus,
             color: kWhite,
           ),
         ),
+        iconTheme: const IconThemeData(color: kNeutralColor),
+        title: Text(
+          'Create Service',
+          style: kTextStyle.copyWith(
+              color: kNeutralColor, fontWeight: FontWeight.bold),
+        ),
+        centerTitle: true,
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
       body: Padding(

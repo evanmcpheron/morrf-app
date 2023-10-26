@@ -1,145 +1,195 @@
 import 'package:flutter/material.dart';
-import 'package:morrf/screen/seller%20screen/add%20payment%20method/seller_add_paypal.dart';
-import 'package:nb_utils/nb_utils.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:get/get.dart';
+import 'package:morrf/models/stripe/card_model.dart';
+import 'package:morrf/providers/card_provider.dart';
+import 'package:morrf/providers/loading_provider.dart';
+import 'package:morrf/utils/enums/font_size.dart';
+import 'package:morrf/utils/format.dart';
+import 'package:morrf/widgets/morff_text.dart';
+import 'package:morrf/widgets/morrf_button.dart';
+import 'package:morrf/widgets/morrf_scaffold.dart';
 
-import '../../../widgets/constant.dart';
 import 'add_credit_card.dart';
 
-class SellerAddPaymentMethod extends StatefulWidget {
+class SellerAddPaymentMethod extends ConsumerStatefulWidget {
   const SellerAddPaymentMethod({super.key});
 
   @override
-  State<SellerAddPaymentMethod> createState() => _SellerAddPaymentMethodState();
+  ConsumerState<SellerAddPaymentMethod> createState() =>
+      _SellerAddPaymentMethodState();
 }
 
-class _SellerAddPaymentMethodState extends State<SellerAddPaymentMethod> {
+class _SellerAddPaymentMethodState
+    extends ConsumerState<SellerAddPaymentMethod> {
+  bool isLoading = false;
   List<String> accList = [
-    'PayPal',
     'Credit or Debit Card',
-    'bkash',
   ];
 
-  List<String> imageList = [
-    'images/paypal.png',
-    'images/card.png',
-    'images/bkash.png',
-  ];
+  List<IconData> imageList = [FontAwesomeIcons.creditCard];
 
   List<Widget> linkList = [
-    const SellerAssPaypal(),
     const AddCreditCard(),
-    const SellerAssPaypal(),
   ];
 
   @override
+  void initState() {
+    super.initState();
+
+    ref.read(morrfCrediCardProvider.notifier).getCards();
+  }
+
+  String getLogo(String brand) {
+    switch (brand.toLowerCase()) {
+      case "visa":
+        return 'images/cards/visa.svg';
+      case "mastercard":
+        return 'images/cards/mastercard.svg';
+      case "discover":
+        return 'images/cards/discover.svg';
+      case "amex":
+        return 'images/cards/amex.svg';
+      default:
+        return 'images/cards/visa.svg';
+    }
+  }
+
+  void updateDefault(String cardId) {
+    ref
+        .read(morrfCrediCardProvider.notifier)
+        .updateDefaultCard(cardId, ref.read(loadingProvider.notifier));
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: kDarkWhite,
-      appBar: AppBar(
-        backgroundColor: kDarkWhite,
-        elevation: 0,
-        iconTheme: const IconThemeData(color: kNeutralColor),
-        title: Text(
-          'Add Payment Methodsss',
-          style: kTextStyle.copyWith(
-              color: kNeutralColor, fontWeight: FontWeight.bold),
-        ),
-        centerTitle: true,
-      ),
-      body: Padding(
-        padding: const EdgeInsets.only(top: 20.0),
-        child: Container(
-          height: context.height(),
-          padding: const EdgeInsets.only(
-            left: 15.0,
-            right: 15.0,
-          ),
-          width: context.width(),
-          decoration: const BoxDecoration(
-            color: kWhite,
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(30.0),
-              topRight: Radius.circular(30.0),
-            ),
-          ),
-          child: SingleChildScrollView(
+    List<MorrfCreditCard> creditCards = ref.watch(morrfCrediCardProvider);
+
+    return MorrfScaffold(
+      title: "Payment Methods",
+      body: Column(
+        children: [
+          SingleChildScrollView(
             physics: const BouncingScrollPhysics(),
             child: Column(
+              mainAxisSize: MainAxisSize.max,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const SizedBox(height: 20.0),
-                ListView.builder(
-                  itemCount: 3,
-                  physics: const NeverScrollableScrollPhysics(),
-                  shrinkWrap: true,
-                  padding: const EdgeInsets.only(bottom: 10.0),
-                  itemBuilder: (_, i) {
-                    return Padding(
-                      padding: const EdgeInsets.only(bottom: 10.0),
-                      child: Container(
-                        padding: const EdgeInsets.all(8.0),
-                        decoration: BoxDecoration(
-                          color: kWhite,
-                          borderRadius: BorderRadius.circular(10.0),
-                          border: Border.all(color: kBorderColorTextField),
-                          boxShadow: const [
-                            BoxShadow(
-                              color: kDarkWhite,
-                              blurRadius: 4.0,
-                              spreadRadius: 2.0,
-                              offset: Offset(0, 2),
-                            ),
-                          ],
-                        ),
-                        child: ListTile(
-                          visualDensity: const VisualDensity(vertical: -3),
-                          contentPadding: EdgeInsets.zero,
-                          horizontalTitleGap: 10,
-                          leading: Container(
-                            height: 40,
-                            width: 40,
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              image: DecorationImage(
-                                  image: AssetImage(imageList[i]),
-                                  fit: BoxFit.cover),
-                            ),
-                          ),
-                          title: Text(
-                            accList[i],
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            style: kTextStyle.copyWith(
-                                color: kNeutralColor,
-                                fontWeight: FontWeight.bold),
-                          ),
-                          trailing: Container(
-                            padding: const EdgeInsets.only(
-                                left: 20, right: 20, top: 10, bottom: 10),
-                            height: 40,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(6.0),
-                              color: kPrimaryColor,
-                            ),
-                            child: GestureDetector(
-                              onTap: () => linkList[i].launch(context),
-                              child: Text(
-                                'Add',
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                                style: kTextStyle.copyWith(
-                                    color: kWhite, fontWeight: FontWeight.bold),
+                creditCards.isEmpty
+                    ? const Center(
+                        child: MorrfText(
+                            text: "You don't have any cards on file",
+                            size: FontSize.h5),
+                      )
+                    : ListView.builder(
+                        itemCount: creditCards.length,
+                        physics: const NeverScrollableScrollPhysics(),
+                        shrinkWrap: true,
+                        padding: const EdgeInsets.only(bottom: 10.0),
+                        itemBuilder: (_, i) {
+                          MorrfCreditCard card = creditCards[i];
+                          return Padding(
+                            padding: const EdgeInsets.only(top: 8),
+                            child: Dismissible(
+                              key: Key(card.id),
+                              onDismissed: (direction) {
+                                ref
+                                    .read(morrfCrediCardProvider.notifier)
+                                    .deleteCard(card.id);
+                              },
+                              confirmDismiss: (direction) async {
+                                if (card.isDefault) {
+                                  Get.snackbar("OOPS!",
+                                      "Pick a new default payment method before you delete this one.");
+                                  return false;
+                                }
+                                return await showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return AlertDialog(
+                                      title: const Text("Confirm"),
+                                      content: const Text(
+                                          "Are you sure you wish to delete this paymentMethod?"),
+                                      actions: <Widget>[
+                                        MorrfButton(
+                                            onPressed: () =>
+                                                Navigator.of(context).pop(true),
+                                            child: const Text("DELETE")),
+                                        MorrfButton(
+                                          onPressed: () =>
+                                              Navigator.of(context).pop(false),
+                                          child: const Text("CANCEL"),
+                                        ),
+                                      ],
+                                    );
+                                  },
+                                );
+                              },
+                              background: Container(
+                                  color: Colors.red,
+                                  child: Row(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Padding(
+                                          padding: EdgeInsets.only(left: 8.0),
+                                          child: FaIcon(
+                                              FontAwesomeIcons.trashCan)),
+                                      Padding(
+                                          padding: EdgeInsets.only(right: 8.0),
+                                          child: FaIcon(
+                                              FontAwesomeIcons.trashCan)),
+                                    ],
+                                  )),
+                              child: ListTile(
+                                leading: SvgPicture.asset(
+                                  getLogo(card.brand),
+                                  semanticsLabel: getLogo(card.brand),
+                                  color: Theme.of(context)
+                                      .colorScheme
+                                      .onBackground,
+                                  width: MediaQuery.of(context).size.width / 8,
+                                ),
+                                tileColor: Theme.of(context).cardColor,
+                                title: MorrfText(
+                                    text: capitalize(card.brand),
+                                    size: FontSize.h6),
+                                subtitle: MorrfText(
+                                  text: "**** **** **** ${card.last4}",
+                                  size: FontSize.p,
+                                ),
+                                onTap: () => card.isDefault
+                                    ? print("do nothing")
+                                    : updateDefault(card.id),
+                                trailing: MorrfText(
+                                    text: card.isDefault ? "Default" : "",
+                                    size: FontSize.h6),
+                                shape: RoundedRectangleBorder(
+                                  side: const BorderSide(
+                                      color: Colors.black, width: 1),
+                                  borderRadius: BorderRadius.circular(15),
+                                ),
                               ),
                             ),
-                          ),
-                        ),
+                          );
+                        },
                       ),
-                    );
-                  },
-                )
               ],
             ),
           ),
-        ),
+          Expanded(child: Container()),
+          SafeArea(
+            child: MorrfButton(
+                onPressed: () => Get.to(() => const AddCreditCard()),
+                fullWidth: true,
+                child: const MorrfText(text: "Add a Card", size: FontSize.h5)),
+          ),
+        ],
       ),
     );
   }

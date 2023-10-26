@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:morrf/models/user/morrf_user.dart';
-import 'package:morrf/utils/firestore_service.dart';
+import 'package:morrf/services/firestore/firestore_user.dart';
 
 class AuthService extends ChangeNotifier {
   User? authenticatedUser = FirebaseAuth.instance.currentUser;

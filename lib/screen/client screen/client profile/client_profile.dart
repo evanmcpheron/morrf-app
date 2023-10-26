@@ -10,7 +10,7 @@ import 'package:morrf/screen/client%20screen/client%20home/client_home.dart';
 import 'package:morrf/screen/client%20screen/client_authentication/client_sign_in.dart';
 import 'package:morrf/screen/client%20screen/client_authentication/client_sign_up.dart';
 import 'package:morrf/screen/seller%20screen/add%20payment%20method/seller_add_payment_method.dart';
-import 'package:morrf/utils/auth_service.dart';
+import 'package:morrf/services/auth_service.dart';
 import 'package:morrf/utils/enums/font_size.dart';
 import 'package:morrf/widgets/morff_text.dart';
 import 'package:morrf/widgets/theme_switcher.dart';
@@ -60,7 +60,7 @@ class _ClientProfileState extends ConsumerState<ClientProfile> {
               image: DecorationImage(
                   image: isSignedIn
                       ? NetworkImage(morrfUser.photoURL)
-                      : const AssetImage('assets/images/user_profile.jpg')
+                      : const AssetImage('images/user_profile.jpg')
                           as ImageProvider,
                   fit: BoxFit.cover),
             ),
@@ -123,14 +123,14 @@ class _ClientProfileState extends ConsumerState<ClientProfile> {
                       trailing: const FaIcon(FontAwesomeIcons.chevronRight),
                     )
                   : const SizedBox(),
+              // PRE-MVP version of item below. Delete this when we implement billing addresses.
               isSignedIn
-                  ? ExpansionTile(
-                      childrenPadding: EdgeInsets.zero,
-                      tilePadding: const EdgeInsets.only(bottom: 10),
-                      collapsedIconColor: kLightNeutralColor,
+                  ? ListTile(
+                      onTap: () => Get.to(() => const SellerAddPaymentMethod()),
+                      visualDensity: const VisualDensity(vertical: -3),
+                      horizontalTitleGap: 10,
                       iconColor: kLightNeutralColor,
-                      title: const MorrfText(
-                          text: 'Payment Method', size: FontSize.lp),
+                      contentPadding: const EdgeInsets.only(bottom: 20),
                       leading: Container(
                         padding: const EdgeInsets.all(10.0),
                         decoration: const BoxDecoration(
@@ -142,42 +142,70 @@ class _ClientProfileState extends ConsumerState<ClientProfile> {
                           color: Color(0xFFFF3B30),
                         ),
                       ),
-                      trailing: const FaIcon(
-                        FontAwesomeIcons.chevronRight,
-                      ),
-                      children: [
-                        ListTile(
-                          visualDensity: const VisualDensity(vertical: -3),
-                          horizontalTitleGap: 10,
-                          contentPadding: const EdgeInsets.only(left: 60),
-                          title: const MorrfText(
-                              text: 'Add Card',
-                              overflow: TextOverflow.ellipsis,
-                              maxLines: 1,
-                              size: FontSize.lp),
-                          trailing: const FaIcon(
-                            FontAwesomeIcons.chevronRight,
-                          ),
-                          onTap: () =>
-                              Get.to(() => const SellerAddPaymentMethod()),
-                        ),
-                        ListTile(
-                          onTap: () => const SellerAddPaymentMethod(),
-                          visualDensity: const VisualDensity(vertical: -3),
-                          horizontalTitleGap: 10,
-                          contentPadding: const EdgeInsets.only(left: 60),
-                          title: const MorrfText(
-                              text: 'Billing Address',
-                              overflow: TextOverflow.ellipsis,
-                              maxLines: 1,
-                              size: FontSize.lp),
-                          trailing: const FaIcon(
-                            FontAwesomeIcons.chevronRight,
-                          ),
-                        ),
-                      ],
+                      title: const MorrfText(
+                          text: 'Add Payment Method',
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 1,
+                          size: FontSize.lp),
+                      trailing: const FaIcon(FontAwesomeIcons.chevronRight),
                     )
                   : const SizedBox(),
+              // MVP
+              // isSignedIn
+              //     ? ExpansionTile(
+              //         childrenPadding: EdgeInsets.zero,
+              //         tilePadding: const EdgeInsets.only(bottom: 10),
+              //         collapsedIconColor: kLightNeutralColor,
+              //         iconColor: kLightNeutralColor,
+              //         title: const MorrfText(
+              //             text: 'Payment Method', size: FontSize.lp),
+              //         leading: Container(
+              //           padding: const EdgeInsets.all(10.0),
+              //           decoration: const BoxDecoration(
+              //             shape: BoxShape.circle,
+              //             color: Color(0xFFFFE5E3),
+              //           ),
+              //           child: const FaIcon(
+              //             FontAwesomeIcons.creditCard,
+              //             color: Color(0xFFFF3B30),
+              //           ),
+              //         ),
+              //         trailing: const FaIcon(
+              //           FontAwesomeIcons.chevronRight,
+              //         ),
+              //         children: [
+              //           ListTile(
+              //             visualDensity: const VisualDensity(vertical: -3),
+              //             horizontalTitleGap: 10,
+              //             contentPadding: const EdgeInsets.only(left: 60),
+              //             title: const MorrfText(
+              //                 text: 'Add Card',
+              //                 overflow: TextOverflow.ellipsis,
+              //                 maxLines: 1,
+              //                 size: FontSize.lp),
+              //             trailing: const FaIcon(
+              //               FontAwesomeIcons.chevronRight,
+              //             ),
+              //             onTap: () =>
+              //                 Get.to(() => const SellerAddPaymentMethod()),
+              //           ),
+              //           ListTile(
+              //             onTap: () => const SellerAddPaymentMethod(),
+              //             visualDensity: const VisualDensity(vertical: -3),
+              //             horizontalTitleGap: 10,
+              //             contentPadding: const EdgeInsets.only(left: 60),
+              //             title: const MorrfText(
+              //                 text: 'Billing Address',
+              //                 overflow: TextOverflow.ellipsis,
+              //                 maxLines: 1,
+              //                 size: FontSize.lp),
+              //             trailing: const FaIcon(
+              //               FontAwesomeIcons.chevronRight,
+              //             ),
+              //           ),
+              //         ],
+              //       )
+              //     : const SizedBox(),
               isSignedIn
                   ? ListTile(
                       onTap: () => const ClientDashBoard().launch(context),
@@ -203,110 +231,113 @@ class _ClientProfileState extends ConsumerState<ClientProfile> {
                       trailing: const FaIcon(FontAwesomeIcons.chevronRight),
                     )
                   : const SizedBox(),
-              isSignedIn
-                  ? ExpansionTile(
-                      childrenPadding: EdgeInsets.zero,
-                      tilePadding: const EdgeInsets.only(bottom: 10),
-                      collapsedIconColor: kLightNeutralColor,
-                      iconColor: kLightNeutralColor,
-                      title:
-                          const MorrfText(text: 'Deposit', size: FontSize.lp),
-                      leading: Container(
-                        padding: const EdgeInsets.all(10.0),
-                        decoration: const BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: Color(0xFFFFEFE0),
-                        ),
-                        child: const FaIcon(
-                          FontAwesomeIcons.wallet,
-                          color: Color(0xFFFF7A00),
-                        ),
-                      ),
-                      trailing: const FaIcon(
-                        FontAwesomeIcons.chevronRight,
-                      ),
-                      children: [
-                        ListTile(
-                          visualDensity: const VisualDensity(vertical: -3),
-                          horizontalTitleGap: 10,
-                          contentPadding: const EdgeInsets.only(left: 60),
-                          title: const MorrfText(
-                              text: 'Add Deposit',
-                              overflow: TextOverflow.ellipsis,
-                              maxLines: 1,
-                              size: FontSize.lp),
-                          trailing: const FaIcon(
-                            FontAwesomeIcons.chevronRight,
-                          ),
-                          onTap: () => const AddDeposit().launch(context),
-                        ),
-                        ListTile(
-                          onTap: () => const DepositHistory().launch(context),
-                          visualDensity: const VisualDensity(vertical: -3),
-                          horizontalTitleGap: 10,
-                          contentPadding: const EdgeInsets.only(left: 60),
-                          title: const MorrfText(
-                              text: 'Deposit History',
-                              overflow: TextOverflow.ellipsis,
-                              maxLines: 1,
-                              size: FontSize.lp),
-                          trailing: const FaIcon(
-                            FontAwesomeIcons.chevronRight,
-                          ),
-                        ),
-                      ],
-                    )
-                  : const SizedBox(),
-              isSignedIn
-                  ? ListTile(
-                      onTap: () => const ClientTransaction().launch(context),
-                      visualDensity: const VisualDensity(vertical: -3),
-                      horizontalTitleGap: 10,
-                      contentPadding: const EdgeInsets.only(bottom: 12),
-                      leading: Container(
-                        padding: const EdgeInsets.all(10.0),
-                        decoration: const BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: Color(0xFFFFE5E3),
-                        ),
-                        child: const FaIcon(
-                          FontAwesomeIcons.fileInvoice,
-                          color: Color(0xFFFF3B30),
-                        ),
-                      ),
-                      title: const MorrfText(
-                          text: 'Transaction History',
-                          overflow: TextOverflow.ellipsis,
-                          maxLines: 1,
-                          size: FontSize.lp),
-                      trailing: const FaIcon(FontAwesomeIcons.chevronRight),
-                    )
-                  : const SizedBox(),
-              isSignedIn
-                  ? ListTile(
-                      onTap: () => const ClientFavList().launch(context),
-                      visualDensity: const VisualDensity(vertical: -3),
-                      horizontalTitleGap: 10,
-                      contentPadding: const EdgeInsets.only(bottom: 15),
-                      leading: Container(
-                        padding: const EdgeInsets.all(10.0),
-                        decoration: const BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: Color(0xFFE8E1FF),
-                        ),
-                        child: const FaIcon(
-                          FontAwesomeIcons.solidHeart,
-                          color: Color(0xFF7E5BFF),
-                        ),
-                      ),
-                      title: const MorrfText(
-                          text: 'Favorites',
-                          overflow: TextOverflow.ellipsis,
-                          maxLines: 1,
-                          size: FontSize.lp),
-                      trailing: const FaIcon(FontAwesomeIcons.chevronRight),
-                    )
-                  : const SizedBox(),
+              // MVP
+              // isSignedIn
+              //     ? ExpansionTile(
+              //         childrenPadding: EdgeInsets.zero,
+              //         tilePadding: const EdgeInsets.only(bottom: 10),
+              //         collapsedIconColor: kLightNeutralColor,
+              //         iconColor: kLightNeutralColor,
+              //         title:
+              //             const MorrfText(text: 'Deposit', size: FontSize.lp),
+              //         leading: Container(
+              //           padding: const EdgeInsets.all(10.0),
+              //           decoration: const BoxDecoration(
+              //             shape: BoxShape.circle,
+              //             color: Color(0xFFFFEFE0),
+              //           ),
+              //           child: const FaIcon(
+              //             FontAwesomeIcons.wallet,
+              //             color: Color(0xFFFF7A00),
+              //           ),
+              //         ),
+              //         trailing: const FaIcon(
+              //           FontAwesomeIcons.chevronRight,
+              //         ),
+              //         children: [
+              //           ListTile(
+              //             visualDensity: const VisualDensity(vertical: -3),
+              //             horizontalTitleGap: 10,
+              //             contentPadding: const EdgeInsets.only(left: 60),
+              //             title: const MorrfText(
+              //                 text: 'Add Deposit',
+              //                 overflow: TextOverflow.ellipsis,
+              //                 maxLines: 1,
+              //                 size: FontSize.lp),
+              //             trailing: const FaIcon(
+              //               FontAwesomeIcons.chevronRight,
+              //             ),
+              //             onTap: () => const AddDeposit().launch(context),
+              //           ),
+              //           ListTile(
+              //             onTap: () => const DepositHistory().launch(context),
+              //             visualDensity: const VisualDensity(vertical: -3),
+              //             horizontalTitleGap: 10,
+              //             contentPadding: const EdgeInsets.only(left: 60),
+              //             title: const MorrfText(
+              //                 text: 'Deposit History',
+              //                 overflow: TextOverflow.ellipsis,
+              //                 maxLines: 1,
+              //                 size: FontSize.lp),
+              //             trailing: const FaIcon(
+              //               FontAwesomeIcons.chevronRight,
+              //             ),
+              //           ),
+              //         ],
+              //       )
+              //     : const SizedBox(),
+              // MVP
+              // isSignedIn
+              //     ? ListTile(
+              //         onTap: () => const ClientTransaction().launch(context),
+              //         visualDensity: const VisualDensity(vertical: -3),
+              //         horizontalTitleGap: 10,
+              //         contentPadding: const EdgeInsets.only(bottom: 12),
+              //         leading: Container(
+              //           padding: const EdgeInsets.all(10.0),
+              //           decoration: const BoxDecoration(
+              //             shape: BoxShape.circle,
+              //             color: Color(0xFFFFE5E3),
+              //           ),
+              //           child: const FaIcon(
+              //             FontAwesomeIcons.fileInvoice,
+              //             color: Color(0xFFFF3B30),
+              //           ),
+              //         ),
+              //         title: const MorrfText(
+              //             text: 'Transaction History',
+              //             overflow: TextOverflow.ellipsis,
+              //             maxLines: 1,
+              //             size: FontSize.lp),
+              //         trailing: const FaIcon(FontAwesomeIcons.chevronRight),
+              //       )
+              //     : const SizedBox(),
+              // MVP
+              // isSignedIn
+              //     ? ListTile(
+              //         onTap: () => const ClientFavList().launch(context),
+              //         visualDensity: const VisualDensity(vertical: -3),
+              //         horizontalTitleGap: 10,
+              //         contentPadding: const EdgeInsets.only(bottom: 15),
+              //         leading: Container(
+              //           padding: const EdgeInsets.all(10.0),
+              //           decoration: const BoxDecoration(
+              //             shape: BoxShape.circle,
+              //             color: Color(0xFFE8E1FF),
+              //           ),
+              //           child: const FaIcon(
+              //             FontAwesomeIcons.solidHeart,
+              //             color: Color(0xFF7E5BFF),
+              //           ),
+              //         ),
+              //         title: const MorrfText(
+              //             text: 'Favorites',
+              //             overflow: TextOverflow.ellipsis,
+              //             maxLines: 1,
+              //             size: FontSize.lp),
+              //         trailing: const FaIcon(FontAwesomeIcons.chevronRight),
+              //       )
+              //     : const SizedBox(),
               isSignedIn
                   ? ListTile(
                       onTap: () => const ClientReport().launch(context),
@@ -354,31 +385,32 @@ class _ClientProfileState extends ConsumerState<ClientProfile> {
                     size: FontSize.lp),
                 trailing: const FaIcon(FontAwesomeIcons.chevronRight),
               ),
-              isSignedIn
-                  ? ListTile(
-                      onTap: () => const ClientInvite().launch(context),
-                      visualDensity: const VisualDensity(vertical: -3),
-                      horizontalTitleGap: 10,
-                      contentPadding: const EdgeInsets.only(bottom: 15),
-                      leading: Container(
-                        padding: const EdgeInsets.all(10.0),
-                        decoration: const BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: Color(0xFFE2EED8),
-                        ),
-                        child: const Icon(
-                          FontAwesomeIcons.userPlus,
-                          color: kPrimaryColor,
-                        ),
-                      ),
-                      title: const MorrfText(
-                          text: 'Invite Friends',
-                          overflow: TextOverflow.ellipsis,
-                          maxLines: 1,
-                          size: FontSize.lp),
-                      trailing: const FaIcon(FontAwesomeIcons.chevronRight),
-                    )
-                  : const SizedBox(),
+              // MVP
+              // isSignedIn
+              //     ? ListTile(
+              //         onTap: () => const ClientInvite().launch(context),
+              //         visualDensity: const VisualDensity(vertical: -3),
+              //         horizontalTitleGap: 10,
+              //         contentPadding: const EdgeInsets.only(bottom: 15),
+              //         leading: Container(
+              //           padding: const EdgeInsets.all(10.0),
+              //           decoration: const BoxDecoration(
+              //             shape: BoxShape.circle,
+              //             color: Color(0xFFE2EED8),
+              //           ),
+              //           child: const Icon(
+              //             FontAwesomeIcons.userPlus,
+              //             color: kPrimaryColor,
+              //           ),
+              //         ),
+              //         title: const MorrfText(
+              //             text: 'Invite Friends',
+              //             overflow: TextOverflow.ellipsis,
+              //             maxLines: 1,
+              //             size: FontSize.lp),
+              //         trailing: const FaIcon(FontAwesomeIcons.chevronRight),
+              //       )
+              //     : const SizedBox(),
               ListTile(
                 visualDensity: const VisualDensity(vertical: -3),
                 horizontalTitleGap: 10,

@@ -4,7 +4,7 @@ import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:get/get.dart';
 import 'package:morrf/screen/client%20screen/client%20home/client_home.dart';
 import 'package:morrf/screen/seller%20screen/profile/seller_profile_details.dart';
-import 'package:morrf/utils/auth_service.dart';
+import 'package:morrf/services/auth_service.dart';
 import 'package:morrf/utils/enums/font_size.dart';
 import 'package:morrf/widgets/morff_text.dart';
 import 'package:morrf/widgets/theme_switcher.dart';

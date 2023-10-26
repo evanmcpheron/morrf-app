@@ -124,6 +124,12 @@
   },
   "indicatorColor": "#e4e1e6",
   "inputDecorationTheme": {
+    "hintStyle": {
+      "color": "#ffffff"
+    },
+    "labelStyle": {
+      "color": "#ffffff"
+    },
     "alignLabelWithHint": false,
     "filled": false,
     "floatingLabelAlignment": "start",

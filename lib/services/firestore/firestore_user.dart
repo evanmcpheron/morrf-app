@@ -1,8 +1,9 @@
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:morrf/models/user/morrf_user.dart';
-import 'package:morrf/utils/auth_service.dart';
+import 'package:morrf/services/auth_service.dart';
 
 class FirestoreService {
   final CollectionReference _usersCollectionReference =

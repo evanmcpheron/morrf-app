@@ -19,9 +19,9 @@ class _ThemeSwitcherState extends ConsumerState<ThemeSwitcher> {
   }
 
   List<MorrfRadioButton> radios = [
-    MorrfRadioButton("Light", Image.asset("assets/images/light_mode.png")),
-    MorrfRadioButton("System", Image.asset("assets/images/system_theme.png")),
-    MorrfRadioButton("Dark", Image.asset("assets/images/dark_mode.png")),
+    MorrfRadioButton("Light", Image.asset("images/light_mode.png")),
+    MorrfRadioButton("System", Image.asset("images/system_theme.png")),
+    MorrfRadioButton("Dark", Image.asset("images/dark_mode.png")),
   ];
 
   @override
