@@ -19,6 +19,7 @@ module.exports = {
     ],
     "prefer-arrow-callback": "error",
     "quotes": 0,
+    "camelcase": 0,
     "indent": 0,
     "object-curly-spacing": 0,
     "max-len": 0,
