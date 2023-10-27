@@ -237,7 +237,7 @@ class _SellerOrderDetailsState extends State<SellerOrderDetails> {
                               const SizedBox(width: 10.0),
                               Flexible(
                                 child: Text(
-                                  'Mobile UI UX design or app UI UX design',
+                                  'Workout routine for body composition',
                                   style: kTextStyle.copyWith(
                                       color: kSubTitleColor),
                                   overflow: TextOverflow.ellipsis,

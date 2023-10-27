@@ -17,6 +17,7 @@ class MorrfInputField extends StatefulWidget {
   final void Function(String?)? onSaved;
   final int? minLines;
   final int? maxLines;
+  final int? maxLength;
   final bool expands;
 
   const MorrfInputField(
@@ -37,7 +38,8 @@ class MorrfInputField extends StatefulWidget {
       this.initialValue,
       this.maxLines,
       this.minLines,
-      this.expands = false});
+      this.expands = false,
+      this.maxLength});
 
   @override
   State<MorrfInputField> createState() => _MorrfInputFieldState();
@@ -91,6 +93,7 @@ class _MorrfInputFieldState extends State<MorrfInputField> {
         validator: widget.validator,
         onSaved: widget.onSaved,
         expands: widget.expands,
+        maxLength: widget.maxLength,
         textInputAction: TextInputAction.done,
         onTap: widget.onTap, textAlign: TextAlign.start,
         textAlignVertical: TextAlignVertical.top,

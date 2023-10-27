@@ -302,7 +302,7 @@ class _ClientHomeScreenState extends ConsumerState<ClientHomeScreen> {
                                       width: 190,
                                       child: MorrfText(
                                         text:
-                                            'Mobile UI UX design or app design',
+                                            'Workout routine for body composition',
                                         size: FontSize.lp,
                                         maxLines: 2,
                                         overflow: TextOverflow.ellipsis,

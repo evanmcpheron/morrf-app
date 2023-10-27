@@ -168,7 +168,7 @@ class _SellerFavListState extends State<SellerFavList> {
                                     child: SizedBox(
                                       width: 190,
                                       child: Text(
-                                        'Mobile UI UX design or app design',
+                                        'Workout routine for body composition',
                                         style: kTextStyle.copyWith(
                                             color: kNeutralColor,
                                             fontWeight: FontWeight.bold),

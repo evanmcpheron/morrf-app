@@ -2,17 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:morrf/screen/client%20screen/client%20home/client_home.dart';
 import 'package:morrf/screen/seller%20screen/profile/seller_profile.dart';
-import 'package:morrf/screen/seller%20screen/seller%20authentication/verification.dart';
 import 'package:morrf/screen/seller%20screen/seller%20home/seller_home.dart';
+import 'package:morrf/utils/enums/font_size.dart';
+import 'package:morrf/utils/enums/severity.dart';
 import 'package:morrf/widgets/button_global.dart';
+import 'package:morrf/widgets/morff_text.dart';
+import 'package:morrf/widgets/morrf_button.dart';
+import 'package:morrf/widgets/morrf_input_field.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../../client screen/client_authentication/client_sign_in.dart';
 import '../../../widgets/constant.dart';
 import '../../../widgets/icons.dart';
 import '../buyer request/create_customer_offer.dart';
-import '../seller authentication/seller_log_in.dart';
 
 class SellerAddLanguagePopUp extends StatefulWidget {
   const SellerAddLanguagePopUp({super.key});
@@ -390,7 +394,7 @@ class _SaveProfilePopUpState extends State<SaveProfilePopUp> {
                 setState(() {
                   finish(context);
                   isFreelancer
-                      ? const SellerLogIn().launch(context)
+                      ? ClientSignIn().launch(context)
                       : ClientSignIn().launch(context);
                 });
               },
@@ -568,10 +572,9 @@ class _AddFAQPopUpState extends State<AddFAQPopUp> {
           children: [
             Row(
               children: [
-                Text(
-                  'Add FAQ',
-                  style: kTextStyle.copyWith(
-                      color: kNeutralColor, fontWeight: FontWeight.bold),
+                const MorrfText(
+                  text: 'Add FAQ',
+                  size: FontSize.h5,
                 ),
                 const Spacer(),
                 GestureDetector(
@@ -580,59 +583,48 @@ class _AddFAQPopUpState extends State<AddFAQPopUp> {
                 ),
               ],
             ),
-            const SizedBox(height: 30.0),
-            TextFormField(
-              keyboardType: TextInputType.multiline,
+            const SizedBox(height: 8.0),
+            const MorrfInputField(
+              inputType: TextInputType.multiline,
               maxLines: 2,
-              cursorColor: kNeutralColor,
-              textInputAction: TextInputAction.next,
-              decoration: kInputDecoration.copyWith(
-                labelText: 'Add Question',
-                labelStyle: kTextStyle.copyWith(color: kNeutralColor),
-                hintText: 'What software is used to create the design?',
-                hintStyle: kTextStyle.copyWith(color: kLightNeutralColor),
-                focusColor: kNeutralColor,
-                border: const OutlineInputBorder(),
-              ),
+              placeholder: 'Question',
+              hint: 'What is your Frequently Asked Question?',
             ),
-            const SizedBox(height: 30.0),
-            TextFormField(
-              keyboardType: TextInputType.multiline,
-              maxLines: 3,
-              cursorColor: kNeutralColor,
-              decoration: kInputDecoration.copyWith(
-                labelText: 'Add Answer',
-                labelStyle: kTextStyle.copyWith(color: kNeutralColor),
-                hintText:
-                    'I can use Figma , Adobe XD or Framer , whatever app your comfortable working with',
-                hintStyle: kTextStyle.copyWith(color: kLightNeutralColor),
-                focusColor: kNeutralColor,
-                border: const OutlineInputBorder(),
-              ),
+            const SizedBox(height: 8.0),
+            SizedBox(
+              height: 150,
+              child: MorrfInputField(
+                  onSaved: (value) {
+                    setState(() {
+                      print(value);
+                    });
+                  },
+                  inputType: TextInputType.multiline,
+                  maxLines: null,
+                  expands: true,
+                  maxLength: 150,
+                  placeholder: 'Answer',
+                  hint: "This should be the answer to the question above."),
             ),
-            const SizedBox(height: 10.0),
+            const SizedBox(height: 8.0),
             Row(
               children: [
                 Expanded(
-                  child: Button(
-                    containerBg: kWhite,
-                    borderColor: Colors.red,
-                    buttonText: 'Cancel',
-                    textColor: Colors.red,
+                  child: MorrfButton(
                     onPressed: () {
                       finish(context);
                     },
+                    child: MorrfText(text: "Cancel", size: FontSize.h6),
                   ),
                 ),
+                SizedBox(width: 8),
                 Expanded(
-                  child: Button(
-                    containerBg: kPrimaryColor,
-                    borderColor: Colors.transparent,
-                    buttonText: 'Add',
-                    textColor: kWhite,
+                  child: MorrfButton(
                     onPressed: () {
                       finish(context);
                     },
+                    severity: Severity.success,
+                    child: MorrfText(text: "Add", size: FontSize.h6),
                   ),
                 )
               ],
@@ -911,12 +903,12 @@ class SendOfferPopUp extends StatefulWidget {
 
 class _SendOfferPopUpState extends State<SendOfferPopUp> {
   List<String> titleList = [
-    'Mobile UI UX design or app design',
+    'Workout routine for body composition',
     'Make a custom font for your projects',
     'MAke a html Template for your website',
     'Make Flyer for your project',
   ];
-  List<String> selectedTitleList = ['Mobile UI UX design or app design'];
+  List<String> selectedTitleList = ['Workout routine for body composition'];
 
   @override
   Widget build(BuildContext context) {
@@ -1202,7 +1194,7 @@ class _VerifyPopUpState extends State<VerifyPopUp> {
                 textColor: kWhite,
                 onPressed: () {
                   finish(context);
-                  const OtpVerification().launch(context);
+                  ClientHome().launch(context);
                 },
               ),
             ),

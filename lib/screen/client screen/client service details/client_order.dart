@@ -166,7 +166,7 @@ class _ClientOrderState extends State<ClientOrder> {
                               child: SizedBox(
                                 width: 190,
                                 child: Text(
-                                  'Mobile UI UX design or app UI UX design.',
+                                  'Workout routine for body composition.',
                                   style: kTextStyle.copyWith(
                                       color: kNeutralColor,
                                       fontWeight: FontWeight.bold),

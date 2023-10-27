@@ -212,7 +212,7 @@ class _CreateCustomerOfferState extends State<CreateCustomerOffer> {
                         child: Padding(
                           padding: const EdgeInsets.only(left: 5.0, right: 5.0),
                           child: Text(
-                            'Mobile UI UX design or app UI UX design.',
+                            'Workout routine for body composition.',
                             maxLines: 2,
                             style: kTextStyle.copyWith(
                                 color: kNeutralColor,

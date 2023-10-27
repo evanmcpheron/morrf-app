@@ -11,3 +11,9 @@ Color textLink(BuildContext context) {
       ? const Color(0xFF216dde)
       : const Color(0xff216dde);
 }
+
+Color borderColor(BuildContext context) {
+  return Theme.of(context).brightness == Brightness.dark
+      ? const Color(0xFF144185)
+      : const Color(0xff216dde);
+}

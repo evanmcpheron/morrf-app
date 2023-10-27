@@ -169,7 +169,7 @@ class _ClientFavListState extends State<ClientFavList> {
                                     child: SizedBox(
                                       width: 190,
                                       child: Text(
-                                        'Mobile UI UX design or app design',
+                                        'Workout routine for body composition',
                                         style: kTextStyle.copyWith(
                                             color: kNeutralColor,
                                             fontWeight: FontWeight.bold),

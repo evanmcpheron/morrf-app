@@ -185,7 +185,7 @@ class _ClientOrderListState extends State<ClientOrderList> {
                                         const SizedBox(width: 10.0),
                                         Flexible(
                                           child: Text(
-                                            'Mobile UI UX design or app UI UX design',
+                                            'Workout routine for body composition',
                                             style: kTextStyle.copyWith(
                                                 color: kSubTitleColor),
                                             overflow: TextOverflow.ellipsis,
@@ -436,7 +436,7 @@ class _ClientOrderListState extends State<ClientOrderList> {
                                         const SizedBox(width: 10.0),
                                         Flexible(
                                           child: Text(
-                                            'Mobile UI UX design or app UI UX design',
+                                            'Workout routine for body composition',
                                             style: kTextStyle.copyWith(
                                                 color: kSubTitleColor),
                                             overflow: TextOverflow.ellipsis,
@@ -687,7 +687,7 @@ class _ClientOrderListState extends State<ClientOrderList> {
                                         const SizedBox(width: 10.0),
                                         Flexible(
                                           child: Text(
-                                            'Mobile UI UX design or app UI UX design',
+                                            'Workout routine for body composition',
                                             style: kTextStyle.copyWith(
                                                 color: kSubTitleColor),
                                             overflow: TextOverflow.ellipsis,

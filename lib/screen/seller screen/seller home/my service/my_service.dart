@@ -136,7 +136,7 @@ class _MyServicesState extends State<MyServices> {
                                         CrossAxisAlignment.start,
                                     children: [
                                       Text(
-                                        'Mobile UI UX design or app design',
+                                        'Workout routine for body composition',
                                         style: kTextStyle.copyWith(
                                             color: kNeutralColor,
                                             fontWeight: FontWeight.bold),

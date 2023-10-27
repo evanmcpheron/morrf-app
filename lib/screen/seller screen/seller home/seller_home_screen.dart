@@ -571,7 +571,7 @@ class _SellerHomeScreenState extends State<SellerHomeScreen> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      'Mobile UI UX design or app design',
+                                      'Workout routine for body composition',
                                       style: kTextStyle.copyWith(
                                           color: kNeutralColor,
                                           fontWeight: FontWeight.bold),

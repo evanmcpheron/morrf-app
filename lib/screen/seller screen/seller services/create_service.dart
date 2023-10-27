@@ -1,7 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:get/get.dart';
+import 'package:morrf/utils/constants/special_color.dart';
+import 'package:morrf/utils/enums/font_size.dart';
 import 'package:morrf/widgets/constant.dart';
+import 'package:morrf/widgets/morff_text.dart';
+import 'package:morrf/widgets/morrf_scaffold.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../seller home/my service/service_details.dart';
@@ -17,225 +23,182 @@ class CreateService extends StatefulWidget {
 class _CreateServiceState extends State<CreateService> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: kDarkWhite,
-      appBar: AppBar(
-        backgroundColor: kDarkWhite,
-        elevation: 0,
-        leading: ElevatedButton(
-          onPressed: () {
-            setState(
-              () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) => const CreateNewService(),
+    return MorrfScaffold(
+      title: 'Create Service',
+      trailing: const FaIcon(FontAwesomeIcons.plus),
+      trailingPressed: () {
+        setState(() {
+          const CreateNewService().launch(context);
+        });
+      },
+      body: Container(
+        width: MediaQuery.of(context).size.width,
+        padding: const EdgeInsets.only(left: 15.0, right: 15.0),
+        child: SingleChildScrollView(
+          physics: const BouncingScrollPhysics(),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              const SizedBox(height: 15.0),
+              Column(
+                children: [
+                  const SizedBox(height: 50.0),
+                  Container(
+                    height: 213,
+                    width: 269,
+                    decoration: const BoxDecoration(
+                      image: DecorationImage(
+                          image: AssetImage('images/emptyservice.png'),
+                          fit: BoxFit.cover),
+                    ),
                   ),
-                );
-              },
-            );
-          },
-          child: const Icon(
-            FeatherIcons.plus,
-            color: kWhite,
-          ),
-        ),
-        iconTheme: const IconThemeData(color: kNeutralColor),
-        title: Text(
-          'Create Service',
-          style: kTextStyle.copyWith(
-              color: kNeutralColor, fontWeight: FontWeight.bold),
-        ),
-        centerTitle: true,
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
-      body: Padding(
-        padding: const EdgeInsets.only(top: 10.0),
-        child: Container(
-          width: context.width(),
-          padding: const EdgeInsets.only(left: 15.0, right: 15.0),
-          decoration: const BoxDecoration(
-            color: kWhite,
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(30.0),
-              topRight: Radius.circular(30.0),
-            ),
-          ),
-          child: SingleChildScrollView(
-            physics: const BouncingScrollPhysics(),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                const SizedBox(height: 15.0),
-                Column(
-                  children: [
-                    const SizedBox(height: 50.0),
-                    Container(
-                      height: 213,
-                      width: 269,
-                      decoration: const BoxDecoration(
-                        image: DecorationImage(
-                            image: AssetImage('images/emptyservice.png'),
-                            fit: BoxFit.cover),
+                  const SizedBox(height: 20.0),
+                  const MorrfText(
+                    text: 'Empty Service',
+                    size: FontSize.h5,
+                  ),
+                ],
+              ).visible(false),
+              GridView.count(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                mainAxisSpacing: 10.0,
+                crossAxisSpacing: 10.0,
+                childAspectRatio: 0.8,
+                crossAxisCount: 2,
+                children: List.generate(
+                  10,
+                  (index) => GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        const ServiceDetails().launch(context);
+                      });
+                    },
+                    child: Container(
+                      height: 205,
+                      width: 156,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(8.0),
+                        border: Border.all(color: kBorderColorTextField),
                       ),
-                    ),
-                    const SizedBox(height: 20.0),
-                    Text(
-                      'Empty  Service',
-                      style: kTextStyle.copyWith(
-                          color: kNeutralColor,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 24.0),
-                    ),
-                  ],
-                ).visible(false),
-                GridView.count(
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  mainAxisSpacing: 10.0,
-                  crossAxisSpacing: 10.0,
-                  childAspectRatio: 0.8,
-                  crossAxisCount: 2,
-                  children: List.generate(
-                    10,
-                    (index) => GestureDetector(
-                      onTap: () {
-                        setState(() {
-                          const ServiceDetails().launch(context);
-                        });
-                      },
-                      child: Container(
-                        height: 205,
-                        width: 156,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(8.0),
-                          border: Border.all(color: kBorderColorTextField),
-                          boxShadow: const [
-                            BoxShadow(
-                              color: kDarkWhite,
-                              blurRadius: 5.0,
-                              spreadRadius: 2.0,
-                              offset: Offset(0, 5),
-                            ),
-                          ],
-                        ),
-                        child: Column(
-                          children: [
-                            Stack(
-                              alignment: Alignment.topRight,
-                              children: [
-                                Container(
-                                  height: 100,
-                                  width: 156,
-                                  decoration: const BoxDecoration(
-                                    borderRadius: BorderRadius.only(
-                                      topRight: Radius.circular(8.0),
-                                      topLeft: Radius.circular(8.0),
-                                    ),
-                                    image: DecorationImage(
-                                        image: AssetImage(
-                                          'images/shot1.png',
-                                        ),
-                                        fit: BoxFit.cover),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.max,
+                        children: [
+                          Stack(
+                            alignment: Alignment.topRight,
+                            children: [
+                              Container(
+                                height: 100,
+                                // width: 156,
+                                decoration: const BoxDecoration(
+                                  borderRadius: BorderRadius.only(
+                                    topRight: Radius.circular(8.0),
+                                    topLeft: Radius.circular(8.0),
                                   ),
-                                ),
-                                GestureDetector(
-                                  onTap: () {
-                                    setState(() {
-                                      isFavorite = !isFavorite;
-                                    });
-                                  },
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(5.0),
-                                    child: Container(
-                                      height: 30,
-                                      width: 30,
-                                      decoration: const BoxDecoration(
-                                        color: Colors.white,
-                                        shape: BoxShape.circle,
+                                  image: DecorationImage(
+                                      image: AssetImage(
+                                        'images/shot1.png',
                                       ),
-                                      child: isFavorite
-                                          ? const Center(
-                                              child: Icon(
-                                                Icons.favorite,
-                                                color: Colors.red,
-                                                size: 18.0,
-                                              ),
-                                            )
-                                          : const Center(
-                                              child: Icon(
-                                                Icons.favorite_border,
-                                                color: kNeutralColor,
-                                                size: 18.0,
-                                              ),
+                                      fit: BoxFit.cover),
+                                ),
+                              ),
+                              GestureDetector(
+                                onTap: () {
+                                  setState(() {
+                                    isFavorite = !isFavorite;
+                                  });
+                                },
+                                child: Padding(
+                                  padding: const EdgeInsets.all(5.0),
+                                  child: Container(
+                                    height: 25,
+                                    width: 25,
+                                    decoration: BoxDecoration(
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .primaryContainer,
+                                      shape: BoxShape.circle,
+                                    ),
+                                    child: isFavorite
+                                        ? const Center(
+                                            child: Icon(
+                                              Icons.favorite,
+                                              color: Colors.red,
+                                              size: 16.0,
                                             ),
-                                    ),
+                                          )
+                                        : const Center(
+                                            child: Icon(
+                                              Icons.favorite_border,
+                                              size: 16.0,
+                                            ),
+                                          ),
                                   ),
                                 ),
-                              ],
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.all(5.0),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    'Mobile UI UX design or app design',
-                                    style: kTextStyle.copyWith(
-                                        color: kNeutralColor,
-                                        fontWeight: FontWeight.bold),
-                                    maxLines: 2,
-                                    overflow: TextOverflow.ellipsis,
-                                  ),
-                                  const SizedBox(height: 5.0),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    children: [
-                                      const Icon(
-                                        IconlyBold.star,
-                                        color: Colors.amber,
-                                        size: 18.0,
-                                      ),
-                                      const SizedBox(width: 2.0),
-                                      Text(
-                                        '5.0',
-                                        style: kTextStyle.copyWith(
-                                            color: kNeutralColor),
-                                      ),
-                                      const SizedBox(width: 2.0),
-                                      Text(
-                                        '(520 review)',
-                                        style: kTextStyle.copyWith(
-                                            color: kLightNeutralColor),
-                                      ),
-                                    ],
-                                  ),
-                                  const SizedBox(height: 5.0),
-                                  RichText(
-                                    text: TextSpan(
-                                      text: 'Price: ',
-                                      style: kTextStyle.copyWith(
-                                          color: kLightNeutralColor),
+                              ),
+                            ],
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(5.0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const MorrfText(
+                                  text: 'Workout routine for body composition',
+                                  size: FontSize.lp,
+                                  maxLines: 2,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                                const SizedBox(height: 25.0),
+                                Column(
+                                  children: [
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
                                       children: [
-                                        TextSpan(
-                                          text: '$currencySign${30}',
-                                          style: kTextStyle.copyWith(
-                                              color: kPrimaryColor,
-                                              fontWeight: FontWeight.bold),
-                                        )
+                                        const Icon(
+                                          IconlyBold.star,
+                                          color: Colors.amber,
+                                          size: 18.0,
+                                        ),
+                                        const SizedBox(width: 2.0),
+                                        const MorrfText(
+                                            text: '5.0', size: FontSize.p),
+                                        const SizedBox(width: 2.0),
+                                        MorrfText(
+                                          text: '(520 reviews)',
+                                          size: FontSize.p,
+                                          style: TextStyle(
+                                              color: Theme.of(context)
+                                                  .colorScheme
+                                                  .primary),
+                                        ),
                                       ],
                                     ),
-                                  )
-                                ],
-                              ),
+                                    const SizedBox(height: 5.0),
+                                    Row(
+                                      children: [
+                                        const MorrfText(
+                                            text: 'Price ', size: FontSize.p),
+                                        MorrfText(
+                                            text: '$currencySign${30}',
+                                            size: FontSize.p,
+                                            style: TextStyle(
+                                                color: money(context)))
+                                      ],
+                                    ),
+                                  ],
+                                )
+                              ],
                             ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
                     ),
                   ),
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),

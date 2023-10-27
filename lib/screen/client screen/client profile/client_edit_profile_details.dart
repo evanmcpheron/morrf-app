@@ -379,6 +379,7 @@ class _ClientEditProfileState extends ConsumerState<ClientEditProfile> {
                                     Radius.circular(10.0),
                                   ),
                                 ),
+                                labelText: "Gender",
                                 focusedBorder: OutlineInputBorder(
                                   borderRadius: const BorderRadius.all(
                                     Radius.circular(10.0),
