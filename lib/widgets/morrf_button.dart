@@ -52,22 +52,25 @@ class _MorrfButtonState extends State<MorrfButton> {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: widget.fullWidth != null
-          ? MediaQuery.of(context).size.width
-          : widget.width,
-      child: ElevatedButton(
-          style: ElevatedButton.styleFrom(
-            fixedSize: const Size(double.infinity, 50),
-            backgroundColor: getSeverity(),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(10.0),
+    return Theme(
+      data: ThemeData(buttonTheme: const ButtonThemeData()),
+      child: SizedBox(
+        width: widget.fullWidth != null
+            ? MediaQuery.of(context).size.width
+            : widget.width,
+        child: ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              fixedSize: const Size(double.infinity, 50),
+              backgroundColor: getSeverity(),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10.0),
+              ),
             ),
-          ),
-          onPressed: widget.disabled != null && widget.disabled!
-              ? null
-              : widget.onPressed,
-          child: widget.child),
+            onPressed: widget.disabled != null && widget.disabled!
+                ? null
+                : widget.onPressed,
+            child: widget.child),
+      ),
     );
   }
 }

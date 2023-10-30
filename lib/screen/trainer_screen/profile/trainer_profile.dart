@@ -12,7 +12,7 @@ import 'package:nb_utils/nb_utils.dart';
 
 import '../../../widgets/constant.dart';
 import '../../global_screen/add_payment_method/global_add_payment_method.dart';
-import '../buyer request/trainer_buyer_request.dart';
+import '../buyer_request/trainer_buyer_request.dart';
 import '../favorite/trainer_favourite_list.dart';
 import '../report/trainer_report.dart';
 import '../setting/trainer_invite.dart';

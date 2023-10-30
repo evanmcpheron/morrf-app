@@ -14,6 +14,7 @@ class MorrfUser {
   String stripe;
   List<MorrfService>? services;
   List<MorrfOrder>? orders;
+  List<String?> favorites;
   String? aboutMe;
 
   MorrfUser(
@@ -30,6 +31,7 @@ class MorrfUser {
       this.stripe = "",
       this.services,
       this.orders,
+      required this.favorites,
       this.aboutMe});
 
   MorrfUser.fromData(Map<String, dynamic> data)
@@ -43,6 +45,7 @@ class MorrfUser {
         birthday = data['birthday'],
         photoURL = data['photoURL'],
         stripe = data['stripe'],
+        favorites = List<String?>.from(data['favorites']),
         services = List<MorrfService>.from(data['services']),
         orders = List<MorrfOrder>.from(data['orders']),
         aboutMe = data['aboutMe'];
@@ -59,6 +62,7 @@ class MorrfUser {
       'birthday': birthday,
       'photoURL': photoURL,
       'stripe': stripe,
+      'favorites': favorites,
       'orders': orders,
       'services': services,
       'aboutMe': aboutMe

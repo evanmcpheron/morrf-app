@@ -18,7 +18,7 @@ import 'package:nb_utils/nb_utils.dart';
 import '../../global_screen/global_authentication/global_sign_in.dart';
 import '../../../widgets/constant.dart';
 import '../../../widgets/icons.dart';
-import '../buyer request/create_customer_offer.dart';
+import '../buyer_request/create_customer_offer.dart';
 
 class TrainerAddLanguagePopUp extends StatefulWidget {
   const TrainerAddLanguagePopUp({super.key});

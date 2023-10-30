@@ -58,8 +58,9 @@ class _MorrfTextState extends State<MorrfText> {
                   widget.size == FontSize.p || widget.size == FontSize.lp
                       ? FontWeight.normal
                       : FontWeight.bold,
-              color:
-                  widget.isLink ? Theme.of(context).colorScheme.textLink : null)
+              color: widget.isLink
+                  ? Theme.of(context).colorScheme.primaryColor
+                  : null)
           .apply(fontSizeFactor: getFontSize()),
       child: Text(
         widget.text,

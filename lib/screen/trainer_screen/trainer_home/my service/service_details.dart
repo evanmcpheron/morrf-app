@@ -340,7 +340,7 @@ class _ServiceDetailsState extends State<ServiceDetails>
                                       AssetImage('images/profilepic.png'),
                                 ),
                                 title: Text(
-                                  'William Liam',
+                                  'William Liams',
                                   maxLines: 1,
                                   overflow: TextOverflow.ellipsis,
                                   style: kTextStyle.copyWith(

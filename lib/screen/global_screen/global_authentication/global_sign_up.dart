@@ -225,7 +225,7 @@ class _ClientSignUpState extends ConsumerState<ClientSignUp> {
                     ])
                   ],
                 ),
-                const SizedBox(height: 20.0),
+                // const SizedBox(height: 20.0),
                 MorrfButton(
                   fullWidth: true,
                   severity: Severity.success,

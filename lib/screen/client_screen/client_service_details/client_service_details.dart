@@ -2,17 +2,20 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
+import 'package:morrf/screen/client_screen/client_home/recently_view.dart';
+import 'package:morrf/screen/client_screen/client_service_details/client_order.dart';
+import 'package:morrf/utils/constants/special_color.dart';
+import 'package:morrf/utils/enums/font_size.dart';
 import 'package:morrf/widgets/button_global.dart';
 import 'package:morrf/widgets/constant.dart';
+import 'package:morrf/widgets/morff_text.dart';
+import 'package:morrf/widgets/review.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
-import '../../../widgets/review.dart';
-import '../client_home/recently_view.dart';
-import 'client_order.dart';
-
 class ClientServiceDetails extends StatefulWidget {
-  const ClientServiceDetails({super.key});
+  String serviceId;
+  ClientServiceDetails({super.key, required this.serviceId});
 
   @override
   State<ClientServiceDetails> createState() => _ClientServiceDetailsState();
@@ -58,1320 +61,1168 @@ class _ClientServiceDetailsState extends State<ClientServiceDetails>
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        bottomNavigationBar: ButtonGlobalWithoutIcon(
-            buttontext: 'Order Now',
-            buttonDecoration: kButtonDecoration.copyWith(
-              color: kPrimaryColor,
-              borderRadius: BorderRadius.circular(30.0),
-            ),
-            onPressed: () {
-              setState(
-                () {
-                  const ClientOrder().launch(context);
-                },
-              );
-            },
-            buttonTextColor: kWhite),
-        backgroundColor: kWhite,
-        body: NestedScrollView(
-          physics: const BouncingScrollPhysics(),
-          controller: _scrollController,
-          headerSliverBuilder: (context, innerBoxIsScrolled) {
-            return [
-              SliverAppBar(
-                elevation: 0,
-                backgroundColor: _isShrink ? kWhite : Colors.transparent,
-                pinned: true,
-                expandedHeight: 290,
-                titleSpacing: 10,
-                automaticallyImplyLeading: false,
-                forceElevated: innerBoxIsScrolled,
-                leading: _isShrink
-                    ? GestureDetector(
+    return Scaffold(
+      body: NestedScrollView(
+        physics: const BouncingScrollPhysics(),
+        controller: _scrollController,
+        headerSliverBuilder: (context, innerBoxIsScrolled) {
+          return [
+            SliverAppBar(
+              elevation: 0,
+              backgroundColor:
+                  _isShrink ? Theme.of(context).cardColor : Colors.transparent,
+              pinned: true,
+              expandedHeight: 290,
+              titleSpacing: 10,
+              automaticallyImplyLeading: false,
+              forceElevated: innerBoxIsScrolled,
+              leading: _isShrink
+                  ? GestureDetector(
+                      onTap: () => Navigator.pop(context),
+                      child: const Icon(
+                        Icons.arrow_back,
+                      ),
+                    )
+                  : Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: GestureDetector(
                         onTap: () => Navigator.pop(context),
-                        child: const Icon(
-                          Icons.arrow_back,
-                          color: kNeutralColor,
-                        ),
-                      )
-                    : Padding(
-                        padding: const EdgeInsets.all(10.0),
-                        child: GestureDetector(
-                          onTap: () => Navigator.pop(context),
-                          child: Container(
-                            padding: const EdgeInsets.all(5.0),
-                            decoration: const BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: kWhite,
-                            ),
-                            child: const Icon(
-                              Icons.arrow_back,
-                              color: kNeutralColor,
-                            ),
+                        child: Container(
+                          padding: const EdgeInsets.all(5.0),
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: Theme.of(context).cardColor,
+                          ),
+                          child: Icon(
+                            Icons.arrow_back,
+                            color: Theme.of(context).colorScheme.onBackground,
                           ),
                         ),
                       ),
-                flexibleSpace: FlexibleSpaceBar(
-                  collapseMode: CollapseMode.parallax,
-                  background: SafeArea(
-                    child: CarouselSlider.builder(
-                      carouselController: _controller,
-                      options: CarouselOptions(
-                        height: 300,
-                        aspectRatio: 18 / 18,
-                        viewportFraction: 1,
-                        initialPage: 0,
-                        enableInfiniteScroll: true,
-                        reverse: false,
-                        autoPlay: false,
-                        autoPlayCurve: Curves.fastOutSlowIn,
-                        enlargeCenterPage: false,
-                        onPageChanged: (i, j) {
-                          pageController.nextPage(
-                              duration: const Duration(microseconds: 1),
-                              curve: Curves.bounceIn);
-                        },
-                        scrollDirection: Axis.horizontal,
-                      ),
-                      itemCount: 10,
-                      itemBuilder:
-                          (BuildContext context, int index, int realIndex) {
-                        return Stack(
-                          alignment: Alignment.bottomCenter,
-                          children: [
-                            Container(
-                              height: 300,
-                              width: MediaQuery.of(context).size.width,
-                              decoration: const BoxDecoration(
-                                image: DecorationImage(
-                                    image: AssetImage('images/bg2.png'),
-                                    fit: BoxFit.fitWidth),
-                              ),
-                            ),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                SmoothPageIndicator(
-                                  controller: pageController,
-                                  count: 3,
-                                  effect: JumpingDotEffect(
-                                    dotHeight: 6.0,
-                                    dotWidth: 6.0,
-                                    jumpScale: .7,
-                                    verticalOffset: 15,
-                                    activeDotColor: kNeutralColor,
-                                    dotColor: kNeutralColor.withOpacity(0.4),
-                                  ),
-                                ),
-                                const SizedBox(height: 10.0),
-                                Container(
-                                  height: 20,
-                                  width: MediaQuery.of(context).size.width,
-                                  decoration: const BoxDecoration(
-                                      borderRadius: BorderRadius.only(
-                                        topRight: Radius.circular(30.0),
-                                        topLeft: Radius.circular(30.0),
-                                      ),
-                                      color: kWhite),
-                                )
-                              ],
-                            ),
-                          ],
-                        );
-                      },
                     ),
+              flexibleSpace: FlexibleSpaceBar(
+                collapseMode: CollapseMode.parallax,
+                background: SafeArea(
+                  child: CarouselSlider.builder(
+                    carouselController: _controller,
+                    options: CarouselOptions(
+                      height: 300,
+                      aspectRatio: 18 / 18,
+                      viewportFraction: 1,
+                      initialPage: 0,
+                      enableInfiniteScroll: true,
+                      reverse: false,
+                      autoPlay: false,
+                      autoPlayCurve: Curves.fastOutSlowIn,
+                      enlargeCenterPage: false,
+                      onPageChanged: (i, j) {
+                        pageController.nextPage(
+                            duration: const Duration(microseconds: 1),
+                            curve: Curves.bounceIn);
+                      },
+                      scrollDirection: Axis.horizontal,
+                    ),
+                    itemCount: 10,
+                    itemBuilder:
+                        (BuildContext context, int index, int realIndex) {
+                      return Stack(
+                        alignment: Alignment.bottomCenter,
+                        children: [
+                          Container(
+                            height: 300,
+                            width: MediaQuery.of(context).size.width,
+                            decoration: const BoxDecoration(
+                              image: DecorationImage(
+                                  image: AssetImage('images/bg2.png'),
+                                  fit: BoxFit.fitWidth),
+                            ),
+                          ),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              SmoothPageIndicator(
+                                controller: pageController,
+                                count: 3,
+                                effect: JumpingDotEffect(
+                                  dotHeight: 6.0,
+                                  dotWidth: 6.0,
+                                  jumpScale: .7,
+                                  verticalOffset: 15,
+                                  activeDotColor: kNeutralColor,
+                                  dotColor: kNeutralColor.withOpacity(0.4),
+                                ),
+                              ),
+                              const SizedBox(height: 10.0),
+                              Container(
+                                height: 20,
+                                width: MediaQuery.of(context).size.width,
+                              )
+                            ],
+                          ),
+                        ],
+                      );
+                    },
                   ),
                 ),
               ),
-            ];
-          },
-          body: CustomScrollView(
-            physics: const BouncingScrollPhysics(),
-            slivers: [
-              SliverList(
-                delegate: SliverChildBuilderDelegate(
-                  childCount: 1,
-                  (BuildContext context, int index) {
-                    return Column(
-                      mainAxisSize: MainAxisSize.min,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Container(
-                          width: double.infinity,
-                          decoration: const BoxDecoration(
-                            color: kWhite,
-                            borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(30.0),
-                              topRight: Radius.circular(30.0),
-                            ),
-                          ),
-                          child: Column(
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.all(15.0),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      'Workout routine for body composition',
-                                      maxLines: 2,
-                                      style: kTextStyle.copyWith(
-                                          color: kNeutralColor,
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                    const SizedBox(height: 5.0),
-                                    Row(
-                                      children: [
-                                        const Icon(
-                                          IconlyBold.star,
-                                          color: Colors.amber,
-                                          size: 18.0,
-                                        ),
-                                        const SizedBox(width: 5.0),
-                                        RichText(
-                                          text: TextSpan(
+            ),
+          ];
+        },
+        body: CustomScrollView(
+          physics: const BouncingScrollPhysics(),
+          slivers: [
+            SliverList(
+              delegate: SliverChildBuilderDelegate(
+                childCount: 1,
+                (BuildContext context, int index) {
+                  return Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                        width: double.infinity,
+                        child: Column(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.all(15.0),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  MorrfText(
+                                    text:
+                                        'Workout routine for body composition',
+                                    maxLines: 2,
+                                    size: FontSize.h5,
+                                  ),
+                                  const SizedBox(height: 5.0),
+                                  Row(
+                                    children: [
+                                      const Icon(
+                                        IconlyBold.star,
+                                        color: Colors.amber,
+                                        size: 18.0,
+                                      ),
+                                      const SizedBox(width: 5.0),
+                                      Row(
+                                        children: [
+                                          MorrfText(
                                             text: '5.0 ',
-                                            style: kTextStyle.copyWith(
-                                                color: kNeutralColor),
+                                            size: FontSize.p,
+                                          ),
+                                          MorrfText(
+                                            text: '(520 reviews)',
+                                            size: FontSize.p,
+                                            style: TextStyle(
+                                                color: Theme.of(context)
+                                                    .colorScheme
+                                                    .primary),
+                                          ),
+                                        ],
+                                      ),
+                                      const Spacer(),
+                                      Icon(
+                                        Icons.favorite,
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .primaryColor,
+                                        size: 18.0,
+                                      ),
+                                      const SizedBox(width: 4.0),
+                                      MorrfText(
+                                        text: '807',
+                                        maxLines: 1,
+                                        size: FontSize.h6,
+                                      )
+                                    ],
+                                  ),
+                                  ListTile(
+                                    contentPadding: EdgeInsets.zero,
+                                    horizontalTitleGap: 10,
+                                    leading: const CircleAvatar(
+                                      radius: 22.0,
+                                      backgroundImage:
+                                          AssetImage('images/profilepic2.png'),
+                                    ),
+                                    title: MorrfText(
+                                      text: 'William Liamsss',
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
+                                      size: FontSize.h6,
+                                    ),
+                                    subtitle: Row(
+                                      children: [
+                                        MorrfText(
+                                            text: 'Trainer Level - 1 ',
+                                            size: FontSize.p),
+                                        MorrfText(
+                                            text: '(View Profile)',
+                                            isLink: true,
+                                            size: FontSize.lp)
+                                      ],
+                                    ),
+                                  ),
+                                  Divider(
+                                    thickness: 1.0,
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .onBackground,
+                                  ),
+                                  const SizedBox(height: 5.0),
+                                  MorrfText(
+                                    text: 'Details',
+                                    maxLines: 1,
+                                    size: FontSize.h6,
+                                  ),
+                                  const SizedBox(height: 5.0),
+                                  ReadMoreText(
+                                    'Lorem ipsum dolor sit amet consectetur. Tortor sapien aliquam amet elit. Quis varius amet grav ida molestie rhoncus. Lorem ipsum dolor sit amet consectetur. Tortor sapien aliquam amet elit. Quis varius amet grav ida molestie rhoncus.',
+                                    trimLines: 3,
+                                    trimMode: TrimMode.Line,
+                                    trimCollapsedText: '..Read more',
+                                    trimExpandedText: '..Read less',
+                                  ),
+                                  const SizedBox(height: 15.0),
+                                  MorrfText(
+                                    text: 'Price',
+                                    maxLines: 1,
+                                    size: FontSize.h6,
+                                  ),
+                                  const SizedBox(height: 10.0),
+                                  Container(
+                                    decoration: BoxDecoration(
+                                      border: Border.all(
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .onBackground,
+                                          width: .5),
+                                      borderRadius: BorderRadius.circular(8.0),
+                                    ),
+                                    child: Column(
+                                      children: [
+                                        TabBar(
+                                          unselectedLabelColor: kSubTitleColor,
+                                          indicatorSize:
+                                              TabBarIndicatorSize.tab,
+                                          indicator: BoxDecoration(
+                                            borderRadius: BorderRadius.only(
+                                              topRight: Radius.circular(8.0),
+                                              topLeft: Radius.circular(8.0),
+                                            ),
+                                            color: Theme.of(context)
+                                                .colorScheme
+                                                .primaryColor,
+                                          ),
+                                          controller: tabController,
+                                          labelColor: Theme.of(context)
+                                              .colorScheme
+                                              .onBackground,
+                                          tabs: const [
+                                            Tab(
+                                              text: 'Basic',
+                                            ),
+                                            Tab(
+                                              text: 'Standard',
+                                            ),
+                                            Tab(
+                                              text: 'Premium',
+                                            ),
+                                          ],
+                                        ),
+                                        Divider(
+                                          height: 0,
+                                          thickness: 1.0,
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .onBackground,
+                                        ),
+                                        SizedBox(
+                                          height: 400,
+                                          child: TabBarView(
+                                            controller: tabController,
                                             children: [
-                                              TextSpan(
-                                                text: '(520 Reviews)',
-                                                style: kTextStyle.copyWith(
-                                                    color: kLightNeutralColor),
+                                              Padding(
+                                                padding:
+                                                    const EdgeInsets.all(10.0),
+                                                child: Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    MorrfText(
+                                                      text:
+                                                          '$currencySign${30}',
+                                                      size: FontSize.h6,
+                                                      style: TextStyle(
+                                                          color:
+                                                              Theme.of(context)
+                                                                  .colorScheme
+                                                                  .money),
+                                                    ),
+                                                    const SizedBox(height: 5.0),
+                                                    MorrfText(
+                                                      text:
+                                                          'I can design the website with 6 pages.',
+                                                      maxLines: 2,
+                                                      size: FontSize.h6,
+                                                    ),
+                                                    const SizedBox(
+                                                        height: 15.0),
+                                                    Row(
+                                                      children: [
+                                                        Icon(
+                                                          IconlyLight
+                                                              .timeCircle,
+                                                          color:
+                                                              Theme.of(context)
+                                                                  .colorScheme
+                                                                  .primaryColor,
+                                                          size: 18.0,
+                                                        ),
+                                                        const SizedBox(
+                                                            width: 5.0),
+                                                        MorrfText(
+                                                          text: 'Delivery days',
+                                                          maxLines: 1,
+                                                          size: FontSize.p,
+                                                        ),
+                                                        const Spacer(),
+                                                        MorrfText(
+                                                          text: '5 Days ',
+                                                          maxLines: 2,
+                                                          size: FontSize.p,
+                                                        ),
+                                                      ],
+                                                    ),
+                                                    const SizedBox(
+                                                        height: 10.0),
+                                                    Row(
+                                                      children: [
+                                                        Icon(
+                                                          Icons.loop,
+                                                          color:
+                                                              Theme.of(context)
+                                                                  .colorScheme
+                                                                  .primaryColor,
+                                                          size: 18.0,
+                                                        ),
+                                                        const SizedBox(
+                                                            width: 5.0),
+                                                        MorrfText(
+                                                          text: 'Revisions',
+                                                          maxLines: 1,
+                                                          size: FontSize.p,
+                                                        ),
+                                                        const Spacer(),
+                                                        MorrfText(
+                                                          text: 'Unlimited',
+                                                          maxLines: 2,
+                                                          size: FontSize.p,
+                                                        ),
+                                                      ],
+                                                    ),
+                                                    const SizedBox(
+                                                        height: 15.0),
+                                                    Divider(
+                                                      height: 0,
+                                                      thickness: 1.0,
+                                                      color: Theme.of(context)
+                                                          .colorScheme
+                                                          .onBackground,
+                                                    ),
+                                                    const SizedBox(
+                                                        height: 15.0),
+                                                    Row(
+                                                      children: [
+                                                        MorrfText(
+                                                          text: '3 Page/Screen',
+                                                          maxLines: 1,
+                                                          size: FontSize.p,
+                                                        ),
+                                                        const Spacer(),
+                                                        Icon(
+                                                          Icons.check_rounded,
+                                                          color:
+                                                              Theme.of(context)
+                                                                  .colorScheme
+                                                                  .primaryColor,
+                                                        ),
+                                                      ],
+                                                    ),
+                                                    const SizedBox(height: 5.0),
+                                                    Row(
+                                                      children: [
+                                                        MorrfText(
+                                                          text:
+                                                              '2 Custom assets',
+                                                          maxLines: 1,
+                                                          size: FontSize.p,
+                                                        ),
+                                                        const Spacer(),
+                                                        const Icon(
+                                                          Icons.check_rounded,
+                                                          color:
+                                                              kLightNeutralColor,
+                                                        ),
+                                                      ],
+                                                    ),
+                                                    const SizedBox(height: 5.0),
+                                                    Row(
+                                                      children: [
+                                                        MorrfText(
+                                                          text:
+                                                              'Responsive design',
+                                                          maxLines: 1,
+                                                          size: FontSize.p,
+                                                        ),
+                                                        const Spacer(),
+                                                        Icon(
+                                                          Icons.check_rounded,
+                                                          color:
+                                                              Theme.of(context)
+                                                                  .colorScheme
+                                                                  .primaryColor,
+                                                        ),
+                                                      ],
+                                                    ),
+                                                    const SizedBox(height: 5.0),
+                                                    Row(
+                                                      children: [
+                                                        MorrfText(
+                                                          text: 'Prototype',
+                                                          maxLines: 1,
+                                                          size: FontSize.p,
+                                                        ),
+                                                        const Spacer(),
+                                                        const Icon(
+                                                          Icons.check_rounded,
+                                                          color:
+                                                              kLightNeutralColor,
+                                                        ),
+                                                      ],
+                                                    ),
+                                                    const SizedBox(height: 5.0),
+                                                    Row(
+                                                      children: [
+                                                        MorrfText(
+                                                          text: 'Source file',
+                                                          maxLines: 1,
+                                                          size: FontSize.p,
+                                                        ),
+                                                        const Spacer(),
+                                                        Icon(
+                                                          Icons.check_rounded,
+                                                          color:
+                                                              Theme.of(context)
+                                                                  .colorScheme
+                                                                  .primaryColor,
+                                                        ),
+                                                      ],
+                                                    ),
+                                                    const SizedBox(
+                                                        height: 10.0),
+                                                    ButtonGlobalWithoutIcon(
+                                                      buttontext:
+                                                          'Select Offer',
+                                                      buttonDecoration:
+                                                          kButtonDecoration
+                                                              .copyWith(
+                                                        color: Theme.of(context)
+                                                            .colorScheme
+                                                            .primaryColor,
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(30.0),
+                                                      ),
+                                                      onPressed: () {},
+                                                      buttonTextColor:
+                                                          Theme.of(context)
+                                                              .colorScheme
+                                                              .onBackground,
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                              Padding(
+                                                padding:
+                                                    const EdgeInsets.all(10.0),
+                                                child: Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    MorrfText(
+                                                      text:
+                                                          '$currencySign${60}',
+                                                      size: FontSize.p,
+                                                      style: TextStyle(
+                                                          color:
+                                                              Theme.of(context)
+                                                                  .colorScheme
+                                                                  .money),
+                                                    ),
+                                                    const SizedBox(height: 5.0),
+                                                    MorrfText(
+                                                        text:
+                                                            'I can design the website with 6 pages.',
+                                                        maxLines: 2,
+                                                        size: FontSize.h6),
+                                                    const SizedBox(
+                                                        height: 15.0),
+                                                    Row(
+                                                      children: [
+                                                        Icon(
+                                                          IconlyLight
+                                                              .timeCircle,
+                                                          color:
+                                                              Theme.of(context)
+                                                                  .colorScheme
+                                                                  .primaryColor,
+                                                          size: 18.0,
+                                                        ),
+                                                        const SizedBox(
+                                                            width: 5.0),
+                                                        MorrfText(
+                                                          text: 'Delivery days',
+                                                          maxLines: 1,
+                                                          size: FontSize.p,
+                                                        ),
+                                                        const Spacer(),
+                                                        MorrfText(
+                                                          text: '5 Days ',
+                                                          maxLines: 2,
+                                                          size: FontSize.p,
+                                                        ),
+                                                      ],
+                                                    ),
+                                                    const SizedBox(
+                                                        height: 10.0),
+                                                    Row(
+                                                      children: [
+                                                        Icon(
+                                                          Icons.loop,
+                                                          color:
+                                                              Theme.of(context)
+                                                                  .colorScheme
+                                                                  .primaryColor,
+                                                          size: 18.0,
+                                                        ),
+                                                        const SizedBox(
+                                                            width: 5.0),
+                                                        MorrfText(
+                                                          text: 'Revisions',
+                                                          maxLines: 1,
+                                                          size: FontSize.p,
+                                                        ),
+                                                        const Spacer(),
+                                                        MorrfText(
+                                                          text: 'Unlimited',
+                                                          maxLines: 2,
+                                                          size: FontSize.p,
+                                                        ),
+                                                      ],
+                                                    ),
+                                                    const SizedBox(
+                                                        height: 15.0),
+                                                    const Divider(
+                                                      height: 0,
+                                                      thickness: 1.0,
+                                                      color:
+                                                          kBorderColorTextField,
+                                                    ),
+                                                    const SizedBox(
+                                                        height: 15.0),
+                                                    Row(
+                                                      children: [
+                                                        MorrfText(
+                                                          text: '3 Page/Screen',
+                                                          maxLines: 1,
+                                                          size: FontSize.p,
+                                                        ),
+                                                        const Spacer(),
+                                                        Icon(
+                                                          Icons.check_rounded,
+                                                          color:
+                                                              Theme.of(context)
+                                                                  .colorScheme
+                                                                  .primaryColor,
+                                                        ),
+                                                      ],
+                                                    ),
+                                                    const SizedBox(height: 5.0),
+                                                    Row(
+                                                      children: [
+                                                        MorrfText(
+                                                          text:
+                                                              '2 Custom assets',
+                                                          maxLines: 1,
+                                                          size: FontSize.p,
+                                                        ),
+                                                        const Spacer(),
+                                                        Icon(
+                                                          Icons.check_rounded,
+                                                          color:
+                                                              Theme.of(context)
+                                                                  .colorScheme
+                                                                  .primaryColor,
+                                                        ),
+                                                      ],
+                                                    ),
+                                                    const SizedBox(height: 5.0),
+                                                    Row(
+                                                      children: [
+                                                        MorrfText(
+                                                          text:
+                                                              'Responsive design',
+                                                          maxLines: 1,
+                                                          size: FontSize.p,
+                                                        ),
+                                                        const Spacer(),
+                                                        Icon(
+                                                          Icons.check_rounded,
+                                                          color:
+                                                              Theme.of(context)
+                                                                  .colorScheme
+                                                                  .primaryColor,
+                                                        ),
+                                                      ],
+                                                    ),
+                                                    const SizedBox(height: 5.0),
+                                                    Row(
+                                                      children: [
+                                                        MorrfText(
+                                                          text: 'Prototype',
+                                                          maxLines: 1,
+                                                          size: FontSize.p,
+                                                        ),
+                                                        const Spacer(),
+                                                        Icon(
+                                                          Icons.check_rounded,
+                                                          color:
+                                                              Theme.of(context)
+                                                                  .colorScheme
+                                                                  .primaryColor,
+                                                        ),
+                                                      ],
+                                                    ),
+                                                    const SizedBox(height: 5.0),
+                                                    Row(
+                                                      children: [
+                                                        MorrfText(
+                                                          text: 'Source file',
+                                                          maxLines: 1,
+                                                          size: FontSize.p,
+                                                        ),
+                                                        const Spacer(),
+                                                        Icon(
+                                                          Icons.check_rounded,
+                                                          color:
+                                                              Theme.of(context)
+                                                                  .colorScheme
+                                                                  .primaryColor,
+                                                        ),
+                                                      ],
+                                                    ),
+                                                    const SizedBox(
+                                                        height: 10.0),
+                                                    ButtonGlobalWithoutIcon(
+                                                      buttontext:
+                                                          'Select Offer',
+                                                      buttonDecoration:
+                                                          kButtonDecoration
+                                                              .copyWith(
+                                                        color: Theme.of(context)
+                                                            .colorScheme
+                                                            .primaryColor,
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(30.0),
+                                                      ),
+                                                      onPressed: () {},
+                                                      buttonTextColor:
+                                                          Theme.of(context)
+                                                              .colorScheme
+                                                              .onBackground,
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                              Padding(
+                                                padding:
+                                                    const EdgeInsets.all(10.0),
+                                                child: Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    MorrfText(
+                                                        text:
+                                                            '$currencySign${99}',
+                                                        style: TextStyle(
+                                                            color: Theme.of(
+                                                                    context)
+                                                                .colorScheme
+                                                                .money),
+                                                        size: FontSize.h6),
+                                                    const SizedBox(height: 5.0),
+                                                    MorrfText(
+                                                        text:
+                                                            'I can design the website with 100 pages.',
+                                                        maxLines: 2,
+                                                        size: FontSize.h6),
+                                                    const SizedBox(
+                                                        height: 15.0),
+                                                    Row(
+                                                      children: [
+                                                        Icon(
+                                                          IconlyLight
+                                                              .timeCircle,
+                                                          color:
+                                                              Theme.of(context)
+                                                                  .colorScheme
+                                                                  .primaryColor,
+                                                          size: 18.0,
+                                                        ),
+                                                        const SizedBox(
+                                                            width: 5.0),
+                                                        MorrfText(
+                                                          text: 'Delivery days',
+                                                          maxLines: 1,
+                                                          size: FontSize.p,
+                                                        ),
+                                                        const Spacer(),
+                                                        MorrfText(
+                                                          text: '15 Days ',
+                                                          maxLines: 2,
+                                                          size: FontSize.p,
+                                                        ),
+                                                      ],
+                                                    ),
+                                                    const SizedBox(
+                                                        height: 10.0),
+                                                    Row(
+                                                      children: [
+                                                        Icon(
+                                                          Icons.loop,
+                                                          color:
+                                                              Theme.of(context)
+                                                                  .colorScheme
+                                                                  .primaryColor,
+                                                          size: 18.0,
+                                                        ),
+                                                        const SizedBox(
+                                                            width: 5.0),
+                                                        MorrfText(
+                                                          text: 'Revisions',
+                                                          maxLines: 1,
+                                                          size: FontSize.p,
+                                                        ),
+                                                        const Spacer(),
+                                                        MorrfText(
+                                                          text: 'Unlimited',
+                                                          maxLines: 2,
+                                                          size: FontSize.p,
+                                                        ),
+                                                      ],
+                                                    ),
+                                                    const SizedBox(
+                                                        height: 15.0),
+                                                    const Divider(
+                                                      height: 0,
+                                                      thickness: 1.0,
+                                                      color:
+                                                          kBorderColorTextField,
+                                                    ),
+                                                    const SizedBox(
+                                                        height: 15.0),
+                                                    Row(
+                                                      children: [
+                                                        MorrfText(
+                                                          text: '3 Page/Screen',
+                                                          maxLines: 1,
+                                                          size: FontSize.p,
+                                                        ),
+                                                        const Spacer(),
+                                                        Icon(
+                                                          Icons.check_rounded,
+                                                          color:
+                                                              Theme.of(context)
+                                                                  .colorScheme
+                                                                  .primaryColor,
+                                                        ),
+                                                      ],
+                                                    ),
+                                                    const SizedBox(height: 5.0),
+                                                    Row(
+                                                      children: [
+                                                        MorrfText(
+                                                          text:
+                                                              '2 Custom assets',
+                                                          maxLines: 1,
+                                                          size: FontSize.p,
+                                                        ),
+                                                        const Spacer(),
+                                                        Icon(
+                                                          Icons.check_rounded,
+                                                          color:
+                                                              Theme.of(context)
+                                                                  .colorScheme
+                                                                  .primaryColor,
+                                                        ),
+                                                      ],
+                                                    ),
+                                                    const SizedBox(height: 5.0),
+                                                    Row(
+                                                      children: [
+                                                        MorrfText(
+                                                          text:
+                                                              'Responsive design',
+                                                          maxLines: 1,
+                                                          size: FontSize.p,
+                                                        ),
+                                                        const Spacer(),
+                                                        Icon(
+                                                          Icons.check_rounded,
+                                                          color:
+                                                              Theme.of(context)
+                                                                  .colorScheme
+                                                                  .primaryColor,
+                                                        ),
+                                                      ],
+                                                    ),
+                                                    const SizedBox(height: 5.0),
+                                                    Row(
+                                                      children: [
+                                                        MorrfText(
+                                                          text: 'Prototype',
+                                                          maxLines: 1,
+                                                          size: FontSize.p,
+                                                        ),
+                                                        const Spacer(),
+                                                        Icon(
+                                                          Icons.check_rounded,
+                                                          color:
+                                                              Theme.of(context)
+                                                                  .colorScheme
+                                                                  .primaryColor,
+                                                        ),
+                                                      ],
+                                                    ),
+                                                    const SizedBox(height: 5.0),
+                                                    Row(
+                                                      children: [
+                                                        MorrfText(
+                                                          text: 'Source file',
+                                                          maxLines: 1,
+                                                          size: FontSize.p,
+                                                        ),
+                                                        const Spacer(),
+                                                        Icon(
+                                                          Icons.check_rounded,
+                                                          color:
+                                                              Theme.of(context)
+                                                                  .colorScheme
+                                                                  .primaryColor,
+                                                        ),
+                                                      ],
+                                                    ),
+                                                    const SizedBox(
+                                                        height: 10.0),
+                                                    ButtonGlobalWithoutIcon(
+                                                      buttontext:
+                                                          'Select Offer',
+                                                      buttonDecoration:
+                                                          kButtonDecoration
+                                                              .copyWith(
+                                                        color: Theme.of(context)
+                                                            .colorScheme
+                                                            .primaryColor,
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(30.0),
+                                                      ),
+                                                      onPressed: () {},
+                                                      buttonTextColor:
+                                                          Theme.of(context)
+                                                              .colorScheme
+                                                              .onBackground,
+                                                    ),
+                                                  ],
+                                                ),
                                               ),
                                             ],
                                           ),
-                                        ),
-                                        const Spacer(),
-                                        const Icon(
-                                          Icons.favorite,
-                                          color: kPrimaryColor,
-                                          size: 18.0,
-                                        ),
-                                        const SizedBox(width: 4.0),
-                                        Text(
-                                          '807',
-                                          maxLines: 1,
-                                          style: kTextStyle.copyWith(
-                                              color: kLightNeutralColor),
                                         )
                                       ],
                                     ),
-                                    ListTile(
-                                      contentPadding: EdgeInsets.zero,
-                                      horizontalTitleGap: 10,
-                                      leading: const CircleAvatar(
-                                        radius: 22.0,
-                                        backgroundImage: AssetImage(
-                                            'images/profilepic2.png'),
-                                      ),
-                                      title: Text(
-                                        'William Liam',
-                                        maxLines: 1,
-                                        overflow: TextOverflow.ellipsis,
-                                        style: kTextStyle.copyWith(
-                                            color: kNeutralColor,
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                      subtitle: RichText(
-                                        text: TextSpan(
-                                          text: 'Trainer Level - 1 ',
-                                          style: kTextStyle.copyWith(
-                                              color: kNeutralColor),
-                                          children: [
-                                            TextSpan(
-                                              text: '(View Profile)',
-                                              style: kTextStyle.copyWith(
-                                                  color: kPrimaryColor),
-                                            )
-                                          ],
+                                  ),
+                                  const SizedBox(height: 15.0),
+                                  MorrfText(
+                                    text: 'Reviews',
+                                    maxLines: 1,
+                                    size: FontSize.h6,
+                                  ),
+                                  const SizedBox(height: 15.0),
+                                  const Review(),
+                                  const SizedBox(height: 15.0),
+                                  const ReviewDetails(),
+                                  const SizedBox(height: 15.0),
+                                  const ReviewDetails2(),
+                                  const SizedBox(height: 20.0),
+                                  Container(
+                                    height: 40.0,
+                                    decoration: BoxDecoration(
+                                        borderRadius:
+                                            BorderRadius.circular(30.0),
+                                        border:
+                                            Border.all(color: kSubTitleColor)),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        MorrfText(
+                                          text: 'View all reviews',
+                                          maxLines: 1,
+                                          size: FontSize.p,
                                         ),
-                                      ),
+                                        const Icon(
+                                          FeatherIcons.chevronDown,
+                                          color: kSubTitleColor,
+                                        ),
+                                      ],
                                     ),
-                                    const Divider(
-                                      thickness: 1.0,
-                                      color: kBorderColorTextField,
-                                    ),
-                                    const SizedBox(height: 5.0),
-                                    Text(
-                                      'Details',
-                                      maxLines: 1,
-                                      style: kTextStyle.copyWith(
-                                          color: kNeutralColor,
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                    const SizedBox(height: 5.0),
-                                    ReadMoreText(
-                                      'Lorem ipsum dolor sit amet consectetur. Tortor sapien aliquam amet elit. Quis varius amet grav ida molestie rhoncus. Lorem ipsum dolor sit amet consectetur. Tortor sapien aliquam amet elit. Quis varius amet grav ida molestie rhoncus.',
-                                      style: kTextStyle.copyWith(
-                                          color: kLightNeutralColor),
-                                      trimLines: 3,
-                                      colorClickableText: kPrimaryColor,
-                                      trimMode: TrimMode.Line,
-                                      trimCollapsedText: '..Read more',
-                                      trimExpandedText: '..Read less',
-                                    ),
-                                    const SizedBox(height: 15.0),
-                                    Text(
-                                      'Price',
-                                      maxLines: 1,
-                                      style: kTextStyle.copyWith(
-                                          color: kNeutralColor,
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                    const SizedBox(height: 10.0),
-                                    Container(
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                  left: 15.0, right: 15.0, top: 15),
+                              child: Row(
+                                children: [
+                                  MorrfText(
+                                      text: 'Recent Viewed', size: FontSize.h6),
+                                  const Spacer(),
+                                  GestureDetector(
+                                    onTap: () =>
+                                        const RecentlyView().launch(context),
+                                    child: MorrfText(
+                                        text: 'View All',
+                                        isLink: true,
+                                        size: FontSize.p),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            HorizontalList(
+                              physics: const BouncingScrollPhysics(),
+                              padding: const EdgeInsets.only(
+                                  left: 15.0, bottom: 15, top: 15),
+                              spacing: 10.0,
+                              itemCount: 10,
+                              itemBuilder: (_, i) {
+                                return Padding(
+                                  padding: const EdgeInsets.only(bottom: 10.0),
+                                  child: GestureDetector(
+                                    onTap: () => print("clicked"),
+                                    // onTap: () => const ClientServiceDetails()
+                                    //     .launch(context),
+                                    child: Container(
+                                      height: 120,
                                       decoration: BoxDecoration(
-                                        color: kWhite,
-                                        border: Border.all(
-                                            color: kBorderColorTextField),
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .onBackground,
                                         borderRadius:
                                             BorderRadius.circular(8.0),
+                                        border: Border.all(
+                                            color: kBorderColorTextField),
                                       ),
-                                      child: Column(
+                                      child: Row(
+                                        mainAxisSize: MainAxisSize.min,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
                                         children: [
-                                          TabBar(
-                                            unselectedLabelColor:
-                                                kSubTitleColor,
-                                            indicatorSize:
-                                                TabBarIndicatorSize.tab,
-                                            indicator: const BoxDecoration(
-                                              borderRadius: BorderRadius.only(
-                                                topRight: Radius.circular(8.0),
-                                                topLeft: Radius.circular(8.0),
+                                          Stack(
+                                            alignment: Alignment.topLeft,
+                                            children: [
+                                              Container(
+                                                height: 120,
+                                                width: 120,
+                                                decoration: const BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.only(
+                                                    bottomLeft:
+                                                        Radius.circular(8.0),
+                                                    topLeft:
+                                                        Radius.circular(8.0),
+                                                  ),
+                                                  image: DecorationImage(
+                                                      image: AssetImage(
+                                                        'images/shot5.png',
+                                                      ),
+                                                      fit: BoxFit.cover),
+                                                ),
                                               ),
-                                              color: kPrimaryColor,
-                                            ),
-                                            controller: tabController,
-                                            labelColor: kWhite,
-                                            tabs: const [
-                                              Tab(
-                                                text: 'Basic',
-                                              ),
-                                              Tab(
-                                                text: 'Standard',
-                                              ),
-                                              Tab(
-                                                text: 'Premium',
+                                              GestureDetector(
+                                                onTap: () {
+                                                  setState(() {
+                                                    isFavorite = !isFavorite;
+                                                  });
+                                                },
+                                                child: Padding(
+                                                  padding:
+                                                      const EdgeInsets.all(5.0),
+                                                  child: Container(
+                                                    height: 25,
+                                                    width: 25,
+                                                    decoration:
+                                                        const BoxDecoration(
+                                                      shape: BoxShape.circle,
+                                                    ),
+                                                    child: isFavorite
+                                                        ? const Center(
+                                                            child: Icon(
+                                                              Icons.favorite,
+                                                              color: Colors.red,
+                                                              size: 16.0,
+                                                            ),
+                                                          )
+                                                        : const Center(
+                                                            child: Icon(
+                                                              Icons
+                                                                  .favorite_border,
+                                                              color:
+                                                                  kNeutralColor,
+                                                              size: 16.0,
+                                                            ),
+                                                          ),
+                                                  ),
+                                                ),
                                               ),
                                             ],
                                           ),
-                                          const Divider(
-                                            height: 0,
-                                            thickness: 1.0,
-                                            color: kBorderColorTextField,
-                                          ),
-                                          SizedBox(
-                                            height: 400,
-                                            child: TabBarView(
-                                              controller: tabController,
+                                          Padding(
+                                            padding: const EdgeInsets.all(5.0),
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              mainAxisSize: MainAxisSize.min,
                                               children: [
-                                                Padding(
-                                                  padding: const EdgeInsets.all(
-                                                      10.0),
-                                                  child: Column(
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .start,
-                                                    children: [
-                                                      Text(
-                                                        '$currencySign${30}',
-                                                        style:
-                                                            kTextStyle.copyWith(
-                                                                color:
-                                                                    kNeutralColor,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold),
-                                                      ),
-                                                      const SizedBox(
-                                                          height: 5.0),
-                                                      Text(
-                                                        'I can design the website with 6 pages.',
-                                                        maxLines: 2,
-                                                        style:
-                                                            kTextStyle.copyWith(
-                                                                color:
-                                                                    kNeutralColor,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold),
-                                                      ),
-                                                      const SizedBox(
-                                                          height: 15.0),
-                                                      Row(
-                                                        children: [
-                                                          const Icon(
-                                                            IconlyLight
-                                                                .timeCircle,
-                                                            color:
-                                                                kPrimaryColor,
-                                                            size: 18.0,
-                                                          ),
-                                                          const SizedBox(
-                                                              width: 5.0),
-                                                          Text(
-                                                            'Delivery days',
-                                                            maxLines: 1,
-                                                            style: kTextStyle
-                                                                .copyWith(
-                                                                    color:
-                                                                        kSubTitleColor),
-                                                          ),
-                                                          const Spacer(),
-                                                          Text(
-                                                            '5 Days ',
-                                                            maxLines: 2,
-                                                            style: kTextStyle
-                                                                .copyWith(
-                                                                    color:
-                                                                        kNeutralColor),
-                                                          ),
-                                                        ],
-                                                      ),
-                                                      const SizedBox(
-                                                          height: 10.0),
-                                                      Row(
-                                                        children: [
-                                                          const Icon(
-                                                            Icons.loop,
-                                                            color:
-                                                                kPrimaryColor,
-                                                            size: 18.0,
-                                                          ),
-                                                          const SizedBox(
-                                                              width: 5.0),
-                                                          Text(
-                                                            'Revisions',
-                                                            maxLines: 1,
-                                                            style: kTextStyle
-                                                                .copyWith(
-                                                                    color:
-                                                                        kSubTitleColor),
-                                                          ),
-                                                          const Spacer(),
-                                                          Text(
-                                                            'Unlimited',
-                                                            maxLines: 2,
-                                                            style: kTextStyle
-                                                                .copyWith(
-                                                                    color:
-                                                                        kNeutralColor),
-                                                          ),
-                                                        ],
-                                                      ),
-                                                      const SizedBox(
-                                                          height: 15.0),
-                                                      const Divider(
-                                                        height: 0,
-                                                        thickness: 1.0,
-                                                        color:
-                                                            kBorderColorTextField,
-                                                      ),
-                                                      const SizedBox(
-                                                          height: 15.0),
-                                                      Row(
-                                                        children: [
-                                                          Text(
-                                                            '3 Page/Screen',
-                                                            maxLines: 1,
-                                                            style: kTextStyle
-                                                                .copyWith(
-                                                                    color:
-                                                                        kNeutralColor),
-                                                          ),
-                                                          const Spacer(),
-                                                          const Icon(
-                                                            Icons.check_rounded,
-                                                            color:
-                                                                kPrimaryColor,
-                                                          ),
-                                                        ],
-                                                      ),
-                                                      const SizedBox(
-                                                          height: 5.0),
-                                                      Row(
-                                                        children: [
-                                                          Text(
-                                                            '2 Custom assets',
-                                                            maxLines: 1,
-                                                            style: kTextStyle
-                                                                .copyWith(
-                                                                    color:
-                                                                        kLightNeutralColor),
-                                                          ),
-                                                          const Spacer(),
-                                                          const Icon(
-                                                            Icons.check_rounded,
-                                                            color:
-                                                                kLightNeutralColor,
-                                                          ),
-                                                        ],
-                                                      ),
-                                                      const SizedBox(
-                                                          height: 5.0),
-                                                      Row(
-                                                        children: [
-                                                          Text(
-                                                            'Responsive design',
-                                                            maxLines: 1,
-                                                            style: kTextStyle
-                                                                .copyWith(
-                                                                    color:
-                                                                        kNeutralColor),
-                                                          ),
-                                                          const Spacer(),
-                                                          const Icon(
-                                                            Icons.check_rounded,
-                                                            color:
-                                                                kPrimaryColor,
-                                                          ),
-                                                        ],
-                                                      ),
-                                                      const SizedBox(
-                                                          height: 5.0),
-                                                      Row(
-                                                        children: [
-                                                          Text(
-                                                            'Prototype',
-                                                            maxLines: 1,
-                                                            style: kTextStyle
-                                                                .copyWith(
-                                                                    color:
-                                                                        kLightNeutralColor),
-                                                          ),
-                                                          const Spacer(),
-                                                          const Icon(
-                                                            Icons.check_rounded,
-                                                            color:
-                                                                kLightNeutralColor,
-                                                          ),
-                                                        ],
-                                                      ),
-                                                      const SizedBox(
-                                                          height: 5.0),
-                                                      Row(
-                                                        children: [
-                                                          Text(
-                                                            'Source file',
-                                                            maxLines: 1,
-                                                            style: kTextStyle
-                                                                .copyWith(
-                                                                    color:
-                                                                        kNeutralColor),
-                                                          ),
-                                                          const Spacer(),
-                                                          const Icon(
-                                                            Icons.check_rounded,
-                                                            color:
-                                                                kPrimaryColor,
-                                                          ),
-                                                        ],
-                                                      ),
-                                                      const SizedBox(
-                                                          height: 10.0),
-                                                      ButtonGlobalWithoutIcon(
-                                                        buttontext:
-                                                            'Select Offer',
-                                                        buttonDecoration:
-                                                            kButtonDecoration
-                                                                .copyWith(
-                                                          color: kPrimaryColor,
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(
-                                                                      30.0),
-                                                        ),
-                                                        onPressed: () {},
-                                                        buttonTextColor: kWhite,
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ),
-                                                Padding(
-                                                  padding: const EdgeInsets.all(
-                                                      10.0),
-                                                  child: Column(
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .start,
-                                                    children: [
-                                                      Text(
-                                                        '$currencySign${60}',
-                                                        style:
-                                                            kTextStyle.copyWith(
-                                                                color:
-                                                                    kNeutralColor,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold),
-                                                      ),
-                                                      const SizedBox(
-                                                          height: 5.0),
-                                                      Text(
-                                                        'I can design the website with 6 pages.',
-                                                        maxLines: 2,
-                                                        style:
-                                                            kTextStyle.copyWith(
-                                                                color:
-                                                                    kNeutralColor,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold),
-                                                      ),
-                                                      const SizedBox(
-                                                          height: 15.0),
-                                                      Row(
-                                                        children: [
-                                                          const Icon(
-                                                            IconlyLight
-                                                                .timeCircle,
-                                                            color:
-                                                                kPrimaryColor,
-                                                            size: 18.0,
-                                                          ),
-                                                          const SizedBox(
-                                                              width: 5.0),
-                                                          Text(
-                                                            'Delivery days',
-                                                            maxLines: 1,
-                                                            style: kTextStyle
-                                                                .copyWith(
-                                                                    color:
-                                                                        kSubTitleColor),
-                                                          ),
-                                                          const Spacer(),
-                                                          Text(
-                                                            '5 Days ',
-                                                            maxLines: 2,
-                                                            style: kTextStyle
-                                                                .copyWith(
-                                                                    color:
-                                                                        kNeutralColor),
-                                                          ),
-                                                        ],
-                                                      ),
-                                                      const SizedBox(
-                                                          height: 10.0),
-                                                      Row(
-                                                        children: [
-                                                          const Icon(
-                                                            Icons.loop,
-                                                            color:
-                                                                kPrimaryColor,
-                                                            size: 18.0,
-                                                          ),
-                                                          const SizedBox(
-                                                              width: 5.0),
-                                                          Text(
-                                                            'Revisions',
-                                                            maxLines: 1,
-                                                            style: kTextStyle
-                                                                .copyWith(
-                                                                    color:
-                                                                        kSubTitleColor),
-                                                          ),
-                                                          const Spacer(),
-                                                          Text(
-                                                            'Unlimited',
-                                                            maxLines: 2,
-                                                            style: kTextStyle
-                                                                .copyWith(
-                                                                    color:
-                                                                        kNeutralColor),
-                                                          ),
-                                                        ],
-                                                      ),
-                                                      const SizedBox(
-                                                          height: 15.0),
-                                                      const Divider(
-                                                        height: 0,
-                                                        thickness: 1.0,
-                                                        color:
-                                                            kBorderColorTextField,
-                                                      ),
-                                                      const SizedBox(
-                                                          height: 15.0),
-                                                      Row(
-                                                        children: [
-                                                          Text(
-                                                            '3 Page/Screen',
-                                                            maxLines: 1,
-                                                            style: kTextStyle
-                                                                .copyWith(
-                                                                    color:
-                                                                        kNeutralColor),
-                                                          ),
-                                                          const Spacer(),
-                                                          const Icon(
-                                                            Icons.check_rounded,
-                                                            color:
-                                                                kPrimaryColor,
-                                                          ),
-                                                        ],
-                                                      ),
-                                                      const SizedBox(
-                                                          height: 5.0),
-                                                      Row(
-                                                        children: [
-                                                          Text(
-                                                            '2 Custom assets',
-                                                            maxLines: 1,
-                                                            style: kTextStyle
-                                                                .copyWith(
-                                                                    color:
-                                                                        kLightNeutralColor),
-                                                          ),
-                                                          const Spacer(),
-                                                          const Icon(
-                                                            Icons.check_rounded,
-                                                            color:
-                                                                kPrimaryColor,
-                                                          ),
-                                                        ],
-                                                      ),
-                                                      const SizedBox(
-                                                          height: 5.0),
-                                                      Row(
-                                                        children: [
-                                                          Text(
-                                                            'Responsive design',
-                                                            maxLines: 1,
-                                                            style: kTextStyle
-                                                                .copyWith(
-                                                                    color:
-                                                                        kNeutralColor),
-                                                          ),
-                                                          const Spacer(),
-                                                          const Icon(
-                                                            Icons.check_rounded,
-                                                            color:
-                                                                kPrimaryColor,
-                                                          ),
-                                                        ],
-                                                      ),
-                                                      const SizedBox(
-                                                          height: 5.0),
-                                                      Row(
-                                                        children: [
-                                                          Text(
-                                                            'Prototype',
-                                                            maxLines: 1,
-                                                            style: kTextStyle
-                                                                .copyWith(
-                                                                    color:
-                                                                        kLightNeutralColor),
-                                                          ),
-                                                          const Spacer(),
-                                                          const Icon(
-                                                            Icons.check_rounded,
-                                                            color:
-                                                                kPrimaryColor,
-                                                          ),
-                                                        ],
-                                                      ),
-                                                      const SizedBox(
-                                                          height: 5.0),
-                                                      Row(
-                                                        children: [
-                                                          Text(
-                                                            'Source file',
-                                                            maxLines: 1,
-                                                            style: kTextStyle
-                                                                .copyWith(
-                                                                    color:
-                                                                        kNeutralColor),
-                                                          ),
-                                                          const Spacer(),
-                                                          const Icon(
-                                                            Icons.check_rounded,
-                                                            color:
-                                                                kPrimaryColor,
-                                                          ),
-                                                        ],
-                                                      ),
-                                                      const SizedBox(
-                                                          height: 10.0),
-                                                      ButtonGlobalWithoutIcon(
-                                                        buttontext:
-                                                            'Select Offer',
-                                                        buttonDecoration:
-                                                            kButtonDecoration
-                                                                .copyWith(
-                                                          color: kWhite,
-                                                          border: Border.all(
-                                                              color:
-                                                                  kPrimaryColor),
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(
-                                                                      30.0),
-                                                        ),
-                                                        onPressed: () {},
-                                                        buttonTextColor:
-                                                            kPrimaryColor,
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ),
-                                                Padding(
-                                                  padding: const EdgeInsets.all(
-                                                      10.0),
-                                                  child: Column(
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .start,
-                                                    children: [
-                                                      Text(
-                                                        '$currencySign${99}',
-                                                        style:
-                                                            kTextStyle.copyWith(
-                                                                color:
-                                                                    kNeutralColor,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold),
-                                                      ),
-                                                      const SizedBox(
-                                                          height: 5.0),
-                                                      Text(
-                                                        'I can design the website with 100 pages.',
-                                                        maxLines: 2,
-                                                        style:
-                                                            kTextStyle.copyWith(
-                                                                color:
-                                                                    kNeutralColor,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold),
-                                                      ),
-                                                      const SizedBox(
-                                                          height: 15.0),
-                                                      Row(
-                                                        children: [
-                                                          const Icon(
-                                                            IconlyLight
-                                                                .timeCircle,
-                                                            color:
-                                                                kPrimaryColor,
-                                                            size: 18.0,
-                                                          ),
-                                                          const SizedBox(
-                                                              width: 5.0),
-                                                          Text(
-                                                            'Delivery days',
-                                                            maxLines: 1,
-                                                            style: kTextStyle
-                                                                .copyWith(
-                                                                    color:
-                                                                        kSubTitleColor),
-                                                          ),
-                                                          const Spacer(),
-                                                          Text(
-                                                            '15 Days ',
-                                                            maxLines: 2,
-                                                            style: kTextStyle
-                                                                .copyWith(
-                                                                    color:
-                                                                        kNeutralColor),
-                                                          ),
-                                                        ],
-                                                      ),
-                                                      const SizedBox(
-                                                          height: 10.0),
-                                                      Row(
-                                                        children: [
-                                                          const Icon(
-                                                            Icons.loop,
-                                                            color:
-                                                                kPrimaryColor,
-                                                            size: 18.0,
-                                                          ),
-                                                          const SizedBox(
-                                                              width: 5.0),
-                                                          Text(
-                                                            'Revisions',
-                                                            maxLines: 1,
-                                                            style: kTextStyle
-                                                                .copyWith(
-                                                                    color:
-                                                                        kSubTitleColor),
-                                                          ),
-                                                          const Spacer(),
-                                                          Text(
-                                                            'Unlimited',
-                                                            maxLines: 2,
-                                                            style: kTextStyle
-                                                                .copyWith(
-                                                                    color:
-                                                                        kNeutralColor),
-                                                          ),
-                                                        ],
-                                                      ),
-                                                      const SizedBox(
-                                                          height: 15.0),
-                                                      const Divider(
-                                                        height: 0,
-                                                        thickness: 1.0,
-                                                        color:
-                                                            kBorderColorTextField,
-                                                      ),
-                                                      const SizedBox(
-                                                          height: 15.0),
-                                                      Row(
-                                                        children: [
-                                                          Text(
-                                                            '3 Page/Screen',
-                                                            maxLines: 1,
-                                                            style: kTextStyle
-                                                                .copyWith(
-                                                                    color:
-                                                                        kNeutralColor),
-                                                          ),
-                                                          const Spacer(),
-                                                          const Icon(
-                                                            Icons.check_rounded,
-                                                            color:
-                                                                kPrimaryColor,
-                                                          ),
-                                                        ],
-                                                      ),
-                                                      const SizedBox(
-                                                          height: 5.0),
-                                                      Row(
-                                                        children: [
-                                                          Text(
-                                                            '2 Custom assets',
-                                                            maxLines: 1,
-                                                            style: kTextStyle
-                                                                .copyWith(
-                                                                    color:
-                                                                        kLightNeutralColor),
-                                                          ),
-                                                          const Spacer(),
-                                                          const Icon(
-                                                            Icons.check_rounded,
-                                                            color:
-                                                                kPrimaryColor,
-                                                          ),
-                                                        ],
-                                                      ),
-                                                      const SizedBox(
-                                                          height: 5.0),
-                                                      Row(
-                                                        children: [
-                                                          Text(
-                                                            'Responsive design',
-                                                            maxLines: 1,
-                                                            style: kTextStyle
-                                                                .copyWith(
-                                                                    color:
-                                                                        kNeutralColor),
-                                                          ),
-                                                          const Spacer(),
-                                                          const Icon(
-                                                            Icons.check_rounded,
-                                                            color:
-                                                                kPrimaryColor,
-                                                          ),
-                                                        ],
-                                                      ),
-                                                      const SizedBox(
-                                                          height: 5.0),
-                                                      Row(
-                                                        children: [
-                                                          Text(
-                                                            'Prototype',
-                                                            maxLines: 1,
-                                                            style: kTextStyle
-                                                                .copyWith(
-                                                                    color:
-                                                                        kLightNeutralColor),
-                                                          ),
-                                                          const Spacer(),
-                                                          const Icon(
-                                                            Icons.check_rounded,
-                                                            color:
-                                                                kPrimaryColor,
-                                                          ),
-                                                        ],
-                                                      ),
-                                                      const SizedBox(
-                                                          height: 5.0),
-                                                      Row(
-                                                        children: [
-                                                          Text(
-                                                            'Source file',
-                                                            maxLines: 1,
-                                                            style: kTextStyle
-                                                                .copyWith(
-                                                                    color:
-                                                                        kNeutralColor),
-                                                          ),
-                                                          const Spacer(),
-                                                          const Icon(
-                                                            Icons.check_rounded,
-                                                            color:
-                                                                kPrimaryColor,
-                                                          ),
-                                                        ],
-                                                      ),
-                                                      const SizedBox(
-                                                          height: 10.0),
-                                                      ButtonGlobalWithoutIcon(
-                                                        buttontext:
-                                                            'Select Offer',
-                                                        buttonDecoration:
-                                                            kButtonDecoration
-                                                                .copyWith(
-                                                          color: kWhite,
-                                                          border: Border.all(
-                                                              color:
-                                                                  kPrimaryColor),
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(
-                                                                      30.0),
-                                                        ),
-                                                        onPressed: () {},
-                                                        buttonTextColor:
-                                                            kPrimaryColor,
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          )
-                                        ],
-                                      ),
-                                    ),
-                                    const SizedBox(height: 15.0),
-                                    Text(
-                                      'Reviews',
-                                      maxLines: 1,
-                                      style: kTextStyle.copyWith(
-                                          color: kNeutralColor,
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                    const SizedBox(height: 15.0),
-                                    const Review(),
-                                    const SizedBox(height: 15.0),
-                                    const ReviewDetails(),
-                                    const SizedBox(height: 15.0),
-                                    const ReviewDetails2(),
-                                    const SizedBox(height: 20.0),
-                                    Container(
-                                      height: 40.0,
-                                      decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(30.0),
-                                          border: Border.all(
-                                              color: kSubTitleColor)),
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          Text(
-                                            'View all reviews',
-                                            maxLines: 1,
-                                            style: kTextStyle.copyWith(
-                                                color: kSubTitleColor),
-                                          ),
-                                          const Icon(
-                                            FeatherIcons.chevronDown,
-                                            color: kSubTitleColor,
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.only(
-                                    left: 15.0, right: 15.0, top: 15),
-                                child: Row(
-                                  children: [
-                                    Text(
-                                      'Recent Viewed',
-                                      style: kTextStyle.copyWith(
-                                          color: kNeutralColor,
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                    const Spacer(),
-                                    GestureDetector(
-                                      onTap: () =>
-                                          const RecentlyView().launch(context),
-                                      child: Text(
-                                        'View All',
-                                        style: kTextStyle.copyWith(
-                                            color: kLightNeutralColor),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              HorizontalList(
-                                physics: const BouncingScrollPhysics(),
-                                padding: const EdgeInsets.only(
-                                    left: 15.0, bottom: 15, top: 15),
-                                spacing: 10.0,
-                                itemCount: 10,
-                                itemBuilder: (_, i) {
-                                  return Padding(
-                                    padding:
-                                        const EdgeInsets.only(bottom: 10.0),
-                                    child: GestureDetector(
-                                      onTap: () => const ClientServiceDetails()
-                                          .launch(context),
-                                      child: Container(
-                                        height: 120,
-                                        decoration: BoxDecoration(
-                                          color: kWhite,
-                                          borderRadius:
-                                              BorderRadius.circular(8.0),
-                                          border: Border.all(
-                                              color: kBorderColorTextField),
-                                          boxShadow: const [
-                                            BoxShadow(
-                                              color: kDarkWhite,
-                                              blurRadius: 5.0,
-                                              spreadRadius: 2.0,
-                                              offset: Offset(0, 5),
-                                            ),
-                                          ],
-                                        ),
-                                        child: Row(
-                                          mainAxisSize: MainAxisSize.min,
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.start,
-                                          children: [
-                                            Stack(
-                                              alignment: Alignment.topLeft,
-                                              children: [
-                                                Container(
-                                                  height: 120,
-                                                  width: 120,
-                                                  decoration:
-                                                      const BoxDecoration(
-                                                    borderRadius:
-                                                        BorderRadius.only(
-                                                      bottomLeft:
-                                                          Radius.circular(8.0),
-                                                      topLeft:
-                                                          Radius.circular(8.0),
+                                                const Flexible(
+                                                  child: SizedBox(
+                                                    width: 190,
+                                                    child: MorrfText(
+                                                      text:
+                                                          'Workout routine for body composition',
+                                                      size: FontSize.lp,
+                                                      maxLines: 2,
+                                                      overflow:
+                                                          TextOverflow.ellipsis,
                                                     ),
-                                                    image: DecorationImage(
-                                                        image: AssetImage(
-                                                          'images/shot5.png',
-                                                        ),
-                                                        fit: BoxFit.cover),
                                                   ),
                                                 ),
-                                                GestureDetector(
-                                                  onTap: () {
-                                                    setState(() {
-                                                      isFavorite = !isFavorite;
-                                                    });
-                                                  },
-                                                  child: Padding(
-                                                    padding:
-                                                        const EdgeInsets.all(
-                                                            5.0),
-                                                    child: Container(
-                                                      height: 25,
-                                                      width: 25,
+                                                const SizedBox(height: 5.0),
+                                                Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.start,
+                                                  children: [
+                                                    const Icon(
+                                                      IconlyBold.star,
+                                                      color: Colors.amber,
+                                                      size: 18.0,
+                                                    ),
+                                                    const SizedBox(width: 2.0),
+                                                    const MorrfText(
+                                                        text: '5.0',
+                                                        size: FontSize.p),
+                                                    const SizedBox(width: 2.0),
+                                                    MorrfText(
+                                                      text: '(520)',
+                                                      size: FontSize.p,
+                                                      style: TextStyle(
+                                                          color:
+                                                              Theme.of(context)
+                                                                  .colorScheme
+                                                                  .primary),
+                                                    ),
+                                                    const SizedBox(width: 40),
+                                                    Row(
+                                                      children: [
+                                                        const MorrfText(
+                                                            text: 'Price ',
+                                                            size: FontSize.p),
+                                                        MorrfText(
+                                                            text:
+                                                                '$currencySign${30}',
+                                                            size: FontSize.p,
+                                                            style: TextStyle(
+                                                                color: Theme.of(
+                                                                        context)
+                                                                    .colorScheme
+                                                                    .money))
+                                                      ],
+                                                    )
+                                                  ],
+                                                ),
+                                                const SizedBox(height: 5.0),
+                                                Row(
+                                                  children: [
+                                                    Container(
+                                                      height: 32,
+                                                      width: 32,
                                                       decoration:
                                                           const BoxDecoration(
-                                                        color: Colors.white,
                                                         shape: BoxShape.circle,
-                                                        boxShadow: [
-                                                          BoxShadow(
-                                                            color:
-                                                                Colors.black12,
-                                                            blurRadius: 10.0,
-                                                            spreadRadius: 1.0,
-                                                            offset:
-                                                                Offset(0, 2),
-                                                          ),
-                                                        ],
+                                                        image: DecorationImage(
+                                                            image: AssetImage(
+                                                                'images/profilepic2.png'),
+                                                            fit: BoxFit.cover),
                                                       ),
-                                                      child: isFavorite
-                                                          ? const Center(
-                                                              child: Icon(
-                                                                Icons.favorite,
-                                                                color:
-                                                                    Colors.red,
-                                                                size: 16.0,
-                                                              ),
-                                                            )
-                                                          : const Center(
-                                                              child: Icon(
-                                                                Icons
-                                                                    .favorite_border,
-                                                                color:
-                                                                    kNeutralColor,
-                                                                size: 16.0,
-                                                              ),
-                                                            ),
                                                     ),
-                                                  ),
+                                                    const SizedBox(width: 5.0),
+                                                    Column(
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .start,
+                                                      children: const [
+                                                        MorrfText(
+                                                            text:
+                                                                'William Liam',
+                                                            maxLines: 1,
+                                                            overflow:
+                                                                TextOverflow
+                                                                    .ellipsis,
+                                                            size: FontSize.p),
+                                                        MorrfText(
+                                                            text:
+                                                                'Trainer Level - 1',
+                                                            maxLines: 1,
+                                                            overflow:
+                                                                TextOverflow
+                                                                    .ellipsis,
+                                                            size: FontSize.p),
+                                                      ],
+                                                    ),
+                                                  ],
                                                 ),
                                               ],
                                             ),
-                                            Padding(
-                                              padding:
-                                                  const EdgeInsets.all(5.0),
-                                              child: Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                mainAxisSize: MainAxisSize.min,
-                                                children: [
-                                                  Flexible(
-                                                    child: SizedBox(
-                                                      width: 190,
-                                                      child: Text(
-                                                        'modern unique business logo design',
-                                                        style:
-                                                            kTextStyle.copyWith(
-                                                                color:
-                                                                    kNeutralColor,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold),
-                                                        maxLines: 2,
-                                                        overflow: TextOverflow
-                                                            .ellipsis,
-                                                      ),
-                                                    ),
-                                                  ),
-                                                  const SizedBox(height: 5.0),
-                                                  Row(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment.start,
-                                                    children: [
-                                                      const Icon(
-                                                        IconlyBold.star,
-                                                        color: Colors.amber,
-                                                        size: 18.0,
-                                                      ),
-                                                      const SizedBox(
-                                                          width: 2.0),
-                                                      Text(
-                                                        '5.0',
-                                                        style: kTextStyle.copyWith(
-                                                            color:
-                                                                kNeutralColor),
-                                                      ),
-                                                      const SizedBox(
-                                                          width: 2.0),
-                                                      Text(
-                                                        '(520)',
-                                                        style: kTextStyle.copyWith(
-                                                            color:
-                                                                kLightNeutralColor),
-                                                      ),
-                                                      const SizedBox(width: 40),
-                                                      RichText(
-                                                        text: TextSpan(
-                                                          text: 'Price: ',
-                                                          style: kTextStyle
-                                                              .copyWith(
-                                                                  color:
-                                                                      kLightNeutralColor),
-                                                          children: [
-                                                            TextSpan(
-                                                              text:
-                                                                  '$currencySign${30}',
-                                                              style: kTextStyle.copyWith(
-                                                                  color:
-                                                                      kPrimaryColor,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .bold),
-                                                            )
-                                                          ],
-                                                        ),
-                                                      )
-                                                    ],
-                                                  ),
-                                                  const SizedBox(height: 5.0),
-                                                  Row(
-                                                    children: [
-                                                      Container(
-                                                        height: 32,
-                                                        width: 32,
-                                                        decoration:
-                                                            const BoxDecoration(
-                                                          shape:
-                                                              BoxShape.circle,
-                                                          image: DecorationImage(
-                                                              image: AssetImage(
-                                                                  'images/profilepic2.png'),
-                                                              fit:
-                                                                  BoxFit.cover),
-                                                        ),
-                                                      ),
-                                                      const SizedBox(
-                                                          width: 5.0),
-                                                      Column(
-                                                        crossAxisAlignment:
-                                                            CrossAxisAlignment
-                                                                .start,
-                                                        children: [
-                                                          Text(
-                                                            'William Liam',
-                                                            maxLines: 1,
-                                                            overflow:
-                                                                TextOverflow
-                                                                    .ellipsis,
-                                                            style: kTextStyle.copyWith(
-                                                                color:
-                                                                    kNeutralColor,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold),
-                                                          ),
-                                                          Text(
-                                                            'Trainer Level - 1',
-                                                            maxLines: 1,
-                                                            overflow:
-                                                                TextOverflow
-                                                                    .ellipsis,
-                                                            style: kTextStyle
-                                                                .copyWith(
-                                                                    color:
-                                                                        kSubTitleColor),
-                                                          ),
-                                                        ],
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          ],
-                                        ),
+                                          ),
+                                        ],
                                       ),
                                     ),
-                                  );
-                                },
-                              ),
-                            ],
-                          ),
+                                  ),
+                                );
+                              },
+                            ),
+                          ],
                         ),
-                      ],
-                    );
-                  },
-                ),
+                      ),
+                    ],
+                  );
+                },
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

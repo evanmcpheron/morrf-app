@@ -31,12 +31,12 @@ class _CreateServiceState extends ConsumerState<CreateService> {
   @override
   void initState() {
     super.initState();
-    ref.read(morrfServiceProvider.notifier).getServicesByTrainer(user.uid);
+    ref.read(morrfServicesProvider.notifier).getServicesByTrainer(user.uid);
   }
 
   @override
   Widget build(BuildContext context) {
-    List<MorrfService?> morrfServices = ref.watch(morrfServiceProvider);
+    List<MorrfService?> morrfServices = ref.watch(morrfServicesProvider);
 
     return MorrfScaffold(
       title: 'Create Service',

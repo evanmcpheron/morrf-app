@@ -227,7 +227,9 @@ class _ClientHomeScreenState extends ConsumerState<ClientHomeScreen> {
                   return Padding(
                     padding: const EdgeInsets.only(bottom: 10.0),
                     child: GestureDetector(
-                      onTap: () => const ClientServiceDetails().launch(context),
+                      onTap: () => ClientServiceDetails(
+                        serviceId: "321",
+                      ).launch(context),
                       child: Container(
                         height: 120,
                         decoration: BoxDecoration(
@@ -529,7 +531,9 @@ class _ClientHomeScreenState extends ConsumerState<ClientHomeScreen> {
                   return Padding(
                     padding: const EdgeInsets.only(bottom: 10.0),
                     child: GestureDetector(
-                      onTap: () => const ClientServiceDetails().launch(context),
+                      onTap: () => ClientServiceDetails(
+                        serviceId: "321",
+                      ).launch(context),
                       child: Container(
                         height: 120,
                         decoration: BoxDecoration(

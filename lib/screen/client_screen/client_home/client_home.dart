@@ -3,9 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
+import 'package:morrf/screen/client_screen/client_search/client_search.dart';
 import 'package:morrf/screen/global_screen/global_authentication/global_sign_in.dart';
 import 'package:morrf/screen/global_screen/global_authentication/global_sign_up.dart';
 import 'package:morrf/screen/trainer_screen/trainer_home/trainer_home.dart';
+import 'package:morrf/utils/constants/special_color.dart';
 
 import '../../trainer_screen/trainer_messages/chat_list.dart';
 import '../client_orders/client_orders.dart';
@@ -26,14 +28,15 @@ class _ClientHomeState extends ConsumerState<ClientHome> {
 
   static const List<Widget> _widgetOptions = <Widget>[
     ClientHomeScreen(),
+    ClientSearchScreen(),
     ChatScreen(),
-    // JobPost(),
     ClientOrderList(),
     ClientProfile(),
   ];
 
   static final List<Widget> _guestWidgetOptions = <Widget>[
     const ClientHomeScreen(),
+    ClientSearchScreen(),
     ClientSignIn(isHome: true),
     ClientSignUp(isHome: true),
     const ClientProfile(),
@@ -69,6 +72,7 @@ class _ClientHomeState extends ConsumerState<ClientHome> {
             ? BottomNavigationBar(
                 showUnselectedLabels: true,
                 backgroundColor: Theme.of(context).cardColor,
+                selectedItemColor: Theme.of(context).colorScheme.borderColor,
                 type: BottomNavigationBarType.fixed,
                 items: const [
                   BottomNavigationBarItem(
@@ -76,13 +80,13 @@ class _ClientHomeState extends ConsumerState<ClientHome> {
                     label: "Home",
                   ),
                   BottomNavigationBarItem(
+                    icon: FaIcon(FontAwesomeIcons.magnifyingGlass),
+                    label: "Search",
+                  ),
+                  BottomNavigationBarItem(
                     icon: FaIcon(FontAwesomeIcons.solidMessage),
                     label: "Message",
                   ),
-                  // BottomNavigationBarItem(
-                  //   icon: FaIcon(FontAwesomeIcons.fileCirclePlus),
-                  //   label: "Job Apply",
-                  // ),
                   BottomNavigationBarItem(
                     icon: FaIcon(FontAwesomeIcons.solidFileLines),
                     label: "Orders",
@@ -101,12 +105,17 @@ class _ClientHomeState extends ConsumerState<ClientHome> {
               )
             : BottomNavigationBar(
                 backgroundColor: Theme.of(context).cardColor,
+                selectedItemColor: Theme.of(context).colorScheme.primary,
                 showUnselectedLabels: true,
                 type: BottomNavigationBarType.fixed,
                 items: const [
                   BottomNavigationBarItem(
                     icon: FaIcon(FontAwesomeIcons.house),
                     label: "Home",
+                  ),
+                  BottomNavigationBarItem(
+                    icon: FaIcon(FontAwesomeIcons.magnifyingGlass),
+                    label: "Search",
                   ),
                   BottomNavigationBarItem(
                     icon: FaIcon(FontAwesomeIcons.arrowRightToBracket),

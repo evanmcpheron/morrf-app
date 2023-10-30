@@ -1,4 +1,3 @@
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:morrf/models/service/morrf_service.dart';
@@ -18,7 +17,24 @@ class FirestoreService {
     }
   }
 
-  Future<List<MorrfService?>> getServicesByTrainer(String trainerId) async {
+  Future<List<MorrfService>> getAllServices() async {
+    try {
+      List<MorrfService> morrfServices = [];
+      await _serviceCollectionReference.get().then((QuerySnapshot doc) {
+        for (var service in doc.docs) {
+          morrfServices.add(
+              MorrfService.fromData(service.data() as Map<String, dynamic>));
+        }
+      });
+      return morrfServices;
+    } catch (e, stacktrace) {
+      print(e);
+      print(stacktrace);
+      rethrow;
+    }
+  }
+
+  Future<List<MorrfService>> getServicesByTrainer(String trainerId) async {
     try {
       List<MorrfService> morrfServices = [];
       await _serviceCollectionReference

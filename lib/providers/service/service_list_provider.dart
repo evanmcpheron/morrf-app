@@ -28,7 +28,7 @@ class MorrfServiceNotifier extends StateNotifier<List<MorrfService>> {
   }
 }
 
-final morrfServiceProvider =
+final morrfServicesProvider =
     StateNotifierProvider<MorrfServiceNotifier, List<MorrfService>>((ref) {
   return MorrfServiceNotifier();
 });

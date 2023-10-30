@@ -11,6 +11,7 @@ class MorrfUserNotifier extends StateNotifier<MorrfUser> {
       firstName: "Guest",
       fullName: "Guest",
       email: "guest@morrf.me",
+      favorites: [],
     );
   }
 
@@ -25,7 +26,6 @@ class MorrfUserNotifier extends StateNotifier<MorrfUser> {
           .collection("users")
           .doc(user.uid)
           .get();
-
       MorrfUser morrfUser = parseSnapshot(unformattedUser.data()!);
       state = morrfUser;
     }
@@ -43,6 +43,7 @@ class MorrfUserNotifier extends StateNotifier<MorrfUser> {
             firstName: "Guest",
             fullName: "Guest",
             email: "guest@morrf.me",
+            favorites: [],
           ),
         ) {
     _init();

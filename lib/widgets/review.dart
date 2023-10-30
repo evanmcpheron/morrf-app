@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
+import 'package:morrf/utils/constants/special_color.dart';
+import 'package:morrf/utils/enums/font_size.dart';
+import 'package:morrf/widgets/morff_text.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 
@@ -34,26 +37,20 @@ class _ReviewState extends State<Review> with TickerProviderStateMixin {
                     width: 70,
                     decoration: BoxDecoration(
                       borderRadius: const BorderRadius.all(Radius.circular(40)),
-                      border: Border.all(width: 2, color: kPrimaryColor),
+                      border: Border.all(
+                          width: 2,
+                          color: Theme.of(context).colorScheme.primaryColor),
                     ),
-                    child: Center(
-                      child: Text(
-                        '4.9',
-                        style: kTextStyle.copyWith(
-                          fontSize: 30,
-                          fontWeight: FontWeight.bold,
-                          color: kPrimaryColor,
-                        ),
+                    child: const Center(
+                      child: MorrfText(
+                        text: '4.9',
+                        style: TextStyle(fontSize: 30),
+                        size: FontSize.h6,
                       ),
                     ),
                   ),
                   const SizedBox(height: 10),
-                  Text(
-                    'Total 22 Reviews',
-                    style: kTextStyle.copyWith(
-                      color: kNeutralColor,
-                    ),
-                  ),
+                  const MorrfText(text: 'Total 22 Reviews', size: FontSize.p),
                 ],
               ),
               Positioned(
@@ -72,12 +69,16 @@ class _ReviewState extends State<Review> with TickerProviderStateMixin {
                           width: 130,
                           lineHeight: 8.0,
                           percent: 0.8,
-                          progressColor: kPrimaryColor,
+                          progressColor:
+                              Theme.of(context).colorScheme.primaryColor,
                           backgroundColor: Colors.transparent,
                           barRadius: const Radius.circular(15),
                         ),
                         const SizedBox(
-                            width: 30, child: Center(child: Text('12'))),
+                            width: 30,
+                            child: Center(
+                                child:
+                                    MorrfText(text: '12', size: FontSize.p))),
                       ],
                     ),
                     Row(
@@ -90,12 +91,15 @@ class _ReviewState extends State<Review> with TickerProviderStateMixin {
                           width: 130,
                           lineHeight: 8.0,
                           percent: 0.4,
-                          progressColor: kPrimaryColor,
+                          progressColor:
+                              Theme.of(context).colorScheme.primaryColor,
                           backgroundColor: Colors.transparent,
                           barRadius: const Radius.circular(15),
                         ),
                         const SizedBox(
-                            width: 30, child: Center(child: Text('5'))),
+                            width: 30,
+                            child: Center(
+                                child: MorrfText(text: '5', size: FontSize.p))),
                       ],
                     ),
                     Row(
@@ -107,12 +111,15 @@ class _ReviewState extends State<Review> with TickerProviderStateMixin {
                           width: 130,
                           lineHeight: 8.0,
                           percent: 0.3,
-                          progressColor: kPrimaryColor,
+                          progressColor:
+                              Theme.of(context).colorScheme.primaryColor,
                           backgroundColor: Colors.transparent,
                           barRadius: const Radius.circular(15),
                         ),
                         const SizedBox(
-                            width: 30, child: Center(child: Text('4'))),
+                            width: 30,
+                            child: Center(
+                                child: MorrfText(text: '4', size: FontSize.p))),
                       ],
                     ),
                     Row(
@@ -123,12 +130,15 @@ class _ReviewState extends State<Review> with TickerProviderStateMixin {
                           width: 130,
                           lineHeight: 8.0,
                           percent: 0.2,
-                          progressColor: kPrimaryColor,
+                          progressColor:
+                              Theme.of(context).colorScheme.primaryColor,
                           backgroundColor: Colors.transparent,
                           barRadius: const Radius.circular(15),
                         ),
                         const SizedBox(
-                            width: 30, child: Center(child: Text('2'))),
+                            width: 30,
+                            child: Center(
+                                child: MorrfText(text: '2', size: FontSize.p))),
                       ],
                     ),
                     Row(
@@ -138,12 +148,15 @@ class _ReviewState extends State<Review> with TickerProviderStateMixin {
                           width: 130,
                           lineHeight: 8.0,
                           percent: 0.1,
-                          progressColor: kPrimaryColor,
+                          progressColor:
+                              Theme.of(context).colorScheme.primaryColor,
                           backgroundColor: Colors.transparent,
                           barRadius: const Radius.circular(15),
                         ),
                         const SizedBox(
-                            width: 30, child: Center(child: Text('0'))),
+                            width: 30,
+                            child: Center(
+                                child: MorrfText(text: '0', size: FontSize.p))),
                       ],
                     ),
                   ],
@@ -168,16 +181,9 @@ class ReviewDetails extends StatelessWidget {
       padding: const EdgeInsets.all(10.0),
       width: context.width(),
       decoration: BoxDecoration(
-          color: kWhite,
-          borderRadius: BorderRadius.circular(8.0),
-          border: Border.all(color: kBorderColorTextField),
-          boxShadow: const [
-            BoxShadow(
-                color: kBorderColorTextField,
-                spreadRadius: 1.0,
-                blurRadius: 5.0,
-                offset: Offset(0, 3))
-          ]),
+        borderRadius: BorderRadius.circular(8.0),
+        border: Border.all(color: kBorderColorTextField),
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start,
@@ -200,29 +206,28 @@ class ReviewDetails extends StatelessWidget {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    'Abdul Korim',
-                    style: kTextStyle.copyWith(
-                        color: kNeutralColor, fontWeight: FontWeight.bold),
+                  const MorrfText(
+                    text: 'Abdul Korim',
+                    size: FontSize.h6,
                   ),
                   const SizedBox(height: 4.0),
                   Row(
                     mainAxisSize: MainAxisSize.min,
-                    children: [
-                      const Icon(
+                    children: const [
+                      Icon(
                         IconlyBold.star,
                         color: ratingBarColor,
                         size: 18.0,
                       ),
-                      const SizedBox(width: 5.0),
-                      Text(
-                        '4.9',
-                        style: kTextStyle.copyWith(color: kNeutralColor),
+                      SizedBox(width: 5.0),
+                      MorrfText(
+                        text: '4.9',
+                        size: FontSize.p,
                       ),
-                      const SizedBox(width: 120),
-                      Text(
-                        '5, June 2023',
-                        style: kTextStyle.copyWith(color: kLightNeutralColor),
+                      SizedBox(width: 120),
+                      MorrfText(
+                        text: '5, June 2023',
+                        size: FontSize.p,
                       ),
                     ],
                   ),
@@ -231,15 +236,12 @@ class ReviewDetails extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 10.0),
-          Text(
-            'Nibh nibh quis dolor in. Etiam cras nisi, turpis quisque diam',
-            style: kTextStyle.copyWith(color: kSubTitleColor),
-          ),
+          const MorrfText(
+              text:
+                  'Nibh nibh quis dolor in. Etiam cras nisi, turpis quisque diam',
+              size: FontSize.p),
           const SizedBox(height: 10.0),
-          Text(
-            'Review',
-            style: kTextStyle.copyWith(color: kLightNeutralColor),
-          ),
+          const MorrfText(text: 'Review', size: FontSize.p),
         ],
       ),
     );
@@ -257,16 +259,9 @@ class ReviewDetails2 extends StatelessWidget {
       padding: const EdgeInsets.all(10.0),
       width: context.width(),
       decoration: BoxDecoration(
-          color: kWhite,
-          borderRadius: BorderRadius.circular(8.0),
-          border: Border.all(color: kBorderColorTextField),
-          boxShadow: const [
-            BoxShadow(
-                color: kBorderColorTextField,
-                spreadRadius: 1.0,
-                blurRadius: 5.0,
-                offset: Offset(0, 3))
-          ]),
+        borderRadius: BorderRadius.circular(8.0),
+        border: Border.all(color: kBorderColorTextField),
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start,
@@ -289,30 +284,26 @@ class ReviewDetails2 extends StatelessWidget {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    'Abdul Korim',
-                    style: kTextStyle.copyWith(
-                        color: kNeutralColor, fontWeight: FontWeight.bold),
+                  const MorrfText(
+                    text: 'Abdul Korim',
+                    size: FontSize.h6,
                   ),
                   const SizedBox(height: 4.0),
                   Row(
                     mainAxisSize: MainAxisSize.min,
-                    children: [
-                      const Icon(
+                    children: const [
+                      Icon(
                         IconlyBold.star,
                         color: ratingBarColor,
                         size: 18.0,
                       ),
-                      const SizedBox(width: 5.0),
-                      Text(
-                        '4.9',
-                        style: kTextStyle.copyWith(color: kNeutralColor),
+                      SizedBox(width: 5.0),
+                      MorrfText(
+                        text: '4.9',
+                        size: FontSize.p,
                       ),
-                      const SizedBox(width: 120),
-                      Text(
-                        '5, June 2023',
-                        style: kTextStyle.copyWith(color: kLightNeutralColor),
-                      ),
+                      SizedBox(width: 120),
+                      MorrfText(text: '5, June 2023', size: FontSize.p),
                     ],
                   ),
                 ],
@@ -320,9 +311,10 @@ class ReviewDetails2 extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 10.0),
-          Text(
-            'Nibh nibh quis dolor in. Etiam cras nisi, turpis quisque diam',
-            style: kTextStyle.copyWith(color: kSubTitleColor),
+          const MorrfText(
+            text:
+                'Nibh nibh quis dolor in. Etiam cras nisi, turpis quisque diam',
+            size: FontSize.p,
           ),
           const SizedBox(height: 10.0),
           Row(
@@ -351,10 +343,7 @@ class ReviewDetails2 extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 10.0),
-          Text(
-            'Review',
-            style: kTextStyle.copyWith(color: kLightNeutralColor),
-          ),
+          const MorrfText(text: 'Review', size: FontSize.p),
         ],
       ),
     );
