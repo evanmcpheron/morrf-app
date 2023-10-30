@@ -158,7 +158,7 @@ class _ClientEditProfileState extends ConsumerState<ClientEditProfile> {
     String getBirthdayTextValue() {
       if (_birthday != null) {
         DateTime dateBirthday = DateTime.fromMicrosecondsSinceEpoch(
-            _birthday!.microsecondsSinceEpoch!);
+            _birthday!.microsecondsSinceEpoch);
         return "${dateBirthday.toMoment().month.toString()}-${dateBirthday.toMoment().day.toString()}-${dateBirthday.toMoment().year.toString()}";
       } else if (timestampBirthday != null) {
         _birthday = timestampBirthday;
