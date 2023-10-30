@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:morrf/screen/trainer_screen/trainer_popUp/trainer_popup.dart';
 import 'package:morrf/widgets/button_global.dart';
+import 'package:morrf/widgets/constant.dart';
 import 'package:nb_utils/nb_utils.dart';
-
-import '../../../widgets/constant.dart';
-import '../trainer_popUp/seller_popup.dart';
 
 class TrainerAssPaypal extends StatefulWidget {
   const TrainerAssPaypal({super.key});

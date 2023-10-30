@@ -11,7 +11,7 @@ import 'package:morrf/widgets/theme_switcher.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../../../widgets/constant.dart';
-import '../add_payment_method/trainer_add_payment_method.dart';
+import '../../global_screen/add_payment_method/global_add_payment_method.dart';
 import '../buyer request/trainer_buyer_request.dart';
 import '../favorite/trainer_favourite_list.dart';
 import '../report/trainer_report.dart';

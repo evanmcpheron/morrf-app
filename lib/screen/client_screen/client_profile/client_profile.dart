@@ -8,7 +8,7 @@ import 'package:morrf/providers/user_provider.dart';
 import 'package:morrf/screen/client_screen/client_home/client_home.dart';
 import 'package:morrf/screen/global_screen/global_authentication/global_sign_in.dart';
 import 'package:morrf/screen/global_screen/global_authentication/global_sign_up.dart';
-import 'package:morrf/screen/trainer_screen/add_payment_method/trainer_add_payment_method.dart';
+import 'package:morrf/screen/global_screen/add_payment_method/global_add_payment_method.dart';
 import 'package:morrf/services/auth_service.dart';
 import 'package:morrf/utils/enums/font_size.dart';
 import 'package:morrf/widgets/morff_text.dart';
