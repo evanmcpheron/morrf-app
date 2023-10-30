@@ -23,7 +23,6 @@ class _ImagePickerModalState extends State<ImagePickerModal> {
       imageQuality: 50,
       maxWidth: 150,
     );
-    print(pickedImage);
     if (pickedImage == null) return;
 
     setState(() {

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:morrf/models/product/morrf_product.dart';
 
 import 'data.dart';
 
@@ -157,16 +158,14 @@ List<String> serviceType = [
 String selectedServiceType = 'Online';
 
 //__________time______________________________________________________
-List<String> deliveryTime = [
-  '3 days',
-  '5 days',
-  '7 days',
-  '12 days',
-  '15 days',
-  '20 days',
+List<int> deliveryTime = [
+  3,
+  5,
+  7,
+  12,
+  15,
+  20,
 ];
-
-String selectedDeliveryTime = '3 days';
 
 //__________time______________________________________________________
 List<String> pageCount = [
@@ -179,7 +178,13 @@ String selectedPageCount = '10 screen';
 
 List<TitleModel> list = [
   TitleModel("Responsive design", false),
+  TitleModel("Responsive design", false),
+  TitleModel("Responsive design", false),
   TitleModel("Prototype", false),
+  TitleModel("Prototype", false),
+  TitleModel("Prototype", false),
+  TitleModel("Source file", false),
+  TitleModel("Source file", false),
   TitleModel("Source file", false),
 ];
 

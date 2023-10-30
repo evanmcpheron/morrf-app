@@ -1,10 +1,11 @@
 import 'package:get/route_manager.dart';
-import 'package:morrf/screen/client%20screen/client%20home/client_home.dart';
-import 'package:morrf/screen/seller%20screen/seller%20home/seller_home.dart';
-import 'package:morrf/screen/splash%20screen/mt_splash_screen.dart';
+import 'package:morrf/screen/client_screen/client_home/client_home.dart';
+import 'package:morrf/screen/trainer_screen/trainer_home/trainer_home.dart';
+import 'package:morrf/screen/trainer_screen/trainer_services/create_new_service.dart';
+import 'package:morrf/screen/splash_screen/mt_splash_screen.dart';
 
 List<GetPage> routes = [
   GetPage(name: '/', page: () => const SplashScreen()),
   GetPage(name: '/client', page: () => ClientHome()),
-  GetPage(name: '/trainer', page: () => SellerHome())
+  GetPage(name: '/trainer', page: () => TrainerHome())
 ];

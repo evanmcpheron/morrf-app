@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get/get.dart';
-import 'package:morrf/screen/client%20screen/client%20home/client_home.dart';
+import 'package:morrf/screen/client_screen/client_home/client_home.dart';
 import 'package:morrf/utils/enums/font_size.dart';
 import 'package:morrf/widgets/loading_container.dart';
 

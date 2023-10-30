@@ -1,9 +1,22 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
+import 'package:morrf/utils/constants/special_color.dart';
 
 class MorrfDrowpdown extends StatefulWidget {
-  const MorrfDrowpdown({
+  List<String> list;
+  String selected;
+  String label;
+  String? initialValue;
+  Function(String) onChange;
+  MorrfDrowpdown({
     super.key,
+    required this.selected,
+    required this.label,
+    required this.list,
+    this.initialValue,
+    required this.onChange,
   });
 
   @override
@@ -11,19 +24,16 @@ class MorrfDrowpdown extends StatefulWidget {
 }
 
 class _MorrfDrowpdownState extends State<MorrfDrowpdown> {
-  bool _passwordVisible = false;
-  String _selectedGender = "";
+  String _selectedItem = "";
 
   @override
   void initState() {
     super.initState();
   }
 
-  List<String> list = ["Test", "Another", "last"];
-
-  DropdownButton<String> getGender() {
+  DropdownButton<String> getSelectedItem(String? selectedItem) {
     List<DropdownMenuItem<String>> dropDownItems = [];
-    for (String des in list) {
+    for (String des in widget.list) {
       var item = DropdownMenuItem(
         value: des,
         child: Text(des),
@@ -33,49 +43,45 @@ class _MorrfDrowpdownState extends State<MorrfDrowpdown> {
     return DropdownButton(
       icon: const Icon(FeatherIcons.chevronDown),
       items: dropDownItems,
-      value: _selectedGender,
-      // value: _selectedGender == "" ? selectedGender : _selectedGender,
+      value: _selectedItem == "" ? selectedItem : _selectedItem,
       onChanged: (value) {
         setState(() {
-          _selectedGender = value!;
+          _selectedItem = value!;
+          widget.onChange(value);
         });
       },
     );
   }
 
-  Color borderColor(BuildContext context) {
-    return Theme.of(context).brightness == Brightness.dark
-        ? const Color(0xFF144185)
-        : const Color(0xff216dde);
-  }
-
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(0, 8, 0, 8),
-      child: FormField(
-        builder: (FormFieldState<dynamic> field) {
-          return InputDecorator(
-            decoration: InputDecoration(
-              filled: true,
-              constraints: const BoxConstraints(maxHeight: 56),
-              enabledBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: borderColor(context), width: 2.0),
-                borderRadius: const BorderRadius.all(
-                  Radius.circular(10.0),
-                ),
-              ),
-              focusedBorder: OutlineInputBorder(
-                borderRadius: const BorderRadius.all(
-                  Radius.circular(10.0),
-                ),
-                borderSide: BorderSide(color: borderColor(context), width: 2.0),
+    return FormField(
+      initialValue: widget.initialValue ?? widget.list[0],
+      builder: (FormFieldState<dynamic> field) {
+        return InputDecorator(
+          decoration: InputDecoration(
+            filled: true,
+            constraints: const BoxConstraints(maxHeight: 56),
+            enabledBorder: OutlineInputBorder(
+              borderSide: BorderSide(
+                  color: Theme.of(context).colorScheme.borderColor, width: 2.0),
+              borderRadius: const BorderRadius.all(
+                Radius.circular(10.0),
               ),
             ),
-            child: DropdownButtonHideUnderline(child: getGender()),
-          );
-        },
-      ),
+            labelText: widget.label,
+            focusedBorder: OutlineInputBorder(
+              borderRadius: const BorderRadius.all(
+                Radius.circular(10.0),
+              ),
+              borderSide: BorderSide(
+                  color: Theme.of(context).colorScheme.borderColor, width: 2.0),
+            ),
+          ),
+          child: DropdownButtonHideUnderline(
+              child: getSelectedItem(widget.selected)),
+        );
+      },
     );
   }
 }

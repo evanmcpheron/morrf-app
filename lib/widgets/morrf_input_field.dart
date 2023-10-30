@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:morrf/utils/constants/special_color.dart';
 
 class MorrfInputField extends StatefulWidget {
   final String placeholder;
@@ -12,12 +14,14 @@ class MorrfInputField extends StatefulWidget {
   final bool? enabled;
   final void Function()? clear;
   final void Function()? onTap;
+  final void Function(String value)? onChanged;
   final String? initialValue;
   final Widget? prefixIcon;
   final void Function(String?)? onSaved;
   final int? minLines;
   final int? maxLines;
   final int? maxLength;
+  final List<TextInputFormatter>? inputFormatters;
   final bool expands;
 
   const MorrfInputField(
@@ -39,6 +43,8 @@ class MorrfInputField extends StatefulWidget {
       this.maxLines,
       this.minLines,
       this.expands = false,
+      this.inputFormatters,
+      this.onChanged,
       this.maxLength});
 
   @override
@@ -74,12 +80,6 @@ class _MorrfInputFieldState extends State<MorrfInputField> {
     return null;
   }
 
-  Color borderColor(BuildContext context) {
-    return Theme.of(context).brightness == Brightness.dark
-        ? const Color(0xFF144185)
-        : const Color(0xff216dde);
-  }
-
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -92,7 +92,11 @@ class _MorrfInputFieldState extends State<MorrfInputField> {
         maxLines: widget.inputType == TextInputType.multiline ? null : 1,
         validator: widget.validator,
         onSaved: widget.onSaved,
+        inputFormatters: widget.inputFormatters,
         expands: widget.expands,
+        onChanged: widget.onChanged != null
+            ? (value) => widget.onChanged!(value)
+            : null,
         maxLength: widget.maxLength,
         textInputAction: TextInputAction.done,
         onTap: widget.onTap, textAlign: TextAlign.start,
@@ -107,7 +111,8 @@ class _MorrfInputFieldState extends State<MorrfInputField> {
           filled: widget.isFilled,
           fillColor: widget.fillColor,
           border: OutlineInputBorder(
-            borderSide: BorderSide(color: borderColor(context), width: 2.0),
+            borderSide: BorderSide(
+                color: Theme.of(context).colorScheme.borderColor, width: 2.0),
           ),
           suffixIcon: getSuffixIcon(),
           prefixIcon: widget.prefixIcon != null
@@ -117,7 +122,8 @@ class _MorrfInputFieldState extends State<MorrfInputField> {
                 )
               : null,
           enabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(color: borderColor(context), width: 2.0),
+            borderSide: BorderSide(
+                color: Theme.of(context).colorScheme.borderColor, width: 2.0),
             borderRadius: const BorderRadius.all(
               Radius.circular(10.0),
             ),
@@ -126,7 +132,8 @@ class _MorrfInputFieldState extends State<MorrfInputField> {
             borderRadius: const BorderRadius.all(
               Radius.circular(10.0),
             ),
-            borderSide: BorderSide(color: borderColor(context), width: 2.0),
+            borderSide: BorderSide(
+                color: Theme.of(context).colorScheme.borderColor, width: 2.0),
           ),
           floatingLabelAlignment: FloatingLabelAlignment.start,
         ),

@@ -1,3 +1,5 @@
+import 'package:morrf/models/product/morrf_product.dart';
+
 String? formatDate(DateTime? date) {
   if (date != null) {
     return "${date.month}-${date.day}-${date.year}";
@@ -7,4 +9,8 @@ String? formatDate(DateTime? date) {
 
 String capitalize(String string) {
   return "${string[0].toUpperCase()}${string.substring(1).toLowerCase()}";
+}
+
+int getLowestPrice(Map<String, Tier> tier) {
+  return 0;
 }

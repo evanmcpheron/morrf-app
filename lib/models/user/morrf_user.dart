@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:morrf/models/product/morrf_product.dart';
 
 class MorrfUser {
   final String id;
@@ -63,12 +64,6 @@ class MorrfUser {
       'aboutMe': aboutMe
     };
   }
-}
-
-class MorrfProduct {
-  String title;
-
-  MorrfProduct({required this.title});
 }
 
 class MorrfOrder {

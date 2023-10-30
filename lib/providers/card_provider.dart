@@ -31,11 +31,8 @@ class MorrfCreditCardsNotifier extends StateNotifier<List<MorrfCreditCard>> {
   }
 
   Future<void> deleteCard(String cardId) async {
-    print(state.length);
-
     await FirestoreCardService().deleteCard(cardId);
     state = state.where((i) => i.id != cardId).toList();
-    print(state.length);
   }
 
   Future<void> getCards() async {
