@@ -5,7 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:morrf/providers/user_provider.dart';
-import 'package:morrf/screen/client_screen/client_authentication/client_sign_in.dart';
+import 'package:morrf/screen/global_screen/global_authentication/global_sign_in.dart';
 import 'package:morrf/services/auth_service.dart';
 import 'package:morrf/utils/constants/special_color.dart';
 import 'package:morrf/utils/enums/severity.dart';

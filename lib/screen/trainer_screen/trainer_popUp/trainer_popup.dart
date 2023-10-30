@@ -15,7 +15,7 @@ import 'package:morrf/widgets/morrf_button.dart';
 import 'package:morrf/widgets/morrf_input_field.dart';
 import 'package:nb_utils/nb_utils.dart';
 
-import '../../client_screen/client_authentication/client_sign_in.dart';
+import '../../global_screen/global_authentication/global_sign_in.dart';
 import '../../../widgets/constant.dart';
 import '../../../widgets/icons.dart';
 import '../buyer request/create_customer_offer.dart';

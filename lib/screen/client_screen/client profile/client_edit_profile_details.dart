@@ -12,7 +12,7 @@ import 'package:moment_dart/moment_dart.dart';
 import 'package:morrf/models/service/morrf_service.dart';
 import 'package:morrf/models/user/morrf_user.dart';
 import 'package:morrf/providers/user_provider.dart';
-import 'package:morrf/screen/client_screen/client_authentication/client_confirm_sign_in.dart';
+import 'package:morrf/screen/global_screen/global_authentication/global_confirm_sign_in.dart';
 import 'package:morrf/utils/constants/constants.dart';
 import 'package:morrf/utils/enums/font_size.dart';
 import 'package:morrf/widgets/morrf_dropdown.dart';
