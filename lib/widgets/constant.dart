@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:morrf/models/product/morrf_product.dart';
+import 'package:morrf/models/service/morrf_service.dart';
 
 import 'data.dart';
 

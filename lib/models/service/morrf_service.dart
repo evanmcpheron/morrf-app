@@ -44,7 +44,7 @@ class Tier {
   }
 }
 
-class MorrfProduct {
+class MorrfService {
   final String id,
       trainerId,
       title,
@@ -59,7 +59,7 @@ class MorrfProduct {
   final List<MorrfFaq> faq;
   final Map<String, Tier> tiers;
 
-  MorrfProduct({
+  MorrfService({
     required this.id,
     required this.trainerId,
     required this.title,
@@ -75,25 +75,25 @@ class MorrfProduct {
     required this.ratings,
   });
 
-  MorrfProduct.fromPartialData(Map<String, dynamic> data, MorrfProduct product)
-      : id = data['id'] ?? product.id,
-        trainerId = data['trainerId'] ?? product.trainerId,
-        title = data['title'] ?? product.title,
-        description = data['description'] ?? product.description,
-        subcategory = data['subcategory'] ?? product.subcategory,
-        photoUrls = data['photoUrls'] ?? product.photoUrls,
-        heroUrl = data['heroUrl'] ?? product.heroUrl,
-        category = data['category'] ?? product.category,
-        ratings = data['ratings'] ?? product.ratings,
-        serviceType = data['serviceType'] ?? product.serviceType,
-        faq = data['faq'] != null ? data['faq'].cast<MorrfFaq>() : product.faq,
+  MorrfService.fromPartialData(Map<String, dynamic> data, MorrfService service)
+      : id = data['id'] ?? service.id,
+        trainerId = data['trainerId'] ?? service.trainerId,
+        title = data['title'] ?? service.title,
+        description = data['description'] ?? service.description,
+        subcategory = data['subcategory'] ?? service.subcategory,
+        photoUrls = data['photoUrls'] ?? service.photoUrls,
+        heroUrl = data['heroUrl'] ?? service.heroUrl,
+        category = data['category'] ?? service.category,
+        ratings = data['ratings'] ?? service.ratings,
+        serviceType = data['serviceType'] ?? service.serviceType,
+        faq = data['faq'] != null ? data['faq'].cast<MorrfFaq>() : service.faq,
         tiers = data['tiers'] != null
             ? data['tiers'].cast<String>()
-            : product.tiers,
+            : service.tiers,
         tags =
-            data['tags'] != null ? data['tags'].cast<String>() : product.tags;
+            data['tags'] != null ? data['tags'].cast<String>() : service.tags;
 
-  MorrfProduct.fromData(Map<String, dynamic> data)
+  MorrfService.fromData(Map<String, dynamic> data)
       : id = data['id'],
         trainerId = data['trainerId'],
         title = data['title'],
@@ -108,20 +108,20 @@ class MorrfProduct {
         tiers = data['tiers'].cast<String, Tier>(),
         tags = data['tags'] != null ? data['tags'].cast<String>() : [];
 
-  MorrfProduct.fromTierData(Map<String, Tier> data, MorrfProduct product)
-      : id = product.id,
-        trainerId = product.trainerId,
-        title = product.title,
-        description = product.description,
-        subcategory = product.subcategory,
-        photoUrls = product.photoUrls,
-        heroUrl = product.heroUrl,
-        category = product.category,
-        ratings = product.ratings,
-        serviceType = product.serviceType,
-        faq = product.faq,
+  MorrfService.fromTierData(Map<String, Tier> data, MorrfService service)
+      : id = service.id,
+        trainerId = service.trainerId,
+        title = service.title,
+        description = service.description,
+        subcategory = service.subcategory,
+        photoUrls = service.photoUrls,
+        heroUrl = service.heroUrl,
+        category = service.category,
+        ratings = service.ratings,
+        serviceType = service.serviceType,
+        faq = service.faq,
         tiers = data,
-        tags = product.tags;
+        tags = service.tags;
 
   Map<String, dynamic> toJson() {
     return {

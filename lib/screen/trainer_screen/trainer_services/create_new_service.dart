@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:morrf/models/product/morrf_product.dart';
+import 'package:morrf/models/service/morrf_service.dart';
 import 'package:morrf/screen/trainer_screen/trainer_services/create_new_service_tab_one.dart';
 import 'package:morrf/screen/trainer_screen/trainer_services/create_new_service_tab_three.dart';
 import 'package:morrf/screen/trainer_screen/trainer_services/create_new_service_tab_two.dart';
@@ -44,7 +44,7 @@ class _CreateNewServiceState extends ConsumerState<CreateNewService> {
 
   @override
   Widget build(BuildContext context) {
-    MorrfProduct morrfProduct = ref.watch(newServiceProvider);
+    MorrfService morrfService = ref.watch(newServiceProvider);
     return MorrfScaffold(
       title: 'Create New Service',
       body: Container(
@@ -81,14 +81,14 @@ class _CreateNewServiceState extends ConsumerState<CreateNewService> {
               ),
               CreateNewServiceTabOne(
                 isVisible: currentIndexPage == 0,
-                morrfProduct: morrfProduct,
+                morrfService: morrfService,
                 pageChange: (page) {
                   updatePage(page);
                 },
               ),
               CreateNewServiceTabTwo(
                 isVisible: currentIndexPage == 1,
-                morrfProduct: morrfProduct,
+                morrfService: morrfService,
                 pageChange: (page) {
                   updatePage(page);
                 },

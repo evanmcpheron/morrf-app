@@ -5,7 +5,7 @@ import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:adapty_flutter/adapty_flutter.dart';
 import 'package:morrf/providers/theme_provider.dart';
 import 'package:morrf/providers/user_provider.dart';
-import 'package:morrf/utils/seeds/product/product.dart';
+import 'package:morrf/utils/seeds/service/service.dart';
 import 'utils/constants/routes.dart';
 import 'dart:convert';
 
@@ -55,7 +55,7 @@ class _MyAppState extends ConsumerState<MyApp> {
   @override
   void initState() {
     super.initState();
-    seedProducts();
+    seedServices();
   }
 
   @override

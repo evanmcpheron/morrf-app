@@ -67,7 +67,7 @@ class _ClientEditProfileState extends ConsumerState<ClientEditProfile> {
   void _onSubmit(String? gender) async {
     MorrfUser morrfUser = ref.watch(morrfUserProvider);
     String stripeId = morrfUser.stripe;
-    List<MorrfService>? services = morrfUser.services;
+    List<MorrfService>? products = morrfUser.services;
     List<MorrfOrder>? orders = morrfUser.orders;
     String? imageUrl;
     if (_formKey.currentState!.validate()) {
@@ -117,7 +117,7 @@ class _ClientEditProfileState extends ConsumerState<ClientEditProfile> {
                   'stripe': stripeId,
                   'gender': _selectedGender == "" ? gender : _selectedGender,
                   'aboutMe': _aboutMe,
-                  'services': services,
+                  'products': products,
                   'orders': orders,
                 }),
                 Get.back()

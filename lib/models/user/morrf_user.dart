@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:morrf/models/product/morrf_product.dart';
+import 'package:morrf/models/service/morrf_service.dart';
 
 class MorrfUser {
   final String id;
@@ -12,7 +12,7 @@ class MorrfUser {
   Timestamp? birthday;
   String photoURL;
   String stripe;
-  List<MorrfProduct>? products;
+  List<MorrfService>? services;
   List<MorrfOrder>? orders;
   String? aboutMe;
 
@@ -28,7 +28,7 @@ class MorrfUser {
       this.photoURL =
           "https://firebasestorage.googleapis.com/v0/b/mickiefitness.appspot.com/o/user_profile.jpg?alt=media&token=deba737f-c8c1-4a2e-bec5-a4474913e102&_gl=1*mvlre7*_ga*MjkyNzM5ODM3LjE2ODkyNzc3MjY.*_ga_CW55HF8NVT*MTY5ODAyMDYyNC41My4xLjE2OTgwMjE0MTEuNTcuMC4w",
       this.stripe = "",
-      this.products,
+      this.services,
       this.orders,
       this.aboutMe});
 
@@ -43,7 +43,7 @@ class MorrfUser {
         birthday = data['birthday'],
         photoURL = data['photoURL'],
         stripe = data['stripe'],
-        products = List<MorrfProduct>.from(data['products']),
+        services = List<MorrfService>.from(data['services']),
         orders = List<MorrfOrder>.from(data['orders']),
         aboutMe = data['aboutMe'];
 
@@ -60,7 +60,7 @@ class MorrfUser {
       'photoURL': photoURL,
       'stripe': stripe,
       'orders': orders,
-      'products': products,
+      'services': services,
       'aboutMe': aboutMe
     };
   }

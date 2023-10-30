@@ -495,7 +495,7 @@ class _TrainerHomeScreenState extends State<TrainerHomeScreen> {
                     itemBuilder: (_, i) {
                       return GestureDetector(
                         onTap: () => ServiceDetails(
-                          productId: "",
+                          serviceId: "",
                         ).launch(context),
                         child: Container(
                           height: 205,

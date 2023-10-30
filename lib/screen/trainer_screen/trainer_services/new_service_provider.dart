@@ -1,14 +1,14 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:morrf/models/product/morrf_product.dart';
+import 'package:morrf/models/service/morrf_service.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:morrf/services/firestore/firestore_product.dart';
+import 'package:morrf/services/firestore/firestore_service.dart';
 import 'package:uuid/uuid.dart';
 
-class NewServiceNotifier extends StateNotifier<MorrfProduct> {
+class NewServiceNotifier extends StateNotifier<MorrfService> {
   User user = FirebaseAuth.instance.currentUser!;
   NewServiceNotifier()
       : super(
-          MorrfProduct(
+          MorrfService(
             id: Uuid().v4(),
             trainerId: '',
             title: "",
@@ -29,18 +29,18 @@ class NewServiceNotifier extends StateNotifier<MorrfProduct> {
           ),
         );
 
-  void updateNewProduct(Map<String, dynamic> data) async {
+  void updateNewService(Map<String, dynamic> data) async {
     data['trainerId'] = user.uid;
-    state = MorrfProduct.fromPartialData(data, state);
+    state = MorrfService.fromPartialData(data, state);
   }
 
   void updateTiers(Map<String, Tier> tiers) {
-    state = MorrfProduct.fromTierData(tiers, state);
+    state = MorrfService.fromTierData(tiers, state);
   }
 
-  Future<void> createService(MorrfProduct morrfProduct) async {
+  Future<void> createService(MorrfService morrfService) async {
     try {
-      await FirestoreProduct().createProduct(morrfProduct);
+      await FirestoreService().createService(morrfService);
     } catch (e, stacktrace) {
       print(stacktrace);
       rethrow;
@@ -48,7 +48,7 @@ class NewServiceNotifier extends StateNotifier<MorrfProduct> {
   }
 
   void disposeNewService() {
-    state = MorrfProduct(
+    state = MorrfService(
       id: Uuid().v4(),
       trainerId: '',
       title: "",
@@ -71,6 +71,6 @@ class NewServiceNotifier extends StateNotifier<MorrfProduct> {
 }
 
 final newServiceProvider =
-    StateNotifierProvider<NewServiceNotifier, MorrfProduct>((ref) {
+    StateNotifierProvider<NewServiceNotifier, MorrfService>((ref) {
   return NewServiceNotifier();
 });

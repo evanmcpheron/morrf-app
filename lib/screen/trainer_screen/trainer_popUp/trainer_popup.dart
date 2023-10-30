@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:morrf/models/product/morrf_faq.dart';
+import 'package:morrf/models/service/morrf_faq.dart';
 import 'package:morrf/screen/client_screen/client_home/client_home.dart';
 import 'package:morrf/screen/trainer_screen/profile/trainer_profile.dart';
 import 'package:morrf/screen/trainer_screen/trainer_home/trainer_home.dart';

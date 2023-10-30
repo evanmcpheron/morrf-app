@@ -7,7 +7,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:morrf/models/product/morrf_product.dart';
+import 'package:morrf/models/service/morrf_service.dart';
 import 'package:morrf/providers/loading_provider.dart';
 import 'package:morrf/screen/trainer_screen/trainer_home/trainer_home.dart';
 import 'package:morrf/utils/constants/special_color.dart';
@@ -118,7 +118,7 @@ class _CreateNewServiceTabThreeState
       for (var i = 0; i < files.length; i++) {
         var storageRef = FirebaseStorage.instance
             .ref()
-            .child('product_images')
+            .child('service_images')
             .child("${Uuid().v4()}.jpg");
         await storageRef.putFile(files[i]);
         imageUrl = await storageRef.getDownloadURL();
@@ -131,12 +131,12 @@ class _CreateNewServiceTabThreeState
         'photoUrls': imageList,
       };
 
-      ref.read(newServiceProvider.notifier).updateNewProduct(data);
+      ref.read(newServiceProvider.notifier).updateNewService(data);
       ref
           .read(newServiceProvider.notifier)
-          .updateNewProduct({'trainerId': user.uid});
-      MorrfProduct morrfProduct = ref.watch(newServiceProvider);
-      ref.read(newServiceProvider.notifier).createService(morrfProduct);
+          .updateNewService({'trainerId': user.uid});
+      MorrfService morrfService = ref.watch(newServiceProvider);
+      ref.read(newServiceProvider.notifier).createService(morrfService);
       ref.read(loadingProvider.notifier).stopLoader();
       ref.read(newServiceProvider.notifier).disposeNewService();
       Get.offAll(
@@ -149,7 +149,7 @@ class _CreateNewServiceTabThreeState
 
   @override
   Widget build(BuildContext context) {
-    MorrfProduct morrfProduct = ref.watch(newServiceProvider);
+    MorrfService morrfService = ref.watch(newServiceProvider);
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,

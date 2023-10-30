@@ -1,4 +1,4 @@
-import 'package:morrf/models/product/morrf_product.dart';
+import 'package:morrf/models/service/morrf_service.dart';
 
 String? formatDate(DateTime? date) {
   if (date != null) {

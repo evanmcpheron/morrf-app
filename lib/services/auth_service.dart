@@ -81,7 +81,7 @@ class AuthService extends ChangeNotifier {
           firstName: firstName,
           lastName: lastName,
           stripe: "",
-          products: [],
+          services: [],
           orders: [],
           aboutMe: null);
       FirestoreService().createUser(morrfUser);

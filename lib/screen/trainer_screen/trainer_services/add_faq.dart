@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
-import 'package:morrf/models/product/morrf_faq.dart';
+import 'package:morrf/models/service/morrf_faq.dart';
 import 'package:morrf/utils/enums/font_size.dart';
 import 'package:morrf/utils/enums/severity.dart';
 import 'package:morrf/widgets/constant.dart';

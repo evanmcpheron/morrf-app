@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:morrf/models/product/morrf_product.dart';
+import 'package:morrf/models/service/morrf_service.dart';
 import 'package:morrf/screen/trainer_screen/trainer_services/new_service_provider.dart';
 import 'package:morrf/utils/enums/font_size.dart';
 import 'package:morrf/utils/enums/severity.dart';
@@ -15,14 +15,14 @@ import 'package:nb_utils/nb_utils.dart';
 
 class CreateNewServiceTabTwo extends ConsumerStatefulWidget {
   bool isVisible;
-  MorrfProduct morrfProduct;
+  MorrfService morrfService;
   Function(int page) pageChange;
 
   CreateNewServiceTabTwo(
       {super.key,
       required this.isVisible,
       required this.pageChange,
-      required this.morrfProduct});
+      required this.morrfService});
 
   @override
   ConsumerState<CreateNewServiceTabTwo> createState() =>
@@ -84,7 +84,7 @@ class _CreateNewServiceTabTwoState
 
   @override
   Widget build(BuildContext context) {
-    MorrfProduct morrfProduct = ref.watch(newServiceProvider);
+    MorrfService morrfService = ref.watch(newServiceProvider);
 
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -104,7 +104,7 @@ class _CreateNewServiceTabTwoState
                 Column(
                   children: [
                     Checkbox(
-                      value: morrfProduct.tiers["basic"]!.isVisible,
+                      value: morrfService.tiers["basic"]!.isVisible,
                       onChanged: (bool? nValue) {
                         if (!nValue! &&
                             !tiers["standard"]!.isVisible &&
@@ -129,7 +129,7 @@ class _CreateNewServiceTabTwoState
                 Column(
                   children: [
                     Checkbox(
-                      value: morrfProduct.tiers["standard"]!.isVisible,
+                      value: morrfService.tiers["standard"]!.isVisible,
                       onChanged: (bool? nValue) {
                         if (!nValue! &&
                             !tiers["basic"]!.isVisible &&
@@ -153,7 +153,7 @@ class _CreateNewServiceTabTwoState
                 Column(
                   children: [
                     Checkbox(
-                      value: morrfProduct.tiers["premium"]!.isVisible,
+                      value: morrfService.tiers["premium"]!.isVisible,
                       onChanged: (bool? nValue) {
                         if (!nValue! &&
                             !tiers["standard"]!.isVisible &&
@@ -229,7 +229,7 @@ class _CreateNewServiceTabTwoState
                   controller: _optionController),
             ),
             const SizedBox(height: 15.0),
-            widget.morrfProduct.tiers["basic"]!.isVisible
+            widget.morrfService.tiers["basic"]!.isVisible
                 ? Column(
                     children: [
                       Container(
@@ -341,7 +341,7 @@ class _CreateNewServiceTabTwoState
                     ],
                   )
                 : const SizedBox(),
-            widget.morrfProduct.tiers["standard"]!.isVisible
+            widget.morrfService.tiers["standard"]!.isVisible
                 ? Column(
                     children: [
                       Container(
@@ -456,7 +456,7 @@ class _CreateNewServiceTabTwoState
                     ],
                   )
                 : const SizedBox(),
-            widget.morrfProduct.tiers["premium"]!.isVisible
+            widget.morrfService.tiers["premium"]!.isVisible
                 ? Container(
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(16.0),

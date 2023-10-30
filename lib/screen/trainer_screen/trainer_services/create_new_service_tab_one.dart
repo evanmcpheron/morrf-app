@@ -1,8 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:morrf/models/product/morrf_faq.dart';
-import 'package:morrf/models/product/morrf_product.dart';
+import 'package:morrf/models/service/morrf_faq.dart';
+import 'package:morrf/models/service/morrf_service.dart';
 import 'package:morrf/utils/constants/constants.dart';
 import 'package:morrf/utils/constants/special_color.dart';
 import 'package:morrf/utils/enums/font_size.dart';
@@ -20,13 +20,13 @@ import 'new_service_provider.dart';
 class CreateNewServiceTabOne extends ConsumerStatefulWidget {
   bool isVisible;
   Function(int page) pageChange;
-  MorrfProduct morrfProduct;
+  MorrfService morrfService;
 
   CreateNewServiceTabOne(
       {super.key,
       required this.isVisible,
       required this.pageChange,
-      required this.morrfProduct});
+      required this.morrfService});
 
   @override
   ConsumerState<CreateNewServiceTabOne> createState() =>
@@ -68,7 +68,7 @@ class _CreateNewServiceTabOneState
 
   Map<String, dynamic> formState = {};
 
-  late List<MorrfFaq> faqList = widget.morrfProduct.faq;
+  late List<MorrfFaq> faqList = widget.morrfService.faq;
 
   void addFaq(MorrfFaq faq) {
     faqList.add(faq);
@@ -100,7 +100,7 @@ class _CreateNewServiceTabOneState
 
   @override
   Widget build(BuildContext context) {
-    MorrfProduct morrfProduct = ref.watch(newServiceProvider);
+    MorrfService morrfService = ref.watch(newServiceProvider);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -113,7 +113,7 @@ class _CreateNewServiceTabOneState
         MorrfInputField(
           inputType: TextInputType.name,
           maxLength: 60,
-          initialValue: morrfProduct.title,
+          initialValue: morrfService.title,
           onChanged: (value) => setState(() {
             createServiceMap['title'] = value;
           }),
@@ -124,7 +124,7 @@ class _CreateNewServiceTabOneState
         MorrfDrowpdown(
             label: "Category",
             list: availableCategories,
-            initialValue: morrfProduct.category,
+            initialValue: morrfService.category,
             onChange: (value) => setState(() {
                   createServiceMap['category'] = value;
                 }),
@@ -133,7 +133,7 @@ class _CreateNewServiceTabOneState
         MorrfDrowpdown(
             label: "Subcategory",
             list: availableSubcategories,
-            initialValue: morrfProduct.subcategory,
+            initialValue: morrfService.subcategory,
             onChange: (value) => setState(() {
                   createServiceMap['subcategory'] = value;
                 }),
@@ -142,7 +142,7 @@ class _CreateNewServiceTabOneState
         MorrfDrowpdown(
             label: "Service Type",
             list: availableServiceTypes,
-            initialValue: morrfProduct.serviceType,
+            initialValue: morrfService.serviceType,
             onChange: (value) => setState(() {
                   createServiceMap['serviceType'] = value;
                 }),
@@ -153,7 +153,7 @@ class _CreateNewServiceTabOneState
           child: MorrfInputField(
             inputType: TextInputType.multiline,
             maxLines: null,
-            initialValue: morrfProduct.description,
+            initialValue: morrfService.description,
             expands: true,
             onChanged: (value) => setState(() {
               createServiceMap['description'] = value;
@@ -170,7 +170,7 @@ class _CreateNewServiceTabOneState
           textfieldTagsController: _controller,
           textSeparators: const [' ', ','],
           letterCase: LetterCase.normal,
-          initialTags: morrfProduct.tags,
+          initialTags: morrfService.tags,
           validator: (String tag) {
             if (_controller.getTags!.contains(tag)) {
               return 'you already entered that';
@@ -291,7 +291,7 @@ class _CreateNewServiceTabOneState
             onPressed: () {
               ref
                   .read(newServiceProvider.notifier)
-                  .updateNewProduct(createServiceMap);
+                  .updateNewService(createServiceMap);
               widget.pageChange(1);
             },
           ),

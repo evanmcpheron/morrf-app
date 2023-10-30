@@ -57,7 +57,7 @@ class _MyServicesState extends State<MyServices> {
                           onTap: () {
                             setState(() {
                               ServiceDetails(
-                                productId: "",
+                                serviceId: "",
                               ).launch(context);
                             });
                           },

@@ -5,9 +5,9 @@ import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
-import 'package:morrf/models/product/morrf_product.dart';
+import 'package:morrf/models/service/morrf_service.dart';
 import 'package:morrf/providers/loading_provider.dart';
-import 'package:morrf/providers/product/product_provider.dart';
+import 'package:morrf/providers/service/service_provider.dart';
 import 'package:morrf/utils/constants/special_color.dart';
 import 'package:morrf/utils/enums/font_size.dart';
 import 'package:morrf/utils/format.dart';
@@ -31,12 +31,12 @@ class _CreateServiceState extends ConsumerState<CreateService> {
   @override
   void initState() {
     super.initState();
-    ref.read(morrfProductProvider.notifier).getProductsByTrainer(user.uid);
+    ref.read(morrfServiceProvider.notifier).getServicesByTrainer(user.uid);
   }
 
   @override
   Widget build(BuildContext context) {
-    List<MorrfProduct?> morrfProducts = ref.watch(morrfProductProvider);
+    List<MorrfService?> morrfServices = ref.watch(morrfServiceProvider);
 
     return MorrfScaffold(
       title: 'Create Service',
@@ -73,7 +73,7 @@ class _CreateServiceState extends ConsumerState<CreateService> {
                     size: FontSize.h5,
                   ),
                 ],
-              ).visible(morrfProducts.isEmpty),
+              ).visible(morrfServices.isEmpty),
               GridView.count(
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
@@ -82,13 +82,13 @@ class _CreateServiceState extends ConsumerState<CreateService> {
                 childAspectRatio: 0.8,
                 crossAxisCount: 2,
                 children: List.generate(
-                  morrfProducts.length,
+                  morrfServices.length,
                   (index) {
-                    MorrfProduct morrfProduct = morrfProducts[index]!;
+                    MorrfService morrfService = morrfServices[index]!;
                     return GestureDetector(
                       onTap: () {
                         setState(() {
-                          ServiceDetails(productId: morrfProduct.id)
+                          ServiceDetails(serviceId: morrfService.id)
                               .launch(context);
                         });
                       },
@@ -114,7 +114,7 @@ class _CreateServiceState extends ConsumerState<CreateService> {
                                       topLeft: Radius.circular(8.0),
                                     ),
                                     image: DecorationImage(
-                                        image: getHeroImage(morrfProduct),
+                                        image: getHeroImage(morrfService),
                                         fit: BoxFit.cover),
                                   ),
                                 ),
@@ -160,7 +160,7 @@ class _CreateServiceState extends ConsumerState<CreateService> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   MorrfText(
-                                    text: morrfProduct.title,
+                                    text: morrfService.title,
                                     size: FontSize.lp,
                                     maxLines: 2,
                                     overflow: TextOverflow.ellipsis,
@@ -198,7 +198,7 @@ class _CreateServiceState extends ConsumerState<CreateService> {
                                               text: 'Price ', size: FontSize.p),
                                           MorrfText(
                                               text:
-                                                  '$currencySign${getLowestPrice(morrfProduct.tiers)}',
+                                                  '$currencySign${getLowestPrice(morrfService.tiers)}',
                                               size: FontSize.p,
                                               style: TextStyle(
                                                   color: Theme.of(context)
@@ -217,7 +217,7 @@ class _CreateServiceState extends ConsumerState<CreateService> {
                     );
                   },
                 ),
-              ).visible(morrfProducts.isNotEmpty),
+              ).visible(morrfServices.isNotEmpty),
             ],
           ),
         ),
@@ -225,9 +225,9 @@ class _CreateServiceState extends ConsumerState<CreateService> {
     );
   }
 
-  NetworkImage getHeroImage(MorrfProduct morrfProduct) {
+  NetworkImage getHeroImage(MorrfService morrfService) {
     return NetworkImage(
-      morrfProduct.heroUrl,
+      morrfService.heroUrl,
     );
   }
 }

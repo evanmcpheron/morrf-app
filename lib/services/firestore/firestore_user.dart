@@ -1,4 +1,3 @@
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -28,7 +27,7 @@ class FirestoreService {
         'gender': null,
         'photoURL': user.photoURL,
         'email': user.email.toLowerCase(),
-        'products': user.products,
+        'services': user.services,
         'orders': user.orders,
         'userWish': [],
         'userCart': [],

@@ -14,7 +14,7 @@ import 'package:morrf/screen/client_screen/client_service_details/client_service
 import 'package:morrf/screen/client_screen/search/search.dart';
 import 'package:morrf/utils/constants/special_color.dart';
 import 'package:morrf/utils/enums/font_size.dart';
-import 'package:morrf/utils/seeds/product/product.dart';
+import 'package:morrf/utils/seeds/service/service.dart';
 import 'package:morrf/widgets/constant.dart';
 import 'package:morrf/widgets/morff_text.dart';
 import 'package:morrf/widgets/morrf_button.dart';

@@ -1,23 +1,23 @@
 import 'dart:math';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:morrf/models/product/morrf_faq.dart';
-import 'package:morrf/models/product/morrf_product.dart';
-import 'package:morrf/services/firestore/firestore_product.dart';
+import 'package:morrf/models/service/morrf_faq.dart';
+import 'package:morrf/models/service/morrf_service.dart';
+import 'package:morrf/services/firestore/firestore_service.dart';
 import 'package:uuid/uuid.dart';
 import 'package:faker/faker.dart';
 
-void seedProductsSeed(String trainerId) {
+void seedServicesSeed(String trainerId) {
   List<String> categories = ["Personal Trainer", "Nutrition"];
   List<String> suncategories = ["Yoga", "Meal Prep"];
   List<String> serviceTypes = ["Online", "In Person"];
   List<String> photoUrls = [
-    "https://firebasestorage.googleapis.com/v0/b/mickiefitness.appspot.com/o/product_images%2F6c175130-044f-4520-9adc-693a430c9249.jpg?alt=media&token=d9170b8b-6bee-4823-aa0d-c693b886074f&_gl=1*kg2hdl*_ga*MjkyNzM5ODM3LjE2ODkyNzc3MjY.*_ga_CW55HF8NVT*MTY5ODYxNDc2Mi43Ny4xLjE2OTg2MjE1OTAuMTIuMC4w",
-    "https://firebasestorage.googleapis.com/v0/b/mickiefitness.appspot.com/o/product_images%2F7220fb6d-caa5-44cf-845b-c3ffccb7ddb7.jpg?alt=media&token=ad6dfb19-87d2-4f6d-a120-e39200b70d62&_gl=1*11f6ejr*_ga*MjkyNzM5ODM3LjE2ODkyNzc3MjY.*_ga_CW55HF8NVT*MTY5ODYxNDc2Mi43Ny4xLjE2OTg2MjE2MjQuNjAuMC4w",
-    "https://firebasestorage.googleapis.com/v0/b/mickiefitness.appspot.com/o/product_images%2Faaea0d69-ad9e-4e03-86b8-b07185b3e76e.jpg?alt=media&token=43ef3a01-109c-4d75-8547-dfc2010fca5c&_gl=1*wm0c1e*_ga*MjkyNzM5ODM3LjE2ODkyNzc3MjY.*_ga_CW55HF8NVT*MTY5ODYxNDc2Mi43Ny4xLjE2OTg2MjE2MzYuNDguMC4w",
-    "https://firebasestorage.googleapis.com/v0/b/mickiefitness.appspot.com/o/product_images%2Fb4b16efb-db38-4ecb-b9f6-3e5d0ea12562.jpg?alt=media&token=6f6276c3-accd-439f-9924-6c0186b79563&_gl=1*giqk21*_ga*MjkyNzM5ODM3LjE2ODkyNzc3MjY.*_ga_CW55HF8NVT*MTY5ODYxNDc2Mi43Ny4xLjE2OTg2MjE2NTEuMzMuMC4w",
-    "https://firebasestorage.googleapis.com/v0/b/mickiefitness.appspot.com/o/product_images%2Fe7f341ea-2608-41ea-815b-50e7712b691e.jpg?alt=media&token=13cc21d2-ff3f-479d-8088-b552bc328ede&_gl=1*ifqk93*_ga*MjkyNzM5ODM3LjE2ODkyNzc3MjY.*_ga_CW55HF8NVT*MTY5ODYxNDc2Mi43Ny4xLjE2OTg2MjE2NjEuMjMuMC4w",
-    "https://firebasestorage.googleapis.com/v0/b/mickiefitness.appspot.com/o/product_images%2Fec28a96f-eca2-4719-b567-7c4b00761c7f.jpg?alt=media&token=c11bf9c4-f128-48df-b2cb-e5c8662b7b7d&_gl=1*1k0u72e*_ga*MjkyNzM5ODM3LjE2ODkyNzc3MjY.*_ga_CW55HF8NVT*MTY5ODYxNDc2Mi43Ny4xLjE2OTg2MjE3MDcuNDguMC4w"
+    "https://firebasestorage.googleapis.com/v0/b/mickiefitness.appspot.com/o/service_images%2F6c175130-044f-4520-9adc-693a430c9249.jpg?alt=media&token=d9170b8b-6bee-4823-aa0d-c693b886074f&_gl=1*kg2hdl*_ga*MjkyNzM5ODM3LjE2ODkyNzc3MjY.*_ga_CW55HF8NVT*MTY5ODYxNDc2Mi43Ny4xLjE2OTg2MjE1OTAuMTIuMC4w",
+    "https://firebasestorage.googleapis.com/v0/b/mickiefitness.appspot.com/o/service_images%2F7220fb6d-caa5-44cf-845b-c3ffccb7ddb7.jpg?alt=media&token=ad6dfb19-87d2-4f6d-a120-e39200b70d62&_gl=1*11f6ejr*_ga*MjkyNzM5ODM3LjE2ODkyNzc3MjY.*_ga_CW55HF8NVT*MTY5ODYxNDc2Mi43Ny4xLjE2OTg2MjE2MjQuNjAuMC4w",
+    "https://firebasestorage.googleapis.com/v0/b/mickiefitness.appspot.com/o/service_images%2Faaea0d69-ad9e-4e03-86b8-b07185b3e76e.jpg?alt=media&token=43ef3a01-109c-4d75-8547-dfc2010fca5c&_gl=1*wm0c1e*_ga*MjkyNzM5ODM3LjE2ODkyNzc3MjY.*_ga_CW55HF8NVT*MTY5ODYxNDc2Mi43Ny4xLjE2OTg2MjE2MzYuNDguMC4w",
+    "https://firebasestorage.googleapis.com/v0/b/mickiefitness.appspot.com/o/service_images%2Fb4b16efb-db38-4ecb-b9f6-3e5d0ea12562.jpg?alt=media&token=6f6276c3-accd-439f-9924-6c0186b79563&_gl=1*giqk21*_ga*MjkyNzM5ODM3LjE2ODkyNzc3MjY.*_ga_CW55HF8NVT*MTY5ODYxNDc2Mi43Ny4xLjE2OTg2MjE2NTEuMzMuMC4w",
+    "https://firebasestorage.googleapis.com/v0/b/mickiefitness.appspot.com/o/service_images%2Fe7f341ea-2608-41ea-815b-50e7712b691e.jpg?alt=media&token=13cc21d2-ff3f-479d-8088-b552bc328ede&_gl=1*ifqk93*_ga*MjkyNzM5ODM3LjE2ODkyNzc3MjY.*_ga_CW55HF8NVT*MTY5ODYxNDc2Mi43Ny4xLjE2OTg2MjE2NjEuMjMuMC4w",
+    "https://firebasestorage.googleapis.com/v0/b/mickiefitness.appspot.com/o/service_images%2Fec28a96f-eca2-4719-b567-7c4b00761c7f.jpg?alt=media&token=c11bf9c4-f128-48df-b2cb-e5c8662b7b7d&_gl=1*1k0u72e*_ga*MjkyNzM5ODM3LjE2ODkyNzc3MjY.*_ga_CW55HF8NVT*MTY5ODYxNDc2Mi43Ny4xLjE2OTg2MjE3MDcuNDguMC4w"
   ];
   photoUrls.shuffle();
   final random = RandomGenerator(seed: 63833423);
@@ -68,7 +68,7 @@ void seedProductsSeed(String trainerId) {
     return faqList;
   }
 
-  MorrfProduct morrfProduct = MorrfProduct(
+  MorrfService morrfService = MorrfService(
       id: Uuid().v4(),
       trainerId: trainerId,
       title: title,
@@ -82,11 +82,11 @@ void seedProductsSeed(String trainerId) {
       photoUrls: photoUrls,
       heroUrl: heroUrl,
       ratings: []);
-  FirestoreProduct().createProduct(morrfProduct);
+  FirestoreService().createService(morrfService);
 }
 
-void seedProducts() async {
-  var collection = FirebaseFirestore.instance.collection('products');
+void seedServices() async {
+  var collection = FirebaseFirestore.instance.collection('services');
   var snapshots = await collection.get();
   for (var doc in snapshots.docs) {
     await doc.reference.delete();
@@ -99,7 +99,7 @@ void seedProducts() async {
 
   for (var i = 0; i < uid.length; i++)
     for (var j = 0; j < 10; j++) {
-      seedProductsSeed(uid[i]);
+      seedServicesSeed(uid[i]);
     }
-  print("seeded products");
+  print("seeded services");
 }
