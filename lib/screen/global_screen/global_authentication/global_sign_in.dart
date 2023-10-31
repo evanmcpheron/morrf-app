@@ -229,13 +229,6 @@ class _ClientSignInState extends ConsumerState<ClientSignIn> {
                     SocialIcon(
                       bgColor: Theme.of(context).colorScheme.onInverseSurface,
                       iconColor: Theme.of(context).colorScheme.textLink,
-                      icon: FontAwesomeIcons.twitter,
-                      borderColor:
-                          Theme.of(context).colorScheme.onPrimaryContainer,
-                    ),
-                    SocialIcon(
-                      bgColor: Theme.of(context).colorScheme.onInverseSurface,
-                      iconColor: Theme.of(context).colorScheme.textLink,
                       icon: FontAwesomeIcons.instagram,
                       borderColor:
                           Theme.of(context).colorScheme.onPrimaryContainer,

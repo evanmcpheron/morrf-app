@@ -4,11 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:get/get.dart';
 import 'package:morrf/models/service/morrf_service.dart';
 import 'package:morrf/providers/service/service_provider.dart';
 import 'package:morrf/screen/client_screen/client_home/recently_view.dart';
 import 'package:morrf/screen/client_screen/client_service_details/tabs/tabs_builder.dart';
 import 'package:morrf/screen/global_screen/splash_screen/loading_screen.dart';
+import 'package:morrf/screen/trainer_screen/setting/trainer_about.dart';
 import 'package:morrf/utils/constants/special_color.dart';
 import 'package:morrf/utils/enums/font_size.dart';
 import 'package:morrf/utils/format.dart';
@@ -254,13 +256,13 @@ class _ClientServiceDetailsState extends ConsumerState<ClientServiceDetails> {
                                             overflow: TextOverflow.ellipsis,
                                             size: FontSize.h6,
                                           ),
-                                          subtitle: Row(
-                                            children: const [
-                                              MorrfText(
-                                                  text: '(View Profile)',
-                                                  isLink: true,
-                                                  size: FontSize.lp)
-                                            ],
+                                          subtitle: GestureDetector(
+                                            onTap: () =>
+                                                Get.to(() => TrainerAbout()),
+                                            child: MorrfText(
+                                                text: '(View Profile)',
+                                                isLink: true,
+                                                size: FontSize.lp),
                                           ),
                                         ),
                                         Divider(
