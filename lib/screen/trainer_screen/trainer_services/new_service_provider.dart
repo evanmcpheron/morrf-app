@@ -18,9 +18,24 @@ class NewServiceNotifier extends StateNotifier<MorrfService> {
             description: "",
             faq: [],
             tiers: {
-              "basic": Tier(deliveryTime: 3, options: [], isVisible: true),
-              "standard": Tier(deliveryTime: 3, options: [], isVisible: true),
-              "premium": Tier(deliveryTime: 3, options: [], isVisible: true)
+              "basic": Tier(
+                  deliveryTime: 3,
+                  options: [],
+                  title: "",
+                  revisions: 3,
+                  isVisible: true),
+              "standard": Tier(
+                  deliveryTime: 3,
+                  options: [],
+                  title: "",
+                  revisions: 3,
+                  isVisible: true),
+              "premium": Tier(
+                  deliveryTime: 3,
+                  options: [],
+                  title: "",
+                  revisions: 3,
+                  isVisible: true)
             },
             photoUrls: [],
             tags: [],
@@ -58,9 +73,24 @@ class NewServiceNotifier extends StateNotifier<MorrfService> {
       description: "",
       faq: [],
       tiers: {
-        "basic": Tier(deliveryTime: 3, options: [], isVisible: true),
-        "standard": Tier(deliveryTime: 3, options: [], isVisible: true),
-        "premium": Tier(deliveryTime: 3, options: [], isVisible: true)
+        "basic": Tier(
+            deliveryTime: 3,
+            options: [],
+            title: "",
+            revisions: 3,
+            isVisible: true),
+        "standard": Tier(
+            deliveryTime: 3,
+            options: [],
+            title: "",
+            revisions: 3,
+            isVisible: true),
+        "premium": Tier(
+            deliveryTime: 3,
+            options: [],
+            title: "",
+            revisions: 3,
+            isVisible: true)
       },
       photoUrls: [],
       tags: [],

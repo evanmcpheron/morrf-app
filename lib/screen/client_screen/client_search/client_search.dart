@@ -4,8 +4,10 @@ import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:get/get.dart';
 import 'package:morrf/models/service/morrf_service.dart';
-import 'package:morrf/providers/service/service_provider.dart';
+import 'package:morrf/models/user/morrf_user.dart';
+import 'package:morrf/providers/service/service_list_provider.dart';
 import 'package:morrf/providers/user_provider.dart';
 import 'package:morrf/screen/client_screen/client_notification/client_notification.dart';
 import 'package:morrf/screen/client_screen/client_service_details/client_service_details.dart';
@@ -42,7 +44,7 @@ class _ClientSearchScreenState extends ConsumerState<ClientSearchScreen> {
 
   @override
   Widget build(BuildContext context) {
-    var morrfUser = ref.watch(morrfUserProvider);
+    MorrfUser morrfUser = ref.watch(morrfUserProvider);
     List<MorrfService> morrfServices = ref.watch(morrfServicesProvider);
     return Scaffold(
       appBar: AppBar(
@@ -157,8 +159,9 @@ class _ClientSearchScreenState extends ConsumerState<ClientSearchScreen> {
                           return GestureDetector(
                             onTap: () {
                               setState(() {
-                                ClientServiceDetails(serviceId: morrfService.id)
-                                    .launch(context);
+                                Get.to(() => ClientServiceDetails(
+                                      serviceId: morrfService.id,
+                                    ));
                               });
                             },
                             child: Container(
@@ -279,7 +282,7 @@ class _ClientSearchScreenState extends ConsumerState<ClientSearchScreen> {
                                                       size: FontSize.p),
                                                   MorrfText(
                                                     text:
-                                                        '$currencySign${getLowestPrice(morrfServices[index].tiers.cast<String, dynamic>())}',
+                                                        '$currencySign${getLowestPrice(morrfServices[index].tiers)}',
                                                     size: FontSize.p,
                                                     style: TextStyle(
                                                         color: Theme.of(context)

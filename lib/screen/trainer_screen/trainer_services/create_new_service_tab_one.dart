@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:morrf/models/service/morrf_faq.dart';
 import 'package:morrf/models/service/morrf_service.dart';
+import 'package:morrf/screen/trainer_screen/trainer_services/new_service_provider.dart';
 import 'package:morrf/utils/constants/constants.dart';
 import 'package:morrf/utils/constants/special_color.dart';
 import 'package:morrf/utils/enums/font_size.dart';
@@ -15,7 +16,6 @@ import 'package:nb_utils/nb_utils.dart';
 import 'package:textfield_tags/textfield_tags.dart';
 
 import 'add_faq.dart';
-import 'new_service_provider.dart';
 
 class CreateNewServiceTabOne extends ConsumerStatefulWidget {
   bool isVisible;

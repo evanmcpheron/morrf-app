@@ -34,10 +34,27 @@ class _CreateNewServiceTabTwoState
   TextEditingController _optionController = TextEditingController();
 
   Map<String, Tier> tiers = {
-    "basic": Tier(deliveryTime: 3, price: 0.00, options: [], isVisible: true),
-    "standard":
-        Tier(deliveryTime: 3, price: 0.00, options: [], isVisible: true),
-    "premium": Tier(deliveryTime: 3, price: 0.00, options: [], isVisible: true)
+    "basic": Tier(
+        deliveryTime: 3,
+        price: 0.00,
+        title: "",
+        options: [],
+        revisions: 3,
+        isVisible: true),
+    "standard": Tier(
+        deliveryTime: 3,
+        price: 0.00,
+        title: "",
+        options: [],
+        revisions: 3,
+        isVisible: true),
+    "premium": Tier(
+        deliveryTime: 3,
+        price: 0.00,
+        title: "",
+        options: [],
+        revisions: 3,
+        isVisible: true)
   };
 
   //__________DeliveryTime____________________________________________________________
@@ -196,21 +213,21 @@ class _CreateNewServiceTabTwoState
                     setState(() {
                       tiers["basic"]!.options = [
                         ...tiers["basic"]!.options,
-                        TitleModel(
+                        Option(
                           _optionController.text.replaceAll(RegExp(','), ''),
                           false,
                         )
                       ];
                       tiers["standard"]!.options = [
                         ...tiers["standard"]!.options,
-                        TitleModel(
+                        Option(
                           _optionController.text.replaceAll(RegExp(','), ''),
                           false,
                         )
                       ];
                       tiers["premium"]!.options = [
                         ...tiers["premium"]!.options,
-                        TitleModel(
+                        Option(
                           _optionController.text.replaceAll(RegExp(','), ''),
                           false,
                         )
@@ -259,6 +276,11 @@ class _CreateNewServiceTabTwoState
                                 trailing: Row(
                                   mainAxisSize: MainAxisSize.min,
                                   children: [
+                                    const MorrfText(
+                                        text: currencySign, size: FontSize.h6),
+                                    const SizedBox(
+                                      width: 15,
+                                    ),
                                     SizedBox(
                                       width: 100.0,
                                       child: MorrfInputField(
@@ -276,11 +298,39 @@ class _CreateNewServiceTabTwoState
                                             ?.toStringAsFixed(2),
                                       ),
                                     ),
-                                    const SizedBox(
-                                      width: 30,
+                                  ],
+                                ),
+                              ),
+                              const Divider(
+                                height: 0.0,
+                                thickness: 1.0,
+                                color: kBorderColorTextField,
+                              ),
+                              ListTile(
+                                visualDensity: const VisualDensity(vertical: 4),
+                                contentPadding: EdgeInsets.zero,
+                                title: const MorrfText(
+                                    text: 'Revisions', size: FontSize.p),
+                                trailing: Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    SizedBox(
+                                      width: 100.0,
+                                      child: MorrfInputField(
+                                        inputType: TextInputType.number,
+                                        onChanged: (value) => setState(() {
+                                          tiers["basic"]!.revisions =
+                                              value.toInt();
+                                        }),
+                                        inputFormatters: [
+                                          FilteringTextInputFormatter.digitsOnly
+                                        ],
+                                        placeholder: 'revisions',
+                                        initialValue: tiers["basic"]!
+                                            .revisions
+                                            .toString(),
+                                      ),
                                     ),
-                                    const MorrfText(
-                                        text: currencySign, size: FontSize.h6),
                                   ],
                                 ),
                               ),
@@ -371,6 +421,11 @@ class _CreateNewServiceTabTwoState
                                 trailing: Row(
                                   mainAxisSize: MainAxisSize.min,
                                   children: [
+                                    const MorrfText(
+                                        text: currencySign, size: FontSize.h6),
+                                    const SizedBox(
+                                      width: 15,
+                                    ),
                                     SizedBox(
                                       width: 100.0,
                                       child: MorrfInputField(
@@ -388,11 +443,6 @@ class _CreateNewServiceTabTwoState
                                         placeholder: 'price',
                                       ),
                                     ),
-                                    const SizedBox(
-                                      width: 30,
-                                    ),
-                                    const MorrfText(
-                                        text: currencySign, size: FontSize.h6),
                                   ],
                                 ),
                               ),
@@ -400,6 +450,39 @@ class _CreateNewServiceTabTwoState
                                 height: 0.0,
                                 thickness: 1.0,
                                 color: kBorderColorTextField,
+                              ),
+                              const Divider(
+                                height: 0.0,
+                                thickness: 1.0,
+                                color: kBorderColorTextField,
+                              ),
+                              ListTile(
+                                visualDensity: const VisualDensity(vertical: 4),
+                                contentPadding: EdgeInsets.zero,
+                                title: const MorrfText(
+                                    text: 'Revisions', size: FontSize.p),
+                                trailing: Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    SizedBox(
+                                      width: 100.0,
+                                      child: MorrfInputField(
+                                        inputType: TextInputType.number,
+                                        onChanged: (value) => setState(() {
+                                          tiers["standard"]!.revisions =
+                                              value.toInt();
+                                        }),
+                                        inputFormatters: [
+                                          FilteringTextInputFormatter.digitsOnly
+                                        ],
+                                        placeholder: 'revisions',
+                                        initialValue: tiers["standard"]!
+                                            .revisions
+                                            .toString(),
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
                               ListTile(
                                 visualDensity:
@@ -484,6 +567,11 @@ class _CreateNewServiceTabTwoState
                             trailing: Row(
                               mainAxisSize: MainAxisSize.min,
                               children: [
+                                const MorrfText(
+                                    text: currencySign, size: FontSize.h6),
+                                const SizedBox(
+                                  width: 15,
+                                ),
                                 SizedBox(
                                   width: 100.0,
                                   child: MorrfInputField(
@@ -501,11 +589,6 @@ class _CreateNewServiceTabTwoState
                                         ?.toStringAsFixed(2),
                                   ),
                                 ),
-                                const SizedBox(
-                                  width: 30,
-                                ),
-                                const MorrfText(
-                                    text: currencySign, size: FontSize.h6),
                               ],
                             ),
                           ),
@@ -513,6 +596,38 @@ class _CreateNewServiceTabTwoState
                             height: 0.0,
                             thickness: 1.0,
                             color: kBorderColorTextField,
+                          ),
+                          const Divider(
+                            height: 0.0,
+                            thickness: 1.0,
+                            color: kBorderColorTextField,
+                          ),
+                          ListTile(
+                            visualDensity: const VisualDensity(vertical: 4),
+                            contentPadding: EdgeInsets.zero,
+                            title: const MorrfText(
+                                text: 'Revisions', size: FontSize.p),
+                            trailing: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                SizedBox(
+                                  width: 100.0,
+                                  child: MorrfInputField(
+                                    inputType: TextInputType.number,
+                                    onChanged: (value) => setState(() {
+                                      tiers["premium"]!.revisions =
+                                          value.toInt();
+                                    }),
+                                    inputFormatters: [
+                                      FilteringTextInputFormatter.digitsOnly
+                                    ],
+                                    placeholder: 'revisions',
+                                    initialValue:
+                                        tiers["premium"]!.revisions.toString(),
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                           ListTile(
                             visualDensity: const VisualDensity(vertical: -4),

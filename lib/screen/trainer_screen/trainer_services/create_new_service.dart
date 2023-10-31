@@ -5,13 +5,12 @@ import 'package:morrf/models/service/morrf_service.dart';
 import 'package:morrf/screen/trainer_screen/trainer_services/create_new_service_tab_one.dart';
 import 'package:morrf/screen/trainer_screen/trainer_services/create_new_service_tab_three.dart';
 import 'package:morrf/screen/trainer_screen/trainer_services/create_new_service_tab_two.dart';
+import 'package:morrf/screen/trainer_screen/trainer_services/new_service_provider.dart';
 import 'package:morrf/utils/enums/font_size.dart';
 import 'package:morrf/widgets/constant.dart';
 import 'package:morrf/widgets/morff_text.dart';
 import 'package:morrf/widgets/morrf_scaffold.dart';
 import 'package:step_progress_indicator/step_progress_indicator.dart';
-
-import 'new_service_provider.dart';
 
 class CreateNewService extends ConsumerStatefulWidget {
   const CreateNewService({super.key});

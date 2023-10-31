@@ -7,7 +7,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:morrf/models/service/morrf_service.dart';
 import 'package:morrf/providers/loading_provider.dart';
-import 'package:morrf/providers/service/service_provider.dart';
+import 'package:morrf/providers/service/service_list_provider.dart';
 import 'package:morrf/utils/constants/special_color.dart';
 import 'package:morrf/utils/enums/font_size.dart';
 import 'package:morrf/utils/format.dart';

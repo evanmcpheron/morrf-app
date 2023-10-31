@@ -1,14 +1,16 @@
+import 'dart:core';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:morrf/widgets/data.dart';
 
 import 'morrf_faq.dart';
 import 'morrf_rating.dart';
 
-class TitleModel {
+class Option {
   String title;
   bool isSelected;
 
-  TitleModel(this.title, this.isSelected);
+  Option(this.title, this.isSelected);
 
   Map<String, dynamic> toJson() {
     return {
@@ -16,32 +18,52 @@ class TitleModel {
       "isSelected": isSelected,
     };
   }
+
+  Option.fromData(Map<String, dynamic> data)
+      : title = data['title'],
+        isSelected = data['isSelected'];
 }
 
 class Tier {
-  List<TitleModel?> options;
+  List<Option?> options;
   double? price;
   int deliveryTime;
   bool isVisible;
+  int revisions;
+  String title;
 
   Tier(
       {required this.options,
+      required this.title,
       this.price,
+      required this.revisions,
       required this.deliveryTime,
       required this.isVisible});
 
   Map<String, dynamic> toJson() {
     List<Map<String, dynamic>> optionsList = [];
-    for (TitleModel? option in options) {
+    for (Option? option in options) {
       optionsList.add(option!.toJson());
     }
     return {
       "options": optionsList,
       "price": price,
+      "title": title,
+      "revisions": revisions,
       "deliveryTime": deliveryTime,
       "isVisible": isVisible
     };
   }
+
+  Tier.fromData(Map<String, dynamic> data)
+      : options = (data['options'] as List).map<Option?>((item) {
+          return Option.fromData(item);
+        }).toList(),
+        price = data['price'],
+        revisions = data['revisions'],
+        title = data['title'],
+        deliveryTime = data['deliveryTime'],
+        isVisible = data['isVisible'];
 }
 
 class MorrfService {
@@ -87,9 +109,8 @@ class MorrfService {
         ratings = data['ratings'] ?? service.ratings,
         serviceType = data['serviceType'] ?? service.serviceType,
         faq = data['faq'] != null ? data['faq'].cast<MorrfFaq>() : service.faq,
-        tiers = data['tiers'] != null
-            ? data['tiers'].cast<String>()
-            : service.tiers,
+        tiers =
+            data['tiers'] != null ? data['tiers'].cast<Tier>() : service.tiers,
         tags =
             data['tags'] != null ? data['tags'].cast<String>() : service.tags;
 
@@ -105,7 +126,11 @@ class MorrfService {
         ratings = data['ratings'].cast<MorrfRating>(),
         serviceType = data['serviceType'],
         faq = data['faq'].cast<MorrfFaq>(),
-        tiers = data['tiers'].cast<String, Tier>(),
+        tiers = {
+          'basic': Tier.fromData(data['tiers']['basic']),
+          'standard': Tier.fromData(data['tiers']['standard']),
+          'premium': Tier.fromData(data['tiers']['premium'])
+        },
         tags = data['tags'] != null ? data['tags'].cast<String>() : [];
 
   MorrfService.fromTierData(Map<String, Tier> data, MorrfService service)

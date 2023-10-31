@@ -3,26 +3,18 @@ import 'dart:async';
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:morrf/models/service/morrf_service.dart';
-import 'package:morrf/models/stripe/card_model.dart';
-import 'package:morrf/services/firestore/firestore_billing/firestore_card.dart';
+import 'package:uuid/uuid.dart';
 import 'package:morrf/services/firestore/firestore_service.dart';
 
-import '../loading_provider.dart';
-
-class MorrfServiceNotifier extends StateNotifier<List<MorrfService>> {
+class MorrfServiceNotifier extends StateNotifier<MorrfService?> {
   FirebaseFunctions functions = FirebaseFunctions.instance;
 
-  MorrfServiceNotifier() : super([]);
+  MorrfServiceNotifier() : super(null);
 
-  Future<void> deleteService(String cardId) async {
-    await FirestoreCardService().deleteCard(cardId);
-    state = state.where((i) => i.id != cardId).toList();
-  }
-
-  Future<void> getServicesByTrainer(String trainerId) async {
+  Future<void> getServicesById(String trainerId) async {
     try {
-      List<MorrfService> services =
-          await FirestoreService().getServicesByTrainer(trainerId);
+      MorrfService services =
+          await FirestoreService().getServiceById(trainerId);
 
       state = services;
     } catch (e, stacktrace) {
@@ -31,19 +23,12 @@ class MorrfServiceNotifier extends StateNotifier<List<MorrfService>> {
     }
   }
 
-  Future<void> getAllServices() async {
-    try {
-      List<MorrfService> services = await FirestoreService().getAllServices();
-
-      state = services;
-    } catch (e, stacktrace) {
-      print(e);
-      print(stacktrace);
-    }
+  void reset() {
+    state = null;
   }
 }
 
-final morrfServicesProvider =
-    StateNotifierProvider<MorrfServiceNotifier, List<MorrfService>>((ref) {
+final morrfServiceProvider =
+    StateNotifierProvider<MorrfServiceNotifier, MorrfService?>((ref) {
   return MorrfServiceNotifier();
 });

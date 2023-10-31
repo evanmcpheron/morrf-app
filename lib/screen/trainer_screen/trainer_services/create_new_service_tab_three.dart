@@ -10,6 +10,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:morrf/models/service/morrf_service.dart';
 import 'package:morrf/providers/loading_provider.dart';
 import 'package:morrf/screen/trainer_screen/trainer_home/trainer_home.dart';
+import 'package:morrf/screen/trainer_screen/trainer_services/new_service_provider.dart';
 import 'package:morrf/utils/constants/special_color.dart';
 import 'package:morrf/utils/enums/font_size.dart';
 import 'package:morrf/utils/enums/severity.dart';
@@ -19,8 +20,6 @@ import 'package:morrf/widgets/morrf_button.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:reorderables/reorderables.dart';
 import 'package:uuid/uuid.dart';
-
-import 'new_service_provider.dart';
 
 class CreateNewServiceTabThree extends ConsumerStatefulWidget {
   bool isVisible;

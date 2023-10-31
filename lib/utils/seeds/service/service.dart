@@ -32,7 +32,7 @@ void seedServicesSeed(String trainerId) {
   String subcategory = suncategories[Random().nextInt(1)];
   String serviceType = serviceTypes[Random().nextInt(1)];
   String description = fakerFa.lorem.sentences(2).join(' ');
-  List<TitleModel> options = createOptionsList();
+  List<Option> options = createOptionsList();
 
   Map<String, Tier> tiers = {
     "basic": createSeedTier(options),
@@ -80,12 +80,16 @@ void seedServicesSeed(String trainerId) {
   FirestoreService().createService(morrfService);
 }
 
-Tier createSeedTier(List<TitleModel> options) {
+Tier createSeedTier(List<Option> options) {
   List<int> deliveryTimes = [3, 5, 7, 12, 15, 20];
   int deliveryTime = deliveryTimes[Random().nextInt(5)];
   bool isVisible = random.boolean();
+  int revisions = Random().nextInt(5);
   double price = "${Random().nextInt(200)}.${Random().nextInt(99)}".toDouble();
+  String title = fakerFa.lorem.words(Random().nextInt(4) + 2).join(' ');
   return Tier(
+    title: title,
+    revisions: revisions,
     options: options,
     deliveryTime: deliveryTime,
     isVisible: isVisible,
@@ -93,12 +97,12 @@ Tier createSeedTier(List<TitleModel> options) {
   );
 }
 
-List<TitleModel> createOptionsList() {
-  List<TitleModel> optionList = [];
+List<Option> createOptionsList() {
+  List<Option> optionList = [];
   for (int i = 0; i < Random().nextInt(5); i++) {
     bool isSelected = random.boolean();
     String title = fakerFa.lorem.words(Random().nextInt(3) + 2).join(' ');
-    optionList.add(TitleModel(title, isSelected));
+    optionList.add(Option(title, isSelected));
   }
   return optionList;
 }

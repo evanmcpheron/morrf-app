@@ -176,19 +176,19 @@ List<String> pageCount = [
 
 String selectedPageCount = '10 screen';
 
-List<TitleModel> list = [
-  TitleModel("Responsive design", false),
-  TitleModel("Responsive design", false),
-  TitleModel("Responsive design", false),
-  TitleModel("Prototype", false),
-  TitleModel("Prototype", false),
-  TitleModel("Prototype", false),
-  TitleModel("Source file", false),
-  TitleModel("Source file", false),
-  TitleModel("Source file", false),
+List<Option> list = [
+  Option("Responsive design", false),
+  Option("Responsive design", false),
+  Option("Responsive design", false),
+  Option("Prototype", false),
+  Option("Prototype", false),
+  Option("Prototype", false),
+  Option("Source file", false),
+  Option("Source file", false),
+  Option("Source file", false),
 ];
 
-List<TitleModel> selectedTitle = [];
+List<Option> selectedTitle = [];
 
 List<String> titleList = [
   'Active',

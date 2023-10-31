@@ -37,7 +37,6 @@ class _ClientHomeState extends ConsumerState<ClientHome> {
   static final List<Widget> _guestWidgetOptions = <Widget>[
     const ClientHomeScreen(),
     ClientSearchScreen(),
-    ClientSignIn(isHome: true),
     ClientSignUp(isHome: true),
     const ClientProfile(),
   ];
@@ -116,10 +115,6 @@ class _ClientHomeState extends ConsumerState<ClientHome> {
                   BottomNavigationBarItem(
                     icon: FaIcon(FontAwesomeIcons.magnifyingGlass),
                     label: "Search",
-                  ),
-                  BottomNavigationBarItem(
-                    icon: FaIcon(FontAwesomeIcons.arrowRightToBracket),
-                    label: "Sign In",
                   ),
                   BottomNavigationBarItem(
                     icon: FaIcon(FontAwesomeIcons.userPlus),

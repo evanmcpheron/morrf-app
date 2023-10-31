@@ -18,9 +18,20 @@ class MorrfServiceNotifier extends StateNotifier<List<MorrfService>> {
 
   Future<void> getServicesByTrainer(String trainerId) async {
     try {
-      var services = await FirestoreService().getServicesByTrainer(trainerId);
-      print("PRODUCTS: $services");
-      // state = services;
+      List<MorrfService> services =
+          await FirestoreService().getServicesByTrainer(trainerId);
+
+      state = services;
+    } catch (e, stacktrace) {
+      print(e);
+      print(stacktrace);
+    }
+  }
+
+  Future<void> getAllServices() async {
+    try {
+      List<MorrfService> services = await FirestoreService().getAllServices();
+      state = services;
     } catch (e, stacktrace) {
       print(e);
       print(stacktrace);
