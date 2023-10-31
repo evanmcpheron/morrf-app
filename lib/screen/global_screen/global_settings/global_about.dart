@@ -1,16 +1,17 @@
+
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../../../widgets/constant.dart';
 
-class TrainerAbout extends StatefulWidget {
-  const TrainerAbout({super.key});
+class ClientAbout extends StatefulWidget {
+  const ClientAbout({super.key});
 
   @override
-  State<TrainerAbout> createState() => _TrainerAboutState();
+  State<ClientAbout> createState() => _ClientAboutState();
 }
 
-class _TrainerAboutState extends State<TrainerAbout> {
+class _ClientAboutState extends State<ClientAbout> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

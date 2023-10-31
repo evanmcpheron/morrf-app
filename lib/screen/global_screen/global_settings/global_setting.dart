@@ -1,38 +1,28 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
-import 'package:morrf/screen/trainer_screen/setting/privacy_policy.dart';
-import 'package:morrf/screen/trainer_screen/setting/trainer_about.dart';
+import 'package:morrf/widgets/morrf_scaffold.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../../../widgets/constant.dart';
-import 'language.dart';
+import 'global_about.dart';
+import 'global_language.dart';
+import 'global_policy.dart';
 
-class TrainerSetting extends StatefulWidget {
-  const TrainerSetting({super.key});
+class GlobalSettings extends StatefulWidget {
+  const GlobalSettings({super.key});
 
   @override
-  State<TrainerSetting> createState() => _TrainerSettingState();
+  State<GlobalSettings> createState() => _GlobalSettingsState();
 }
 
-class _TrainerSettingState extends State<TrainerSetting> {
+class _GlobalSettingsState extends State<GlobalSettings> {
   bool isOn = false;
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: kDarkWhite,
-      appBar: AppBar(
-        backgroundColor: kDarkWhite,
-        elevation: 0,
-        iconTheme: const IconThemeData(color: kNeutralColor),
-        title: Text(
-          'Setting',
-          style: kTextStyle.copyWith(
-              color: kNeutralColor, fontWeight: FontWeight.bold),
-        ),
-        centerTitle: true,
-      ),
+    return MorrfScaffold(
+      title: "Settings",
       body: Padding(
         padding: const EdgeInsets.only(top: 20),
         child: Container(
@@ -82,7 +72,7 @@ class _TrainerSettingState extends State<TrainerSetting> {
                 ),
               ),
               ListTile(
-                onTap: () => const Language().launch(context),
+                onTap: () => const ClientLanguage().launch(context),
                 visualDensity: const VisualDensity(vertical: -3),
                 horizontalTitleGap: 10,
                 contentPadding: const EdgeInsets.only(bottom: 15),
@@ -111,7 +101,7 @@ class _TrainerSettingState extends State<TrainerSetting> {
                 ),
               ),
               ListTile(
-                onTap: () => const Policy().launch(context),
+                onTap: () => const ClientPolicy().launch(context),
                 visualDensity: const VisualDensity(vertical: -3),
                 horizontalTitleGap: 10,
                 contentPadding: const EdgeInsets.only(bottom: 15),
@@ -134,7 +124,7 @@ class _TrainerSettingState extends State<TrainerSetting> {
                 ),
               ),
               ListTile(
-                onTap: () => const TrainerAbout().launch(context),
+                onTap: () => const ClientAbout().launch(context),
                 visualDensity: const VisualDensity(vertical: -3),
                 horizontalTitleGap: 10,
                 contentPadding: const EdgeInsets.only(bottom: 15),

@@ -18,7 +18,7 @@ import 'package:nb_utils/nb_utils.dart';
 import '../../../widgets/constant.dart';
 import '../client_dashboard/client_dashboard.dart';
 import '../client_report/client_report.dart';
-import '../client_setting/client_setting.dart';
+import '../../global_screen/global_settings/global_setting.dart';
 import 'client_profile_details.dart';
 
 class ClientProfile extends ConsumerStatefulWidget {
@@ -359,7 +359,7 @@ class _ClientProfileState extends ConsumerState<ClientProfile> {
                     )
                   : const SizedBox(),
               ListTile(
-                onTap: () => Get.to(() => const ClientSetting()),
+                onTap: () => Get.to(() => const GlobalSettings()),
                 visualDensity: const VisualDensity(vertical: -3),
                 horizontalTitleGap: 10,
                 contentPadding: const EdgeInsets.only(bottom: 15),

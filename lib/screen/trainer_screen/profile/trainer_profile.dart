@@ -3,23 +3,21 @@ import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:get/get.dart';
 import 'package:morrf/screen/client_screen/client_home/client_home.dart';
+import 'package:morrf/screen/global_screen/add_payment_method/trainer_add_payment_method.dart';
+import 'package:morrf/screen/global_screen/global_settings/global_setting.dart';
+import 'package:morrf/screen/trainer_screen/buyer_request/trainer_buyer_request.dart';
+import 'package:morrf/screen/trainer_screen/favorite/trainer_favourite_list.dart';
 import 'package:morrf/screen/trainer_screen/profile/trainer_profile_details.dart';
+import 'package:morrf/screen/trainer_screen/report/trainer_report.dart';
+import 'package:morrf/screen/trainer_screen/transaction/trainer_transaction.dart';
+import 'package:morrf/screen/trainer_screen/withdraw_money/trainer_withdraw_history.dart';
+import 'package:morrf/screen/trainer_screen/withdraw_money/trainer_withdraw_money.dart';
 import 'package:morrf/services/auth_service.dart';
 import 'package:morrf/utils/enums/font_size.dart';
+import 'package:morrf/widgets/constant.dart';
 import 'package:morrf/widgets/morff_text.dart';
 import 'package:morrf/widgets/theme_switcher.dart';
 import 'package:nb_utils/nb_utils.dart';
-
-import '../../../widgets/constant.dart';
-import '../../global_screen/add_payment_method/global_add_payment_method.dart';
-import '../buyer_request/trainer_buyer_request.dart';
-import '../favorite/trainer_favourite_list.dart';
-import '../report/trainer_report.dart';
-import '../setting/trainer_invite.dart';
-import '../setting/trainer_setting.dart';
-import '../transaction/trainer_transaction.dart';
-import '../withdraw_money/trainer_withdraw_history.dart';
-import '../withdraw_money/trainer_withdraw_money.dart';
 
 class TrainerProfile extends StatefulWidget {
   const TrainerProfile({super.key});
@@ -104,32 +102,6 @@ class _TrainerProfileState extends State<TrainerProfile> {
                 ),
                 title: const Text(
                   'My Profile',
-                  overflow: TextOverflow.ellipsis,
-                  maxLines: 1,
-                ),
-                trailing: const Icon(
-                  FeatherIcons.chevronRight,
-                  color: kLightNeutralColor,
-                ),
-              ),
-              ListTile(
-                onTap: () => const TrainerBuyerReq().launch(context),
-                visualDensity: const VisualDensity(vertical: -3),
-                horizontalTitleGap: 10,
-                contentPadding: const EdgeInsets.only(bottom: 20),
-                leading: Container(
-                  padding: const EdgeInsets.all(10.0),
-                  decoration: const BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: Color(0xFFE3EDFF),
-                  ),
-                  child: const Icon(
-                    IconlyBold.paper,
-                    color: Color(0xFF144BD6),
-                  ),
-                ),
-                title: const Text(
-                  'Buyer Request',
                   overflow: TextOverflow.ellipsis,
                   maxLines: 1,
                 ),
@@ -247,32 +219,6 @@ class _TrainerProfileState extends State<TrainerProfile> {
                 ),
               ),
               ListTile(
-                onTap: () => const TrainerFavList().launch(context),
-                visualDensity: const VisualDensity(vertical: -3),
-                horizontalTitleGap: 10,
-                contentPadding: const EdgeInsets.only(bottom: 15),
-                leading: Container(
-                  padding: const EdgeInsets.all(10.0),
-                  decoration: const BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: Color(0xFFFFE5E3),
-                  ),
-                  child: const Icon(
-                    IconlyBold.heart,
-                    color: Color(0xFFFF3B30),
-                  ),
-                ),
-                title: const Text(
-                  'Favourite',
-                  overflow: TextOverflow.ellipsis,
-                  maxLines: 1,
-                ),
-                trailing: const Icon(
-                  FeatherIcons.chevronRight,
-                  color: kLightNeutralColor,
-                ),
-              ),
-              ListTile(
                 onTap: () => const TrainerReport().launch(context),
                 visualDensity: const VisualDensity(vertical: -3),
                 horizontalTitleGap: 10,
@@ -299,33 +245,7 @@ class _TrainerProfileState extends State<TrainerProfile> {
                 ),
               ),
               ListTile(
-                onTap: () => const TrainerInvite().launch(context),
-                visualDensity: const VisualDensity(vertical: -3),
-                horizontalTitleGap: 10,
-                contentPadding: const EdgeInsets.only(bottom: 15),
-                leading: Container(
-                  padding: const EdgeInsets.all(10.0),
-                  decoration: const BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: Color(0xFFE2EED8),
-                  ),
-                  child: const Icon(
-                    IconlyBold.addUser,
-                    color: kPrimaryColor,
-                  ),
-                ),
-                title: const Text(
-                  'Invite Friends',
-                  overflow: TextOverflow.ellipsis,
-                  maxLines: 1,
-                ),
-                trailing: const Icon(
-                  FeatherIcons.chevronRight,
-                  color: kLightNeutralColor,
-                ),
-              ),
-              ListTile(
-                onTap: () => const TrainerSetting().launch(context),
+                onTap: () => const GlobalSettings().launch(context),
                 visualDensity: const VisualDensity(vertical: -3),
                 horizontalTitleGap: 10,
                 contentPadding: const EdgeInsets.only(bottom: 15),
@@ -341,7 +261,7 @@ class _TrainerProfileState extends State<TrainerProfile> {
                   ),
                 ),
                 title: const Text(
-                  'Setting',
+                  'Settings',
                   overflow: TextOverflow.ellipsis,
                   maxLines: 1,
                 ),
