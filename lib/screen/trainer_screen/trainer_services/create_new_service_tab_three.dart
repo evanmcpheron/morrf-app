@@ -133,7 +133,7 @@ class _CreateNewServiceTabThreeState
       ref.read(newServiceProvider.notifier).updateNewService(data);
       ref
           .read(newServiceProvider.notifier)
-          .updateNewService({'trainerId': user.uid});
+          .updateNewService({'trainerName': user.uid});
       MorrfService morrfService = ref.watch(newServiceProvider);
       ref.read(newServiceProvider.notifier).createService(morrfService);
       ref.read(loadingProvider.notifier).stopLoader();

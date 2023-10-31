@@ -16,10 +16,10 @@ class MorrfServiceNotifier extends StateNotifier<List<MorrfService>> {
     state = state.where((i) => i.id != cardId).toList();
   }
 
-  Future<void> getServicesByTrainer(String trainerId) async {
+  Future<void> getServicesByTrainer(String trainerName) async {
     try {
       List<MorrfService> services =
-          await FirestoreService().getServicesByTrainer(trainerId);
+          await FirestoreService().getServicesByTrainer(trainerName);
 
       state = services;
     } catch (e, stacktrace) {

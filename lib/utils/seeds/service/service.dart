@@ -12,7 +12,7 @@ import 'package:faker/faker.dart';
 final random = RandomGenerator(seed: 63833423);
 final fakerFa = Faker.withGenerator(random);
 
-void seedServicesSeed(String trainerId) {
+void seedServicesSeed(String trainerId, String trainerName) {
   List<String> categories = ["Personal Trainer", "Nutrition"];
   List<String> suncategories = ["Yoga", "Meal Prep"];
   List<String> serviceTypes = ["Online", "In Person"];
@@ -66,6 +66,9 @@ void seedServicesSeed(String trainerId) {
   MorrfService morrfService = MorrfService(
       id: Uuid().v4(),
       trainerId: trainerId,
+      trainerName: trainerName,
+      trainerProfileImage:
+          "https://firebasestorage.googleapis.com/v0/b/mickiefitness.appspot.com/o/user_profile.jpg?alt=media&token=deba737f-c8c1-4a2e-bec5-a4474913e102&_gl=1*dljxr1*_ga*MjkyNzM5ODM3LjE2ODkyNzc3MjY.*_ga_CW55HF8NVT*MTY5ODc2OTc2OC44NS4xLjE2OTg3NzE4NTMuNTUuMC4w",
       title: title,
       category: category,
       subcategory: subcategory,
@@ -115,13 +118,14 @@ void seedServices() async {
   }
 
   List<String> uid = [
-    'gwSSMEnzvWZuDDn5GMu8U4YKPzq1',
-    'orvM6Mkz5XVAVzNmERcEu4SxwOa2'
+    '5VJNmogTMGQuzGTVcQxWUvXirnS2',
+    'O1r7P1328DSXJjHbDri38CxAs2f2'
   ];
+  List<String> names = ['Evan McPheron', 'Trainer Morrf'];
 
   for (var i = 0; i < uid.length; i++)
     for (var j = 0; j < 10; j++) {
-      seedServicesSeed(uid[i]);
+      seedServicesSeed(uid[i], names[i]);
     }
   print("seeded services");
 }

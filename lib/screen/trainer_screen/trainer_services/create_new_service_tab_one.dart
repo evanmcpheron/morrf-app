@@ -56,7 +56,7 @@ class _CreateNewServiceTabOneState
   }
 
   Map<String, dynamic> createServiceMap = {
-    'trainerId': "",
+    'trainerName': "",
     'title': "",
     'category': "",
     'subcategory': "",

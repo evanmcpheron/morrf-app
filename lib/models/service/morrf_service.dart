@@ -68,6 +68,8 @@ class Tier {
 
 class MorrfService {
   final String id,
+      trainerName,
+      trainerProfileImage,
       trainerId,
       title,
       heroUrl,
@@ -83,6 +85,8 @@ class MorrfService {
 
   MorrfService({
     required this.id,
+    required this.trainerName,
+    required this.trainerProfileImage,
     required this.trainerId,
     required this.title,
     required this.category,
@@ -99,7 +103,10 @@ class MorrfService {
 
   MorrfService.fromPartialData(Map<String, dynamic> data, MorrfService service)
       : id = data['id'] ?? service.id,
+        trainerName = data['trainerName'] ?? service.trainerName,
         trainerId = data['trainerId'] ?? service.trainerId,
+        trainerProfileImage =
+            data['trainerProfileImage'] ?? service.trainerProfileImage,
         title = data['title'] ?? service.title,
         description = data['description'] ?? service.description,
         subcategory = data['subcategory'] ?? service.subcategory,
@@ -116,7 +123,9 @@ class MorrfService {
 
   MorrfService.fromData(Map<String, dynamic> data)
       : id = data['id'],
+        trainerName = data['trainerName'],
         trainerId = data['trainerId'],
+        trainerProfileImage = data['trainerProfileImage'],
         title = data['title'],
         description = data['description'],
         subcategory = data['subcategory'],
@@ -135,7 +144,9 @@ class MorrfService {
 
   MorrfService.fromTierData(Map<String, Tier> data, MorrfService service)
       : id = service.id,
+        trainerName = service.trainerName,
         trainerId = service.trainerId,
+        trainerProfileImage = service.trainerProfileImage,
         title = service.title,
         description = service.description,
         subcategory = service.subcategory,
@@ -151,7 +162,9 @@ class MorrfService {
   Map<String, dynamic> toJson() {
     return {
       'id': id,
+      'trainerName': trainerName,
       'trainerId': trainerId,
+      'trainerProfileImage': trainerProfileImage,
       'title': title,
       'description': description,
       'subcategory': subcategory,

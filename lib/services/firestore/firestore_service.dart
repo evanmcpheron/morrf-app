@@ -36,11 +36,11 @@ class FirestoreService {
     }
   }
 
-  Future<List<MorrfService>> getServicesByTrainer(String trainerId) async {
+  Future<List<MorrfService>> getServicesByTrainer(String trainerName) async {
     try {
       List<MorrfService> morrfServices = [];
       await _serviceCollectionReference
-          .where("trainerId", isEqualTo: trainerId)
+          .where("trainerName", isEqualTo: trainerName)
           .get()
           .then((QuerySnapshot doc) {
         for (var service in doc.docs) {

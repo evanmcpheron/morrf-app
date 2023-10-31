@@ -31,12 +31,14 @@ class _ClientSignUpState extends ConsumerState<ClientSignUp> {
   final _nameKey = GlobalKey<FormFieldState>();
   final _lastNameKey = GlobalKey<FormFieldState>();
   final _emailKey = GlobalKey<FormFieldState>();
-  final _passKey = GlobalKey<FormFieldState>();
+  final TextEditingController _passController = TextEditingController();
+  final TextEditingController _confirmPassController = TextEditingController();
 
   String _name = "";
   String _lastName = "";
   String _email = "";
   String _pass = "";
+  String _confirmPass = "";
 
   void _onSubmit() async {
     try {
@@ -176,7 +178,7 @@ class _ClientSignUpState extends ConsumerState<ClientSignUp> {
                 ),
                 const SizedBox(height: 20.0),
                 MorrfInputField(
-                  key: _passKey,
+                  controller: _passController,
                   placeholder: "Password*",
                   hint: "Enter your password",
                   inputType: TextInputType.name,
@@ -190,6 +192,28 @@ class _ClientSignUpState extends ConsumerState<ClientSignUp> {
                   onSaved: (value) {
                     setState(() {
                       _pass = value.toString();
+                    });
+                  },
+                ),
+                const SizedBox(height: 20.0),
+                MorrfInputField(
+                  controller: _confirmPassController,
+                  placeholder: "Confirm Password*",
+                  hint: "Confirm your password",
+                  inputType: TextInputType.name,
+                  isSecure: true,
+                  validator: (value) {
+                    print(value);
+                    print(_passController.text);
+                    if (value == null ||
+                        value.isEmpty ||
+                        value != _passController.text) {}
+                    return 'Make sure your passwords match';
+                    return null;
+                  },
+                  onSaved: (value) {
+                    setState(() {
+                      _confirmPass = value.toString();
                     });
                   },
                 ),
@@ -285,13 +309,6 @@ class _ClientSignUpState extends ConsumerState<ClientSignUp> {
                         bgColor: Theme.of(context).colorScheme.onInverseSurface,
                         iconColor: Theme.of(context).colorScheme.textLink,
                         icon: FontAwesomeIcons.google,
-                        borderColor:
-                            Theme.of(context).colorScheme.onPrimaryContainer,
-                      ),
-                      SocialIcon(
-                        bgColor: Theme.of(context).colorScheme.onInverseSurface,
-                        iconColor: Theme.of(context).colorScheme.textLink,
-                        icon: FontAwesomeIcons.twitter,
                         borderColor:
                             Theme.of(context).colorScheme.onPrimaryContainer,
                       ),

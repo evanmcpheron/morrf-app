@@ -10,7 +10,9 @@ class NewServiceNotifier extends StateNotifier<MorrfService> {
       : super(
           MorrfService(
             id: Uuid().v4(),
+            trainerName: '',
             trainerId: '',
+            trainerProfileImage: "",
             title: "",
             category: "",
             subcategory: "",
@@ -45,7 +47,9 @@ class NewServiceNotifier extends StateNotifier<MorrfService> {
         );
 
   void updateNewService(Map<String, dynamic> data) async {
+    data['trainerName'] = user.displayName;
     data['trainerId'] = user.uid;
+    data['trainerProfileImage'] = user.photoURL;
     state = MorrfService.fromPartialData(data, state);
   }
 
@@ -65,7 +69,9 @@ class NewServiceNotifier extends StateNotifier<MorrfService> {
   void disposeNewService() {
     state = MorrfService(
       id: Uuid().v4(),
+      trainerName: '',
       trainerId: '',
+      trainerProfileImage: "",
       title: "",
       category: "",
       subcategory: "",

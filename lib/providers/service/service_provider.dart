@@ -11,10 +11,10 @@ class MorrfServiceNotifier extends StateNotifier<MorrfService?> {
 
   MorrfServiceNotifier() : super(null);
 
-  Future<void> getServicesById(String trainerId) async {
+  Future<void> getServiceById(String trainerName) async {
     try {
       MorrfService services =
-          await FirestoreService().getServiceById(trainerId);
+          await FirestoreService().getServiceById(trainerName);
 
       state = services;
     } catch (e, stacktrace) {

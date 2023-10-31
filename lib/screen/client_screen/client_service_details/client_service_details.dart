@@ -35,6 +35,7 @@ class _ClientServiceDetailsState extends ConsumerState<ClientServiceDetails> {
   PageController pageController = PageController(initialPage: 0);
   TabController? tabController;
   int currentTab = 0;
+  int currentImage = 0;
   ScrollController? _scrollController;
   bool lastStatus = false;
   double height = 200;
@@ -57,7 +58,8 @@ class _ClientServiceDetailsState extends ConsumerState<ClientServiceDetails> {
   void initState() {
     super.initState();
     _scrollController = ScrollController()..addListener(_scrollListener);
-    ref.read(morrfServiceProvider.notifier).getServicesById(widget.serviceId);
+    pageController.addListener(() {});
+    ref.read(morrfServiceProvider.notifier).getServiceById(widget.serviceId);
   }
 
   @override
@@ -122,68 +124,48 @@ class _ClientServiceDetailsState extends ConsumerState<ClientServiceDetails> {
                     flexibleSpace: FlexibleSpaceBar(
                       collapseMode: CollapseMode.parallax,
                       background: SafeArea(
-                        child: CarouselSlider.builder(
-                          carouselController: _controller,
-                          options: CarouselOptions(
-                            height: 300,
-                            aspectRatio: 18 / 18,
-                            viewportFraction: 1,
-                            initialPage: 0,
-                            enableInfiniteScroll: true,
-                            reverse: false,
-                            autoPlay: false,
-                            autoPlayCurve: Curves.fastOutSlowIn,
-                            enlargeCenterPage: false,
-                            onPageChanged: (i, j) {
-                              pageController.nextPage(
-                                  duration: const Duration(microseconds: 1),
-                                  curve: Curves.bounceIn);
-                            },
-                            scrollDirection: Axis.horizontal,
-                          ),
-                          itemCount: 10,
-                          itemBuilder:
-                              (BuildContext context, int index, int realIndex) {
-                            return Stack(
-                              alignment: Alignment.bottomCenter,
-                              children: [
-                                Container(
-                                  height: 300,
-                                  width: MediaQuery.of(context).size.width,
-                                  decoration: const BoxDecoration(
-                                    image: DecorationImage(
-                                        image: AssetImage('images/bg2.png'),
-                                        fit: BoxFit.fitWidth),
-                                  ),
-                                ),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    SmoothPageIndicator(
-                                      controller: pageController,
-                                      count: 3,
-                                      effect: JumpingDotEffect(
-                                        dotHeight: 6.0,
-                                        dotWidth: 6.0,
-                                        jumpScale: .7,
-                                        verticalOffset: 15,
-                                        activeDotColor: kNeutralColor,
-                                        dotColor:
-                                            kNeutralColor.withOpacity(0.4),
-                                      ),
-                                    ),
-                                    const SizedBox(height: 10.0),
-                                    Container(
-                                      height: 20,
+                        child: Stack(
+                          children: [
+                            CarouselSlider(
+                              options: CarouselOptions(
+                                height: 300,
+                                aspectRatio: 18 / 18,
+                                viewportFraction: 1,
+                                initialPage: 0,
+                                enableInfiniteScroll: true,
+                                reverse: false,
+                                autoPlay: false,
+                                autoPlayCurve: Curves.fastOutSlowIn,
+                                enlargeCenterPage: false,
+                                scrollDirection: Axis.horizontal,
+                                onPageChanged: (index, reason) => {
+                                  setState(() => {
+                                        currentImage = index,
+                                      })
+                                },
+                              ),
+                              items: [
+                                for (var i = 0;
+                                    i < morrfService.photoUrls.length;
+                                    i++)
+                                  i
+                              ].map((i) {
+                                return Builder(
+                                  builder: (BuildContext context) {
+                                    return Container(
                                       width: MediaQuery.of(context).size.width,
-                                    )
-                                  ],
-                                ),
-                              ],
-                            );
-                          },
+                                      decoration: BoxDecoration(
+                                        image: DecorationImage(
+                                            image: NetworkImage(
+                                                morrfService.photoUrls[i]),
+                                            fit: BoxFit.fitWidth),
+                                      ),
+                                    );
+                                  },
+                                );
+                              }).toList(),
+                            ),
+                          ],
                         ),
                       ),
                     ),
@@ -211,9 +193,8 @@ class _ClientServiceDetailsState extends ConsumerState<ClientServiceDetails> {
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
-                                        const MorrfText(
-                                          text:
-                                              'Workout routine for body composition',
+                                        MorrfText(
+                                          text: morrfService.title,
                                           maxLines: 2,
                                           size: FontSize.h5,
                                         ),
@@ -261,22 +242,20 @@ class _ClientServiceDetailsState extends ConsumerState<ClientServiceDetails> {
                                         ListTile(
                                           contentPadding: EdgeInsets.zero,
                                           horizontalTitleGap: 10,
-                                          leading: const CircleAvatar(
+                                          leading: CircleAvatar(
                                             radius: 22.0,
-                                            backgroundImage: AssetImage(
-                                                'images/profilepic2.png'),
+                                            backgroundImage: NetworkImage(
+                                                morrfService
+                                                    .trainerProfileImage),
                                           ),
-                                          title: const MorrfText(
-                                            text: 'William Liamsss',
+                                          title: MorrfText(
+                                            text: morrfService.trainerName,
                                             maxLines: 1,
                                             overflow: TextOverflow.ellipsis,
                                             size: FontSize.h6,
                                           ),
                                           subtitle: Row(
                                             children: const [
-                                              MorrfText(
-                                                  text: 'Trainer Level - 1 ',
-                                                  size: FontSize.p),
                                               MorrfText(
                                                   text: '(View Profile)',
                                                   isLink: true,
@@ -297,8 +276,8 @@ class _ClientServiceDetailsState extends ConsumerState<ClientServiceDetails> {
                                           size: FontSize.h6,
                                         ),
                                         const SizedBox(height: 5.0),
-                                        const ReadMoreText(
-                                          'Lorem ipsum dolor sit amet consectetur. Tortor sapien aliquam amet elit. Quis varius amet grav ida molestie rhoncus. Lorem ipsum dolor sit amet consectetur. Tortor sapien aliquam amet elit. Quis varius amet grav ida molestie rhoncus.',
+                                        ReadMoreText(
+                                          morrfService.description,
                                           trimLines: 3,
                                           trimMode: TrimMode.Line,
                                           trimCollapsedText: '..Read more',
@@ -353,257 +332,11 @@ class _ClientServiceDetailsState extends ConsumerState<ClientServiceDetails> {
                                             ],
                                           ),
                                         ),
+                                        const SizedBox(
+                                          height: 15,
+                                        )
                                       ],
                                     ),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(
-                                        left: 15.0, right: 15.0, top: 15),
-                                    child: Row(
-                                      children: [
-                                        const MorrfText(
-                                            text: 'Recent Viewed',
-                                            size: FontSize.h6),
-                                        const Spacer(),
-                                        GestureDetector(
-                                          onTap: () => const RecentlyView()
-                                              .launch(context),
-                                          child: const MorrfText(
-                                              text: 'View All',
-                                              isLink: true,
-                                              size: FontSize.p),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  HorizontalList(
-                                    physics: const BouncingScrollPhysics(),
-                                    padding: const EdgeInsets.only(
-                                        left: 15.0, bottom: 15, top: 15),
-                                    spacing: 10.0,
-                                    itemCount: 10,
-                                    itemBuilder: (_, i) {
-                                      return Padding(
-                                        padding:
-                                            const EdgeInsets.only(bottom: 10.0),
-                                        child: GestureDetector(
-                                          onTap: () => print("clicked"),
-                                          // onTap: () => const ClientServiceDetails()
-                                          //     .launch(context),
-                                          child: Container(
-                                            height: 120,
-                                            decoration: BoxDecoration(
-                                              color: Theme.of(context)
-                                                  .colorScheme
-                                                  .onBackground,
-                                              borderRadius:
-                                                  BorderRadius.circular(8.0),
-                                              border: Border.all(
-                                                  color: kBorderColorTextField),
-                                            ),
-                                            child: Row(
-                                              mainAxisSize: MainAxisSize.min,
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.start,
-                                              children: [
-                                                Stack(
-                                                  alignment: Alignment.topLeft,
-                                                  children: [
-                                                    Container(
-                                                      height: 120,
-                                                      width: 120,
-                                                      decoration:
-                                                          const BoxDecoration(
-                                                        borderRadius:
-                                                            BorderRadius.only(
-                                                          bottomLeft:
-                                                              Radius.circular(
-                                                                  8.0),
-                                                          topLeft:
-                                                              Radius.circular(
-                                                                  8.0),
-                                                        ),
-                                                        image: DecorationImage(
-                                                            image: AssetImage(
-                                                              'images/shot5.png',
-                                                            ),
-                                                            fit: BoxFit.cover),
-                                                      ),
-                                                    ),
-                                                    GestureDetector(
-                                                      onTap: () {
-                                                        setState(() {
-                                                          isFavorite =
-                                                              !isFavorite;
-                                                        });
-                                                      },
-                                                      child: Padding(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                .all(5.0),
-                                                        child: Container(
-                                                          height: 25,
-                                                          width: 25,
-                                                          decoration:
-                                                              const BoxDecoration(
-                                                            shape:
-                                                                BoxShape.circle,
-                                                          ),
-                                                          child: isFavorite
-                                                              ? const Center(
-                                                                  child: Icon(
-                                                                    Icons
-                                                                        .favorite,
-                                                                    color: Colors
-                                                                        .red,
-                                                                    size: 16.0,
-                                                                  ),
-                                                                )
-                                                              : const Center(
-                                                                  child: Icon(
-                                                                    Icons
-                                                                        .favorite_border,
-                                                                    color:
-                                                                        kNeutralColor,
-                                                                    size: 16.0,
-                                                                  ),
-                                                                ),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ],
-                                                ),
-                                                Padding(
-                                                  padding:
-                                                      const EdgeInsets.all(5.0),
-                                                  child: Column(
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .start,
-                                                    mainAxisSize:
-                                                        MainAxisSize.min,
-                                                    children: [
-                                                      const Flexible(
-                                                        child: SizedBox(
-                                                          width: 190,
-                                                          child: MorrfText(
-                                                            text:
-                                                                'Workout routine for body composition',
-                                                            size: FontSize.lp,
-                                                            maxLines: 2,
-                                                            overflow:
-                                                                TextOverflow
-                                                                    .ellipsis,
-                                                          ),
-                                                        ),
-                                                      ),
-                                                      const SizedBox(
-                                                          height: 5.0),
-                                                      Row(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .start,
-                                                        children: [
-                                                          const Icon(
-                                                            IconlyBold.star,
-                                                            color: Colors.amber,
-                                                            size: 18.0,
-                                                          ),
-                                                          const SizedBox(
-                                                              width: 2.0),
-                                                          const MorrfText(
-                                                              text: '5.0',
-                                                              size: FontSize.p),
-                                                          const SizedBox(
-                                                              width: 2.0),
-                                                          MorrfText(
-                                                            text: '(520)',
-                                                            size: FontSize.p,
-                                                            style: TextStyle(
-                                                                color: Theme.of(
-                                                                        context)
-                                                                    .colorScheme
-                                                                    .primary),
-                                                          ),
-                                                          const SizedBox(
-                                                              width: 40),
-                                                          Row(
-                                                            children: [
-                                                              const MorrfText(
-                                                                  text:
-                                                                      'Price ',
-                                                                  size: FontSize
-                                                                      .p),
-                                                              MorrfText(
-                                                                  text:
-                                                                      '$currencySign${30}',
-                                                                  size: FontSize
-                                                                      .p,
-                                                                  style: TextStyle(
-                                                                      color: Theme.of(
-                                                                              context)
-                                                                          .colorScheme
-                                                                          .money))
-                                                            ],
-                                                          )
-                                                        ],
-                                                      ),
-                                                      const SizedBox(
-                                                          height: 5.0),
-                                                      Row(
-                                                        children: [
-                                                          Container(
-                                                            height: 32,
-                                                            width: 32,
-                                                            decoration:
-                                                                const BoxDecoration(
-                                                              shape: BoxShape
-                                                                  .circle,
-                                                              image: DecorationImage(
-                                                                  image: AssetImage(
-                                                                      'images/profilepic2.png'),
-                                                                  fit: BoxFit
-                                                                      .cover),
-                                                            ),
-                                                          ),
-                                                          const SizedBox(
-                                                              width: 5.0),
-                                                          Column(
-                                                            crossAxisAlignment:
-                                                                CrossAxisAlignment
-                                                                    .start,
-                                                            children: const [
-                                                              MorrfText(
-                                                                  text:
-                                                                      'William Liam',
-                                                                  maxLines: 1,
-                                                                  overflow:
-                                                                      TextOverflow
-                                                                          .ellipsis,
-                                                                  size: FontSize
-                                                                      .p),
-                                                              MorrfText(
-                                                                  text:
-                                                                      'Trainer Level - 1',
-                                                                  maxLines: 1,
-                                                                  overflow:
-                                                                      TextOverflow
-                                                                          .ellipsis,
-                                                                  size: FontSize
-                                                                      .p),
-                                                            ],
-                                                          ),
-                                                        ],
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                        ),
-                                      );
-                                    },
                                   ),
                                 ],
                               ),

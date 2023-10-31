@@ -5,6 +5,8 @@ import 'package:morrf/models/user/morrf_user.dart';
 import 'package:uuid/uuid.dart';
 
 class MorrfUserNotifier extends StateNotifier<MorrfUser> {
+  User? user = FirebaseAuth.instance.currentUser;
+
   Future _init() async {
     state = MorrfUser(
       id: Uuid().v4(),
@@ -20,11 +22,10 @@ class MorrfUserNotifier extends StateNotifier<MorrfUser> {
   }
 
   Future<void> getUser() async {
-    User? user = FirebaseAuth.instance.currentUser;
     if (user != null) {
       var unformattedUser = await FirebaseFirestore.instance
           .collection("users")
-          .doc(user.uid)
+          .doc(user!.uid)
           .get();
       MorrfUser morrfUser = parseSnapshot(unformattedUser.data()!);
       state = morrfUser;
