@@ -5,6 +5,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:morrf/providers/user_provider.dart';
 import 'package:morrf/screen/global_screen/global_authentication/global_sign_up.dart';
+import 'package:morrf/screen/global_screen/splash_screen/mt_splash_screen.dart';
 import 'package:morrf/services/auth_service.dart';
 import 'package:morrf/utils/constants/special_color.dart';
 import 'package:morrf/utils/enums/font_size.dart';
@@ -44,7 +45,7 @@ class _ClientSignInState extends ConsumerState<ClientSignIn> {
     try {
       await AuthService().signin(_email, _pass);
       ref.read(morrfUserProvider.notifier).getUser();
-      Get.toNamed("/");
+      Get.to(() => const SplashScreen());
     } on FirebaseAuthException catch (error) {
       if (error.code == 'email-already-in-use') {
         // ...
