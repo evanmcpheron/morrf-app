@@ -27,6 +27,7 @@ class _TrainerStarterHomeState extends ConsumerState<TrainerStarterHome> {
   void initState() {
     super.initState();
     Future.delayed(Duration.zero, () {
+      print(user.emailVerified);
       if (user.emailVerified &&
           ref.watch(morrfUserProvider).morrfTrainer != null) {
         Get.offAll(() => TrainerHome());

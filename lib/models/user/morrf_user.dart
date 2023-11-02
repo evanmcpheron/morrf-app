@@ -18,7 +18,7 @@ class MorrfUser {
   List<MorrfOrder>? orders;
   List<String?> favorites;
   String? aboutMe;
-  MorrfTainer? morrfTrainer;
+  MorrfTrainer? morrfTrainer;
 
   MorrfUser(
       {required this.id,
@@ -51,7 +51,9 @@ class MorrfUser {
         favorites = List<String?>.from(data['favorites']),
         orders = List<MorrfOrder>.from(data['orders']),
         aboutMe = data['aboutMe'],
-        morrfTrainer = data['morrfTrainer']?.cast<MorrfTainer>();
+        morrfTrainer = data['morrfTrainer'] != null
+            ? MorrfTrainer.fromData(data['morrfTrainer'])
+            : null;
 
   Map<String, dynamic> toJson() {
     return {
