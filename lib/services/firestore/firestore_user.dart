@@ -27,11 +27,12 @@ class FirestoreService {
         'gender': null,
         'photoURL': user.photoURL,
         'email': user.email.toLowerCase(),
-        'services': user.services,
         'orders': user.orders,
         'userWish': [],
         'userCart': [],
         'stripe': result.data['payload'],
+        'favorites': [],
+        'morrfTrainer': null,
         'createdAt': Timestamp.now(),
       }).then((value) => print("User Added"));
     } catch (e) {

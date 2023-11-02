@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -8,6 +9,7 @@ import 'package:morrf/screen/client_screen/client_notification/client_notificati
 import 'package:morrf/screen/client_screen/client_search/client_search.dart';
 import 'package:morrf/screen/global_screen/global_authentication/global_sign_up.dart';
 import 'package:morrf/screen/trainer_screen/trainer_home/trainer_home.dart';
+import 'package:morrf/screen/trainer_screen/trainer_home/trainer_starter_home.dart';
 import 'package:morrf/utils/constants/special_color.dart';
 import 'package:morrf/utils/enums/font_size.dart';
 import 'package:morrf/widgets/morff_text.dart';
@@ -26,7 +28,6 @@ class ClientHome extends ConsumerStatefulWidget {
 }
 
 class _ClientHomeState extends ConsumerState<ClientHome> {
-  bool isSignedIn = FirebaseAuth.instance.currentUser != null;
   int _currentPage = 0;
 
   static const List<Widget> _widgetOptions = <Widget>[
@@ -57,6 +58,7 @@ class _ClientHomeState extends ConsumerState<ClientHome> {
 
   @override
   Widget build(BuildContext context) {
+    bool isSignedIn = FirebaseAuth.instance.currentUser != null;
     var morrfUser = ref.watch(morrfUserProvider);
     return Scaffold(
       appBar: AppBar(
@@ -101,13 +103,13 @@ class _ClientHomeState extends ConsumerState<ClientHome> {
               : const SizedBox(),
         ),
       ),
-      body: isSignedIn
-          ? _widgetOptions.elementAt(_currentPage)
-          : _guestWidgetOptions.elementAt(_currentPage),
+      body:
+          isSignedIn ? _widgetOptions.elementAt(_currentPage) : getGuestLinks(),
       floatingActionButton: isSignedIn
           ? FloatingActionButton(
               onPressed: () {
-                Get.offAll(() => TrainerHome());
+                FirebaseAuth.instance.currentUser!.reload();
+                Get.offAll(() => const TrainerStarterHome());
               },
               child: const FaIcon(FontAwesomeIcons.moneyBill1Wave),
             )
@@ -178,5 +180,14 @@ class _ClientHomeState extends ConsumerState<ClientHome> {
               ),
       ),
     );
+  }
+
+  Widget getGuestLinks() {
+    if (_currentPage == 4) {
+      setState(() {
+        _currentPage = 0;
+      });
+    }
+    return _guestWidgetOptions.elementAt(_currentPage);
   }
 }

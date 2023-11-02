@@ -9,7 +9,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:moment_dart/moment_dart.dart';
-import 'package:morrf/models/service/morrf_service.dart';
+import 'package:morrf/models/order/morrf_order.dart';
 import 'package:morrf/models/user/morrf_user.dart';
 import 'package:morrf/providers/user_provider.dart';
 import 'package:morrf/screen/global_screen/global_authentication/global_confirm_sign_in.dart';
@@ -67,7 +67,6 @@ class _ClientEditProfileState extends ConsumerState<ClientEditProfile> {
   void _onSubmit(String? gender) async {
     MorrfUser morrfUser = ref.watch(morrfUserProvider);
     String stripeId = morrfUser.stripe;
-    List<MorrfService>? services = morrfUser.services;
     List<MorrfOrder>? orders = morrfUser.orders;
     String? imageUrl;
     if (_formKey.currentState!.validate()) {
@@ -117,7 +116,6 @@ class _ClientEditProfileState extends ConsumerState<ClientEditProfile> {
                   'stripe': stripeId,
                   'gender': _selectedGender == "" ? gender : _selectedGender,
                   'aboutMe': _aboutMe,
-                  'services': services,
                   'orders': orders,
                 }),
                 Get.back()

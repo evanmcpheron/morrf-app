@@ -1,7 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
+import 'package:morrf/providers/user_provider.dart';
 import 'package:morrf/screen/global_screen/global_authentication/global_sign_up.dart';
 import 'package:morrf/services/auth_service.dart';
 import 'package:morrf/utils/constants/special_color.dart';
@@ -15,15 +17,16 @@ import 'package:nb_utils/nb_utils.dart';
 
 import 'global_forgot_password.dart';
 
-class ClientConfirmSignIn extends StatefulWidget {
+class ClientConfirmSignIn extends ConsumerStatefulWidget {
   bool isHome;
   ClientConfirmSignIn({super.key, this.isHome = false});
 
   @override
-  State<ClientConfirmSignIn> createState() => _ClientConfirmSignInState();
+  ConsumerState<ClientConfirmSignIn> createState() =>
+      _ClientConfirmSignInState();
 }
 
-class _ClientConfirmSignInState extends State<ClientConfirmSignIn> {
+class _ClientConfirmSignInState extends ConsumerState<ClientConfirmSignIn> {
   bool hidePassword = false;
   User user = FirebaseAuth.instance.currentUser!;
 
@@ -77,7 +80,7 @@ class _ClientConfirmSignInState extends State<ClientConfirmSignIn> {
                     key: _passKey,
                     placeholder: "Password*",
                     hint: "Enter your password",
-                    inputType: TextInputType.emailAddress,
+                    inputType: TextInputType.text,
                     isSecure: true,
                     validator: (value) {
                       if (value == null || value.isEmpty || value.length < 6) {

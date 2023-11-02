@@ -207,8 +207,9 @@ class _ClientSignUpState extends ConsumerState<ClientSignUp> {
                     print(_passController.text);
                     if (value == null ||
                         value.isEmpty ||
-                        value != _passController.text) {}
-                    return 'Make sure your passwords match';
+                        value != _passController.text) {
+                      return 'Make sure your passwords match';
+                    }
                     return null;
                   },
                   onSaved: (value) {

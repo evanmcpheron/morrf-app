@@ -81,7 +81,6 @@ class AuthService extends ChangeNotifier {
           firstName: firstName,
           lastName: lastName,
           stripe: "",
-          services: [],
           favorites: [],
           orders: [],
           aboutMe: null);

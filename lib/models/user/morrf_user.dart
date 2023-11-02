@@ -1,5 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:morrf/models/order/morrf_order.dart';
 import 'package:morrf/models/service/morrf_service.dart';
+
+import 'morrf_trainer.dart';
 
 class MorrfUser {
   final String id;
@@ -12,10 +15,10 @@ class MorrfUser {
   Timestamp? birthday;
   String photoURL;
   String stripe;
-  List<MorrfService>? services;
   List<MorrfOrder>? orders;
   List<String?> favorites;
   String? aboutMe;
+  MorrfTainer? morrfTrainer;
 
   MorrfUser(
       {required this.id,
@@ -29,10 +32,10 @@ class MorrfUser {
       this.photoURL =
           "https://firebasestorage.googleapis.com/v0/b/mickiefitness.appspot.com/o/user_profile.jpg?alt=media&token=deba737f-c8c1-4a2e-bec5-a4474913e102&_gl=1*mvlre7*_ga*MjkyNzM5ODM3LjE2ODkyNzc3MjY.*_ga_CW55HF8NVT*MTY5ODAyMDYyNC41My4xLjE2OTgwMjE0MTEuNTcuMC4w",
       this.stripe = "",
-      this.services,
       this.orders,
       required this.favorites,
-      this.aboutMe});
+      this.aboutMe,
+      this.morrfTrainer});
 
   MorrfUser.fromData(Map<String, dynamic> data)
       : id = data['id'],
@@ -46,9 +49,9 @@ class MorrfUser {
         photoURL = data['photoURL'],
         stripe = data['stripe'],
         favorites = List<String?>.from(data['favorites']),
-        services = List<MorrfService>.from(data['services']),
         orders = List<MorrfOrder>.from(data['orders']),
-        aboutMe = data['aboutMe'];
+        aboutMe = data['aboutMe'],
+        morrfTrainer = data['morrfTrainer']?.cast<MorrfTainer>();
 
   Map<String, dynamic> toJson() {
     return {
@@ -64,14 +67,7 @@ class MorrfUser {
       'stripe': stripe,
       'favorites': favorites,
       'orders': orders,
-      'services': services,
       'aboutMe': aboutMe
     };
   }
-}
-
-class MorrfOrder {
-  String title;
-
-  MorrfOrder({required this.title});
 }

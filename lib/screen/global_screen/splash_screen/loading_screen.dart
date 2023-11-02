@@ -25,8 +25,8 @@ class _LoadingPageState extends State<LoadingPage> {
                 fit: BoxFit.cover),
           ),
         ),
-        Padding(
-          padding: const EdgeInsets.only(top: 16.0),
+        const Padding(
+          padding: EdgeInsets.only(top: 16.0),
           child: MorrfText(size: FontSize.p, text: "LOADING..."),
         ),
       ],

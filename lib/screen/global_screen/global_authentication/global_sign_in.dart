@@ -146,7 +146,7 @@ class _ClientSignInState extends ConsumerState<ClientSignIn> {
                       key: _passKey,
                       placeholder: "Password*",
                       hint: "Enter your password",
-                      inputType: TextInputType.emailAddress,
+                      inputType: TextInputType.text,
                       isSecure: true,
                       validator: (value) {
                         if (value == null ||

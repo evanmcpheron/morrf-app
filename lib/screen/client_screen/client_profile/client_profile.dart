@@ -405,10 +405,10 @@ class _ClientProfileState extends ConsumerState<ClientProfile> {
                       onTap: () => {
                         AuthService().signout(),
                         Get.offAllNamed("/"),
-                        ref.read(morrfUserProvider.notifier).getUser()
+                        ref.read(morrfUserProvider.notifier).getUser(),
                       },
                       title: const MorrfText(
-                          text: 'Log Out',
+                          text: 'Sign Out',
                           overflow: TextOverflow.ellipsis,
                           maxLines: 1,
                           size: FontSize.lp),

@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -55,7 +56,7 @@ class _MyAppState extends ConsumerState<MyApp> {
   void initState() {
     super.initState();
     // seedServices();
-    // FirebaseAuth.instance.signOut();
+    FirebaseAuth.instance.signOut();
   }
 
   @override

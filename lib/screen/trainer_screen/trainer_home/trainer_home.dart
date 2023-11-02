@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -12,6 +13,7 @@ import '../trainer_services/create_service.dart';
 
 class TrainerHome extends StatefulWidget {
   int? currentPage;
+  User user = FirebaseAuth.instance.currentUser!;
   TrainerHome({super.key, this.currentPage});
 
   @override
