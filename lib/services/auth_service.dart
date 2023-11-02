@@ -21,10 +21,6 @@ class AuthService extends ChangeNotifier {
     notifyListeners();
   }
 
-  void getCurrentMorrfUser() {
-    FirestoreService().getCurrentMorrfUser();
-  }
-
   void setCurrentMorrfUser(MorrfUser? user) {
     currentMorrfUser = user;
     setIsSignedIn();

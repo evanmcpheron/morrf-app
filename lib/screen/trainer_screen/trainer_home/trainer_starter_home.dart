@@ -132,7 +132,8 @@ class _VerifyEmailState extends State<VerifyEmail> {
                       },
                       severity: Severity.danger,
                       fullWidth: true,
-                      text: "Send Verification Link"),
+                      text: "Send Verification Link",
+                    ),
             ],
           )
         : const SizedBox();

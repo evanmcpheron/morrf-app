@@ -52,8 +52,8 @@ class _ClientSignUpState extends ConsumerState<ClientSignUp> {
 
       await userCredentials.user?.sendEmailVerification();
 
-      ref.read(morrfUserProvider.notifier).getUser();
       Get.toNamed("/");
+      ref.read(morrfUserProvider.notifier).getUser();
     } on FirebaseAuthException catch (error) {
       if (error.code == 'email-already-in-use') {
         // ...
