@@ -687,7 +687,7 @@ class _CreateNewServiceTabTwoState
                       widget.pageChange(0);
                     },
                     width: MediaQuery.of(context).size.width / 2 - 23,
-                    child: const MorrfText(text: "Back", size: FontSize.h5),
+                    text: "Back",
                   ),
                   const SizedBox(
                     width: 16,
@@ -698,7 +698,7 @@ class _CreateNewServiceTabTwoState
                       widget.pageChange(2);
                     },
                     width: MediaQuery.of(context).size.width / 2 - 23,
-                    child: const MorrfText(text: "Next", size: FontSize.h5),
+                    text: "Next",
                   ),
                 ],
               ),

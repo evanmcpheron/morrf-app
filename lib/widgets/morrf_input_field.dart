@@ -112,7 +112,7 @@ class _MorrfInputFieldState extends State<MorrfInputField> {
           fillColor: widget.fillColor,
           border: OutlineInputBorder(
             borderSide: BorderSide(
-                color: Theme.of(context).colorScheme.borderColor, width: 2.0),
+                color: Theme.of(context).colorScheme.primaryColor, width: 2.0),
           ),
           suffixIcon: getSuffixIcon(),
           prefixIcon: widget.prefixIcon != null
@@ -123,7 +123,7 @@ class _MorrfInputFieldState extends State<MorrfInputField> {
               : null,
           enabledBorder: OutlineInputBorder(
             borderSide: BorderSide(
-                color: Theme.of(context).colorScheme.borderColor, width: 2.0),
+                color: Theme.of(context).colorScheme.primaryColor, width: 2.0),
             borderRadius: const BorderRadius.all(
               Radius.circular(10.0),
             ),
@@ -133,7 +133,7 @@ class _MorrfInputFieldState extends State<MorrfInputField> {
               Radius.circular(10.0),
             ),
             borderSide: BorderSide(
-                color: Theme.of(context).colorScheme.borderColor, width: 2.0),
+                color: Theme.of(context).colorScheme.primaryColor, width: 2.0),
           ),
           floatingLabelAlignment: FloatingLabelAlignment.start,
         ),

@@ -378,8 +378,7 @@ class _ClientEditProfileState extends ConsumerState<ClientEditProfile> {
                     // _onSubmit(gender);
                   },
                   fullWidth: true,
-                  child:
-                      const MorrfText(text: 'Update Profile', size: FontSize.p),
+                  text: 'Update Profile',
                 ),
               ),
             ],

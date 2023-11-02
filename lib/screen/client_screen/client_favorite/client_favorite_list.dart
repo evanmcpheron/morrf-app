@@ -13,9 +13,9 @@ class ClientFavList extends StatefulWidget {
 }
 
 class _ClientFavListState extends State<ClientFavList> {
-  //__________favourite_warning_popup________________________________________________
+  //__________favorite_warning_popup________________________________________________
 
-  void favouriteWarningPopUp() {
+  void favoriteWarningPopUp() {
     showDialog(
       barrierDismissible: false,
       context: context,
@@ -27,7 +27,7 @@ class _ClientFavListState extends State<ClientFavList> {
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(20.0),
               ),
-              child: const FavouriteWarningPopUp(),
+              child: const FavoriteWarningPopUp(),
             );
           },
         );
@@ -119,7 +119,7 @@ class _ClientFavListState extends State<ClientFavList> {
                                   onTap: () {
                                     setState(() {
                                       isFavorite = !isFavorite;
-                                      favouriteWarningPopUp();
+                                      favoriteWarningPopUp();
                                     });
                                   },
                                   child: Padding(

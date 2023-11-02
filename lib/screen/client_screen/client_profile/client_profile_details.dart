@@ -355,7 +355,7 @@ class _ClientProfileDetailsState extends ConsumerState<ClientProfileDetails> {
             SafeArea(
               child: MorrfButton(
                 fullWidth: true,
-                child: const MorrfText(text: 'Edit Profile', size: FontSize.p),
+                text: 'Edit Profile',
                 onPressed: () {
                   Navigator.push(
                     context,

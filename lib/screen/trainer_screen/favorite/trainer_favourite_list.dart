@@ -13,8 +13,8 @@ class TrainerFavList extends StatefulWidget {
 }
 
 class _TrainerFavListState extends State<TrainerFavList> {
-  //__________favourite_warning_popup________________________________________________
-  void favouriteWarningPopUp() {
+  //__________favorite_warning_popup________________________________________________
+  void favoriteWarningPopUp() {
     showDialog(
       barrierDismissible: false,
       context: context,
@@ -26,7 +26,7 @@ class _TrainerFavListState extends State<TrainerFavList> {
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(20.0),
               ),
-              child: const FavouriteWarningPopUp(),
+              child: const FavoriteWarningPopUp(),
             );
           },
         );
@@ -118,7 +118,7 @@ class _TrainerFavListState extends State<TrainerFavList> {
                                   onTap: () {
                                     setState(() {
                                       isFavorite = !isFavorite;
-                                      favouriteWarningPopUp();
+                                      favoriteWarningPopUp();
                                     });
                                   },
                                   child: Padding(

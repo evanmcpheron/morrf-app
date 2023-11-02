@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:morrf/utils/constants/special_color.dart';
+import 'package:morrf/utils/enums/font_size.dart';
 import 'package:morrf/utils/enums/severity.dart';
+import 'package:morrf/widgets/morff_text.dart';
 
 class MorrfButton extends StatefulWidget {
   final void Function() onPressed;
-  final Widget child;
   final bool? fullWidth;
+  final String text;
   final Severity? severity;
   final double? width;
   bool? disabled;
@@ -13,11 +15,11 @@ class MorrfButton extends StatefulWidget {
   MorrfButton(
       {super.key,
       required this.onPressed,
-      required this.child,
       this.fullWidth,
       this.width,
       this.disabled,
-      this.severity});
+      this.severity,
+      required this.text});
 
   @override
   State<MorrfButton> createState() => _MorrfButtonState();
@@ -27,26 +29,13 @@ class _MorrfButtonState extends State<MorrfButton> {
   Color getSeverity() {
     switch (widget.severity) {
       case Severity.success:
-        return Theme.of(context).colorScheme.successButton;
+        return Theme.of(context).colorScheme.primaryColor;
       case Severity.danger:
         return Theme.of(context).colorScheme.dangerButton;
       case Severity.warn:
         return Theme.of(context).colorScheme.warnButton;
       default:
-        return Theme.of(context).colorScheme.normalButton;
-    }
-  }
-
-  Color getSeverityText() {
-    switch (widget.severity) {
-      case Severity.success:
-        return Theme.of(context).colorScheme.successButton;
-      case Severity.danger:
-        return Colors.black;
-      case Severity.warn:
-        return Theme.of(context).colorScheme.warnButton;
-      default:
-        return Theme.of(context).colorScheme.normalButton;
+        return Theme.of(context).colorScheme.primaryColor;
     }
   }
 
@@ -69,7 +58,7 @@ class _MorrfButtonState extends State<MorrfButton> {
             onPressed: widget.disabled != null && widget.disabled!
                 ? null
                 : widget.onPressed,
-            child: widget.child),
+            child: MorrfText(text: widget.text, size: FontSize.h6)),
       ),
     );
   }

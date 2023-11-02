@@ -223,7 +223,7 @@ class _ClientSignUpState extends ConsumerState<ClientSignUp> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Checkbox(
-                        activeColor: Theme.of(context).colorScheme.textLink,
+                        activeColor: Theme.of(context).colorScheme.primaryColor,
                         visualDensity: const VisualDensity(horizontal: -4),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(2.0),
@@ -270,7 +270,7 @@ class _ClientSignUpState extends ConsumerState<ClientSignUp> {
                       );
                     }
                   },
-                  child: const MorrfText(text: 'Sign Up', size: FontSize.h5),
+                  text: 'Sign Up',
                 ),
                 const SizedBox(height: 20.0),
                 Row(
@@ -300,21 +300,21 @@ class _ClientSignUpState extends ConsumerState<ClientSignUp> {
                     children: [
                       SocialIcon(
                         bgColor: Theme.of(context).colorScheme.onInverseSurface,
-                        iconColor: Theme.of(context).colorScheme.textLink,
+                        iconColor: Theme.of(context).colorScheme.primaryColor,
                         icon: FontAwesomeIcons.facebookF,
                         borderColor:
                             Theme.of(context).colorScheme.onPrimaryContainer,
                       ),
                       SocialIcon(
                         bgColor: Theme.of(context).colorScheme.onInverseSurface,
-                        iconColor: Theme.of(context).colorScheme.textLink,
+                        iconColor: Theme.of(context).colorScheme.primaryColor,
                         icon: FontAwesomeIcons.google,
                         borderColor:
                             Theme.of(context).colorScheme.onPrimaryContainer,
                       ),
                       SocialIcon(
                         bgColor: Theme.of(context).colorScheme.onInverseSurface,
-                        iconColor: Theme.of(context).colorScheme.textLink,
+                        iconColor: Theme.of(context).colorScheme.primaryColor,
                         icon: FontAwesomeIcons.instagram,
                         borderColor:
                             Theme.of(context).colorScheme.onPrimaryContainer,

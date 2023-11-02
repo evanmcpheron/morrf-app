@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
@@ -16,16 +15,16 @@ import 'package:morrf/widgets/morrf_scaffold.dart';
 
 import 'add_credit_card.dart';
 
-class TrainerAddPaymentMethod extends ConsumerStatefulWidget {
-  const TrainerAddPaymentMethod({super.key});
+class GlobalAddPaymentMethod extends ConsumerStatefulWidget {
+  const GlobalAddPaymentMethod({super.key});
 
   @override
-  ConsumerState<TrainerAddPaymentMethod> createState() =>
-      _TrainerAddPaymentMethodState();
+  ConsumerState<GlobalAddPaymentMethod> createState() =>
+      _GlobalAddPaymentMethodState();
 }
 
-class _TrainerAddPaymentMethodState
-    extends ConsumerState<TrainerAddPaymentMethod> {
+class _GlobalAddPaymentMethodState
+    extends ConsumerState<GlobalAddPaymentMethod> {
   bool isLoading = false;
   List<String> accList = [
     'Credit or Debit Card',
@@ -120,11 +119,11 @@ class _TrainerAddPaymentMethodState
                                             severity: Severity.danger,
                                             onPressed: () =>
                                                 Navigator.of(context).pop(true),
-                                            child: const Text("DELETE")),
+                                            text: "Delete"),
                                         MorrfButton(
                                           onPressed: () =>
                                               Navigator.of(context).pop(false),
-                                          child: const Text("CANCEL"),
+                                          text: "Cancel",
                                         ),
                                       ],
                                     );
@@ -190,7 +189,7 @@ class _TrainerAddPaymentMethodState
             child: MorrfButton(
                 onPressed: () => Get.to(() => const AddCreditCard()),
                 fullWidth: true,
-                child: const MorrfText(text: "Add a Card", size: FontSize.h5)),
+                text: "Add a Card"),
           ),
         ],
       ),

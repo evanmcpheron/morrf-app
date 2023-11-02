@@ -130,8 +130,7 @@ class _ClientForgotPasswordState extends State<ClientForgotPassword> {
                 },
                 fullWidth: true,
                 severity: Severity.success,
-                child:
-                    const MorrfText(text: 'Reset Password', size: FontSize.h5),
+                text: 'Reset Password',
               ),
             ),
           ],

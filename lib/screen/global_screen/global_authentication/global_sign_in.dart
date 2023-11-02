@@ -186,7 +186,7 @@ class _ClientSignInState extends ConsumerState<ClientSignIn> {
                 onPressed: () {
                   _onSubmit();
                 },
-                child: const MorrfText(text: 'Sign In', size: FontSize.h5),
+                text: 'Sign In',
               ),
               const SizedBox(height: 20.0),
               Row(
@@ -215,21 +215,21 @@ class _ClientSignInState extends ConsumerState<ClientSignIn> {
                   children: [
                     SocialIcon(
                       bgColor: Theme.of(context).colorScheme.onInverseSurface,
-                      iconColor: Theme.of(context).colorScheme.textLink,
+                      iconColor: Theme.of(context).colorScheme.primaryColor,
                       icon: FontAwesomeIcons.facebookF,
                       borderColor:
                           Theme.of(context).colorScheme.onPrimaryContainer,
                     ),
                     SocialIcon(
                       bgColor: Theme.of(context).colorScheme.onInverseSurface,
-                      iconColor: Theme.of(context).colorScheme.textLink,
+                      iconColor: Theme.of(context).colorScheme.primaryColor,
                       icon: FontAwesomeIcons.google,
                       borderColor:
                           Theme.of(context).colorScheme.onPrimaryContainer,
                     ),
                     SocialIcon(
                       bgColor: Theme.of(context).colorScheme.onInverseSurface,
-                      iconColor: Theme.of(context).colorScheme.textLink,
+                      iconColor: Theme.of(context).colorScheme.primaryColor,
                       icon: FontAwesomeIcons.instagram,
                       borderColor:
                           Theme.of(context).colorScheme.onPrimaryContainer,

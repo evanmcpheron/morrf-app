@@ -80,21 +80,24 @@ class _AddFAQPopUpState extends State<AddFAQPopUp> {
                     onPressed: () {
                       finish(context);
                     },
-                    child: const MorrfText(text: "Cancel", size: FontSize.h6),
+                    text: "Cancel",
                   ),
                 ),
                 const SizedBox(width: 8),
                 Expanded(
                   child: MorrfButton(
                     onPressed: () {
-                      widget.addFaq(MorrfFaq(
+                      widget.addFaq(
+                        MorrfFaq(
                           answer: faqData['answer']!,
                           id: Uuid().v4(),
-                          question: faqData['question']!));
+                          question: faqData['question']!,
+                        ),
+                      );
                       finish(context);
                     },
                     severity: Severity.success,
-                    child: const MorrfText(text: "Add", size: FontSize.h6),
+                    text: "Add",
                   ),
                 )
               ],

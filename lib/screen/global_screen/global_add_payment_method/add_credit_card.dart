@@ -281,7 +281,7 @@ class AddCreditCardState extends ConsumerState<AddCreditCard> {
               child: MorrfButton(
                 onPressed: _onValidate,
                 fullWidth: true,
-                child: const MorrfText(size: FontSize.p, text: "Add Card"),
+                text: "Add Card",
               ),
             ),
           ],

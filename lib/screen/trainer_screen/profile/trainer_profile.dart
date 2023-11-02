@@ -3,10 +3,8 @@ import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:get/get.dart';
 import 'package:morrf/screen/client_screen/client_home/client_home.dart';
-import 'package:morrf/screen/global_screen/add_payment_method/trainer_add_payment_method.dart';
-import 'package:morrf/screen/global_screen/global_settings/global_setting.dart';
-import 'package:morrf/screen/trainer_screen/buyer_request/trainer_buyer_request.dart';
-import 'package:morrf/screen/trainer_screen/favorite/trainer_favourite_list.dart';
+import 'package:morrf/screen/global_screen/global_add_payment_method/global_add_payment_method.dart';
+import 'package:morrf/screen/global_screen/global_settings/global_settings.dart';
 import 'package:morrf/screen/trainer_screen/profile/trainer_profile_details.dart';
 import 'package:morrf/screen/trainer_screen/report/trainer_report.dart';
 import 'package:morrf/screen/trainer_screen/transaction/trainer_transaction.dart';
@@ -111,7 +109,7 @@ class _TrainerProfileState extends State<TrainerProfile> {
                 ),
               ),
               ListTile(
-                onTap: () => const TrainerAddPaymentMethod().launch(context),
+                onTap: () => const GlobalAddPaymentMethod().launch(context),
                 visualDensity: const VisualDensity(vertical: -3),
                 horizontalTitleGap: 10,
                 contentPadding: const EdgeInsets.only(bottom: 12),

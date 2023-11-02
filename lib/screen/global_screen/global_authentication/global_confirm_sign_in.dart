@@ -110,13 +110,13 @@ class _ClientConfirmSignInState extends State<ClientConfirmSignIn> {
       actions: [
         MorrfButton(
           severity: Severity.success,
-          child: const Text('Confirm'),
+          text: 'Confirm',
           onPressed: () {
             _onSubmit();
           },
         ),
         MorrfButton(
-          child: const Text('Cancel'),
+          text: 'Cancel',
           onPressed: () {
             Navigator.pop(context, false);
           },

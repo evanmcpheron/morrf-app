@@ -983,14 +983,14 @@ class _SendOfferPopUpState extends State<SendOfferPopUp> {
   }
 }
 
-class FavouriteWarningPopUp extends StatefulWidget {
-  const FavouriteWarningPopUp({super.key});
+class FavoriteWarningPopUp extends StatefulWidget {
+  const FavoriteWarningPopUp({super.key});
 
   @override
-  State<FavouriteWarningPopUp> createState() => _FavouriteWarningPopUpState();
+  State<FavoriteWarningPopUp> createState() => _FavoriteWarningPopUpState();
 }
 
-class _FavouriteWarningPopUpState extends State<FavouriteWarningPopUp> {
+class _FavoriteWarningPopUpState extends State<FavoriteWarningPopUp> {
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -1022,7 +1022,7 @@ class _FavouriteWarningPopUpState extends State<FavouriteWarningPopUp> {
             Padding(
               padding: const EdgeInsets.only(left: 20.0, right: 20.0),
               child: Text(
-                'Do you really want to remove this from your favourite list',
+                'Do you really want to remove this from your favorite list',
                 maxLines: 2,
                 textAlign: TextAlign.center,
                 style: kTextStyle.copyWith(color: kSubTitleColor),

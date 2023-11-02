@@ -8,7 +8,8 @@ import 'package:morrf/providers/user_provider.dart';
 import 'package:morrf/screen/client_screen/client_home/client_home.dart';
 import 'package:morrf/screen/global_screen/global_authentication/global_sign_in.dart';
 import 'package:morrf/screen/global_screen/global_authentication/global_sign_up.dart';
-import 'package:morrf/screen/global_screen/add_payment_method/global_add_payment_method.dart';
+import 'package:morrf/screen/global_screen/global_add_payment_method/global_add_payment_method.dart';
+import 'package:morrf/screen/global_screen/global_help/global_help.dart';
 import 'package:morrf/services/auth_service.dart';
 import 'package:morrf/utils/enums/font_size.dart';
 import 'package:morrf/widgets/morff_text.dart';
@@ -18,7 +19,7 @@ import 'package:nb_utils/nb_utils.dart';
 import '../../../widgets/constant.dart';
 import '../client_dashboard/client_dashboard.dart';
 import '../client_report/client_report.dart';
-import '../../global_screen/global_settings/global_setting.dart';
+import '../../global_screen/global_settings/global_settings.dart';
 import 'client_profile_details.dart';
 
 class ClientProfile extends ConsumerStatefulWidget {
@@ -38,49 +39,6 @@ class _ClientProfileState extends ConsumerState<ClientProfile> {
     MorrfUser morrfUser = ref.read(morrfUserProvider);
     return Scaffold(
       key: UniqueKey(),
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).cardColor,
-        elevation: 0,
-        titleSpacing: 24,
-        title: ListTile(
-          visualDensity: const VisualDensity(vertical: -4),
-          contentPadding: EdgeInsets.zero,
-          leading: Container(
-            height: 45,
-            width: 45,
-            padding: const EdgeInsets.all(10.0),
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              image: DecorationImage(
-                  image: isSignedIn
-                      ? NetworkImage(morrfUser.photoURL)
-                      : const AssetImage('images/user_profile.jpg')
-                          as ImageProvider,
-                  fit: BoxFit.cover),
-            ),
-          ),
-          title: isSignedIn
-              ? MorrfText(
-                  text: morrfUser.fullName,
-                  size: FontSize.h6,
-                  overflow: TextOverflow.ellipsis,
-                  maxLines: 1,
-                )
-              : const MorrfText(text: "Guest", size: FontSize.h6),
-          subtitle: isSignedIn
-              ? Row(
-                  children: const [
-                    MorrfText(text: "Deposit Balance", size: FontSize.lp),
-                    MorrfText(
-                      text: "\$545.12",
-                      size: FontSize.h6,
-                    )
-                  ],
-                )
-              : null,
-        ),
-        centerTitle: true,
-      ),
       body: Container(
         padding: const EdgeInsets.only(left: 20.0, right: 20.0),
         width: MediaQuery.of(context).size.width,
@@ -120,8 +78,7 @@ class _ClientProfileState extends ConsumerState<ClientProfile> {
               // PRE-MVP version of item below. Delete this when we implement billing addresses.
               isSignedIn
                   ? ListTile(
-                      onTap: () =>
-                          Get.to(() => const TrainerAddPaymentMethod()),
+                      onTap: () => Get.to(() => const GlobalAddPaymentMethod()),
                       visualDensity: const VisualDensity(vertical: -3),
                       horizontalTitleGap: 10,
                       iconColor: kLightNeutralColor,
@@ -182,10 +139,10 @@ class _ClientProfileState extends ConsumerState<ClientProfile> {
               //               FontAwesomeIcons.chevronRight,
               //             ),
               //             onTap: () =>
-              //                 Get.to(() => const TrainerAddPaymentMethod()),
+              //                 Get.to(() => const GlobalAddPaymentMethod()),
               //           ),
               //           ListTile(
-              //             onTap: () => const TrainerAddPaymentMethod(),
+              //             onTap: () => const GlobalAddPaymentMethod(),
               //             visualDensity: const VisualDensity(vertical: -3),
               //             horizontalTitleGap: 10,
               //             contentPadding: const EdgeInsets.only(left: 60),
@@ -425,6 +382,9 @@ class _ClientProfileState extends ConsumerState<ClientProfile> {
                     maxLines: 1,
                     size: FontSize.lp),
                 trailing: const FaIcon(FontAwesomeIcons.chevronRight),
+                onTap: () => {
+                  Get.to(() => const GlobalHelpAndSupportScreen()),
+                },
               ),
               isSignedIn
                   ? ListTile(

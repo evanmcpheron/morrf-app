@@ -1,23 +1,22 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:morrf/models/service/morrf_service.dart';
+import 'package:morrf/providers/service/service_list_provider.dart';
+import 'package:morrf/providers/service/service_provider.dart';
 import 'package:morrf/providers/user_provider.dart';
 import 'package:morrf/screen/client_screen/client_home/client_all_categories.dart';
 import 'package:morrf/screen/client_screen/client_home/popular_services.dart';
-import 'package:morrf/screen/client_screen/client_home/recently_view.dart';
 import 'package:morrf/screen/client_screen/client_home/top_seller.dart';
-import 'package:morrf/screen/client_screen/client_notification/client_notification.dart';
-import 'package:morrf/screen/client_screen/client_service_details/client_service_details.dart';
-import 'package:morrf/screen/client_screen/search/search.dart';
+import 'package:morrf/utils/constants/constants.dart';
 import 'package:morrf/utils/constants/special_color.dart';
 import 'package:morrf/utils/enums/font_size.dart';
-import 'package:morrf/utils/seeds/service/service.dart';
 import 'package:morrf/widgets/constant.dart';
 import 'package:morrf/widgets/morff_text.dart';
-import 'package:morrf/widgets/morrf_button.dart';
+import 'package:morrf/widgets/tiles/morrf_service_tile.dart';
+import 'package:morrf/widgets/tiles/morrf_trainer_tile.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 class ClientHomeScreen extends ConsumerStatefulWidget {
@@ -44,65 +43,26 @@ class _ClientHomeScreenState extends ConsumerState<ClientHomeScreen> {
   @override
   Widget build(BuildContext context) {
     var morrfUser = ref.watch(morrfUserProvider);
+    List<MorrfService> morrfServices = ref.watch(morrfServicesProvider);
     return Scaffold(
-      appBar: AppBar(
-        elevation: 0,
-        automaticallyImplyLeading: false,
-        title: ListTile(
-          contentPadding: const EdgeInsets.only(bottom: 10),
-          leading: Padding(
-            padding: const EdgeInsets.only(left: 10.0),
-            child: GestureDetector(
-              // onTap: ()=>const TrainerProfile().launch(context),
-              child: Container(
-                height: 44,
-                width: 44,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  image: DecorationImage(
-                      image: isSignedIn
-                          ? NetworkImage(morrfUser.photoURL)
-                          : const AssetImage('images/user_profile.jpg')
-                              as ImageProvider,
-                      fit: BoxFit.cover),
-                ),
-              ),
-            ),
-          ),
-          title: isSignedIn
-              ? MorrfText(text: morrfUser.fullName, size: FontSize.h5)
-              : const MorrfText(text: "Guest", size: FontSize.h5),
-          trailing: GestureDetector(
-            onTap: () => const ClientNotification().launch(context),
-            child: Container(
-              padding: const EdgeInsets.all(8.0),
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                border: Border.all(),
-              ),
-              child: const FaIcon(FontAwesomeIcons.solidBell),
-            ),
-          ),
-        ),
-      ),
       body: Container(
         width: MediaQuery.of(context).size.width,
         child: SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
           child: Column(
             children: [
-              const SizedBox(height: 10.0),
+              SizedBox(height: MorrfSize.s.size),
               HorizontalList(
                 physics: const BouncingScrollPhysics(),
-                padding: const EdgeInsets.only(left: 15),
-                spacing: 10.0,
+                padding: EdgeInsets.only(left: MorrfSize.m.size),
+                spacing: MorrfSize.s.size,
                 itemCount: 10,
                 itemBuilder: (_, i) {
                   return Container(
                     height: 140,
                     width: 304,
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(8.0),
+                      borderRadius: BorderRadius.circular(MorrfSize.s.size),
                       image: const DecorationImage(
                           image: AssetImage('images/banner.png'),
                           fit: BoxFit.cover),
@@ -110,9 +70,10 @@ class _ClientHomeScreenState extends ConsumerState<ClientHomeScreen> {
                   );
                 },
               ),
-              const SizedBox(height: 25.0),
+              SizedBox(height: MorrfSize.xl.size),
               Padding(
-                padding: const EdgeInsets.only(left: 15.0, right: 15.0),
+                padding: EdgeInsets.only(
+                    left: MorrfSize.m.size, right: MorrfSize.m.size),
                 child: Row(
                   children: [
                     const MorrfText(text: 'Categories', size: FontSize.h5),
@@ -127,18 +88,28 @@ class _ClientHomeScreenState extends ConsumerState<ClientHomeScreen> {
               ),
               HorizontalList(
                 physics: const BouncingScrollPhysics(),
-                padding: const EdgeInsets.only(
-                    top: 20, bottom: 20, left: 15.0, right: 15.0),
-                spacing: 10.0,
+                padding: EdgeInsets.only(
+                    top: MorrfSize.l.size,
+                    bottom: MorrfSize.l.size,
+                    left: MorrfSize.m.size,
+                    right: MorrfSize.m.size),
+                spacing: MorrfSize.s.size,
                 itemCount: catName.length,
                 itemBuilder: (_, i) {
                   return Container(
-                    padding: const EdgeInsets.only(
-                        left: 5.0, right: 10.0, top: 5.0, bottom: 5.0),
+                    padding: EdgeInsets.only(
+                        left: MorrfSize.s.size,
+                        right: MorrfSize.s.size,
+                        top: MorrfSize.s.size,
+                        bottom: MorrfSize.s.size),
                     decoration: BoxDecoration(
-                      color: Theme.of(context).cardColor,
-                      borderRadius: BorderRadius.circular(30.0),
-                    ),
+                        color: Theme.of(context).cardColor,
+                        borderRadius: BorderRadius.circular(MorrfSize.s.size),
+                        border: Border.all(
+                            color: Theme.of(context)
+                                .colorScheme
+                                .primaryColor
+                                .withOpacity(.5))),
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
@@ -152,7 +123,7 @@ class _ClientHomeScreenState extends ConsumerState<ClientHomeScreen> {
                                 fit: BoxFit.cover),
                           ),
                         ),
-                        const SizedBox(width: 5.0),
+                        SizedBox(width: MorrfSize.s.size),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -160,9 +131,9 @@ class _ClientHomeScreenState extends ConsumerState<ClientHomeScreen> {
                               text: catName[i],
                               size: FontSize.h6,
                             ),
-                            const SizedBox(height: 2.0),
-                            const MorrfText(
-                              text: 'Related all categories',
+                            SizedBox(height: MorrfSize.s.size),
+                            MorrfText(
+                              text: 'View ${catName[i]}',
                               size: FontSize.p,
                             ),
                           ],
@@ -173,8 +144,8 @@ class _ClientHomeScreenState extends ConsumerState<ClientHomeScreen> {
                 },
               ),
               Padding(
-                padding:
-                    const EdgeInsets.only(left: 15.0, right: 15.0, top: 10),
+                padding: EdgeInsets.only(
+                    left: MorrfSize.m.size, right: MorrfSize.m.size, top: 10),
                 child: Row(
                   children: [
                     const MorrfText(
@@ -192,182 +163,25 @@ class _ClientHomeScreenState extends ConsumerState<ClientHomeScreen> {
               ),
               HorizontalList(
                 physics: const BouncingScrollPhysics(),
-                padding: const EdgeInsets.only(
-                    top: 20, bottom: 20, left: 15.0, right: 15.0),
-                spacing: 10.0,
-                itemCount: 10,
+                padding: EdgeInsets.only(
+                    top: MorrfSize.l.size,
+                    bottom: MorrfSize.l.size,
+                    left: MorrfSize.m.size,
+                    right: MorrfSize.m.size),
+                spacing: MorrfSize.s.size,
+                itemCount: morrfServices.isEmpty ? 1 : 10,
                 itemBuilder: (_, i) {
-                  return Padding(
-                    padding: const EdgeInsets.only(bottom: 10.0),
-                    child: GestureDetector(
-                      onTap: () => ClientServiceDetails(
-                        serviceId: "321",
-                      ).launch(context),
-                      child: Container(
-                        height: 120,
-                        decoration: BoxDecoration(
-                          color: Theme.of(context).cardColor,
-                          borderRadius: BorderRadius.circular(8.0),
-                          border: Border.all(color: kBorderColorTextField),
-                        ),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Stack(
-                              alignment: Alignment.topLeft,
-                              children: [
-                                Container(
-                                  height: 120,
-                                  width: 120,
-                                  decoration: const BoxDecoration(
-                                    borderRadius: BorderRadius.only(
-                                      bottomLeft: Radius.circular(8.0),
-                                      topLeft: Radius.circular(8.0),
-                                    ),
-                                    image: DecorationImage(
-                                        image: AssetImage(
-                                          'images/shot1.png',
-                                        ),
-                                        fit: BoxFit.cover),
-                                  ),
-                                ),
-                                GestureDetector(
-                                  onTap: () {
-                                    setState(() {
-                                      isFavorite = !isFavorite;
-                                    });
-                                  },
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(5.0),
-                                    child: Container(
-                                      height: 25,
-                                      width: 25,
-                                      decoration: BoxDecoration(
-                                        color: Theme.of(context)
-                                            .colorScheme
-                                            .primaryContainer,
-                                        shape: BoxShape.circle,
-                                      ),
-                                      child: isFavorite
-                                          ? const Center(
-                                              child: Icon(
-                                                Icons.favorite,
-                                                color: Colors.red,
-                                                size: 16.0,
-                                              ),
-                                            )
-                                          : const Center(
-                                              child: Icon(
-                                                Icons.favorite_border,
-                                                size: 16.0,
-                                              ),
-                                            ),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.all(5.0),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  const Flexible(
-                                    child: SizedBox(
-                                      width: 190,
-                                      child: MorrfText(
-                                        text:
-                                            'Workout routine for body composition',
-                                        size: FontSize.lp,
-                                        maxLines: 2,
-                                        overflow: TextOverflow.ellipsis,
-                                      ),
-                                    ),
-                                  ),
-                                  const SizedBox(height: 5.0),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    children: [
-                                      const Icon(
-                                        IconlyBold.star,
-                                        color: Colors.amber,
-                                        size: 18.0,
-                                      ),
-                                      const SizedBox(width: 2.0),
-                                      const MorrfText(
-                                          text: '5.0', size: FontSize.p),
-                                      const SizedBox(width: 2.0),
-                                      MorrfText(
-                                        text: '(520)',
-                                        size: FontSize.p,
-                                        style: TextStyle(
-                                            color: Theme.of(context)
-                                                .colorScheme
-                                                .primary),
-                                      ),
-                                      const SizedBox(width: 40),
-                                      Row(
-                                        children: [
-                                          const MorrfText(
-                                              text: 'Price ', size: FontSize.p),
-                                          MorrfText(
-                                              text: '$currencySign${30}',
-                                              size: FontSize.p,
-                                              style: TextStyle(
-                                                  color: Theme.of(context)
-                                                      .colorScheme
-                                                      .money))
-                                        ],
-                                      )
-                                    ],
-                                  ),
-                                  const SizedBox(height: 5.0),
-                                  Row(
-                                    children: [
-                                      Container(
-                                        height: 32,
-                                        width: 32,
-                                        decoration: const BoxDecoration(
-                                          shape: BoxShape.circle,
-                                          image: DecorationImage(
-                                              image: AssetImage(
-                                                  'images/profilepic2.png'),
-                                              fit: BoxFit.cover),
-                                        ),
-                                      ),
-                                      const SizedBox(width: 5.0),
-                                      Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: const [
-                                          MorrfText(
-                                              text: 'William Liam',
-                                              maxLines: 1,
-                                              overflow: TextOverflow.ellipsis,
-                                              size: FontSize.p),
-                                          MorrfText(
-                                              text: 'Trainer Level - 1',
-                                              maxLines: 1,
-                                              overflow: TextOverflow.ellipsis,
-                                              size: FontSize.p),
-                                        ],
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  );
+                  if (morrfServices.isEmpty) {
+                    return const MorrfText(
+                        text: "Loading Services", size: FontSize.h6);
+                  }
+                  return MorrfServiceTile(
+                      morrfService: morrfServices[i], fullWidth: false);
                 },
               ),
               Padding(
-                padding: const EdgeInsets.only(left: 15.0, right: 15.0),
+                padding: EdgeInsets.only(
+                    left: MorrfSize.m.size, right: MorrfSize.m.size),
                 child: Row(
                   children: [
                     const MorrfText(
@@ -385,96 +199,15 @@ class _ClientHomeScreenState extends ConsumerState<ClientHomeScreen> {
               ),
               HorizontalList(
                 physics: const BouncingScrollPhysics(),
-                padding: const EdgeInsets.only(
-                    top: 20, bottom: 20, left: 15.0, right: 15.0),
-                spacing: 10.0,
+                padding: EdgeInsets.only(
+                    top: MorrfSize.l.size,
+                    bottom: MorrfSize.l.size,
+                    left: MorrfSize.m.size,
+                    right: MorrfSize.m.size),
+                spacing: MorrfSize.s.size,
                 itemCount: 10,
                 itemBuilder: (_, i) {
-                  return Padding(
-                    padding: const EdgeInsets.only(bottom: 10.0),
-                    child: Container(
-                      height: 220,
-                      width: 156,
-                      decoration: BoxDecoration(
-                        color: kWhite,
-                        borderRadius: BorderRadius.circular(8.0),
-                        border: Border.all(color: kBorderColorTextField),
-                      ),
-                      child: Column(
-                        children: [
-                          Container(
-                            height: 135,
-                            width: 156,
-                            decoration: const BoxDecoration(
-                              borderRadius: BorderRadius.only(
-                                topRight: Radius.circular(8.0),
-                                topLeft: Radius.circular(8.0),
-                              ),
-                              image: DecorationImage(
-                                  image: AssetImage(
-                                    'images/dev1.png',
-                                  ),
-                                  fit: BoxFit.cover),
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(6.0),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  'William Liam',
-                                  style: kTextStyle.copyWith(
-                                      color: kNeutralColor,
-                                      fontWeight: FontWeight.bold),
-                                  maxLines: 1,
-                                  overflow: TextOverflow.ellipsis,
-                                ),
-                                const SizedBox(height: 6.0),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: [
-                                    const Icon(
-                                      IconlyBold.star,
-                                      color: Colors.amber,
-                                      size: 18.0,
-                                    ),
-                                    const SizedBox(width: 2.0),
-                                    Text(
-                                      '5.0',
-                                      style: kTextStyle.copyWith(
-                                          color: kNeutralColor),
-                                    ),
-                                    const SizedBox(width: 2.0),
-                                    Text(
-                                      '(520 review)',
-                                      style: kTextStyle.copyWith(
-                                          color: kLightNeutralColor),
-                                    ),
-                                  ],
-                                ),
-                                const SizedBox(height: 6.0),
-                                RichText(
-                                  text: TextSpan(
-                                    text: 'Trainer Level - ',
-                                    style: kTextStyle.copyWith(
-                                        color: kNeutralColor),
-                                    children: [
-                                      TextSpan(
-                                        text: '2',
-                                        style: kTextStyle.copyWith(
-                                            color: kLightNeutralColor),
-                                      )
-                                    ],
-                                  ),
-                                )
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  );
+                  return MorrfTrainerTile();
                 },
               ),
             ],

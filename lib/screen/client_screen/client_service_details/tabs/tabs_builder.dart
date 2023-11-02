@@ -178,8 +178,7 @@ class _TabsBuilderState extends State<TabsBuilder>
           const SizedBox(height: 10.0),
           isSignedIn
               ? MorrfButton(
-                  child:
-                      const MorrfText(text: "Select Offer", size: FontSize.h5),
+                  text: "Select Offer",
                   onPressed: () {},
                 )
               : const SizedBox(),

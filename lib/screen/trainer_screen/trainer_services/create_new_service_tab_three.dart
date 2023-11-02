@@ -168,7 +168,7 @@ class _CreateNewServiceTabThreeState
             disabled: _tiles.length > 5,
             severity: Severity.success,
             fullWidth: true,
-            child: const MorrfText(text: "Add Images", size: FontSize.h6)),
+            text: "Add Images"),
         const SizedBox(height: 16.0),
         Row(
           children: [
@@ -177,7 +177,7 @@ class _CreateNewServiceTabThreeState
                 widget.pageChange(1);
               },
               width: MediaQuery.of(context).size.width / 2 - 23,
-              child: const MorrfText(text: "Back", size: FontSize.h5),
+              text: "Back",
             ),
             const SizedBox(
               width: 16,
@@ -189,7 +189,7 @@ class _CreateNewServiceTabThreeState
                 _onSubmit();
               },
               width: MediaQuery.of(context).size.width / 2 - 23,
-              child: const MorrfText(text: "Create Listing", size: FontSize.h5),
+              text: "Create Listing",
             ),
           ],
         ),

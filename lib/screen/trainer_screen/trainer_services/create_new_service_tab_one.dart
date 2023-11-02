@@ -287,7 +287,7 @@ class _CreateNewServiceTabOneState
         SafeArea(
           child: MorrfButton(
             fullWidth: true,
-            child: const MorrfText(text: "Next", size: FontSize.h5),
+            text: "Next",
             onPressed: () {
               ref
                   .read(newServiceProvider.notifier)
