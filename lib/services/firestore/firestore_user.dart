@@ -35,6 +35,7 @@ class FirestoreService {
         'morrfTrainer': null,
         'createdAt': Timestamp.now(),
       }).then((value) => print("User Added"));
+      return;
     } catch (e) {
       rethrow;
     }

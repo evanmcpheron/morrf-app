@@ -109,7 +109,11 @@ class _ClientHomeState extends ConsumerState<ClientHome> {
           ? FloatingActionButton(
               onPressed: () {
                 FirebaseAuth.instance.currentUser!.reload();
-                Get.offAll(() => const TrainerStarterHome());
+                if (morrfUser.morrfTrainer != null) {
+                  Get.offAll(() => TrainerHome());
+                } else {
+                  Get.offAll(() => const TrainerStarterHome());
+                }
               },
               child: const FaIcon(FontAwesomeIcons.moneyBill1Wave),
             )

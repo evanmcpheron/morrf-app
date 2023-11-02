@@ -27,7 +27,6 @@ class MorrfUserNotifier extends StateNotifier<MorrfUser> {
           .collection("users")
           .doc(user.uid)
           .get();
-      print(unformattedUser.data()!['morrfTrainer']);
       MorrfUser morrfUser = parseSnapshot(unformattedUser.data()!);
       state = morrfUser;
     }

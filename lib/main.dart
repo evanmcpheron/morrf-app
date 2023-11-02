@@ -56,7 +56,7 @@ class _MyAppState extends ConsumerState<MyApp> {
   void initState() {
     super.initState();
     // seedServices();
-    // FirebaseAuth.instance.signOut();
+    FirebaseAuth.instance.signOut();
   }
 
   @override
