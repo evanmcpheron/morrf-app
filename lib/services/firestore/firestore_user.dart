@@ -11,7 +11,6 @@ class FirestoreService {
   Future createUser(MorrfUser user) async {
     try {
       final _uid = user.id;
-      print('user: $user');
       final result = await FirebaseFunctions.instance
           .httpsCallable('createStripeCustomer')
           .call(<String, dynamic>{

@@ -10,7 +10,7 @@ class MorrfRating {
       required this.description,
       required this.rating});
 
-  MorrfRating.fromDat(Map<String, dynamic> data)
+  MorrfRating.fromData(Map<String, dynamic> data)
       : id = data['id'],
         userName = data['userName'],
         description = data['description'],

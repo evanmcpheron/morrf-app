@@ -4,6 +4,7 @@ import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:morrf/models/service/morrf_service.dart';
+import 'package:morrf/screen/client_screen/client_service_details/client_order.dart';
 import 'package:morrf/utils/constants/special_color.dart';
 import 'package:morrf/utils/enums/font_size.dart';
 import 'package:morrf/widgets/constant.dart';
@@ -179,7 +180,10 @@ class _TabsBuilderState extends State<TabsBuilder>
           isSignedIn
               ? MorrfButton(
                   text: "Select Offer",
-                  onPressed: () {},
+                  fullWidth: true,
+                  onPressed: () {
+                    Get.to(() => ClientOrder());
+                  },
                 )
               : const SizedBox(),
         ],

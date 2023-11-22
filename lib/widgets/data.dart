@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
+import 'package:morrf/utils/constants/special_color.dart';
+import 'package:morrf/utils/enums/font_size.dart';
+import 'package:morrf/widgets/morff_text.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import 'constant.dart';
@@ -163,21 +166,22 @@ class Summary extends StatelessWidget {
       padding: const EdgeInsets.all(10.0),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(4.0),
-        color: kDarkWhite,
+        border: Border.all(
+            color: Theme.of(context).colorScheme.primaryColor.withOpacity(.5)),
+        color: Theme.of(context).scaffoldBackgroundColor,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Text(
-            title,
-            style: kTextStyle.copyWith(
-                color: kNeutralColor, fontWeight: FontWeight.bold),
+          MorrfText(
+            text: title,
+            size: FontSize.h6,
           ),
           const SizedBox(height: 10.0),
-          Text(
-            subtitle,
-            style: kTextStyle.copyWith(color: kSubTitleColor),
+          MorrfText(
+            text: subtitle,
+            size: FontSize.p,
           ),
         ],
       ),
@@ -202,8 +206,8 @@ class SummaryWithoutIcon extends StatelessWidget {
       padding: const EdgeInsets.all(10.0),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(8.0),
-        border: Border.all(color: kBorderColorTextField),
-        color: kWhite,
+        border: Border.all(
+            color: Theme.of(context).colorScheme.primaryColor.withOpacity(.5)),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -243,30 +247,31 @@ class Summary2 extends StatelessWidget {
       height: 72,
       padding: const EdgeInsets.all(10.0),
       decoration: BoxDecoration(
+        border: Border.all(
+            color: Theme.of(context).colorScheme.primaryColor.withOpacity(.5)),
         borderRadius: BorderRadius.circular(4.0),
-        color: kDarkWhite,
+        color: Theme.of(context).scaffoldBackgroundColor,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          RichText(
-            text: TextSpan(
+          Row(
+            children: [
+              MorrfText(
                 text: title1,
-                style: kTextStyle.copyWith(
-                    color: kNeutralColor, fontWeight: FontWeight.bold),
-                children: [
-                  TextSpan(
-                    text: title2,
-                    style: kTextStyle.copyWith(
-                        color: kLightNeutralColor, fontSize: 12.0),
-                  )
-                ]),
+                size: FontSize.h6,
+              ),
+              MorrfText(
+                text: title2,
+                size: FontSize.p,
+              ),
+            ],
           ),
           const SizedBox(height: 10.0),
-          Text(
-            subtitle,
-            style: kTextStyle.copyWith(color: kSubTitleColor),
+          MorrfText(
+            text: subtitle,
+            size: FontSize.p,
           ),
         ],
       ),

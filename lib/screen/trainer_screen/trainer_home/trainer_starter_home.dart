@@ -41,7 +41,12 @@ class _TrainerStarterHomeState extends ConsumerState<TrainerStarterHome> {
           .collection("users")
           .doc(user.uid)
           .update({
-        'morrfTrainer': {'id': const Uuid().v4(), 'services': [], 'ratings': []}
+        'morrfTrainer': {
+          'id': const Uuid().v4(),
+          'services': [],
+          'ratings': [],
+          'orders': []
+        }
       }).then((value) {
         Get.offAll(() => TrainerHome());
       });

@@ -1,11 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:morrf/models/service/morrf_service.dart';
 import 'package:morrf/providers/service/service_list_provider.dart';
-import 'package:morrf/providers/service/service_provider.dart';
 import 'package:morrf/providers/user_provider.dart';
 import 'package:morrf/screen/client_screen/client_home/client_all_categories.dart';
 import 'package:morrf/screen/client_screen/client_home/popular_services.dart';
@@ -161,24 +158,23 @@ class _ClientHomeScreenState extends ConsumerState<ClientHomeScreen> {
                   ],
                 ),
               ),
-              HorizontalList(
-                physics: const BouncingScrollPhysics(),
-                padding: EdgeInsets.only(
-                    top: MorrfSize.l.size,
-                    bottom: MorrfSize.l.size,
-                    left: MorrfSize.m.size,
-                    right: MorrfSize.m.size),
-                spacing: MorrfSize.s.size,
-                itemCount: morrfServices.isEmpty ? 1 : 10,
-                itemBuilder: (_, i) {
-                  if (morrfServices.isEmpty) {
-                    return const MorrfText(
-                        text: "Loading Services", size: FontSize.h6);
-                  }
-                  return MorrfServiceTile(
-                      morrfService: morrfServices[i], fullWidth: false);
-                },
-              ),
+              morrfServices.isNotEmpty
+                  ? HorizontalList(
+                      physics: const BouncingScrollPhysics(),
+                      padding: EdgeInsets.only(
+                          top: MorrfSize.l.size,
+                          bottom: MorrfSize.l.size,
+                          left: MorrfSize.m.size,
+                          right: MorrfSize.m.size),
+                      spacing: MorrfSize.s.size,
+                      itemCount: morrfServices.length,
+                      itemBuilder: (_, i) {
+                        return MorrfServiceTile(
+                            morrfService: morrfServices[i], fullWidth: false);
+                      },
+                    )
+                  : const MorrfText(
+                      text: "Loading Services", size: FontSize.h6),
               Padding(
                 padding: EdgeInsets.only(
                     left: MorrfSize.m.size, right: MorrfSize.m.size),

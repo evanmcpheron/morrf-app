@@ -8,13 +8,14 @@ import 'package:morrf/providers/user_provider.dart';
 import 'package:morrf/screen/client_screen/client_notification/client_notification.dart';
 import 'package:morrf/screen/client_screen/client_search/client_search.dart';
 import 'package:morrf/screen/global_screen/global_authentication/global_sign_up.dart';
+import 'package:morrf/screen/global_screen/global_messages/rooms.dart';
 import 'package:morrf/screen/trainer_screen/trainer_home/trainer_home.dart';
 import 'package:morrf/screen/trainer_screen/trainer_home/trainer_starter_home.dart';
 import 'package:morrf/utils/constants/special_color.dart';
 import 'package:morrf/utils/enums/font_size.dart';
 import 'package:morrf/widgets/morff_text.dart';
 
-import '../../trainer_screen/trainer_messages/chat_list.dart';
+import '../../global_screen/global_messages/chat_list_depr.dart';
 import '../client_orders/client_orders.dart';
 import '../client_profile/client_profile.dart';
 import 'client_home_screen.dart';
@@ -33,7 +34,7 @@ class _ClientHomeState extends ConsumerState<ClientHome> {
   static const List<Widget> _widgetOptions = <Widget>[
     ClientHomeScreen(),
     ClientSearchScreen(),
-    ChatScreen(),
+    RoomsScreen(),
     ClientOrderList(),
     ClientProfile(),
   ];
@@ -95,7 +96,11 @@ class _ClientHomeState extends ConsumerState<ClientHome> {
                     padding: const EdgeInsets.all(8.0),
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
-                      border: Border.all(),
+                      border: Border.all(
+                          color: Theme.of(context)
+                              .colorScheme
+                              .primaryColor
+                              .withOpacity(.5)),
                     ),
                     child: const FaIcon(FontAwesomeIcons.solidBell),
                   ),
@@ -107,6 +112,7 @@ class _ClientHomeState extends ConsumerState<ClientHome> {
           isSignedIn ? _widgetOptions.elementAt(_currentPage) : getGuestLinks(),
       floatingActionButton: isSignedIn
           ? FloatingActionButton(
+              backgroundColor: Theme.of(context).colorScheme.primaryColor,
               onPressed: () {
                 FirebaseAuth.instance.currentUser!.reload();
                 if (morrfUser.morrfTrainer != null) {

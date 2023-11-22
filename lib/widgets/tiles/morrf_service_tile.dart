@@ -167,7 +167,7 @@ class _MorrfServiceTileState extends State<MorrfServiceTile> {
                                         text: 'Price ', size: FontSize.p),
                                     MorrfText(
                                       text:
-                                          '$currencySign${getLowestPrice(widget.morrfService.tiers)}',
+                                          '$currencySign${formatPrice(getLowestPrice(widget.morrfService.tiers))}',
                                       size: FontSize.p,
                                       style: TextStyle(
                                           color: Theme.of(context)

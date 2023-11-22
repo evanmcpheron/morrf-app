@@ -54,7 +54,7 @@ class _ClientSignUpState extends ConsumerState<ClientSignUp> {
       await userCredentials.user?.sendEmailVerification();
 
       Get.to(() => const SplashScreen());
-      ref.read(morrfUserProvider.notifier).getUser();
+      ref.read(morrfUserProvider.notifier).getCurrentUser();
     } on FirebaseAuthException catch (error) {
       if (error.code == 'email-already-in-use') {
         // ...
@@ -204,8 +204,6 @@ class _ClientSignUpState extends ConsumerState<ClientSignUp> {
                   inputType: TextInputType.name,
                   isSecure: true,
                   validator: (value) {
-                    print(value);
-                    print(_passController.text);
                     if (value == null ||
                         value.isEmpty ||
                         value != _passController.text) {

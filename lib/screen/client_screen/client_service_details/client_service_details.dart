@@ -1,13 +1,19 @@
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:morrf/models/service/morrf_service.dart';
 import 'package:morrf/providers/service/service_provider.dart';
+import 'package:morrf/screen/client_screen/client_service_details/client_order.dart';
 import 'package:morrf/screen/client_screen/client_service_details/tabs/tabs_builder.dart';
+import 'package:morrf/screen/global_screen/global_messages/chat_inbox_depr.dart';
+import 'package:morrf/screen/global_screen/global_messages/chat_list_depr.dart';
 import 'package:morrf/screen/global_screen/splash_screen/loading_screen.dart';
 import 'package:morrf/screen/trainer_screen/profile/trainer_profile_details.dart';
 import 'package:morrf/utils/constants/special_color.dart';
@@ -16,10 +22,11 @@ import 'package:morrf/utils/format.dart';
 import 'package:morrf/widgets/button_global.dart';
 import 'package:morrf/widgets/constant.dart';
 import 'package:morrf/widgets/morff_text.dart';
+import 'package:morrf/widgets/morrf_button.dart';
 import 'package:morrf/widgets/morrf_scaffold.dart';
 import 'package:morrf/widgets/review.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import 'package:uuid/uuid.dart';
 
 class ClientServiceDetails extends ConsumerStatefulWidget {
   String serviceId;
@@ -76,6 +83,19 @@ class _ClientServiceDetailsState extends ConsumerState<ClientServiceDetails> {
   Widget build(BuildContext context) {
     MorrfService? morrfService = ref.watch(morrfServiceProvider);
     return Scaffold(
+      floatingActionButton: isSignedIn && morrfService != null
+          ? FloatingActionButton(
+              backgroundColor: Theme.of(context).colorScheme.primaryColor,
+              onPressed: () {
+                Get.to(() => ChatInbox(
+                      img: morrfService.trainerProfileImage,
+                      name: morrfService.trainerName,
+                      recipientId: morrfService.trainerId,
+                    ));
+              },
+              child: const FaIcon(FontAwesomeIcons.message),
+            )
+          : null,
       body: morrfService == null
           ? MorrfScaffold(title: "", body: Center(child: LoadingPage()))
           : NestedScrollView(
@@ -256,9 +276,9 @@ class _ClientServiceDetailsState extends ConsumerState<ClientServiceDetails> {
                                             size: FontSize.h6,
                                           ),
                                           subtitle: GestureDetector(
-                                            onTap: () => Get.to(
-                                                () => TrainerProfileDetails()),
-                                            child: MorrfText(
+                                            onTap: () => Get.to(() =>
+                                                const TrainerProfileDetails()),
+                                            child: const MorrfText(
                                                 text: '(View Profile)',
                                                 isLink: true,
                                                 size: FontSize.lp),
@@ -499,15 +519,12 @@ class _ClientServiceDetailsState extends ConsumerState<ClientServiceDetails> {
               ),
               const SizedBox(height: 10.0),
               isSignedIn
-                  ? ButtonGlobalWithoutIcon(
-                      buttontext: 'Select Offer',
-                      buttonDecoration: kButtonDecoration.copyWith(
-                        color: Theme.of(context).colorScheme.primaryColor,
-                        borderRadius: BorderRadius.circular(30.0),
-                      ),
-                      onPressed: () {},
-                      buttonTextColor:
-                          Theme.of(context).colorScheme.onBackground,
+                  ? MorrfButton(
+                      text: "Select Offer",
+                      fullWidth: true,
+                      onPressed: () {
+                        Get.to(() => ClientOrder());
+                      },
                     )
                   : const SizedBox(),
             ],
@@ -655,15 +672,12 @@ class _ClientServiceDetailsState extends ConsumerState<ClientServiceDetails> {
               ),
               const SizedBox(height: 10.0),
               isSignedIn
-                  ? ButtonGlobalWithoutIcon(
-                      buttontext: 'Select Offer',
-                      buttonDecoration: kButtonDecoration.copyWith(
-                        color: Theme.of(context).colorScheme.primaryColor,
-                        borderRadius: BorderRadius.circular(30.0),
-                      ),
-                      onPressed: () {},
-                      buttonTextColor:
-                          Theme.of(context).colorScheme.onBackground,
+                  ? MorrfButton(
+                      text: "Select Offer",
+                      fullWidth: true,
+                      onPressed: () {
+                        Get.to(() => ClientOrder());
+                      },
                     )
                   : const SizedBox(),
             ],
@@ -814,15 +828,12 @@ class _ClientServiceDetailsState extends ConsumerState<ClientServiceDetails> {
               ),
               const SizedBox(height: 10.0),
               isSignedIn
-                  ? ButtonGlobalWithoutIcon(
-                      buttontext: 'Select Offer',
-                      buttonDecoration: kButtonDecoration.copyWith(
-                        color: Theme.of(context).colorScheme.primaryColor,
-                        borderRadius: BorderRadius.circular(30.0),
-                      ),
-                      onPressed: () {},
-                      buttonTextColor:
-                          Theme.of(context).colorScheme.onBackground,
+                  ? MorrfButton(
+                      text: "Select Offer",
+                      fullWidth: true,
+                      onPressed: () {
+                        Get.to(() => ClientOrder());
+                      },
                     )
                   : const SizedBox(),
             ],

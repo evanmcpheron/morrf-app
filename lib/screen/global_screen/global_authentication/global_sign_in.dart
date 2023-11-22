@@ -44,7 +44,7 @@ class _ClientSignInState extends ConsumerState<ClientSignIn> {
     }
     try {
       await AuthService().signin(_email, _pass);
-      ref.read(morrfUserProvider.notifier).getUser();
+      ref.read(morrfUserProvider.notifier).getCurrentUser();
       Get.to(() => const SplashScreen());
     } on FirebaseAuthException catch (error) {
       if (error.code == 'email-already-in-use') {

@@ -5,7 +5,7 @@ import 'package:morrf/widgets/button_global.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:slide_countdown/slide_countdown.dart';
 
-import '../../trainer_screen/trainer_messages/chat_list.dart';
+import '../../global_screen/global_messages/chat_list_depr.dart';
 import '../../../widgets/constant.dart';
 import '../client_popup/client_popup.dart';
 import '../client_review/client_review.dart';

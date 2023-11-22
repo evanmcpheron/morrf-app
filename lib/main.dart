@@ -62,7 +62,7 @@ class _MyAppState extends ConsumerState<MyApp> {
   @override
   Widget build(BuildContext context) {
     var darkMode = ref.watch(darkModeProvider);
-    ref.read(morrfUserProvider.notifier).getUser();
+    ref.read(morrfUserProvider.notifier).getCurrentUser();
 
     return GetMaterialApp(
       title: 'Morrf',

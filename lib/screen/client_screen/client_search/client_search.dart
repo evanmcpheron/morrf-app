@@ -37,7 +37,6 @@ class _ClientSearchScreenState extends ConsumerState<ClientSearchScreen> {
 
   @override
   Widget build(BuildContext context) {
-    MorrfUser morrfUser = ref.watch(morrfUserProvider);
     List<MorrfService> morrfServices = ref.watch(morrfServicesProvider);
     return Scaffold(
       body: SizedBox(

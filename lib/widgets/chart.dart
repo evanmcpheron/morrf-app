@@ -19,10 +19,12 @@ class RecordStatistics extends StatelessWidget {
       chartLegendSpacing: 32,
       chartRadius: MediaQuery.of(context).size.width / 3.2,
       colorList: colorList,
+      centerTextStyle:
+          TextStyle(color: Theme.of(context).textTheme.bodyMedium!.color),
       initialAngleInDegree: 0,
       chartType: ChartType.ring,
       ringStrokeWidth: 12,
-      centerText: "Statistics\nRecord ",
+      centerText: "Statistic\nRecords ",
       legendOptions: const LegendOptions(
         showLegendsInRow: false,
         legendPosition: LegendPosition.right,

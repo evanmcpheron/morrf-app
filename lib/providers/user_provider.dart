@@ -19,10 +19,9 @@ class MorrfUserNotifier extends StateNotifier<MorrfUser> {
     state = parseSnapshot(data);
   }
 
-  Future<void> getUser() async {
+  Future<void> getCurrentUser() async {
     User? user = FirebaseAuth.instance.currentUser;
     if (user != null) {
-      print(user.displayName);
       var unformattedUser = await FirebaseFirestore.instance
           .collection("users")
           .doc(user.uid)

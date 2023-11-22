@@ -1,0 +1,46 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "morrf",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "morrf (profile mode)",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        },
+        {
+            "name": "morrf (release mode)",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "release"
+        },
+        {
+            "name": "iPhone 13 mini",
+            "request": "launch",
+            "type": "dart",
+            "deviceId": "BA18D9A0-9A24-44CE-9ACA-75881ACA6FF8"
+        },
+        {
+            "name": "iPhone 14 Pro Max",
+            "request": "launch",
+            "type": "dart",
+            "deviceId": "C1D2632A-307E-40C6-BCFD-4AD0DB0E83AA"
+        },
+    ],
+    "compounds": [
+        {
+            "name": "All Devices",
+            "configurations": [
+                "iPhone 14 Pro Max",
+                "iPhone 13 mini",
+            ]
+        }
+    ]
+}

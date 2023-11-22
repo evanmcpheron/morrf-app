@@ -13,7 +13,7 @@ class ChatModel {
       this.subTitle,
       this.image,
       this.color,
-      this.isCheckList = false,
+      this.isCheckList = true,
       this.icon});
 }
 
