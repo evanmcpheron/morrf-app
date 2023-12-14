@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:morrf/models/order/morrf_order.dart';
-import 'package:morrf/models/service/morrf_service.dart';
 
 import 'morrf_trainer.dart';
 

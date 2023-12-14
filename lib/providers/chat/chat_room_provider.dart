@@ -31,7 +31,7 @@ class ChatRoomNotifier extends StateNotifier<MorrfChatRoom?> {
       ChatSessionNotifier chatSessionRef) async {
     String roomId = const Uuid().v4();
     String userSessionId = const Uuid().v4();
-    String trainerSessionId = Uuid().v4();
+    String trainerSessionId = const Uuid().v4();
 
     MorrfChatRoom morrfChatRoom = MorrfChatRoom(
         id: roomId, userIds: [user.uid, trainerId], productId: null);

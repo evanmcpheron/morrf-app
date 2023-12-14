@@ -7,7 +7,6 @@ import 'package:morrf/models/user/morrf_user.dart';
 import 'package:morrf/providers/user_provider.dart';
 import 'package:morrf/screen/client_screen/client_home/client_home.dart';
 import 'package:morrf/screen/client_screen/client_notification/client_notification.dart';
-import 'package:morrf/screen/global_screen/global_messages/chat_list_depr.dart';
 import 'package:morrf/screen/trainer_screen/trainer_home/trainer_home_screen.dart';
 import 'package:morrf/utils/constants/special_color.dart';
 import 'package:morrf/utils/enums/font_size.dart';
@@ -30,8 +29,7 @@ class _TrainerHomeState extends ConsumerState<TrainerHome> {
   User user = FirebaseAuth.instance.currentUser!;
 
   static const List<Widget> _widgetOptions = <Widget>[
-    TrainerHomeScreen(),
-    ChatScreen(),
+    // TrainerHomeScreen(),
     CreateService(),
     TrainerOrderList(),
     TrainerProfile(),
@@ -56,7 +54,6 @@ class _TrainerHomeState extends ConsumerState<TrainerHome> {
           leading: Padding(
             padding: const EdgeInsets.only(left: 10.0),
             child: GestureDetector(
-              // onTap: ()=>const TrainerProfile().launch(context),
               child: Container(
                 height: 44,
                 width: 44,
@@ -70,43 +67,23 @@ class _TrainerHomeState extends ConsumerState<TrainerHome> {
             ),
           ),
           title: MorrfText(text: morrfUser.fullName, size: FontSize.h5),
-          trailing: GestureDetector(
-            onTap: () => Get.to(() => const ClientNotification()),
-            child: Container(
-              padding: const EdgeInsets.all(8.0),
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                border: Border.all(
-                    color: Theme.of(context)
-                        .colorScheme
-                        .primaryColor
-                        .withOpacity(.5)),
-              ),
-              child: const FaIcon(FontAwesomeIcons.solidBell),
-            ),
-          ),
         ),
       ),
       body: _widgetOptions.elementAt(_currentPage),
       floatingActionButton: FloatingActionButton(
+        backgroundColor: Theme.of(context).colorScheme.primaryColor,
         onPressed: () {
           Get.off(() => ClientHome());
         },
         child: const FaIcon(FontAwesomeIcons.cartShopping),
       ),
       bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: Theme.of(context).cardColor,
+        selectedItemColor: Theme.of(context).colorScheme.primaryColor,
         elevation: 0.0,
         showUnselectedLabels: true,
         type: BottomNavigationBarType.fixed,
         items: const [
-          BottomNavigationBarItem(
-            icon: FaIcon(FontAwesomeIcons.house),
-            label: "Home",
-          ),
-          BottomNavigationBarItem(
-            icon: FaIcon(FontAwesomeIcons.solidMessage),
-            label: "Message",
-          ),
           BottomNavigationBarItem(
             icon: FaIcon(FontAwesomeIcons.fileCirclePlus),
             label: "Service",

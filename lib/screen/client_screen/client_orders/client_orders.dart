@@ -16,7 +16,6 @@ class _ClientOrderListState extends State<ClientOrderList> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: kDarkWhite,
       appBar: AppBar(
         backgroundColor: kDarkWhite,
         elevation: 0,

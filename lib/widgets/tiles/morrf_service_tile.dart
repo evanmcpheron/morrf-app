@@ -1,6 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:get/get.dart';
 import 'package:morrf/models/service/morrf_service.dart';
 import 'package:morrf/screen/client_screen/client_service_details/client_service_details.dart';
@@ -159,7 +158,7 @@ class _MorrfServiceTileState extends State<MorrfServiceTile> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                ReviewCounter(),
+                                const ReviewCounter(),
                                 const SizedBox(width: 40),
                                 Row(
                                   children: [
@@ -313,7 +312,7 @@ class _MorrfServiceTileState extends State<MorrfServiceTile> {
                                     maxLines: 1,
                                     overflow: TextOverflow.ellipsis,
                                     size: FontSize.p),
-                                ReviewCounter(),
+                                const ReviewCounter(),
                               ],
                             ),
                           ],

@@ -1,5 +1,3 @@
-import 'package:flutter_stripe/flutter_stripe.dart';
-import 'package:morrf/models/stripe/card_model.dart';
 
 import '../user/morrf_address_model.dart';
 

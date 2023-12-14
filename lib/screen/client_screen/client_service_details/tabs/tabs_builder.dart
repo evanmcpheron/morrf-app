@@ -14,10 +14,12 @@ import 'package:morrf/widgets/morrf_button.dart';
 class TabsBuilder extends StatefulWidget {
   Map<String, Tier> tiers;
   int tabLength;
+  String image;
   String title;
   TabsBuilder(
       {super.key,
       required this.tiers,
+      required this.image,
       required this.title,
       this.tabLength = 3});
 
@@ -182,7 +184,10 @@ class _TabsBuilderState extends State<TabsBuilder>
                   text: "Select Offer",
                   fullWidth: true,
                   onPressed: () {
-                    Get.to(() => ClientOrder());
+                    Get.to(() => ClientOrder(
+                        service: tierData,
+                        image: widget.image,
+                        title: widget.title));
                   },
                 )
               : const SizedBox(),

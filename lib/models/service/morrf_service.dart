@@ -1,7 +1,5 @@
 import 'dart:core';
 
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:morrf/widgets/data.dart';
 
 import 'morrf_faq.dart';
 import 'morrf_rating.dart';

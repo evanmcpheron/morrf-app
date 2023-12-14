@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:morrf/models/service/morrf_service.dart';
-import 'package:uuid/uuid.dart';
 import 'package:morrf/services/firestore/firestore_service.dart';
 
 class MorrfServiceNotifier extends StateNotifier<MorrfService?> {

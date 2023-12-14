@@ -273,8 +273,8 @@ class _ClientSignUpState extends ConsumerState<ClientSignUp> {
                   text: 'Sign Up',
                 ),
                 const SizedBox(height: 20.0),
-                Row(
-                  children: const [
+                const Row(
+                  children: [
                     Expanded(
                       child: Divider(
                         thickness: 1.0,

@@ -3,9 +3,7 @@ import 'package:morrf/utils/constants/special_color.dart';
 import 'package:morrf/utils/enums/font_size.dart';
 import 'package:morrf/widgets/morff_text.dart';
 import 'package:morrf/widgets/morrf_scaffold.dart';
-import 'package:nb_utils/nb_utils.dart';
 
-import '../../../widgets/constant.dart';
 
 class ClientAbout extends StatefulWidget {
   const ClientAbout({super.key});

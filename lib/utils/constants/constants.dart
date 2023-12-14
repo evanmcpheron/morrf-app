@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:morrf/models/service/morrf_faq.dart';
 import 'package:uuid/uuid.dart';
 
@@ -10,7 +9,7 @@ List<String> availableServiceTypes = ["Online", "In Person"];
 
 List<MorrfFaq> globalFaq = [
   MorrfFaq(
-      id: Uuid().v4(),
+      id: const Uuid().v4(),
       question: "Question number on",
       answer: "Answer number 1")
 ];

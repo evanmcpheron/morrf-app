@@ -55,7 +55,7 @@ class ThemeNotifier extends ChangeNotifier {
       case ThemeMode.dark:
         return 2;
       default:
-        return 1;
+        return 2;
     }
   }
 }

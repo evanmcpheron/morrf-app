@@ -70,8 +70,8 @@ class _TrainerHomeScreenState extends State<TrainerHomeScreen> {
                       ],
                     ),
                     const SizedBox(height: 15.0),
-                    Row(
-                      children: const [
+                    const Row(
+                      children: [
                         Expanded(
                           flex: 1,
                           child: Summary(
@@ -91,8 +91,8 @@ class _TrainerHomeScreenState extends State<TrainerHomeScreen> {
                       ],
                     ),
                     const SizedBox(height: 10.0),
-                    Row(
-                      children: const [
+                    const Row(
+                      children: [
                         Expanded(
                           flex: 1,
                           child: Summary(
@@ -159,10 +159,10 @@ class _TrainerHomeScreenState extends State<TrainerHomeScreen> {
                             colorList: colorList,
                           ),
                         ),
-                        Expanded(
+                        const Expanded(
                           flex: 1,
                           child: Column(
-                            children: const [
+                            children: [
                               ChartLegend(
                                 iconColor: Color(0xFF69B22A),
                                 title: 'Impressions',
@@ -221,8 +221,8 @@ class _TrainerHomeScreenState extends State<TrainerHomeScreen> {
                       ],
                     ),
                     const SizedBox(height: 15.0),
-                    Row(
-                      children: const [
+                    const Row(
+                      children: [
                         Expanded(
                           flex: 1,
                           child: Summary(
@@ -241,8 +241,8 @@ class _TrainerHomeScreenState extends State<TrainerHomeScreen> {
                       ],
                     ),
                     const SizedBox(height: 10.0),
-                    Row(
-                      children: const [
+                    const Row(
+                      children: [
                         Expanded(
                           flex: 1,
                           child: Summary(

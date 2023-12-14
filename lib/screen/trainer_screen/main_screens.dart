@@ -6,10 +6,10 @@ import 'package:morrf/screen/client_screen/client_home/client_home_screen.dart';
 import 'package:morrf/screen/client_screen/client_job_post/client_job_post.dart';
 import 'package:morrf/screen/client_screen/client_orders/client_orders.dart';
 import 'package:morrf/screen/client_screen/client_profile/client_profile.dart';
+import 'package:morrf/screen/global_screen/global_messages/rooms.dart';
 import 'package:morrf/screen/trainer_screen/orders/trainer_orders.dart';
 import 'package:morrf/screen/trainer_screen/profile/trainer_profile.dart';
 import 'package:morrf/screen/trainer_screen/trainer_home/trainer_home_screen.dart';
-import 'package:morrf/screen/global_screen/global_messages/chat_list_depr.dart';
 import 'package:morrf/screen/trainer_screen/trainer_services/create_service.dart';
 
 class MainScreen extends StatefulWidget {
@@ -44,7 +44,7 @@ class _MainScreenState extends State<MainScreen>
 
   late final List<Widget> availableClientScreens = const <Widget>[
     ClientHomeScreen(),
-    ChatScreen(),
+    RoomsScreen(),
     JobPost(),
     ClientOrderList(),
     ClientProfile(),
@@ -52,7 +52,7 @@ class _MainScreenState extends State<MainScreen>
 
   late final List<Widget> availableTrainerScreens = const <Widget>[
     TrainerHomeScreen(),
-    ChatScreen(),
+    RoomsScreen(),
     CreateService(),
     TrainerOrderList(),
     TrainerProfile(),

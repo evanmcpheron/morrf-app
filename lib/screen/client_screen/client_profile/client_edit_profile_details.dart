@@ -79,7 +79,7 @@ class _ClientEditProfileState extends ConsumerState<ClientEditProfile> {
         final storageRef = FirebaseStorage.instance
             .ref()
             .child('user_images')
-            .child('${Uuid().v4()}.jpg');
+            .child('${const Uuid().v4()}.jpg');
 
         await storageRef.putFile(pickedImageFile!);
 

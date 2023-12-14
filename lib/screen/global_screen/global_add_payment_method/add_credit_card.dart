@@ -9,12 +9,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:morrf/providers/card_provider.dart';
 import 'package:morrf/providers/loading_provider.dart';
-import 'package:morrf/services/firestore/firestore_billing/firestore_card.dart';
 import 'package:morrf/utils/constants/special_color.dart';
-import 'package:morrf/widgets/loading_container.dart';
-import 'package:morrf/widgets/morff_text.dart';
 import 'package:morrf/widgets/morrf_button.dart';
-import 'package:morrf/utils/enums/font_size.dart';
 import 'package:morrf/widgets/morrf_scaffold.dart';
 
 class AddCreditCard extends ConsumerStatefulWidget {
@@ -303,7 +299,7 @@ class AddCreditCardState extends ConsumerState<AddCreditCard> {
     final billingDetails = BillingDetails(
       email: user.email,
       name: cardHolderName,
-      address: Address(
+      address: const Address(
         country: "US",
         city: "my city",
         line1: "address",

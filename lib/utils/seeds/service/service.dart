@@ -58,13 +58,13 @@ void seedServicesSeed(String trainerId, String trainerName) {
           "${fakerFa.lorem.words(Random().nextInt(10)).join(' ')}?";
       String answer = fakerFa.lorem.sentences(2).join(' ');
       faqList
-          .add(MorrfFaq(id: Uuid().v4(), question: question, answer: answer));
+          .add(MorrfFaq(id: const Uuid().v4(), question: question, answer: answer));
     }
     return faqList;
   }
 
   MorrfService morrfService = MorrfService(
-      id: Uuid().v4(),
+      id: const Uuid().v4(),
       trainerId: trainerId,
       trainerName: trainerName,
       trainerProfileImage:

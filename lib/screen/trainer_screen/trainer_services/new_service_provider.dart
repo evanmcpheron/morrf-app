@@ -9,7 +9,7 @@ class NewServiceNotifier extends StateNotifier<MorrfService> {
   NewServiceNotifier()
       : super(
           MorrfService(
-            id: Uuid().v4(),
+            id: const Uuid().v4(),
             trainerName: '',
             trainerId: '',
             trainerProfileImage: "",
@@ -68,7 +68,7 @@ class NewServiceNotifier extends StateNotifier<MorrfService> {
 
   void disposeNewService() {
     state = MorrfService(
-      id: Uuid().v4(),
+      id: const Uuid().v4(),
       trainerName: '',
       trainerId: '',
       trainerProfileImage: "",

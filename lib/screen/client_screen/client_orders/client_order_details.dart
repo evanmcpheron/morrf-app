@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
+import 'package:morrf/screen/global_screen/global_messages/rooms.dart';
 import 'package:morrf/widgets/button_global.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:slide_countdown/slide_countdown.dart';
 
-import '../../global_screen/global_messages/chat_list_depr.dart';
 import '../../../widgets/constant.dart';
 import '../client_popup/client_popup.dart';
 import '../client_review/client_review.dart';
@@ -66,7 +66,7 @@ class _ClientOrderDetailsState extends State<ClientOrderDetails> {
                       'Message',
                       style: kTextStyle.copyWith(color: kNeutralColor),
                     ).onTap(
-                      () => const ChatScreen().launch(context),
+                      () => const RoomsScreen().launch(context),
                     ),
                   ],
                 ),

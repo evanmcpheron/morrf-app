@@ -15,7 +15,7 @@ class _GlobalMessageUsScreenState extends State<GlobalMessageUsScreen> {
   Widget build(BuildContext context) {
     return MorrfScaffold(
       title: "Help & Support",
-      body: MorrfText(text: "help", size: FontSize.h5),
+      body: const MorrfText(text: "help", size: FontSize.h5),
     );
   }
 }

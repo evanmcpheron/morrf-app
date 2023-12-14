@@ -118,7 +118,7 @@ class _CreateNewServiceTabThreeState
         var storageRef = FirebaseStorage.instance
             .ref()
             .child('service_images')
-            .child("${Uuid().v4()}.jpg");
+            .child("${const Uuid().v4()}.jpg");
         await storageRef.putFile(files[i]);
         imageUrl = await storageRef.getDownloadURL();
         imageList = [...imageList, imageUrl];
@@ -198,7 +198,7 @@ class _CreateNewServiceTabThreeState
   }
 
   Widget buildImageDisplay(BuildContext context) {
-    void _onReorder(int oldIndex, int newIndex) {
+    void onReorder(int oldIndex, int newIndex) {
       setState(() {
         Widget row = _tiles.removeAt(oldIndex);
         _tiles.insert(newIndex, row);
@@ -211,9 +211,9 @@ class _CreateNewServiceTabThreeState
     var wrap = ReorderableWrap(
       spacing: 16.0,
       runSpacing: 4.0,
-      padding: EdgeInsets.only(bottom: 16),
+      padding: const EdgeInsets.only(bottom: 16),
       onReorder: (int oldIndex, int newIndex) {
-        _onReorder(oldIndex, newIndex);
+        onReorder(oldIndex, newIndex);
       },
       onNoReorder: (int index) {
         //this callback is optional

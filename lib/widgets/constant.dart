@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:morrf/models/service/morrf_service.dart';
 
-import 'data.dart';
 
 // const kMainColor = Color(0xFF3F8CFF);
 const kPrimaryColor = Color(0xFF69B22A);

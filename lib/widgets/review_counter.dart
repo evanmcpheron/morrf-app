@@ -5,8 +5,9 @@ import 'package:morrf/utils/enums/font_size.dart';
 import 'package:morrf/widgets/morff_text.dart';
 
 class ReviewCounter extends StatelessWidget {
-  ReviewCounter({super.key});
+  const ReviewCounter({super.key});
 
+  @override
   Widget build(BuildContext context) {
     return Row(
       children: [

@@ -1,12 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:get/get.dart';
 import 'package:morrf/models/service/morrf_service.dart';
-import 'package:morrf/providers/loading_provider.dart';
 import 'package:morrf/providers/service/service_list_provider.dart';
 import 'package:morrf/utils/constants/special_color.dart';
 import 'package:morrf/utils/enums/font_size.dart';
@@ -31,13 +28,15 @@ class _CreateServiceState extends ConsumerState<CreateService> {
   @override
   void initState() {
     super.initState();
-    ref.read(morrfServicesProvider.notifier).getServicesByTrainer(user.uid);
+    ref
+        .read(morrfServicesProvider.notifier)
+        .getServicesByTrainer(user.displayName!);
   }
 
   @override
   Widget build(BuildContext context) {
     List<MorrfService?> morrfServices = ref.watch(morrfServicesProvider);
-
+    print(morrfServices);
     return MorrfScaffold(
       title: 'Create Service',
       trailing: const FaIcon(FontAwesomeIcons.plus),

@@ -46,7 +46,7 @@ class _CreateNewServiceState extends ConsumerState<CreateNewService> {
     MorrfService morrfService = ref.watch(newServiceProvider);
     return MorrfScaffold(
       title: 'Create New Service',
-      body: Container(
+      body: SizedBox(
         width: MediaQuery.of(context).size.width,
         child: SingleChildScrollView(
           physics: const BouncingScrollPhysics(),

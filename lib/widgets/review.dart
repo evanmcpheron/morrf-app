@@ -203,17 +203,17 @@ class ReviewDetails extends StatelessWidget {
                 ),
               ),
               const SizedBox(width: 10.0),
-              Column(
+              const Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const MorrfText(
+                  MorrfText(
                     text: 'Abdul Korim',
                     size: FontSize.h6,
                   ),
-                  const SizedBox(height: 4.0),
+                  SizedBox(height: 4.0),
                   Row(
                     mainAxisSize: MainAxisSize.min,
-                    children: const [
+                    children: [
                       Icon(
                         IconlyBold.star,
                         color: ratingBarColor,
@@ -281,17 +281,17 @@ class ReviewDetails2 extends StatelessWidget {
                 ),
               ),
               const SizedBox(width: 10.0),
-              Column(
+              const Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const MorrfText(
+                  MorrfText(
                     text: 'Abdul Korim',
                     size: FontSize.h6,
                   ),
-                  const SizedBox(height: 4.0),
+                  SizedBox(height: 4.0),
                   Row(
                     mainAxisSize: MainAxisSize.min,
-                    children: const [
+                    children: [
                       Icon(
                         IconlyBold.star,
                         color: ratingBarColor,

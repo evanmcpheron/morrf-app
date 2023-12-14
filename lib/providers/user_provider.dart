@@ -7,7 +7,7 @@ import 'package:uuid/uuid.dart';
 class MorrfUserNotifier extends StateNotifier<MorrfUser> {
   Future _init() async {
     state = MorrfUser(
-      id: Uuid().v4(),
+      id: const Uuid().v4(),
       firstName: "Guest",
       fullName: "Guest",
       email: "guest@morrf.me",
@@ -33,7 +33,7 @@ class MorrfUserNotifier extends StateNotifier<MorrfUser> {
 
   void signOut() {
     state = MorrfUser(
-      id: Uuid().v4(),
+      id: const Uuid().v4(),
       firstName: "Guest",
       fullName: "Guest",
       email: "guest@morrf.me",
@@ -49,7 +49,7 @@ class MorrfUserNotifier extends StateNotifier<MorrfUser> {
   MorrfUserNotifier()
       : super(
           MorrfUser(
-            id: Uuid().v4(),
+            id: const Uuid().v4(),
             firstName: "Guest",
             fullName: "Guest",
             email: "guest@morrf.me",

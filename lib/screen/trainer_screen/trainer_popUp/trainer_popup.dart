@@ -1,18 +1,11 @@
-import 'package:uuid/uuid.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:morrf/models/service/morrf_faq.dart';
 import 'package:morrf/screen/client_screen/client_home/client_home.dart';
 import 'package:morrf/screen/trainer_screen/profile/trainer_profile.dart';
 import 'package:morrf/screen/trainer_screen/trainer_home/trainer_home.dart';
-import 'package:morrf/utils/enums/font_size.dart';
-import 'package:morrf/utils/enums/severity.dart';
 import 'package:morrf/widgets/button_global.dart';
-import 'package:morrf/widgets/morff_text.dart';
-import 'package:morrf/widgets/morrf_button.dart';
-import 'package:morrf/widgets/morrf_input_field.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../../global_screen/global_authentication/global_sign_in.dart';

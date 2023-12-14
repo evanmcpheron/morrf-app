@@ -163,11 +163,11 @@ class _ClientInviteState extends State<ClientInvite> {
                   ],
                 ),
                 const SizedBox(height: 20.0),
-                Padding(
-                  padding: const EdgeInsets.only(left: 20.0, right: 20.0),
+                const Padding(
+                  padding: EdgeInsets.only(left: 20.0, right: 20.0),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: const [
+                    children: [
                       SocialIcon(
                         bgColor: kNeutralColor,
                         iconColor: kWhite,

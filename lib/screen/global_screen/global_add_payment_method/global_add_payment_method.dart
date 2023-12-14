@@ -132,12 +132,12 @@ class _GlobalAddPaymentMethodState
                               },
                               background: Container(
                                   color: Colors.red,
-                                  child: Row(
+                                  child: const Row(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.center,
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
-                                    children: const [
+                                    children: [
                                       Padding(
                                           padding: EdgeInsets.only(left: 8.0),
                                           child: FaIcon(

@@ -43,8 +43,8 @@ class _ClientDashBoardState extends State<ClientDashBoard> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const SizedBox(height: 15.0),
-              Row(
-                children: const [
+              const Row(
+                children: [
                   Expanded(
                     child: DashBoardInfo(
                       count: '$currencySign${4000.00}',
@@ -63,8 +63,8 @@ class _ClientDashBoardState extends State<ClientDashBoard> {
                 ],
               ),
               const SizedBox(height: 10.0),
-              Row(
-                children: const [
+              const Row(
+                children: [
                   Expanded(
                     child: DashBoardInfo(
                       count: '$currencySign${4000.00}',
@@ -83,8 +83,8 @@ class _ClientDashBoardState extends State<ClientDashBoard> {
                 ],
               ),
               const SizedBox(height: 10.0),
-              Row(
-                children: const [
+              const Row(
+                children: [
                   Expanded(
                     child: DashBoardInfo(
                       count: '08',

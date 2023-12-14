@@ -10,15 +10,15 @@ class FirestoreService {
 
   Future createUser(MorrfUser user) async {
     try {
-      final _uid = user.id;
+      final uid = user.id;
       final result = await FirebaseFunctions.instance
           .httpsCallable('createStripeCustomer')
           .call(<String, dynamic>{
         'name': user.fullName,
         'email': user.email.toLowerCase()
       });
-      await _usersCollectionReference.doc(_uid).set({
-        'id': _uid,
+      await _usersCollectionReference.doc(uid).set({
+        'id': uid,
         'firstName': user.firstName,
         'lastName': user.lastName,
         'fullName': user.fullName,

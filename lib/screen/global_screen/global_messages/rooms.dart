@@ -2,8 +2,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_chat_types/flutter_chat_types.dart' as types;
-import 'package:flutter_firebase_chat_core/flutter_firebase_chat_core.dart';
 import 'package:morrf/screen/global_screen/global_authentication/global_sign_in.dart';
+import "package:flutter_firebase_chat_core/flutter_firebase_chat_core.dart";
 
 import 'chat.dart';
 import 'users.dart';

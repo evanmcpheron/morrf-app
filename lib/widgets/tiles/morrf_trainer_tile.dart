@@ -7,7 +7,7 @@ import 'package:morrf/utils/enums/font_size.dart';
 import 'package:morrf/widgets/morff_text.dart';
 
 class MorrfTrainerTile extends ConsumerStatefulWidget {
-  MorrfTrainerTile({super.key});
+  const MorrfTrainerTile({super.key});
 
   @override
   ConsumerState<MorrfTrainerTile> createState() => _MorrfTrainerTileState();

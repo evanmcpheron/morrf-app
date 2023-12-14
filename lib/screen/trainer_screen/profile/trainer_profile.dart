@@ -6,14 +6,10 @@ import 'package:morrf/screen/client_screen/client_home/client_home.dart';
 import 'package:morrf/screen/global_screen/global_add_payment_method/global_add_payment_method.dart';
 import 'package:morrf/screen/global_screen/global_settings/global_settings.dart';
 import 'package:morrf/screen/trainer_screen/profile/trainer_profile_details.dart';
-import 'package:morrf/screen/trainer_screen/report/trainer_report.dart';
-import 'package:morrf/screen/trainer_screen/transaction/trainer_transaction.dart';
 import 'package:morrf/screen/trainer_screen/withdraw_money/trainer_withdraw_history.dart';
 import 'package:morrf/screen/trainer_screen/withdraw_money/trainer_withdraw_money.dart';
 import 'package:morrf/services/auth_service.dart';
-import 'package:morrf/utils/enums/font_size.dart';
 import 'package:morrf/widgets/constant.dart';
-import 'package:morrf/widgets/morff_text.dart';
 import 'package:morrf/widgets/theme_switcher.dart';
 import 'package:nb_utils/nb_utils.dart';
 
@@ -33,41 +29,6 @@ class _TrainerProfileState extends State<TrainerProfile> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).cardColor,
-        elevation: 0,
-        titleSpacing: 24,
-        title: ListTile(
-            visualDensity: const VisualDensity(vertical: -4),
-            contentPadding: EdgeInsets.zero,
-            leading: Container(
-              height: 45,
-              width: 45,
-              padding: const EdgeInsets.all(10.0),
-              decoration: const BoxDecoration(
-                shape: BoxShape.circle,
-                image: DecorationImage(
-                    image: NetworkImage(
-                        "https://randomuser.me/api/portraits/men/51.jpg"),
-                    fit: BoxFit.cover),
-              ),
-            ),
-            title: const Text(
-              'Evan McPheron',
-              overflow: TextOverflow.ellipsis,
-              maxLines: 1,
-            ),
-            subtitle: Row(
-              children: const [
-                MorrfText(text: "Deposit Balance", size: FontSize.lp),
-                MorrfText(
-                  text: "\$545.12",
-                  size: FontSize.h6,
-                )
-              ],
-            )),
-        centerTitle: true,
-      ),
       body: Container(
         padding: const EdgeInsets.only(left: 20.0, right: 20.0),
         width: MediaQuery.of(context).size.width,
@@ -191,58 +152,6 @@ class _TrainerProfileState extends State<TrainerProfile> {
                 ],
               ),
               ListTile(
-                onTap: () => const TrainerTransaction().launch(context),
-                visualDensity: const VisualDensity(vertical: -3),
-                horizontalTitleGap: 10,
-                contentPadding: const EdgeInsets.only(bottom: 15),
-                leading: Container(
-                  padding: const EdgeInsets.all(10.0),
-                  decoration: const BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: Color(0xFFE8E1FF),
-                  ),
-                  child: const Icon(
-                    IconlyBold.ticketStar,
-                    color: Color(0xFF7E5BFF),
-                  ),
-                ),
-                title: const Text(
-                  'Transaction',
-                  overflow: TextOverflow.ellipsis,
-                  maxLines: 1,
-                ),
-                trailing: const Icon(
-                  FeatherIcons.chevronRight,
-                  color: kLightNeutralColor,
-                ),
-              ),
-              ListTile(
-                onTap: () => const TrainerReport().launch(context),
-                visualDensity: const VisualDensity(vertical: -3),
-                horizontalTitleGap: 10,
-                contentPadding: const EdgeInsets.only(bottom: 15),
-                leading: Container(
-                  padding: const EdgeInsets.all(10.0),
-                  decoration: const BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: Color(0xFFD0F1FF),
-                  ),
-                  child: const Icon(
-                    IconlyBold.document,
-                    color: Color(0xFF06AEF3),
-                  ),
-                ),
-                title: const Text(
-                  'Trainer Report',
-                  overflow: TextOverflow.ellipsis,
-                  maxLines: 1,
-                ),
-                trailing: const Icon(
-                  FeatherIcons.chevronRight,
-                  color: kLightNeutralColor,
-                ),
-              ),
-              ListTile(
                 onTap: () => const GlobalSettings().launch(context),
                 visualDensity: const VisualDensity(vertical: -3),
                 horizontalTitleGap: 10,
@@ -260,31 +169,6 @@ class _TrainerProfileState extends State<TrainerProfile> {
                 ),
                 title: const Text(
                   'Settings',
-                  overflow: TextOverflow.ellipsis,
-                  maxLines: 1,
-                ),
-                trailing: const Icon(
-                  FeatherIcons.chevronRight,
-                  color: kLightNeutralColor,
-                ),
-              ),
-              ListTile(
-                visualDensity: const VisualDensity(vertical: -3),
-                horizontalTitleGap: 10,
-                contentPadding: const EdgeInsets.only(bottom: 15),
-                leading: Container(
-                  padding: const EdgeInsets.all(10.0),
-                  decoration: const BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: Color(0xFFE3EDFF),
-                  ),
-                  child: const Icon(
-                    IconlyBold.danger,
-                    color: Color(0xFF144BD6),
-                  ),
-                ),
-                title: const Text(
-                  'Help & Support',
                   overflow: TextOverflow.ellipsis,
                   maxLines: 1,
                 ),

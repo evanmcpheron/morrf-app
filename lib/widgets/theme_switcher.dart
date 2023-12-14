@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:morrf/providers/theme_provider.dart';
-import 'package:morrf/theme/theme.dart';
-import 'package:provider/provider.dart';
 
 import 'morrf_radio.dart';
 

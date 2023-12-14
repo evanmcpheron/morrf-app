@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:morrf/models/service/morrf_faq.dart';
 import 'package:morrf/utils/constants/constants.dart';
 import 'package:morrf/utils/enums/font_size.dart';
-import 'package:morrf/widgets/constant.dart';
 import 'package:morrf/widgets/morff_text.dart';
 import 'package:morrf/widgets/morrf_button.dart';
 import 'package:morrf/widgets/morrf_faq_list.dart';
@@ -34,7 +32,7 @@ class _GlobalHelpAndSupportScreenState
               MorrfFaqList(faqList: globalFaq),
             ],
           ),
-          Spacer(),
+          const Spacer(),
           SafeArea(
             child: MorrfButton(
               onPressed: () => print("ask us a question"),

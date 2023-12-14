@@ -31,7 +31,7 @@ class ChatSessionNotifier extends StateNotifier<MorrfChatSession?> {
 
     MorrfMessage morrfMessage = MorrfMessage(
         createdAt: Timestamp.now(),
-        id: Uuid().v4(),
+        id: const Uuid().v4(),
         read: false,
         senderId: userOne.userId,
         roomId: userOne.roomId,

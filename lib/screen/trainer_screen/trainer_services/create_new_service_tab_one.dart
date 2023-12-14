@@ -283,7 +283,7 @@ class _CreateNewServiceTabOneState
         Column(
           children: buildFaqTile(),
         ),
-        SizedBox(height: 15),
+        const SizedBox(height: 15),
         SafeArea(
           child: MorrfButton(
             fullWidth: true,

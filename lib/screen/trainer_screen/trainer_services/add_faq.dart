@@ -90,7 +90,7 @@ class _AddFAQPopUpState extends State<AddFAQPopUp> {
                       widget.addFaq(
                         MorrfFaq(
                           answer: faqData['answer']!,
-                          id: Uuid().v4(),
+                          id: const Uuid().v4(),
                           question: faqData['question']!,
                         ),
                       );

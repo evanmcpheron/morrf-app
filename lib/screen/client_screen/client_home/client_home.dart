@@ -1,5 +1,4 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -15,7 +14,6 @@ import 'package:morrf/utils/constants/special_color.dart';
 import 'package:morrf/utils/enums/font_size.dart';
 import 'package:morrf/widgets/morff_text.dart';
 
-import '../../global_screen/global_messages/chat_list_depr.dart';
 import '../client_orders/client_orders.dart';
 import '../client_profile/client_profile.dart';
 import 'client_home_screen.dart';
@@ -32,15 +30,12 @@ class _ClientHomeState extends ConsumerState<ClientHome> {
   int _currentPage = 0;
 
   static const List<Widget> _widgetOptions = <Widget>[
-    ClientHomeScreen(),
     ClientSearchScreen(),
-    RoomsScreen(),
     ClientOrderList(),
     ClientProfile(),
   ];
 
   static final List<Widget> _guestWidgetOptions = <Widget>[
-    const ClientHomeScreen(),
     const ClientSearchScreen(),
     ClientSignUp(isHome: true),
     const ClientProfile(),
@@ -70,7 +65,6 @@ class _ClientHomeState extends ConsumerState<ClientHome> {
           leading: Padding(
             padding: const EdgeInsets.only(left: 10.0),
             child: GestureDetector(
-              // onTap: ()=>const TrainerProfile().launch(context),
               child: Container(
                 height: 44,
                 width: 44,
@@ -89,23 +83,6 @@ class _ClientHomeState extends ConsumerState<ClientHome> {
           title: isSignedIn
               ? MorrfText(text: morrfUser.fullName, size: FontSize.h5)
               : const MorrfText(text: "Guest", size: FontSize.h5),
-          trailing: isSignedIn
-              ? GestureDetector(
-                  onTap: () => Get.to(() => const ClientNotification()),
-                  child: Container(
-                    padding: const EdgeInsets.all(8.0),
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      border: Border.all(
-                          color: Theme.of(context)
-                              .colorScheme
-                              .primaryColor
-                              .withOpacity(.5)),
-                    ),
-                    child: const FaIcon(FontAwesomeIcons.solidBell),
-                  ),
-                )
-              : const SizedBox(),
         ),
       ),
       body:
@@ -133,16 +110,8 @@ class _ClientHomeState extends ConsumerState<ClientHome> {
                 type: BottomNavigationBarType.fixed,
                 items: const [
                   BottomNavigationBarItem(
-                    icon: FaIcon(FontAwesomeIcons.house),
-                    label: "Home",
-                  ),
-                  BottomNavigationBarItem(
                     icon: FaIcon(FontAwesomeIcons.magnifyingGlass),
                     label: "Search",
-                  ),
-                  BottomNavigationBarItem(
-                    icon: FaIcon(FontAwesomeIcons.solidMessage),
-                    label: "Message",
                   ),
                   BottomNavigationBarItem(
                     icon: FaIcon(FontAwesomeIcons.solidFileLines),
@@ -154,9 +123,7 @@ class _ClientHomeState extends ConsumerState<ClientHome> {
                   ),
                 ],
                 onTap: (int index) {
-                  setState(() => {
-                        {_currentPage = index}
-                      });
+                  setState(() => _currentPage = index);
                 },
                 currentIndex: _currentPage,
               )
@@ -166,10 +133,6 @@ class _ClientHomeState extends ConsumerState<ClientHome> {
                 showUnselectedLabels: true,
                 type: BottomNavigationBarType.fixed,
                 items: const [
-                  BottomNavigationBarItem(
-                    icon: FaIcon(FontAwesomeIcons.house),
-                    label: "Home",
-                  ),
                   BottomNavigationBarItem(
                     icon: FaIcon(FontAwesomeIcons.magnifyingGlass),
                     label: "Search",
@@ -184,7 +147,7 @@ class _ClientHomeState extends ConsumerState<ClientHome> {
                   ),
                 ],
                 onTap: (int index) {
-                  setState(() => {_currentPage = index});
+                  setState(() => _currentPage = index);
                 },
                 currentIndex: _currentPage,
               ),

@@ -1,19 +1,34 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:morrf/models/service/morrf_service.dart';
+import 'package:morrf/models/stripe/card_model.dart';
+import 'package:morrf/providers/card_provider.dart';
+import 'package:morrf/screen/client_screen/client_service_details/client_add_card.dart';
+import 'package:morrf/utils/constants/special_color.dart';
+import 'package:morrf/utils/enums/font_size.dart';
+import 'package:morrf/widgets/button_global.dart';
+import 'package:morrf/widgets/constant.dart';
+import 'package:morrf/widgets/morff_text.dart';
 import 'package:nb_utils/nb_utils.dart';
 
-import '../../../widgets/button_global.dart';
-import '../../../widgets/constant.dart';
-import 'client_add_card.dart';
+class ClientOrder extends ConsumerStatefulWidget {
+  Tier service;
+  String image;
+  String title;
 
-class ClientOrder extends StatefulWidget {
-  const ClientOrder({super.key});
+  ClientOrder(
+      {super.key,
+      required this.service,
+      required this.image,
+      required this.title});
 
   @override
-  State<ClientOrder> createState() => _ClientOrderState();
+  ConsumerState<ClientOrder> createState() => _ClientOrderState();
 }
 
-class _ClientOrderState extends State<ClientOrder> {
+class _ClientOrderState extends ConsumerState<ClientOrder> {
   List<String> paymentMethod = [
     'Credit or Debit Card',
     'Paypal',
@@ -29,12 +44,20 @@ class _ClientOrderState extends State<ClientOrder> {
   ];
 
   @override
+  void initState() {
+    super.initState();
+
+    ref.read(morrfCrediCardProvider.notifier).getCards();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    List<MorrfCreditCard> creditCards = ref.watch(morrfCrediCardProvider);
+    double serviceFee =
+        widget.service.price! * 0.05 >= 5 ? widget.service.price! * 0.05 : 5;
     return Scaffold(
-      backgroundColor: kDarkWhite,
       appBar: AppBar(
         elevation: 0.0,
-        backgroundColor: kDarkWhite,
         centerTitle: true,
         iconTheme: const IconThemeData(color: kNeutralColor),
         title: Text(
@@ -101,57 +124,14 @@ class _ClientOrderState extends State<ClientOrder> {
                           Container(
                             height: 120,
                             width: 120,
-                            decoration: const BoxDecoration(
-                              borderRadius: BorderRadius.only(
+                            decoration: BoxDecoration(
+                              borderRadius: const BorderRadius.only(
                                 bottomLeft: Radius.circular(8.0),
                                 topLeft: Radius.circular(8.0),
                               ),
                               image: DecorationImage(
-                                  image: AssetImage(
-                                    'images/shot1.png',
-                                  ),
+                                  image: NetworkImage(widget.image),
                                   fit: BoxFit.cover),
-                            ),
-                          ),
-                          GestureDetector(
-                            onTap: () {
-                              setState(() {
-                                isFavorite = !isFavorite;
-                              });
-                            },
-                            child: Padding(
-                              padding: const EdgeInsets.all(5.0),
-                              child: Container(
-                                height: 25,
-                                width: 25,
-                                decoration: const BoxDecoration(
-                                  color: Colors.white,
-                                  shape: BoxShape.circle,
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Colors.black12,
-                                      blurRadius: 10.0,
-                                      spreadRadius: 1.0,
-                                      offset: Offset(0, 2),
-                                    ),
-                                  ],
-                                ),
-                                child: isFavorite
-                                    ? const Center(
-                                        child: Icon(
-                                          Icons.favorite,
-                                          color: Colors.red,
-                                          size: 16.0,
-                                        ),
-                                      )
-                                    : const Center(
-                                        child: Icon(
-                                          Icons.favorite_border,
-                                          color: kNeutralColor,
-                                          size: 16.0,
-                                        ),
-                                      ),
-                              ),
                             ),
                           ),
                         ],
@@ -166,7 +146,7 @@ class _ClientOrderState extends State<ClientOrder> {
                               child: SizedBox(
                                 width: 190,
                                 child: Text(
-                                  'Workout routine for body composition.',
+                                  widget.title,
                                   style: kTextStyle.copyWith(
                                       color: kNeutralColor,
                                       fontWeight: FontWeight.bold),
@@ -176,29 +156,6 @@ class _ClientOrderState extends State<ClientOrder> {
                               ),
                             ),
                             const SizedBox(height: 5.0),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                const Icon(
-                                  IconlyBold.star,
-                                  color: Colors.amber,
-                                  size: 18.0,
-                                ),
-                                const SizedBox(width: 2.0),
-                                Text(
-                                  '5.0',
-                                  style:
-                                      kTextStyle.copyWith(color: kNeutralColor),
-                                ),
-                                const SizedBox(width: 2.0),
-                                Text(
-                                  '(520)',
-                                  style: kTextStyle.copyWith(
-                                      color: kLightNeutralColor),
-                                ),
-                              ],
-                            ),
-                            const SizedBox(height: 5.0),
                             RichText(
                               text: TextSpan(
                                 text: 'Price: ',
@@ -206,7 +163,8 @@ class _ClientOrderState extends State<ClientOrder> {
                                     color: kLightNeutralColor),
                                 children: [
                                   TextSpan(
-                                    text: '$currencySign${30}',
+                                    text:
+                                        '$currencySign${widget.service.price}',
                                     style: kTextStyle.copyWith(
                                         color: kPrimaryColor,
                                         fontWeight: FontWeight.bold),
@@ -241,74 +199,40 @@ class _ClientOrderState extends State<ClientOrder> {
                   ],
                 ),
                 const SizedBox(height: 15.0),
-                Row(
-                  children: [
-                    Text(
-                      'Revisions',
-                      style: kTextStyle.copyWith(color: kSubTitleColor),
-                    ),
-                    const Spacer(),
-                    Text(
-                      'Unlimited',
-                      style: kTextStyle.copyWith(color: kSubTitleColor),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 15.0),
-                Row(
-                  children: [
-                    Text(
-                      '3 Page/Screen',
-                      style: kTextStyle.copyWith(color: kSubTitleColor),
-                    ),
-                    const Spacer(),
-                    const Icon(
-                      Icons.check_rounded,
-                      color: kPrimaryColor,
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 15.0),
-                Row(
-                  children: [
-                    Text(
-                      'Responsive design',
-                      style: kTextStyle.copyWith(color: kSubTitleColor),
-                    ),
-                    const Spacer(),
-                    const Icon(
-                      Icons.check_rounded,
-                      color: kPrimaryColor,
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 15.0),
-                Row(
-                  children: [
-                    Text(
-                      'Source file',
-                      style: kTextStyle.copyWith(color: kSubTitleColor),
-                    ),
-                    const Spacer(),
-                    const Icon(
-                      Icons.check_rounded,
-                      color: kPrimaryColor,
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 20.0),
-                Text(
-                  'Payment Method',
-                  style: kTextStyle.copyWith(
-                      color: kNeutralColor, fontWeight: FontWeight.bold),
+                ListView.builder(
+                  itemCount: widget.service.options.length,
+                  physics: const NeverScrollableScrollPhysics(),
+                  shrinkWrap: true,
+                  padding: const EdgeInsets.only(bottom: 10.0),
+                  itemBuilder: (_, i) {
+                    Option currentOption = widget.service.options[i]!;
+                    return Row(
+                      children: [
+                        MorrfText(
+                          text: currentOption.title,
+                          maxLines: 1,
+                          size: FontSize.p,
+                        ),
+                        const Spacer(),
+                        currentOption.isSelected
+                            ? FaIcon(
+                                FontAwesomeIcons.check,
+                                color:
+                                    Theme.of(context).colorScheme.primaryColor,
+                              )
+                            : const FaIcon(FontAwesomeIcons.minus),
+                      ],
+                    );
+                  },
                 ),
                 const SizedBox(height: 20.0),
                 ListView.builder(
-                  itemCount: paymentMethod.length,
+                  itemCount: creditCards.length,
                   shrinkWrap: true,
                   padding: EdgeInsets.zero,
                   physics: const NeverScrollableScrollPhysics(),
                   itemBuilder: (_, i) {
+                    MorrfCreditCard card = creditCards[i];
                     return Padding(
                       padding: const EdgeInsets.only(bottom: 10.0),
                       child: Container(
@@ -370,7 +294,7 @@ class _ClientOrderState extends State<ClientOrder> {
                     ),
                     const Spacer(),
                     Text(
-                      '$currencySign${30}',
+                      '$currencySign${widget.service.price}',
                       style: kTextStyle.copyWith(color: kSubTitleColor),
                     ),
                   ],
@@ -384,7 +308,7 @@ class _ClientOrderState extends State<ClientOrder> {
                     ),
                     const Spacer(),
                     Text(
-                      '$currencySign${5.50}',
+                      '$currencySign${serviceFee}',
                       style: kTextStyle.copyWith(color: kSubTitleColor),
                     ),
                   ],
@@ -401,7 +325,7 @@ class _ClientOrderState extends State<ClientOrder> {
                     ),
                     const Spacer(),
                     Text(
-                      '$currencySign${35.50}',
+                      '$currencySign${widget.service.price! + serviceFee}',
                       style: kTextStyle.copyWith(
                           color: kNeutralColor,
                           fontWeight: FontWeight.bold,

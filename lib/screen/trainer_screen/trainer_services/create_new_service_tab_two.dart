@@ -7,7 +7,6 @@ import 'package:morrf/screen/trainer_screen/trainer_services/new_service_provide
 import 'package:morrf/utils/enums/font_size.dart';
 import 'package:morrf/utils/enums/severity.dart';
 import 'package:morrf/widgets/constant.dart';
-import 'package:morrf/widgets/data.dart';
 import 'package:morrf/widgets/morff_text.dart';
 import 'package:morrf/widgets/morrf_button.dart';
 import 'package:morrf/widgets/morrf_input_field.dart';
@@ -31,7 +30,7 @@ class CreateNewServiceTabTwo extends ConsumerStatefulWidget {
 
 class _CreateNewServiceTabTwoState
     extends ConsumerState<CreateNewServiceTabTwo> {
-  TextEditingController _optionController = TextEditingController();
+  final TextEditingController _optionController = TextEditingController();
 
   Map<String, Tier> tiers = {
     "basic": Tier(

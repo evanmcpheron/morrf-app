@@ -1,21 +1,13 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:get/get.dart';
-import 'package:morrf/providers/user_provider.dart';
-import 'package:morrf/screen/global_screen/global_authentication/global_sign_up.dart';
 import 'package:morrf/services/auth_service.dart';
-import 'package:morrf/utils/constants/special_color.dart';
 import 'package:morrf/utils/enums/font_size.dart';
 import 'package:morrf/utils/enums/severity.dart';
-import 'package:morrf/widgets/icons.dart';
 import 'package:morrf/widgets/morff_text.dart';
 import 'package:morrf/widgets/morrf_button.dart';
 import 'package:morrf/widgets/morrf_input_field.dart';
-import 'package:nb_utils/nb_utils.dart';
 
-import 'global_forgot_password.dart';
 
 class ClientConfirmSignIn extends ConsumerStatefulWidget {
   bool isHome;

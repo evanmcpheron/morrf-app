@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:morrf/utils/constants/special_color.dart';
 import 'package:morrf/utils/enums/font_size.dart';
-import 'package:morrf/utils/enums/severity.dart';
 
 class MorrfText extends StatefulWidget {
   final String text;

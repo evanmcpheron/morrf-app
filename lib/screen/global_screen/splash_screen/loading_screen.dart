@@ -3,6 +3,8 @@ import 'package:morrf/widgets/morff_text.dart';
 import 'package:morrf/utils/enums/font_size.dart';
 
 class LoadingPage extends StatefulWidget {
+  const LoadingPage({super.key});
+
   @override
   State<LoadingPage> createState() => _LoadingPageState();
 }

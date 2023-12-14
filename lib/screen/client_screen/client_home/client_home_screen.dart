@@ -42,7 +42,7 @@ class _ClientHomeScreenState extends ConsumerState<ClientHomeScreen> {
     var morrfUser = ref.watch(morrfUserProvider);
     List<MorrfService> morrfServices = ref.watch(morrfServicesProvider);
     return Scaffold(
-      body: Container(
+      body: SizedBox(
         width: MediaQuery.of(context).size.width,
         child: SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
@@ -203,7 +203,7 @@ class _ClientHomeScreenState extends ConsumerState<ClientHomeScreen> {
                 spacing: MorrfSize.s.size,
                 itemCount: 10,
                 itemBuilder: (_, i) {
-                  return MorrfTrainerTile();
+                  return const MorrfTrainerTile();
                 },
               ),
             ],
