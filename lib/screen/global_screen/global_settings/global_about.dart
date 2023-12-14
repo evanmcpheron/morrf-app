@@ -4,7 +4,6 @@ import 'package:morrf/utils/enums/font_size.dart';
 import 'package:morrf/widgets/morff_text.dart';
 import 'package:morrf/widgets/morrf_scaffold.dart';
 
-
 class ClientAbout extends StatefulWidget {
   const ClientAbout({super.key});
 

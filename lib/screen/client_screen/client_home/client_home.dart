@@ -87,9 +87,8 @@ class _ClientHomeState extends ConsumerState<ClientHome> {
       ),
       body:
           isSignedIn ? _widgetOptions.elementAt(_currentPage) : getGuestLinks(),
-      floatingActionButton: isSignedIn
+      floatingActionButton: !isSignedIn
           ? FloatingActionButton(
-              backgroundColor: Theme.of(context).colorScheme.primaryColor,
               onPressed: () {
                 FirebaseAuth.instance.currentUser!.reload();
                 if (morrfUser.morrfTrainer != null) {
@@ -129,7 +128,6 @@ class _ClientHomeState extends ConsumerState<ClientHome> {
               )
             : BottomNavigationBar(
                 backgroundColor: Theme.of(context).cardColor,
-                selectedItemColor: Theme.of(context).colorScheme.primaryColor,
                 showUnselectedLabels: true,
                 type: BottomNavigationBarType.fixed,
                 items: const [

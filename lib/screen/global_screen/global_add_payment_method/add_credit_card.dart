@@ -74,7 +74,7 @@ class AddCreditCardState extends ConsumerState<AddCreditCard> {
               textStyle:
                   TextStyle(color: Theme.of(context).colorScheme.onBackground),
               isChipVisible: false,
-              cardBgColor: Theme.of(context).primaryColorDark,
+              cardBgColor: Theme.of(context).colorScheme.primaryColor,
               isSwipeGestureEnabled: false,
               onCreditCardWidgetChange: (CreditCardBrand creditCardBrand) {},
               customCardTypeIcons: <CustomCardTypeIcon>[

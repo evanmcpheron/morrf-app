@@ -27,9 +27,9 @@ extension CustomColors on ColorScheme {
 
   Color get normalButton => brightness == Brightness.dark
       ? const Color(0xFF294868)
-      : const Color(0xfbac3ff);
+      : const Color(0xffbac3ff);
 
   Color get primaryColor => brightness == Brightness.dark
       ? const Color(0xFF294868)
-      : const Color(0xfbac3ff);
+      : const Color(0xffbac3ff);
 }
