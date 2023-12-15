@@ -3,16 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:adapty_flutter/adapty_flutter.dart';
-import 'package:morrf/providers/theme_provider.dart';
-import 'package:morrf/providers/user_provider.dart';
-import 'utils/constants/routes.dart';
 import 'dart:convert';
 
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:json_theme/json_theme.dart';
-
-import 'firebase_options.dart';
+import 'package:morrf/features/splash_screen/screens/splash_screen.dart';
+import 'package:morrf/firebase_options.dart';
+import 'package:morrf/providers/theme_provider.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -54,23 +52,20 @@ class _MyAppState extends ConsumerState<MyApp> {
   @override
   void initState() {
     super.initState();
-    // seedServices();
-    // FirebaseAuth.instance.signOut();
   }
 
   @override
   Widget build(BuildContext context) {
     var darkMode = ref.watch(darkModeProvider);
-    ref.read(morrfUserProvider.notifier).getCurrentUser();
 
     return GetMaterialApp(
+      home: const SplashScreen(),
       title: 'Morrf',
+      debugShowCheckedModeBanner: false,
       defaultTransition: Transition.noTransition,
-      initialRoute: "/",
       themeMode: darkMode,
       darkTheme: widget.darkTheme,
       theme: widget.lightTheme,
-      getPages: routes,
     );
   }
 }
