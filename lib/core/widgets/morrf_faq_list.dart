@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:morrf/core/enums/font_size.dart';
-import 'package:morrf/core/models/morrf_faq.dart';
+import 'package:morrf/models/morrf_faq.dart';
 import 'package:morrf/core/widgets/morff_text.dart';
 
 class MorrfFaqList extends StatefulWidget {

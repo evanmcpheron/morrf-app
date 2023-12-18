@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:morrf/features/auth/screens/signin_screen.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -12,13 +11,6 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    init();
-  }
-
-  Future<void> init() async {
-    await Future.delayed(const Duration(seconds: 2)).then(
-      (value) => Navigator.pushNamed(context, SigninScreen.routeName),
-    );
   }
 
   @override

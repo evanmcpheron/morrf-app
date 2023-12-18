@@ -8,6 +8,12 @@ import 'dart:convert';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:json_theme/json_theme.dart';
+import 'package:morrf/core/widgets/error.dart';
+import 'package:morrf/core/widgets/loader.dart';
+import 'package:morrf/features/auth/controller/auth_controller.dart';
+import 'package:morrf/features/auth/screens/signup_screen.dart';
+import 'package:morrf/features/landing/screens/landing_screen.dart';
+import 'package:morrf/features/splash_screen/screens/redirect_splash_screen.dart';
 import 'package:morrf/features/splash_screen/screens/splash_screen.dart';
 import 'package:morrf/firebase_options.dart';
 import 'package:morrf/providers/theme_provider.dart';
@@ -59,10 +65,20 @@ class _MyAppState extends ConsumerState<MyApp> {
     var darkMode = ref.watch(darkModeProvider);
 
     return GetMaterialApp(
-      home: const SplashScreen(),
+      home: ref.watch(userDataAuthProvider).when(
+            data: (user) {
+              return RedirectSplashScreen();
+            },
+            error: (err, trace) {
+              return ErrorScreen(
+                error: err.toString(),
+              );
+            },
+            loading: () => const SplashScreen(),
+          ),
       title: 'Morrf',
-      debugShowCheckedModeBanner: false,
       defaultTransition: Transition.noTransition,
+      debugShowCheckedModeBanner: false,
       themeMode: darkMode,
       darkTheme: widget.darkTheme,
       theme: widget.lightTheme,

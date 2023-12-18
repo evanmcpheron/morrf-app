@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:get/get.dart';
 import 'package:morrf/core/enums/font_size.dart';
 import 'package:morrf/core/enums/severity.dart';
 import 'package:morrf/core/utils.dart';
@@ -7,11 +8,12 @@ import 'package:morrf/core/widgets/icons.dart';
 import 'package:morrf/core/widgets/morff_text.dart';
 import 'package:morrf/core/widgets/morrf_button.dart';
 import 'package:morrf/core/widgets/morrf_input_field.dart';
+import 'package:morrf/core/widgets/morrf_scaffold.dart';
+import 'package:morrf/features/auth/controller/auth_controller.dart';
 import 'package:morrf/features/auth/screens/signup_screen.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class SigninScreen extends ConsumerStatefulWidget {
-  static const routeName = '/signup-screen';
   const SigninScreen({super.key});
 
   @override
@@ -22,38 +24,22 @@ class _SigninScreenState extends ConsumerState<SigninScreen> {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
 
-  void navigateToSignupScreen(BuildContext context) {
-    Navigator.pushNamed(context, SignupScreen.routeName);
-  }
-
   void onSubmit() {
     String email = emailController.text.trim();
     String password = passwordController.text.trim();
     if (email.isNotEmpty && password.isNotEmpty) {
-      // ref
-      //     .read(authControllerProvider)
-      //     .signInWithPhone(context, '+${country!.phoneCode}$phoneNumber');
+      ref
+          .read(authControllerProvider)
+          .signinWithEmailAndPassword(context, email, password);
     } else {
       showSnackBar(context, 'Fill out all the fields');
     }
   }
 
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        elevation: 0,
-        backgroundColor: Theme.of(context).cardColor,
-        automaticallyImplyLeading: false,
-        shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.only(
-            bottomLeft: Radius.circular(50.0),
-            bottomRight: Radius.circular(50.0),
-          ),
-        ),
-        toolbarHeight: 180,
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(10.0),
+    return MorrfScaffold(
+      title: "",
+      body: Center(
         child: SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
           child: Column(
@@ -179,7 +165,7 @@ class _SigninScreenState extends ConsumerState<SigninScreen> {
                     const MorrfText(
                         text: "Don't have an account? ", size: FontSize.p),
                     GestureDetector(
-                      onTap: () => navigateToSignupScreen,
+                      onTap: () => Get.to(() => const SignupScreen()),
                       child: const MorrfText(
                         text: "Sign Up",
                         size: FontSize.h6,

@@ -1,142 +1,109 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:get/get.dart';
+import 'package:morrf/features/splash_screen/screens/redirect_splash_screen.dart';
+import 'package:morrf/models/user/morrf_user.dart';
+import 'package:morrf/core/utils.dart';
 
-// import 'dart:io';
+final authRepositoryProvider = Provider(
+  (ref) => AuthRepository(
+    auth: FirebaseAuth.instance,
+    firestore: FirebaseFirestore.instance,
+  ),
+);
 
-// import 'package:cloud_firestore/cloud_firestore.dart';
-// import 'package:firebase_auth/firebase_auth.dart';
-// import 'package:flutter/material.dart';
-// import 'package:flutter_riverpod/flutter_riverpod.dart';
-// import 'package:whatsapp_ui/common/repositories/common_firebase_storage_repository.dart';
-// import 'package:whatsapp_ui/common/utils/utils.dart';
-// import 'package:whatsapp_ui/features/auth/screens/otp_screen.dart';
-// import 'package:whatsapp_ui/features/auth/screens/user_information_screen.dart';
-// import 'package:whatsapp_ui/models/user_model.dart';
-// import 'package:whatsapp_ui/mobile_layout_screen.dart';
+class AuthRepository {
+  final FirebaseAuth auth;
+  final FirebaseFirestore firestore;
+  AuthRepository({
+    required this.auth,
+    required this.firestore,
+  });
 
-// final authRepositoryProvider = Provider(
-//   (ref) => AuthRepository(
-//     auth: FirebaseAuth.instance,
-//     firestore: FirebaseFirestore.instance,
-//   ),
-// );
+  Future<MorrfUser?> getCurrentUserData() async {
+    var userData =
+        await firestore.collection('users').doc(auth.currentUser?.uid).get();
+    MorrfUser? user;
+    if (userData.data() != null) {
+      user = MorrfUser.fromMap(userData.data()!);
+    }
+    return user;
+  }
 
-// class AuthRepository {
-//   final FirebaseAuth auth;
-//   final FirebaseFirestore firestore;
-//   AuthRepository({
-//     required this.auth,
-//     required this.firestore,
-//   });
+  void signupWithEmailAndPassword(
+      BuildContext context, String email, String password) async {
+    try {
+      await auth.createUserWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+      saveUserDataToFirebase(context: context, email: email);
+    } on FirebaseAuthException catch (e) {
+      showSnackBar(context, e.message!);
+    }
+  }
 
-//   Future<MorrfUser?> getCurrentUserData() async {
-//     var userData =
-//         await firestore.collection('users').doc(auth.currentUser?.uid).get();
+  void signinWithEmailAndPassword(
+      BuildContext context, String email, String password) async {
+    try {
+      await auth.signInWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
 
-//     MorrfUser? user;
-//     if (userData.data() != null) {
-//       user = MorrfUser.fromMap(userData.data()!);
-//     }
-//     return user;
-//   }
+      Get.offAll(() => RedirectSplashScreen());
+    } on FirebaseAuthException catch (e) {
+      showSnackBar(context, e.message!);
+    }
+  }
 
-//   void signInWithPhone(BuildContext context, String phoneNumber) async {
-//     try {
-//       await auth.verifyPhoneNumber(
-//         phoneNumber: phoneNumber,
-//         verificationCompleted: (PhoneAuthCredential credential) async {
-//           await auth.signInWithCredential(credential);
-//         },
-//         verificationFailed: (e) {
-//           throw Exception(e.message);
-//         },
-//         codeSent: ((String verificationId, int? resendToken) async {
-//           Navigator.pushNamed(
-//             context,
-//             OTPScreen.routeName,
-//             arguments: verificationId,
-//           );
-//         }),
-//         codeAutoRetrievalTimeout: (String verificationId) {},
-//       );
-//     } on FirebaseAuthException catch (e) {
-//       showSnackBar(context: context, content: e.message!);
-//     }
-//   }
+  void saveUserDataToFirebase({
+    required String email,
+    required BuildContext context,
+  }) async {
+    try {
+      User currentUser = auth.currentUser!;
+      String uid = currentUser.uid;
+      String photoUrl =
+          'https://firebasestorage.googleapis.com/v0/b/mickiefitness.appspot.com/o/user_profile.jpg?alt=media&token=deba737f-c8c1-4a2e-bec5-a4474913e102&_gl=1*mvlre7*_ga*MjkyNzM5ODM3LjE2ODkyNzc3MjY.*_ga_CW55HF8NVT*MTY5ODAyMDYyNC41My4xLjE2OTgwMjE0MTEuNTcuMC4w';
 
-//   void verifyOTP({
-//     required BuildContext context,
-//     required String verificationId,
-//     required String userOTP,
-//   }) async {
-//     try {
-//       PhoneAuthCredential credential = PhoneAuthProvider.credential(
-//         verificationId: verificationId,
-//         smsCode: userOTP,
-//       );
-//       await auth.signInWithCredential(credential);
-//       Navigator.pushNamedAndRemoveUntil(
-//         context,
-//         UserInformationScreen.routeName,
-//         (route) => false,
-//       );
-//     } on FirebaseAuthException catch (e) {
-//       showSnackBar(context: context, content: e.message!);
-//     }
-//   }
+      await currentUser.updatePhotoURL(photoUrl);
 
-//   void saveUserDataToFirebase({
-//     required String name,
-//     required File? profilePic,
-//     required ProviderRef ref,
-//     required BuildContext context,
-//   }) async {
-//     try {
-//       String uid = auth.currentUser!.uid;
-//       String photoUrl =
-//           'https://png.pngitem.com/pimgs/s/649-6490124_katie-notopoulos-katienotopoulos-i-write-about-tech-round.png';
+      var user = MorrfUser(
+          firstName: "",
+          lastName: "",
+          fullName: "",
+          email: email,
+          isOnline: true,
+          id: uid,
+          favorites: [],
+          orders: []);
 
-//       if (profilePic != null) {
-//         photoUrl = await ref
-//             .read(commonFirebaseStorageRepositoryProvider)
-//             .storeFileToFirebase(
-//               'profilePic/$uid',
-//               profilePic,
-//             );
-//       }
+      await firestore.collection('users').doc(uid).set(user.toJson());
 
-//       var user = MorrfUser(
-//         name: name,
-//         uid: uid,
-//         profilePic: photoUrl,
-//         isOnline: true,
-//         phoneNumber: auth.currentUser!.phoneNumber!,
-//         groupId: [],
-//       );
+      Get.offAll(() => RedirectSplashScreen());
+    } catch (e) {
+      showSnackBar(context, e.toString());
+    }
+  }
 
-//       await firestore.collection('users').doc(uid).set(user.toMap());
+  Stream<MorrfUser> userData(String userId) {
+    return firestore.collection('users').doc(userId).snapshots().map(
+          (event) => MorrfUser.fromMap(
+            event.data()!,
+          ),
+        );
+  }
 
-//       Navigator.pushAndRemoveUntil(
-//         context,
-//         MaterialPageRoute(
-//           builder: (context) => const MobileLayoutScreen(),
-//         ),
-//         (route) => false,
-//       );
-//     } catch (e) {
-//       showSnackBar(context: context, content: e.toString());
-//     }
-//   }
+  void setUserState(bool isOnline) async {
+    await firestore.collection('users').doc(auth.currentUser!.uid).update({
+      'isOnline': isOnline,
+    });
+  }
 
-//   Stream<MorrfUser> userData(String userId) {
-//     return firestore.collection('users').doc(userId).snapshots().map(
-//           (event) => MorrfUser.fromMap(
-//             event.data()!,
-//           ),
-//         );
-//   }
-
-//   void setUserState(bool isOnline) async {
-//     await firestore.collection('users').doc(auth.currentUser!.uid).update({
-//       'isOnline': isOnline,
-//     });
-//   }
-// }
+  void signout() async {
+    await auth.signOut();
+  }
+}
