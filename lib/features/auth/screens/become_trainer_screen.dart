@@ -1,6 +1,3 @@
-// ignore_for_file: use_build_context_synchronously
-
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -29,7 +26,7 @@ class _BecomeTrainerScreenState extends ConsumerState<BecomeTrainerScreen> {
   }
 
   void becomeTrainer() async {
-    await ref.read(authControllerProvider).becomeTrainer();
+    ref.read(authControllerProvider.notifier).becomeTrainer();
   }
 
   @override

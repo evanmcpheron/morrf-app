@@ -32,7 +32,7 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
     String password = passwordController.text.trim();
     if (email.isNotEmpty && password.isNotEmpty) {
       ref
-          .read(authControllerProvider)
+          .read(authControllerProvider.notifier)
           .signupWithEmailAndPassword(context, email, password);
     } else {
       showSnackBar(context, 'Fill out all the fields');

@@ -29,7 +29,7 @@ class _SigninScreenState extends ConsumerState<SigninScreen> {
     String password = passwordController.text.trim();
     if (email.isNotEmpty && password.isNotEmpty) {
       ref
-          .read(authControllerProvider)
+          .read(authControllerProvider.notifier)
           .signinWithEmailAndPassword(context, email, password);
     } else {
       showSnackBar(context, 'Fill out all the fields');

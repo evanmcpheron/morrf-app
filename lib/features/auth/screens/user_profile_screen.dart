@@ -8,6 +8,7 @@ import 'package:morrf/core/widgets/morrf_scaffold.dart';
 import 'package:morrf/features/auth/controller/auth_controller.dart';
 import 'package:morrf/features/auth/screens/become_trainer_screen.dart';
 import 'package:morrf/features/splash_screen/screens/splash_screen.dart';
+import 'package:morrf/models/user/morrf_user.dart';
 
 class UserProfileScreen extends ConsumerStatefulWidget {
   String? userId;
@@ -33,36 +34,26 @@ class _UserProfileScreenState extends ConsumerState<UserProfileScreen> {
   @override
   Widget build(BuildContext context) {
     bool isSignedInUser = widget.userId == null;
+    MorrfUser morrfUser = ref.watch(authControllerProvider);
 
-    return ref.watch(userDataAuthProvider).when(
-          data: (morrfUser) {
-            return MorrfScaffold(
-              title: isSignedInUser ? "My Profile" : "Someone Else",
-              body: SafeArea(
-                child: Column(
-                  children: [
-                    const Expanded(
-                      child: Text("Testing"),
-                    ),
-                    isSignedInUser && morrfUser?.morrfTrainer == null
-                        ? MorrfButton(
-                            onPressed: () =>
-                                Get.to(() => const BecomeTrainerScreen()),
-                            fullWidth: true,
-                            text: "Become a Morrf Trainer",
-                          )
-                        : const SizedBox(),
-                  ],
-                ),
-              ),
-            );
-          },
-          error: (err, trace) {
-            return ErrorScreen(
-              error: err.toString(),
-            );
-          },
-          loading: () => const SplashScreen(),
-        );
+    return MorrfScaffold(
+      title: isSignedInUser ? "My Profile" : "Someone Else",
+      body: SafeArea(
+        child: Column(
+          children: [
+            const Expanded(
+              child: Text("Testing"),
+            ),
+            isSignedInUser && morrfUser?.morrfTrainer == null
+                ? MorrfButton(
+                    onPressed: () => Get.to(() => const BecomeTrainerScreen()),
+                    fullWidth: true,
+                    text: "Become a Morrf Trainer",
+                  )
+                : const SizedBox(),
+          ],
+        ),
+      ),
+    );
   }
 }

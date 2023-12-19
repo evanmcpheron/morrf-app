@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get/get.dart';
 import 'package:morrf/features/splash_screen/screens/redirect_splash_screen.dart';
+import 'package:morrf/models/user/morrf_trainer.dart';
 import 'package:morrf/models/user/morrf_user.dart';
 import 'package:morrf/core/utils.dart';
 import 'package:uuid/uuid.dart';
@@ -23,10 +24,18 @@ class AuthRepository {
     required this.firestore,
   });
 
-  Future<MorrfUser?> getCurrentUserData() async {
+  Future<MorrfUser> getCurrentUserData() async {
     var userData =
         await firestore.collection('users').doc(auth.currentUser?.uid).get();
-    MorrfUser? user;
+    MorrfUser user = MorrfUser(
+      id: const Uuid().v4(),
+      firstName: "Guest",
+      fullName: "Guest",
+      email: "guest@morrf.me",
+      favorites: [],
+      isOnline: true,
+    );
+    ;
 
     if (userData.data() != null) {
       user = MorrfUser.fromMap(userData.data()!);
@@ -91,14 +100,6 @@ class AuthRepository {
     }
   }
 
-  Stream<MorrfUser> userData(String userId) {
-    return firestore.collection('users').doc(userId).snapshots().map(
-          (event) => MorrfUser.fromMap(
-            event.data()!,
-          ),
-        );
-  }
-
   void setUserState(bool isOnline) async {
     await firestore.collection('users').doc(auth.currentUser!.uid).update({
       'isOnline': isOnline,
@@ -121,9 +122,9 @@ class AuthRepository {
           'ratings': [],
           'orders': []
         }
-      }).then((value) {
-        Get.offAll(() => RedirectSplashScreen());
       });
+      Get.offAll(() => RedirectSplashScreen());
+      return;
     } catch (e) {
       rethrow;
     }

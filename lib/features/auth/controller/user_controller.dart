@@ -1,67 +1,26 @@
 import 'dart:io';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:morrf/features/auth/repository/auth_repository.dart';
+import 'package:morrf/features/auth/repository/user_repository.dart';
 import 'package:morrf/models/user/morrf_user.dart';
+import 'package:uuid/uuid.dart';
 
-final authControllerProvider = Provider((ref) {
-  final authRepository = ref.watch(authRepositoryProvider);
-  return AuthController(authRepository: authRepository, ref: ref);
-});
-
-final userDataAuthProvider = FutureProvider((ref) {
-  final authController = ref.watch(authControllerProvider);
-  return authController.getUserData();
-});
-
-class AuthController {
-  final AuthRepository authRepository;
+class UserController extends ChangeNotifier {
+  final UserRepository userRepository;
   final ProviderRef ref;
-  AuthController({
-    required this.authRepository,
+  MorrfUser morrfUser = MorrfUser(
+      id: const Uuid().v4(),
+      firstName: "Guest",
+      fullName: "Guest",
+      email: "guest@morrf.me",
+      favorites: [],
+      isOnline: true);
+  UserController({
+    required this.userRepository,
     required this.ref,
   });
 
-  Future<MorrfUser?> getUserData() async {
-    MorrfUser? user = await authRepository.getCurrentUserData();
-    return user;
-  }
-
-  void signupWithEmailAndPassword(
-      BuildContext context, String email, String password) {
-    authRepository.signupWithEmailAndPassword(context, email, password);
-  }
-
-  void signinWithEmailAndPassword(
-      BuildContext context, String email, String password) {
-    authRepository.signinWithEmailAndPassword(context, email, password);
-    setUserState(true);
-  }
-
-  void saveUserDataToFirebase(BuildContext context, User user, String email) {
-    authRepository.saveUserDataToFirebase(
-      email: email,
-      context: context,
-    );
-  }
-
   Stream<MorrfUser> userDataById(String userId) {
-    return authRepository.userData(userId);
-  }
-
-  void setUserState(bool isOnline) {
-    authRepository.setUserState(isOnline);
-  }
-
-  Future<MorrfUser?> becomeTrainer() async {
-    authRepository.becomeTrainer();
-    MorrfUser? user = await getUserData();
-    return user;
-  }
-
-  void signout() {
-    setUserState(false);
-    authRepository.signout();
+    return userRepository.userData(userId);
   }
 }

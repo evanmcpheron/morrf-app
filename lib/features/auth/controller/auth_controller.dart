@@ -1,34 +1,58 @@
-import 'dart:io';
+// import 'dart:io';
+// import 'package:firebase_auth/firebase_auth.dart';
+// import 'package:flutter/material.dart';
+// import 'package:flutter_riverpod/flutter_riverpod.dart';
+// import 'package:get/get.dart';
+// import 'package:morrf/features/auth/repository/auth_repository.dart';
+// import 'package:morrf/features/splash_screen/screens/redirect_splash_screen.dart';
+// import 'package:morrf/models/user/morrf_user.dart';
+
+// final authControllerProvider = Provider((ref) {
+//   final authRepository = ref.watch(authRepositoryProvider);
+//   return AuthController(authRepository: authRepository, ref: ref);
+// });
+
+// final userDataAuthProvider = FutureProvider((ref) {
+//   final authController = ref.watch(authControllerProvider);
+//   print("Hite here");
+//   return authController.getUserData();
+// });
+
+// class AuthController {
+//   final AuthRepository authRepository;
+//   final ProviderRef ref;
+//   AuthController({
+//     required this.authRepository,
+//     required this.ref,
+//   });
+
+// }
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:get/get.dart';
 import 'package:morrf/features/auth/repository/auth_repository.dart';
-import 'package:morrf/features/splash_screen/screens/redirect_splash_screen.dart';
 import 'package:morrf/models/user/morrf_user.dart';
+import 'package:uuid/uuid.dart';
 
-final authControllerProvider = Provider((ref) {
-  final authRepository = ref.watch(authRepositoryProvider);
-  return AuthController(authRepository: authRepository, ref: ref);
-});
+class MorrfUserNotifier extends StateNotifier<MorrfUser> {
+  AuthRepository authRepository = AuthRepository(
+      auth: FirebaseAuth.instance, firestore: FirebaseFirestore.instance);
+  Future _init() async {
+    state = MorrfUser(
+      id: const Uuid().v4(),
+      firstName: "Guest",
+      fullName: "Guest",
+      email: "guest@morrf.me",
+      favorites: [],
+      isOnline: true,
+    );
+  }
 
-final userDataAuthProvider = FutureProvider((ref) {
-  final authController = ref.watch(authControllerProvider);
-  print("Hite here");
-  return authController.getUserData();
-});
-
-class AuthController {
-  final AuthRepository authRepository;
-  final ProviderRef ref;
-  AuthController({
-    required this.authRepository,
-    required this.ref,
-  });
-
-  Future<MorrfUser?> getUserData() async {
-    MorrfUser? user = await authRepository.getCurrentUserData();
-    print("Hit Get user data in auth_controller");
+  Future<MorrfUser> getUserData() async {
+    MorrfUser user = await authRepository.getCurrentUserData();
+    state = user;
     return user;
   }
 
@@ -50,22 +74,36 @@ class AuthController {
     );
   }
 
-  Stream<MorrfUser> userDataById(String userId) {
-    return authRepository.userData(userId);
-  }
-
   void setUserState(bool isOnline) {
     authRepository.setUserState(isOnline);
   }
 
-  Future<MorrfUser?> becomeTrainer() async {
+  void becomeTrainer() async {
     authRepository.becomeTrainer();
     MorrfUser? user = await getUserData();
-    return user;
+    state = user!;
   }
 
   void signout() {
     setUserState(false);
     authRepository.signout();
   }
+
+  MorrfUserNotifier()
+      : super(
+          MorrfUser(
+              id: const Uuid().v4(),
+              firstName: "Guest",
+              fullName: "Guest",
+              email: "guest@morrf.me",
+              favorites: [],
+              isOnline: true),
+        ) {
+    _init();
+  }
 }
+
+final authControllerProvider =
+    StateNotifierProvider<MorrfUserNotifier, MorrfUser>(
+  (ref) => MorrfUserNotifier(),
+);

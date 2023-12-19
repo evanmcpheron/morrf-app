@@ -13,6 +13,7 @@ import 'package:morrf/features/auth/controller/auth_controller.dart';
 import 'package:morrf/features/splash_screen/screens/redirect_splash_screen.dart';
 import 'package:morrf/features/splash_screen/screens/splash_screen.dart';
 import 'package:morrf/firebase_options.dart';
+import 'package:morrf/models/user/morrf_user.dart';
 import 'package:morrf/providers/theme_provider.dart';
 
 Future<void> main() async {
@@ -60,19 +61,10 @@ class _MyAppState extends ConsumerState<MyApp> {
   @override
   Widget build(BuildContext context) {
     var darkMode = ref.watch(darkModeProvider);
+    MorrfUser morrfUser = ref.watch(authControllerProvider);
 
     return GetMaterialApp(
-      home: ref.watch(userDataAuthProvider).when(
-            data: (user) {
-              return RedirectSplashScreen();
-            },
-            error: (err, trace) {
-              return ErrorScreen(
-                error: err.toString(),
-              );
-            },
-            loading: () => const SplashScreen(),
-          ),
+      home: RedirectSplashScreen(),
       title: 'Morrf',
       defaultTransition: Transition.noTransition,
       debugShowCheckedModeBanner: false,
