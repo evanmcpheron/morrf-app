@@ -25,6 +25,7 @@ class _RedirectSplashScreenState extends ConsumerState<RedirectSplashScreen> {
     if (widget.signout) {
       ref.read(authControllerProvider).signout();
     }
+    ref.read(authControllerProvider).getUserData();
     await Future.delayed(const Duration(seconds: 2)).then(
       (value) => Get.offAll(() => const LandingScreen()),
     );

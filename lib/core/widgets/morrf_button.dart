@@ -40,7 +40,6 @@ class _MorrfButtonState extends State<MorrfButton> {
 
   @override
   Widget build(BuildContext context) {
-    print(widget.text);
     return Theme(
       data: ThemeData(buttonTheme: const ButtonThemeData()),
       child: SizedBox(
@@ -61,8 +60,7 @@ class _MorrfButtonState extends State<MorrfButton> {
             child: MorrfText(
               text: widget.text,
               size: FontSize.h6,
-              style:
-                  TextStyle(color: Theme.of(context).colorScheme.onBackground),
+              style: TextStyle(color: Theme.of(context).colorScheme.background),
             )),
       ),
     );

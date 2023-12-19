@@ -2,9 +2,7 @@ import 'dart:io';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:get/get.dart';
 import 'package:morrf/features/auth/repository/auth_repository.dart';
-import 'package:morrf/features/splash_screen/screens/redirect_splash_screen.dart';
 import 'package:morrf/models/user/morrf_user.dart';
 
 final authControllerProvider = Provider((ref) {
@@ -14,7 +12,6 @@ final authControllerProvider = Provider((ref) {
 
 final userDataAuthProvider = FutureProvider((ref) {
   final authController = ref.watch(authControllerProvider);
-  print("Hite here");
   return authController.getUserData();
 });
 
@@ -28,7 +25,6 @@ class AuthController {
 
   Future<MorrfUser?> getUserData() async {
     MorrfUser? user = await authRepository.getCurrentUserData();
-    print("Hit Get user data in auth_controller");
     return user;
   }
 

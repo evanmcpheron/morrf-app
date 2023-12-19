@@ -21,4 +21,6 @@ class Constants {
       IconData(0xe801, fontFamily: 'MyFlutterApp', fontPackage: null);
 
   static const awardsPath = 'assets/images/awards';
+
+  static const availableGenders = ["", "Male", "Female"];
 }

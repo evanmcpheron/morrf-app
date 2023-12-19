@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:morrf/features/splash_screen/screens/redirect_splash_screen.dart';
 import 'package:morrf/models/user/morrf_user.dart';
 import 'package:morrf/core/utils.dart';
+import 'package:uuid/uuid.dart';
 
 final authRepositoryProvider = Provider(
   (ref) => AuthRepository(
@@ -26,6 +27,7 @@ class AuthRepository {
     var userData =
         await firestore.collection('users').doc(auth.currentUser?.uid).get();
     MorrfUser? user;
+
     if (userData.data() != null) {
       user = MorrfUser.fromMap(userData.data()!);
     }
@@ -105,5 +107,25 @@ class AuthRepository {
 
   void signout() async {
     await auth.signOut();
+  }
+
+  void becomeTrainer() async {
+    try {
+      await FirebaseFirestore.instance
+          .collection("users")
+          .doc(auth.currentUser!.uid)
+          .update({
+        'morrfTrainer': {
+          'id': const Uuid().v4(),
+          'services': [],
+          'ratings': [],
+          'orders': []
+        }
+      }).then((value) {
+        Get.offAll(() => RedirectSplashScreen());
+      });
+    } catch (e) {
+      rethrow;
+    }
   }
 }

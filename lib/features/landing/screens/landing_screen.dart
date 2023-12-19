@@ -3,8 +3,12 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:morrf/core/enums/font_size.dart';
+import 'package:morrf/core/widgets/error.dart';
+import 'package:morrf/core/widgets/morff_text.dart';
 import 'package:morrf/features/auth/controller/auth_controller.dart';
 import 'package:morrf/features/auth/screens/menu_screen.dart';
+import 'package:morrf/features/splash_screen/screens/splash_screen.dart';
 import 'package:morrf/models/user/morrf_user.dart';
 
 class LandingScreen extends ConsumerStatefulWidget {
@@ -18,7 +22,6 @@ class _LandingScreenState extends ConsumerState<LandingScreen>
     with WidgetsBindingObserver, TickerProviderStateMixin {
   late TabController tabBarController;
   int _currentPage = 0;
-  late MorrfUser? morrfUser = ref.watch(userDataAuthProvider).value;
   User? user = FirebaseAuth.instance.currentUser;
 
   @override
@@ -56,94 +59,90 @@ class _LandingScreenState extends ConsumerState<LandingScreen>
     MenuScreen(),
   ];
 
-  String welcomeHeader() {
-    if (user != null && morrfUser!.firstName != "") {
-      return "Welcome ${morrfUser!.firstName}";
-    } else if (user != null) {
-      return "Welcome back";
-    } else {
-      return "Guest";
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        elevation: 0,
-        centerTitle: false,
-        title: Text(
-          welcomeHeader(),
-          style: const TextStyle(
-            fontSize: 20,
-            color: Colors.grey,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-      ),
-      body: _widgetOptions.elementAt(_currentPage),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () async {
-          if (tabBarController.index == 0) {
-            print("tab bar controller == 0");
-          } else {
-            print(" else");
-          }
-        },
-        child: const Icon(
-          Icons.comment,
-          color: Colors.white,
-        ),
-      ),
-      bottomNavigationBar: Container(
-        child: morrfUser != null
-            ? BottomNavigationBar(
-                showUnselectedLabels: true,
-                selectedItemColor: Theme.of(context).colorScheme.primary,
-                type: BottomNavigationBarType.fixed,
-                items: const [
-                  BottomNavigationBarItem(
-                    icon: FaIcon(FontAwesomeIcons.magnifyingGlass),
-                    label: "Search",
-                  ),
-                  BottomNavigationBarItem(
-                    icon: FaIcon(FontAwesomeIcons.solidFileLines),
-                    label: "Orders",
-                  ),
-                  BottomNavigationBarItem(
-                    icon: FaIcon(FontAwesomeIcons.userAstronaut),
-                    label: "Profile",
-                  ),
-                ],
-                onTap: (int index) {
-                  setState(() => _currentPage = index);
-                },
-                currentIndex: _currentPage,
-              )
-            : BottomNavigationBar(
-                showUnselectedLabels: true,
-                selectedItemColor: Theme.of(context).colorScheme.primary,
-                type: BottomNavigationBarType.fixed,
-                items: const [
-                  BottomNavigationBarItem(
-                    icon: FaIcon(FontAwesomeIcons.magnifyingGlass),
-                    label: "Search",
-                  ),
-                  BottomNavigationBarItem(
-                    icon: FaIcon(FontAwesomeIcons.userPlus),
-                    label: "Sign Up",
-                  ),
-                  BottomNavigationBarItem(
-                    icon: FaIcon(FontAwesomeIcons.gear),
-                    label: "Settings",
-                  ),
-                ],
-                onTap: (int index) {
-                  setState(() => _currentPage = index);
-                },
-                currentIndex: _currentPage,
+    return ref.watch(userDataAuthProvider).when(
+          data: (morrfUser) {
+            return Scaffold(
+              appBar: AppBar(
+                elevation: 0,
+                centerTitle: false,
+                title: MorrfText(
+                    text: "Morrf",
+                    size: FontSize.h3,
+                    style: TextStyle(
+                        color: Theme.of(context).colorScheme.primary)),
               ),
-      ),
-    );
+              body: _widgetOptions.elementAt(_currentPage),
+              floatingActionButton: morrfUser?.morrfTrainer != null
+                  ? FloatingActionButton(
+                      onPressed: () async {
+                        print("Clicked Button");
+                      },
+                      child: const FaIcon(
+                        FontAwesomeIcons.moneyBill1Wave,
+                      ),
+                    )
+                  : SizedBox(),
+              bottomNavigationBar: Container(
+                child: morrfUser != null
+                    ? BottomNavigationBar(
+                        showUnselectedLabels: true,
+                        selectedItemColor:
+                            Theme.of(context).colorScheme.primary,
+                        type: BottomNavigationBarType.fixed,
+                        items: const [
+                          BottomNavigationBarItem(
+                            icon: FaIcon(FontAwesomeIcons.magnifyingGlass),
+                            label: "Search",
+                          ),
+                          BottomNavigationBarItem(
+                            icon: FaIcon(FontAwesomeIcons.solidFileLines),
+                            label: "Orders",
+                          ),
+                          BottomNavigationBarItem(
+                            icon: FaIcon(FontAwesomeIcons.userAstronaut),
+                            label: "Profile",
+                          ),
+                        ],
+                        onTap: (int index) {
+                          setState(() => _currentPage = index);
+                        },
+                        currentIndex: _currentPage,
+                      )
+                    : BottomNavigationBar(
+                        showUnselectedLabels: true,
+                        selectedItemColor:
+                            Theme.of(context).colorScheme.primary,
+                        type: BottomNavigationBarType.fixed,
+                        items: const [
+                          BottomNavigationBarItem(
+                            icon: FaIcon(FontAwesomeIcons.magnifyingGlass),
+                            label: "Search",
+                          ),
+                          BottomNavigationBarItem(
+                            icon: FaIcon(FontAwesomeIcons.userPlus),
+                            label: "Sign Up",
+                          ),
+                          BottomNavigationBarItem(
+                            icon: FaIcon(FontAwesomeIcons.gear),
+                            label: "Settings",
+                          ),
+                        ],
+                        onTap: (int index) {
+                          setState(() => _currentPage = index);
+                        },
+                        currentIndex: _currentPage,
+                      ),
+              ),
+            );
+          },
+          error: (err, trace) {
+            return ErrorScreen(
+              error: err.toString(),
+            );
+          },
+          loading: () => const SplashScreen(),
+        );
   }
 }
