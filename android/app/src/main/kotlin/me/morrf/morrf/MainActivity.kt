@@ -1,4 +1,4 @@
-package com.maantheme.freelancer
+package me.morrf.morrf
 
 import io.flutter.embedding.android.FlutterActivity
 
