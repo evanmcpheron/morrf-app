@@ -1,109 +1,73 @@
-// import 'dart:io';
-// import 'package:firebase_auth/firebase_auth.dart';
-// import 'package:flutter/material.dart';
-// import 'package:flutter_riverpod/flutter_riverpod.dart';
-// import 'package:get/get.dart';
-// import 'package:morrf/features/auth/repository/auth_repository.dart';
-// import 'package:morrf/features/splash_screen/screens/redirect_splash_screen.dart';
-// import 'package:morrf/models/user/morrf_user.dart';
-
-// final authControllerProvider = Provider((ref) {
-//   final authRepository = ref.watch(authRepositoryProvider);
-//   return AuthController(authRepository: authRepository, ref: ref);
-// });
-
-// final userDataAuthProvider = FutureProvider((ref) {
-//   final authController = ref.watch(authControllerProvider);
-//   print("Hite here");
-//   return authController.getUserData();
-// });
-
-// class AuthController {
-//   final AuthRepository authRepository;
-//   final ProviderRef ref;
-//   AuthController({
-//     required this.authRepository,
-//     required this.ref,
-//   });
-
-// }
-
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:morrf/features/auth/repository/auth_repository.dart';
 import 'package:morrf/models/user/morrf_user.dart';
-import 'package:uuid/uuid.dart';
 
-class MorrfUserNotifier extends StateNotifier<MorrfUser> {
-  AuthRepository authRepository = AuthRepository(
-      auth: FirebaseAuth.instance, firestore: FirebaseFirestore.instance);
+final userProvider = StateProvider<MorrfUser?>((ref) => null);
+
+final authControllerProvider = StateNotifierProvider<MorrfUserNotifier, bool>(
+  (ref) => MorrfUserNotifier(
+    authRepository: ref.watch(authRepositoryProvider),
+    ref: ref,
+  ),
+);
+
+final authStateChangeProvider = StreamProvider((ref) {
+  final authController = ref.watch(authControllerProvider.notifier);
+  return authController.authStateChange;
+});
+
+final getUserDataProvider = StreamProvider.family((ref, String uid) {
+  final authController = ref.watch(authControllerProvider.notifier);
+  return authController.getUserData(uid);
+});
+
+class MorrfUserNotifier extends StateNotifier<bool> {
+  final AuthRepository _authRepository;
+  final Ref _ref;
+  MorrfUserNotifier({required AuthRepository authRepository, required Ref ref})
+      : _authRepository = authRepository,
+        _ref = ref,
+        super(false);
+
   Future _init() async {
-    state = MorrfUser(
-      id: const Uuid().v4(),
-      firstName: "Guest",
-      fullName: "Guest",
-      email: "guest@morrf.me",
-      favorites: [],
-      isOnline: true,
-    );
+    state = false;
   }
 
-  Future<MorrfUser> getUserData() async {
-    MorrfUser user = await authRepository.getCurrentUserData();
-    state = user;
-    return user;
+  Stream<User?> get authStateChange => _authRepository.authStateChange;
+
+  Stream<MorrfUser> getUserData(String uid) {
+    return _authRepository.getUserData(uid);
   }
 
   void signupWithEmailAndPassword(
       BuildContext context, String email, String password) {
-    authRepository.signupWithEmailAndPassword(context, email, password);
+    _authRepository.signupWithEmailAndPassword(context, email, password);
   }
 
   void signinWithEmailAndPassword(
       BuildContext context, String email, String password) {
-    authRepository.signinWithEmailAndPassword(context, email, password);
-    setUserState(true);
+    _authRepository.signinWithEmailAndPassword(context, email, password);
   }
 
   void saveUserDataToFirebase(BuildContext context, User user, String email) {
-    authRepository.saveUserDataToFirebase(
+    _authRepository.saveUserDataToFirebase(
       email: email,
       context: context,
     );
   }
 
   void setUserState(bool isOnline) {
-    authRepository.setUserState(isOnline);
+    _authRepository.setUserState(isOnline);
   }
 
   void becomeTrainer() async {
-    authRepository.becomeTrainer();
-    MorrfUser? user = await getUserData();
-    state = user!;
+    _authRepository.becomeTrainer();
   }
 
   void signout() {
     setUserState(false);
-    authRepository.signout();
-  }
-
-  MorrfUserNotifier()
-      : super(
-          MorrfUser(
-              id: const Uuid().v4(),
-              firstName: "Guest",
-              fullName: "Guest",
-              email: "guest@morrf.me",
-              favorites: [],
-              isOnline: true),
-        ) {
-    _init();
+    _authRepository.signout();
   }
 }
-
-final authControllerProvider =
-    StateNotifierProvider<MorrfUserNotifier, MorrfUser>(
-  (ref) => MorrfUserNotifier(),
-);

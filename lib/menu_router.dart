@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:morrf/features/auth/screens/signin_screen.dart';
@@ -14,8 +15,33 @@ final List<Color> menuColors = [
 
 final List<MenuItem> mainSignedinProfileMenu = [
   MenuItem(
-      destination: UserProfileScreen(),
+      destination:
+          UserProfileScreen(userId: FirebaseAuth.instance.currentUser!.uid),
       title: "My Profile",
+      icon: FontAwesomeIcons.userAstronaut),
+  MenuItem(
+      destination: const Text(""),
+      title: "Add Payment Method",
+      icon: FontAwesomeIcons.creditCard),
+  MenuItem(
+      destination: const SettingsScreen(),
+      title: "Settings",
+      icon: FontAwesomeIcons.gear),
+  MenuItem(
+      destination: RedirectSplashScreen(signout: true),
+      title: "Sign Out",
+      icon: FontAwesomeIcons.doorOpen),
+];
+final List<MenuItem> mainTrainerProfileMenu = [
+  MenuItem(
+      destination:
+          UserProfileScreen(userId: FirebaseAuth.instance.currentUser!.uid),
+      title: "My Profile",
+      icon: FontAwesomeIcons.userAstronaut),
+  MenuItem(
+      destination:
+          UserProfileScreen(userId: FirebaseAuth.instance.currentUser!.uid),
+      title: "Add Service",
       icon: FontAwesomeIcons.userAstronaut),
   MenuItem(
       destination: const Text(""),

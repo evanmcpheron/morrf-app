@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get/get.dart';
+import 'package:morrf/core/constants/firebase_constants.dart';
 import 'package:morrf/features/splash_screen/screens/redirect_splash_screen.dart';
 import 'package:morrf/models/user/morrf_trainer.dart';
 import 'package:morrf/models/user/morrf_user.dart';
@@ -23,6 +24,11 @@ class AuthRepository {
     required this.auth,
     required this.firestore,
   });
+
+  CollectionReference get _users =>
+      firestore.collection(FirebaseConstants.usersCollection);
+
+  Stream<User?> get authStateChange => auth.authStateChanges();
 
   Future<MorrfUser> getCurrentUserData() async {
     var userData =
@@ -104,6 +110,22 @@ class AuthRepository {
     await firestore.collection('users').doc(auth.currentUser!.uid).update({
       'isOnline': isOnline,
     });
+    setUserState(true);
+  }
+
+  Stream<MorrfUser> getUserData(String? uid) {
+    return _users.doc(uid).snapshots().map(
+          (event) => uid != null
+              ? MorrfUser.fromMap(event.data() as Map<String, dynamic>)
+              : MorrfUser(
+                  id: const Uuid().v4(),
+                  firstName: "Guest",
+                  fullName: "Guest",
+                  email: "guest@morrf.me",
+                  favorites: [],
+                  isOnline: true,
+                ),
+        );
   }
 
   void signout() async {

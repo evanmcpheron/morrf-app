@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -9,7 +10,11 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:json_theme/json_theme.dart';
 import 'package:morrf/core/widgets/error.dart';
+import 'package:morrf/core/widgets/loader.dart';
 import 'package:morrf/features/auth/controller/auth_controller.dart';
+import 'package:morrf/features/auth/screens/signup_screen.dart';
+import 'package:morrf/features/landing/screens/guest_landing_screen.dart';
+import 'package:morrf/features/landing/screens/landing_screen.dart';
 import 'package:morrf/features/splash_screen/screens/redirect_splash_screen.dart';
 import 'package:morrf/features/splash_screen/screens/splash_screen.dart';
 import 'package:morrf/firebase_options.dart';
@@ -61,10 +66,28 @@ class _MyAppState extends ConsumerState<MyApp> {
   @override
   Widget build(BuildContext context) {
     var darkMode = ref.watch(darkModeProvider);
-    MorrfUser morrfUser = ref.watch(authControllerProvider);
+    MorrfUser? userModel;
+
+    void getData(WidgetRef ref, User data) async {
+      userModel = await ref
+          .watch(authControllerProvider.notifier)
+          .getUserData(data.uid)
+          .first;
+      ref.read(userProvider.notifier).update((state) => userModel);
+    }
 
     return GetMaterialApp(
-      home: RedirectSplashScreen(),
+      home: ref.watch(authStateChangeProvider).when(
+            data: (user) {
+              return RedirectSplashScreen();
+            },
+            error: (err, trace) {
+              return ErrorScreen(
+                error: err.toString(),
+              );
+            },
+            loading: () => const SplashScreen(),
+          ),
       title: 'Morrf',
       defaultTransition: Transition.noTransition,
       debugShowCheckedModeBanner: false,
