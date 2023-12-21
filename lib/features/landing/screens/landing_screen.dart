@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -9,7 +8,6 @@ import 'package:morrf/core/widgets/morff_text.dart';
 import 'package:morrf/features/auth/controller/auth_controller.dart';
 import 'package:morrf/features/auth/screens/menu_screen.dart';
 import 'package:morrf/features/splash_screen/screens/splash_screen.dart';
-import 'package:morrf/models/user/morrf_user.dart';
 
 class LandingScreen extends ConsumerStatefulWidget {
   const LandingScreen({Key? key}) : super(key: key);

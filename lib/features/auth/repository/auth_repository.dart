@@ -5,7 +5,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get/get.dart';
 import 'package:morrf/core/constants/firebase_constants.dart';
 import 'package:morrf/features/splash_screen/screens/redirect_splash_screen.dart';
-import 'package:morrf/models/user/morrf_trainer.dart';
 import 'package:morrf/models/user/morrf_user.dart';
 import 'package:morrf/core/utils.dart';
 import 'package:uuid/uuid.dart';

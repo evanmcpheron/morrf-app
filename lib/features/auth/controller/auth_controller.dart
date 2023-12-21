@@ -25,10 +25,8 @@ final getUserDataProvider = StreamProvider.family((ref, String uid) {
 
 class MorrfUserNotifier extends StateNotifier<bool> {
   final AuthRepository _authRepository;
-  final Ref _ref;
   MorrfUserNotifier({required AuthRepository authRepository, required Ref ref})
       : _authRepository = authRepository,
-        _ref = ref,
         super(false);
 
   Future _init() async {

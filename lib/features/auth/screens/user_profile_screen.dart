@@ -10,8 +10,8 @@ import 'package:morrf/features/auth/screens/become_trainer_screen.dart';
 import 'package:morrf/features/splash_screen/screens/splash_screen.dart';
 
 class UserProfileScreen extends ConsumerStatefulWidget {
-  String userId;
-  UserProfileScreen({super.key, required this.userId});
+  final String userId;
+  const UserProfileScreen({super.key, required this.userId});
 
   @override
   ConsumerState<UserProfileScreen> createState() => _UserProfileScreenState();

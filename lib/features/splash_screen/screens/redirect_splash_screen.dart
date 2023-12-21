@@ -3,13 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get/get.dart';
 import 'package:morrf/features/auth/controller/auth_controller.dart';
-import 'package:morrf/features/auth/screens/signup_screen.dart';
 import 'package:morrf/features/landing/screens/guest_landing_screen.dart';
 import 'package:morrf/features/landing/screens/landing_screen.dart';
 
 class RedirectSplashScreen extends ConsumerStatefulWidget {
-  bool signout;
-  RedirectSplashScreen({super.key, this.signout = false});
+  final bool signout;
+  const RedirectSplashScreen({super.key, this.signout = false});
 
   @override
   ConsumerState<RedirectSplashScreen> createState() =>
