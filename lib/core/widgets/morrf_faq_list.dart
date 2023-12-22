@@ -4,8 +4,8 @@ import 'package:morrf/models/morrf_faq.dart';
 import 'package:morrf/core/widgets/morff_text.dart';
 
 class MorrfFaqList extends StatefulWidget {
-  List<MorrfFaq?> faqList;
-  MorrfFaqList({super.key, required this.faqList});
+  final List<MorrfFaq?> faqList;
+  const MorrfFaqList({super.key, required this.faqList});
 
   @override
   State<MorrfFaqList> createState() => _MorrfFaqListState();

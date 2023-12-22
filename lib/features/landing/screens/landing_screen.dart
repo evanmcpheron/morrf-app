@@ -73,7 +73,7 @@ class _LandingScreenState extends ConsumerState<LandingScreen>
                         color: Theme.of(context).colorScheme.primary)),
               ),
               body: _widgetOptions.elementAt(_currentPage),
-              floatingActionButton: morrfUser?.morrfTrainer != null
+              floatingActionButton: morrfUser.morrfTrainer != null
                   ? FloatingActionButton(
                       onPressed: () async {
                         print("Clicked Button");
@@ -82,7 +82,7 @@ class _LandingScreenState extends ConsumerState<LandingScreen>
                         FontAwesomeIcons.moneyBill1Wave,
                       ),
                     )
-                  : SizedBox(),
+                  : const SizedBox(),
               bottomNavigationBar: Container(
                 child: isSignedIn
                     ? BottomNavigationBar(

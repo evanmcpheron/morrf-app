@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 
 class MorrfDrowpdown extends StatefulWidget {
-  List<String> list;
-  String selected;
-  String label;
-  String? initialValue;
-  bool compact;
-  Function(String) onChange;
-  MorrfDrowpdown(
+  final List<String> list;
+  final String selected;
+  final String label;
+  final String? initialValue;
+  final bool compact;
+  final Function(String) onChange;
+  const MorrfDrowpdown(
       {super.key,
       required this.selected,
       required this.label,

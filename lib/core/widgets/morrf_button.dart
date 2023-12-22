@@ -9,9 +9,9 @@ class MorrfButton extends StatefulWidget {
   final String text;
   final Severity? severity;
   final double? width;
-  bool? disabled;
+  final bool? disabled;
 
-  MorrfButton(
+  const MorrfButton(
       {super.key,
       required this.onPressed,
       this.fullWidth,

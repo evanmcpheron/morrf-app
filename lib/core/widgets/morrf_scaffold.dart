@@ -5,13 +5,13 @@ import 'package:morrf/core/enums/font_size.dart';
 import 'morff_text.dart';
 
 class MorrfScaffold extends ConsumerStatefulWidget {
-  String title;
-  Widget? leading;
-  void Function()? leadingPressed;
-  Widget? trailing;
-  void Function()? trailingPressed;
-  Widget body;
-  MorrfScaffold(
+  final String title;
+  final Widget? leading;
+  final void Function()? leadingPressed;
+  final Widget? trailing;
+  final void Function()? trailingPressed;
+  final Widget body;
+  const MorrfScaffold(
       {super.key,
       required this.title,
       required this.body,

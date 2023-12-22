@@ -1,14 +1,9 @@
-import 'dart:io';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:morrf/core/enums/font_size.dart';
-import 'package:morrf/core/widgets/error.dart';
 import 'package:morrf/core/widgets/morff_text.dart';
-import 'package:morrf/features/auth/controller/auth_controller.dart';
 import 'package:morrf/features/auth/screens/menu_screen.dart';
-import 'package:morrf/features/splash_screen/screens/splash_screen.dart';
 
 class GuestLandingScreen extends ConsumerStatefulWidget {
   const GuestLandingScreen({Key? key}) : super(key: key);
