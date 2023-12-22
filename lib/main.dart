@@ -39,8 +39,11 @@ Future<void> main() async {
   final darkThemeJson = jsonDecode(darkThemeStr);
   final darkTheme = ThemeDecoder.decodeThemeData(darkThemeJson)!;
 
-  return runApp(ProviderScope(
-      child: MyApp(darkTheme: darkTheme, lightTheme: lightTheme)));
+  return runApp(
+    ProviderScope(
+      child: MyApp(darkTheme: darkTheme, lightTheme: lightTheme),
+    ),
+  );
 }
 
 class MyApp extends ConsumerStatefulWidget {
