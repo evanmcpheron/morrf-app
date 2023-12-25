@@ -31,8 +31,8 @@ class _GuestLandingScreenState extends ConsumerState<GuestLandingScreen>
   }
 
   static const List<Widget> _widgetOptions = <Widget>[
-    Text("Auth 1"),
-    Text("Auth 2"),
+    Text("Guest 1"),
+    Text("Guest 2"),
     MenuScreen(),
   ];
 
