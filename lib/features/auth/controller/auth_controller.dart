@@ -1,14 +1,14 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:morrf/features/auth/repository/auth_repository.dart';
+import 'package:morrf/features/auth/service/auth_service.dart';
 import 'package:morrf/models/user/morrf_user.dart';
 
 final userProvider = StateProvider<MorrfUser?>((ref) => null);
 
 final authControllerProvider = StateNotifierProvider<MorrfUserNotifier, bool>(
   (ref) => MorrfUserNotifier(
-    authRepository: ref.watch(authRepositoryProvider),
+    authService: ref.watch(authServiceProvider),
     ref: ref,
   ),
 );
@@ -24,48 +24,49 @@ final getUserDataProvider = StreamProvider.family((ref, String uid) {
 });
 
 class MorrfUserNotifier extends StateNotifier<bool> {
-  final AuthRepository _authRepository;
-  MorrfUserNotifier({required AuthRepository authRepository, required Ref ref})
-      : _authRepository = authRepository,
+  final AuthService _authService;
+  MorrfUserNotifier({required AuthService authService, required Ref ref})
+      : _authService = authService,
         super(false);
 
   Future _init() async {
     state = false;
   }
 
-  Stream<User?> get authStateChange => _authRepository.authStateChange;
+  Stream<User?> get authStateChange => _authService.authStateChange;
 
   Stream<MorrfUser> getUserData(String uid) {
-    return _authRepository.getUserData(uid);
+    return _authService.getUserData(uid);
   }
 
   void signupWithEmailAndPassword(
       BuildContext context, String email, String password) {
-    _authRepository.signupWithEmailAndPassword(context, email, password);
+    _authService.signupWithEmailAndPassword(context, email, password);
   }
 
   void signinWithEmailAndPassword(
       BuildContext context, String email, String password) {
-    _authRepository.signinWithEmailAndPassword(context, email, password);
+    _authService.signinWithEmailAndPassword(context, email, password);
   }
 
   void saveUserDataToFirebase(BuildContext context, User user, String email) {
-    _authRepository.saveUserDataToFirebase(
+    _authService.saveUserDataToFirebase(
       email: email,
       context: context,
     );
   }
 
   void setUserState(bool isOnline) {
-    _authRepository.setUserState(isOnline);
+    _authService.setUserState(isOnline);
   }
 
   void becomeTrainer() async {
-    _authRepository.becomeTrainer();
+    _authService.becomeTrainer();
   }
 
   void signout() {
     setUserState(false);
-    _authRepository.signout();
+    print("signed out");
+    _authService.signout();
   }
 }

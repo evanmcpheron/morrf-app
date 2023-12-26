@@ -57,6 +57,42 @@ class MorrfUser {
             ? MorrfTrainer.fromMap(data['morrfTrainer'])
             : null;
 
+  MorrfUser copyWith({
+    String? id,
+    String? firstName,
+    String? lastName,
+    String? fullName,
+    String? email,
+    bool? isOnline,
+    String? gender,
+    String? phoneNumber,
+    Timestamp? birthday,
+    String? photoURL,
+    String? stripe,
+    List<String?>? favorites,
+    List<MorrfOrder>? orders,
+    String? aboutMe,
+    MorrfTrainer? morrfTrainer,
+  }) {
+    return MorrfUser(
+      id: id ?? this.id,
+      firstName: firstName ?? this.firstName,
+      lastName: lastName ?? this.lastName,
+      fullName: fullName ?? this.fullName,
+      email: email ?? this.email,
+      isOnline: isOnline ?? this.isOnline,
+      gender: gender ?? this.gender,
+      phoneNumber: phoneNumber ?? this.phoneNumber,
+      birthday: birthday ?? this.birthday,
+      photoURL: photoURL ?? this.photoURL,
+      stripe: stripe ?? this.stripe,
+      favorites: favorites ?? this.favorites,
+      orders: orders ?? this.orders,
+      aboutMe: aboutMe ?? this.aboutMe,
+      morrfTrainer: morrfTrainer ?? this.morrfTrainer,
+    );
+  }
+
   Map<String, dynamic> toJson() {
     return {
       'id': id,

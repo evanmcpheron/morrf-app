@@ -9,17 +9,17 @@ import 'package:morrf/models/user/morrf_user.dart';
 import 'package:morrf/core/utils.dart';
 import 'package:uuid/uuid.dart';
 
-final authRepositoryProvider = Provider(
-  (ref) => AuthRepository(
+final authServiceProvider = Provider(
+  (ref) => AuthService(
     auth: FirebaseAuth.instance,
     firestore: FirebaseFirestore.instance,
   ),
 );
 
-class AuthRepository {
+class AuthService {
   final FirebaseAuth auth;
   final FirebaseFirestore firestore;
-  AuthRepository({
+  AuthService({
     required this.auth,
     required this.firestore,
   });

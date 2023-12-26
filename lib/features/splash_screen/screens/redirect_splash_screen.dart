@@ -26,7 +26,7 @@ class _RedirectSplashScreenState extends ConsumerState<RedirectSplashScreen> {
     if (widget.signout) {
       ref.read(authControllerProvider.notifier).signout();
     }
-    if (FirebaseAuth.instance.currentUser != null) {
+    if (FirebaseAuth.instance.currentUser != null && !widget.signout) {
       await Future.delayed(const Duration(seconds: 2)).then(
         (value) => Get.offAll(
           () => const LandingScreen(),

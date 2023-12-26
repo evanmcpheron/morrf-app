@@ -38,6 +38,7 @@ class _GuestLandingScreenState extends ConsumerState<GuestLandingScreen>
 
   @override
   Widget build(BuildContext context) {
+    print("guest Page");
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
