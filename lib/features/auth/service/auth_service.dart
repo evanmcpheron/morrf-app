@@ -1,9 +1,12 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get/get.dart';
 import 'package:morrf/core/constants/firebase_constants.dart';
+import 'package:morrf/core/repositories/common_firebase_storage_repository.dart';
 import 'package:morrf/features/splash_screen/screens/redirect_splash_screen.dart';
 import 'package:morrf/models/user/morrf_user.dart';
 import 'package:morrf/core/utils.dart';
@@ -34,8 +37,7 @@ class AuthService {
         await firestore.collection('users').doc(auth.currentUser?.uid).get();
     MorrfUser user = MorrfUser(
       id: const Uuid().v4(),
-      firstName: "Guest",
-      fullName: "Guest",
+      displayName: "Guest",
       email: "guest@morrf.me",
       favorites: [],
       isOnline: true,
@@ -46,6 +48,44 @@ class AuthService {
       user = MorrfUser.fromMap(userData.data()!);
     }
     return user;
+  }
+
+  void updateUserInFirebase({
+    required MorrfUser morrfUser,
+    required String displayName,
+    required File? profilePic,
+    required WidgetRef ref,
+    required BuildContext context,
+  }) async {
+    try {
+      String uid = auth.currentUser!.uid;
+      String photoUrl =
+          'https://png.pngitem.com/pimgs/s/649-6490124_katie-notopoulos-katienotopoulos-i-write-about-tech-round.png';
+
+      if (profilePic != null) {
+        photoUrl = await ref
+            .read(commonFirebaseStorageRepositoryProvider)
+            .storeFileToFirebase(
+              'profilePic/$uid',
+              profilePic,
+            );
+      }
+      if (displayName != null) {
+        await auth.currentUser!.updateDisplayName(displayName);
+      }
+
+      var user = morrfUser.copyWith(
+        displayName: displayName,
+        photoURL: photoUrl,
+        isOnline: true,
+      );
+      print(user.toJson());
+      await firestore.collection('users').doc(uid).set(user.toJson());
+
+      Get.back();
+    } catch (e) {
+      showSnackBar(context, e.toString());
+    }
   }
 
   void signupWithEmailAndPassword(
@@ -88,9 +128,7 @@ class AuthService {
       await currentUser.updatePhotoURL(photoUrl);
 
       var user = MorrfUser(
-          firstName: "",
-          lastName: "",
-          fullName: "",
+          displayName: "",
           email: email,
           isOnline: true,
           id: uid,
@@ -118,8 +156,7 @@ class AuthService {
               ? MorrfUser.fromMap(event.data() as Map<String, dynamic>)
               : MorrfUser(
                   id: const Uuid().v4(),
-                  firstName: "Guest",
-                  fullName: "Guest",
+                  displayName: "Guest",
                   email: "guest@morrf.me",
                   favorites: [],
                   isOnline: true,

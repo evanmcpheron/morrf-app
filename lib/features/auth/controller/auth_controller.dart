@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -31,6 +33,17 @@ class MorrfUserNotifier extends StateNotifier<bool> {
 
   Future _init() async {
     state = false;
+  }
+
+  void updateUserInFirebase(MorrfUser morrfUser, BuildContext context,
+      String name, File? profilePic, WidgetRef ref) {
+    _authService.updateUserInFirebase(
+      morrfUser: morrfUser,
+      displayName: name,
+      profilePic: profilePic,
+      ref: ref,
+      context: context,
+    );
   }
 
   Stream<User?> get authStateChange => _authService.authStateChange;

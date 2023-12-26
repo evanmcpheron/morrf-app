@@ -4,6 +4,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:morrf/features/auth/screens/signin_screen.dart';
 import 'package:morrf/features/auth/screens/signup_screen.dart';
 import 'package:morrf/features/auth/screens/user_profile_screen.dart';
+import 'package:morrf/features/payments/screens/payment_method_screen.dart';
 import 'package:morrf/features/settings/screens/settings_screen.dart';
 import 'package:morrf/features/splash_screen/screens/redirect_splash_screen.dart';
 import 'package:morrf/models/general/menu_item.dart';
@@ -20,7 +21,7 @@ final List<MenuItem> mainSignedinProfileMenu = [
       title: "My Profile",
       icon: FontAwesomeIcons.userAstronaut),
   MenuItem(
-      destination: const Text(""),
+      destination: const PaymentMethodsScreen(),
       title: "Add Payment Method",
       icon: FontAwesomeIcons.creditCard),
   MenuItem(
@@ -28,7 +29,7 @@ final List<MenuItem> mainSignedinProfileMenu = [
       title: "Settings",
       icon: FontAwesomeIcons.gear),
   MenuItem(
-      destination: RedirectSplashScreen(signout: true),
+      destination: const RedirectSplashScreen(signout: true),
       title: "Sign Out",
       icon: FontAwesomeIcons.doorOpen),
 ];
@@ -44,7 +45,7 @@ final List<MenuItem> mainTrainerProfileMenu = [
       title: "Add Service",
       icon: FontAwesomeIcons.userAstronaut),
   MenuItem(
-      destination: const Text(""),
+      destination: const PaymentMethodsScreen(),
       title: "Add Payment Method",
       icon: FontAwesomeIcons.creditCard),
   MenuItem(
@@ -52,7 +53,7 @@ final List<MenuItem> mainTrainerProfileMenu = [
       title: "Settings",
       icon: FontAwesomeIcons.gear),
   MenuItem(
-      destination: RedirectSplashScreen(signout: true),
+      destination: const RedirectSplashScreen(signout: true),
       title: "Sign Out",
       icon: FontAwesomeIcons.doorOpen),
 ];

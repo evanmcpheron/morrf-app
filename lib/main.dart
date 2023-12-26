@@ -78,7 +78,7 @@ class _MyAppState extends ConsumerState<MyApp> {
     return GetMaterialApp(
       home: ref.watch(authStateChangeProvider).when(
             data: (user) {
-              return RedirectSplashScreen();
+              return const RedirectSplashScreen();
             },
             error: (err, trace) {
               return ErrorScreen(

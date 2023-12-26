@@ -5,9 +5,7 @@ import 'morrf_trainer.dart';
 
 class MorrfUser {
   final String id;
-  final String firstName;
-  final String lastName;
-  final String fullName;
+  final String displayName;
   final String email;
   bool isOnline;
   String? gender;
@@ -22,9 +20,7 @@ class MorrfUser {
 
   MorrfUser(
       {required this.id,
-      required this.firstName,
-      this.lastName = "",
-      required this.fullName,
+      required this.displayName,
       required this.email,
       this.gender,
       this.phoneNumber,
@@ -40,9 +36,7 @@ class MorrfUser {
 
   MorrfUser.fromMap(Map<String, dynamic> data)
       : id = data['id'],
-        firstName = data['firstName'],
-        lastName = data['lastName'],
-        fullName = data['fullName'],
+        displayName = data['displayName'],
         email = data['email'],
         isOnline = data['isOnline'],
         gender = data['gender'],
@@ -59,9 +53,7 @@ class MorrfUser {
 
   MorrfUser copyWith({
     String? id,
-    String? firstName,
-    String? lastName,
-    String? fullName,
+    String? displayName,
     String? email,
     bool? isOnline,
     String? gender,
@@ -76,9 +68,7 @@ class MorrfUser {
   }) {
     return MorrfUser(
       id: id ?? this.id,
-      firstName: firstName ?? this.firstName,
-      lastName: lastName ?? this.lastName,
-      fullName: fullName ?? this.fullName,
+      displayName: displayName ?? this.displayName,
       email: email ?? this.email,
       isOnline: isOnline ?? this.isOnline,
       gender: gender ?? this.gender,
@@ -96,9 +86,7 @@ class MorrfUser {
   Map<String, dynamic> toJson() {
     return {
       'id': id,
-      'firstName': firstName,
-      'lastName': lastName,
-      'fullName': fullName,
+      'displayName': displayName,
       'email': email,
       'isOnline': isOnline,
       'gender': gender,
@@ -108,7 +96,8 @@ class MorrfUser {
       'stripe': stripe,
       'favorites': favorites,
       'orders': orders,
-      'aboutMe': aboutMe
+      'aboutMe': aboutMe,
+      'morrfTrainer': morrfTrainer?.toJson()
     };
   }
 }

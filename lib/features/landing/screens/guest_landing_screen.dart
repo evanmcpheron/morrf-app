@@ -4,6 +4,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:morrf/core/enums/font_size.dart';
 import 'package:morrf/core/widgets/morff_text.dart';
 import 'package:morrf/features/auth/screens/menu_screen.dart';
+import 'package:morrf/features/auth/screens/signup_screen.dart';
 
 class GuestLandingScreen extends ConsumerStatefulWidget {
   const GuestLandingScreen({Key? key}) : super(key: key);
@@ -32,7 +33,7 @@ class _GuestLandingScreenState extends ConsumerState<GuestLandingScreen>
 
   static const List<Widget> _widgetOptions = <Widget>[
     Text("Guest 1"),
-    Text("Guest 2"),
+    SignupScreen(),
     MenuScreen(),
   ];
 

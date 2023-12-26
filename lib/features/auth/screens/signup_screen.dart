@@ -104,35 +104,37 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
                   },
                 ),
                 const SizedBox(height: 20.0),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
+                Wrap(
                   children: [
-                    Checkbox(
-                        activeColor: Theme.of(context).colorScheme.primary,
-                        visualDensity: const VisualDensity(horizontal: -4),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(2.0),
-                        ),
-                        value: isCheck,
-                        onChanged: (value) {
-                          setState(() {
-                            isCheck = !isCheck;
-                          });
-                        }),
-                    Row(children: [
-                      const MorrfText(
-                          text: "Yes, I understand and agree to the ",
-                          size: FontSize.p),
-                      GestureDetector(
-                          onTap: () => Get.to(() =>
-                              const SigninScreen()), //TODO: MAKE TERMS OF SERVICE PAGE
-                          child: const MorrfText(
-                            text: "Terms of service",
-                            size: FontSize.h6,
-                            isLink: true,
-                          )),
-                    ])
+                    Row(
+                      children: [
+                        Checkbox(
+                            activeColor: Theme.of(context).colorScheme.primary,
+                            visualDensity: const VisualDensity(horizontal: -4),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(2.0),
+                            ),
+                            value: isCheck,
+                            onChanged: (value) {
+                              setState(() {
+                                isCheck = !isCheck;
+                              });
+                            }),
+                        const MorrfText(
+                            text: "Yes, I understand and agree to the ",
+                            size: FontSize.p),
+                      ],
+                    ),
+                    GestureDetector(
+                      onTap: () => Get.to(() =>
+                          const SigninScreen()), //TODO: MAKE TERMS OF SERVICE PAGE
+                      child: const MorrfText(
+                        text: "Terms of service",
+                        size: FontSize.h6,
+                        isLink: true,
+                        overflow: TextOverflow.clip,
+                      ),
+                    ),
                   ],
                 ),
                 const SizedBox(height: 20.0),
