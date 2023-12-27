@@ -65,15 +65,6 @@ class _MyAppState extends ConsumerState<MyApp> {
   @override
   Widget build(BuildContext context) {
     var darkMode = ref.watch(darkModeProvider);
-    MorrfUser? userModel;
-
-    void getData(WidgetRef ref, User data) async {
-      userModel = await ref
-          .watch(authControllerProvider.notifier)
-          .getUserData(data.uid)
-          .first;
-      ref.read(userProvider.notifier).update((state) => userModel);
-    }
 
     return GetMaterialApp(
       home: ref.watch(authStateChangeProvider).when(
