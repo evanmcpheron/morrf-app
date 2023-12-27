@@ -1,4 +1,4 @@
-import 'package:morrf/models/morrf_service.dart';
+import 'package:morrf/models/service/morrf_service.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 String? formatDate(DateTime? date) {
