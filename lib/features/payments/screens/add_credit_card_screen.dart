@@ -10,6 +10,7 @@ import 'package:get/get.dart';
 import 'package:morrf/core/utils.dart';
 import 'package:morrf/core/widgets/morrf_button.dart';
 import 'package:morrf/core/widgets/morrf_scaffold.dart';
+import 'package:morrf/features/payments/controller/payment_controller.dart';
 
 class AddCreditCardScreen extends ConsumerStatefulWidget {
   const AddCreditCardScreen({super.key});
@@ -21,6 +22,7 @@ class AddCreditCardScreen extends ConsumerStatefulWidget {
 
 class AddCreditCardScreenState extends ConsumerState<AddCreditCardScreen> {
   User user = FirebaseAuth.instance.currentUser!;
+  bool isLoading = false;
   String cardNumber = '';
   String expiryDate = '';
   String cardHolderName = '';
@@ -32,10 +34,16 @@ class AddCreditCardScreenState extends ConsumerState<AddCreditCardScreen> {
 
   Future<void> addCard(paymentMethodId) async {
     try {
-      // await ref
-      //     .read(morrfCrediCardProvider.notifier)
-      //     .createCard(paymentMethodId, ref.read(loadingProvider.notifier));
+      setState(() {
+        isLoading = true;
+      });
+      await ref
+          .read(morrfCrediCardProvider.notifier)
+          .createCard(paymentMethodId);
 
+      setState(() {
+        isLoading = false;
+      });
       Get.back();
     } catch (e) {
       rethrow;
@@ -57,227 +65,239 @@ class AddCreditCardScreenState extends ConsumerState<AddCreditCardScreen> {
   Widget build(BuildContext context) {
     return MorrfScaffold(
       title: "Add a Card",
-      body: SafeArea(
-        child: Column(
-          children: <Widget>[
-            CreditCardWidget(
-              cardNumber: cardNumber,
-              expiryDate: expiryDate,
-              cardHolderName: cardHolderName,
-              cvvCode: cvvCode,
-              showBackView: isCvvFocused,
-              obscureCardNumber: true,
-              obscureCardCvv: true,
-              isHolderNameVisible: true,
-              textStyle:
-                  TextStyle(color: Theme.of(context).colorScheme.onBackground),
-              isChipVisible: false,
-              cardBgColor: Theme.of(context).colorScheme.primary,
-              isSwipeGestureEnabled: false,
-              onCreditCardWidgetChange: (CreditCardBrand creditCardBrand) {},
-              customCardTypeIcons: <CustomCardTypeIcon>[
-                CustomCardTypeIcon(
-                  cardType: CardType.mastercard,
-                  cardImage: SvgPicture.asset(
-                    'images/cards/mastercard.svg',
-                    semanticsLabel: 'Mastercard Logo',
-                    width: MediaQuery.of(context).size.width / 8,
-                    color: Theme.of(context).colorScheme.onBackground,
-                  ),
-                ),
-                CustomCardTypeIcon(
-                  cardType: CardType.visa,
-                  cardImage: SvgPicture.asset(
-                    'images/cards/visa.svg',
-                    semanticsLabel: 'Visa Logo',
-                    width: MediaQuery.of(context).size.width / 8,
-                    color: Theme.of(context).colorScheme.onBackground,
-                  ),
-                ),
-                CustomCardTypeIcon(
-                  cardType: CardType.discover,
-                  cardImage: SvgPicture.asset(
-                    'images/cards/discover.svg',
-                    semanticsLabel: 'Discover Logo',
-                    width: MediaQuery.of(context).size.width / 8,
-                    color: Theme.of(context).colorScheme.onBackground,
-                  ),
-                ),
-                CustomCardTypeIcon(
-                  cardType: CardType.americanExpress,
-                  cardImage: SvgPicture.asset(
-                    'images/cards/amex.svg',
-                    semanticsLabel: 'American Express Logo',
-                    width: MediaQuery.of(context).size.width / 8,
-                    color: Theme.of(context).colorScheme.onBackground,
-                  ),
-                ),
-              ],
-            ),
-            Expanded(
-              child: SingleChildScrollView(
-                child: Column(
-                  children: <Widget>[
-                    CreditCardForm(
-                      formKey: formKey,
-                      textColor: Theme.of(context).colorScheme.onBackground,
-                      obscureCvv: true,
-                      obscureNumber: true,
-                      cardNumber: cardNumber,
-                      cvvCode: cvvCode,
-                      isHolderNameVisible: true,
-                      isCardNumberVisible: true,
-                      isExpiryDateVisible: true,
-                      cardHolderName: cardHolderName,
-                      expiryDate: expiryDate,
-                      themeColor: Theme.of(context).colorScheme.onBackground,
-                      cardNumberDecoration: InputDecoration(
-                        labelText: 'Number',
-                        hintText: 'XXXX XXXX XXXX XXXX',
-                        hintStyle: TextStyle(
-                            color: Theme.of(context).colorScheme.onBackground),
-                        labelStyle: TextStyle(
-                            color: Theme.of(context).colorScheme.onBackground),
-                        alignLabelWithHint: true,
-                        filled: true,
-                        border: OutlineInputBorder(
-                          borderSide: BorderSide(
-                              color: Theme.of(context).colorScheme.primary,
-                              width: 2.0),
+      body: isLoading
+          ? Center(child: CircularProgressIndicator())
+          : SafeArea(
+              child: Column(
+                children: <Widget>[
+                  CreditCardWidget(
+                    cardNumber: cardNumber,
+                    expiryDate: expiryDate,
+                    cardHolderName: cardHolderName,
+                    cvvCode: cvvCode,
+                    showBackView: isCvvFocused,
+                    obscureCardNumber: true,
+                    obscureCardCvv: true,
+                    isHolderNameVisible: true,
+                    isChipVisible: false,
+                    cardBgColor: Theme.of(context).colorScheme.primary,
+                    isSwipeGestureEnabled: false,
+                    onCreditCardWidgetChange:
+                        (CreditCardBrand creditCardBrand) {},
+                    customCardTypeIcons: <CustomCardTypeIcon>[
+                      CustomCardTypeIcon(
+                        cardType: CardType.mastercard,
+                        cardImage: SvgPicture.asset(
+                          'images/cards/mastercard.svg',
+                          semanticsLabel: 'Mastercard Logo',
+                          width: MediaQuery.of(context).size.width / 8,
                         ),
-                        enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(
-                              color: Theme.of(context).colorScheme.primary,
-                              width: 2.0),
-                          borderRadius: const BorderRadius.all(
-                            Radius.circular(10.0),
-                          ),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: const BorderRadius.all(
-                            Radius.circular(10.0),
-                          ),
-                          borderSide: BorderSide(
-                              color: Theme.of(context).colorScheme.primary,
-                              width: 2.0),
-                        ),
-                        floatingLabelAlignment: FloatingLabelAlignment.start,
                       ),
-                      expiryDateDecoration: InputDecoration(
-                        labelText: 'Expired Date',
-                        hintText: 'XX/XX',
-                        hintStyle: TextStyle(
-                            color: Theme.of(context).colorScheme.onBackground),
-                        labelStyle: TextStyle(
-                            color: Theme.of(context).colorScheme.onBackground),
-                        alignLabelWithHint: true,
-                        filled: true,
-                        border: OutlineInputBorder(
-                          borderSide: BorderSide(
-                              color: Theme.of(context).colorScheme.primary,
-                              width: 2.0),
+                      CustomCardTypeIcon(
+                        cardType: CardType.visa,
+                        cardImage: SvgPicture.asset(
+                          'images/cards/visa.svg',
+                          semanticsLabel: 'Visa Logo',
+                          width: MediaQuery.of(context).size.width / 8,
                         ),
-                        enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(
-                              color: Theme.of(context).colorScheme.primary,
-                              width: 2.0),
-                          borderRadius: const BorderRadius.all(
-                            Radius.circular(10.0),
-                          ),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: const BorderRadius.all(
-                            Radius.circular(10.0),
-                          ),
-                          borderSide: BorderSide(
-                              color: Theme.of(context).colorScheme.primary,
-                              width: 2.0),
-                        ),
-                        floatingLabelAlignment: FloatingLabelAlignment.start,
                       ),
-                      cvvCodeDecoration: InputDecoration(
-                        hintStyle: TextStyle(
-                            color: Theme.of(context).colorScheme.onBackground),
-                        labelStyle: TextStyle(
-                            color: Theme.of(context).colorScheme.onBackground),
-                        alignLabelWithHint: true,
-                        filled: true,
-                        border: OutlineInputBorder(
-                          borderSide: BorderSide(
-                              color: Theme.of(context).colorScheme.primary,
-                              width: 2.0),
+                      CustomCardTypeIcon(
+                        cardType: CardType.discover,
+                        cardImage: SvgPicture.asset(
+                          'images/cards/discover.svg',
+                          semanticsLabel: 'Discover Logo',
+                          width: MediaQuery.of(context).size.width / 8,
                         ),
-                        enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(
-                              color: Theme.of(context).colorScheme.primary,
-                              width: 2.0),
-                          borderRadius: const BorderRadius.all(
-                            Radius.circular(10.0),
-                          ),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: const BorderRadius.all(
-                            Radius.circular(10.0),
-                          ),
-                          borderSide: BorderSide(
-                              color: Theme.of(context).colorScheme.primary,
-                              width: 2.0),
-                        ),
-                        floatingLabelAlignment: FloatingLabelAlignment.start,
-                        labelText: 'CVV',
-                        hintText: 'XXX',
                       ),
-                      cardHolderDecoration: InputDecoration(
-                        hintStyle: TextStyle(
-                            color: Theme.of(context).colorScheme.onBackground),
-                        labelStyle: TextStyle(
-                            color: Theme.of(context).colorScheme.onBackground),
-                        alignLabelWithHint: true,
-                        filled: true,
-                        border: OutlineInputBorder(
-                          borderSide: BorderSide(
-                              color: Theme.of(context).colorScheme.primary,
-                              width: 2.0),
+                      CustomCardTypeIcon(
+                        cardType: CardType.americanExpress,
+                        cardImage: SvgPicture.asset(
+                          'images/cards/amex.svg',
+                          semanticsLabel: 'American Express Logo',
+                          width: MediaQuery.of(context).size.width / 8,
                         ),
-                        enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(
-                              color: Theme.of(context).colorScheme.primary,
-                              width: 2.0),
-                          borderRadius: const BorderRadius.all(
-                            Radius.circular(10.0),
-                          ),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: const BorderRadius.all(
-                            Radius.circular(10.0),
-                          ),
-                          borderSide: BorderSide(
-                              color: Theme.of(context).colorScheme.primary,
-                              width: 2.0),
-                        ),
-                        floatingLabelAlignment: FloatingLabelAlignment.start,
-                        labelText: 'Card Holder',
                       ),
-                      onCreditCardModelChange: onCreditCardModelChange,
+                    ],
+                  ),
+                  Expanded(
+                    child: SingleChildScrollView(
+                      child: Column(
+                        children: <Widget>[
+                          CreditCardForm(
+                            formKey: formKey,
+                            obscureCvv: true,
+                            obscureNumber: true,
+                            cardNumber: cardNumber,
+                            cvvCode: cvvCode,
+                            isHolderNameVisible: true,
+                            isCardNumberVisible: true,
+                            isExpiryDateVisible: true,
+                            cardHolderName: cardHolderName,
+                            expiryDate: expiryDate,
+                            themeColor: Theme.of(context).colorScheme.primary,
+                            cardNumberDecoration: InputDecoration(
+                              labelText: 'Number',
+                              hintText: 'XXXX XXXX XXXX XXXX',
+                              hintStyle: TextStyle(
+                                  color: Theme.of(context).colorScheme.primary),
+                              labelStyle: TextStyle(
+                                  color: Theme.of(context).colorScheme.primary),
+                              alignLabelWithHint: true,
+                              filled: false,
+                              border: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                    color:
+                                        Theme.of(context).colorScheme.primary,
+                                    width: 2.0),
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                    color:
+                                        Theme.of(context).colorScheme.primary,
+                                    width: 2.0),
+                                borderRadius: const BorderRadius.all(
+                                  Radius.circular(10.0),
+                                ),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius: const BorderRadius.all(
+                                  Radius.circular(10.0),
+                                ),
+                                borderSide: BorderSide(
+                                    color:
+                                        Theme.of(context).colorScheme.primary,
+                                    width: 2.0),
+                              ),
+                              floatingLabelAlignment:
+                                  FloatingLabelAlignment.start,
+                            ),
+                            expiryDateDecoration: InputDecoration(
+                              labelText: 'Expired Date',
+                              hintText: 'XX/XX',
+                              hintStyle: TextStyle(
+                                  color: Theme.of(context).colorScheme.primary),
+                              labelStyle: TextStyle(
+                                  color: Theme.of(context).colorScheme.primary),
+                              alignLabelWithHint: true,
+                              filled: false,
+                              border: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                    color:
+                                        Theme.of(context).colorScheme.primary,
+                                    width: 2.0),
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                    color:
+                                        Theme.of(context).colorScheme.primary,
+                                    width: 2.0),
+                                borderRadius: const BorderRadius.all(
+                                  Radius.circular(10.0),
+                                ),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius: const BorderRadius.all(
+                                  Radius.circular(10.0),
+                                ),
+                                borderSide: BorderSide(
+                                    color:
+                                        Theme.of(context).colorScheme.primary,
+                                    width: 2.0),
+                              ),
+                              floatingLabelAlignment:
+                                  FloatingLabelAlignment.start,
+                            ),
+                            cvvCodeDecoration: InputDecoration(
+                              hintStyle: TextStyle(
+                                  color: Theme.of(context).colorScheme.primary),
+                              labelStyle: TextStyle(
+                                  color: Theme.of(context).colorScheme.primary),
+                              alignLabelWithHint: true,
+                              filled: false,
+                              border: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                    color:
+                                        Theme.of(context).colorScheme.primary,
+                                    width: 2.0),
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                    color:
+                                        Theme.of(context).colorScheme.primary,
+                                    width: 2.0),
+                                borderRadius: const BorderRadius.all(
+                                  Radius.circular(10.0),
+                                ),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius: const BorderRadius.all(
+                                  Radius.circular(10.0),
+                                ),
+                                borderSide: BorderSide(
+                                    color:
+                                        Theme.of(context).colorScheme.primary,
+                                    width: 2.0),
+                              ),
+                              floatingLabelAlignment:
+                                  FloatingLabelAlignment.start,
+                              labelText: 'CVV',
+                              hintText: 'XXX',
+                            ),
+                            cardHolderDecoration: InputDecoration(
+                              hintStyle: TextStyle(
+                                  color: Theme.of(context).colorScheme.primary),
+                              labelStyle: TextStyle(
+                                  color: Theme.of(context).colorScheme.primary),
+                              alignLabelWithHint: true,
+                              filled: false,
+                              border: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                    color:
+                                        Theme.of(context).colorScheme.primary,
+                                    width: 2.0),
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                    color:
+                                        Theme.of(context).colorScheme.primary,
+                                    width: 2.0),
+                                borderRadius: const BorderRadius.all(
+                                  Radius.circular(10.0),
+                                ),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius: const BorderRadius.all(
+                                  Radius.circular(10.0),
+                                ),
+                                borderSide: BorderSide(
+                                    color:
+                                        Theme.of(context).colorScheme.primary,
+                                    width: 2.0),
+                              ),
+                              floatingLabelAlignment:
+                                  FloatingLabelAlignment.start,
+                              labelText: 'Card Holder',
+                            ),
+                            onCreditCardModelChange: onCreditCardModelChange,
+                          ),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                        ],
+                      ),
                     ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                  ],
-                ),
+                  ),
+                  MorrfButton(
+                    onPressed: _onValidate,
+                    fullWidth: true,
+                    text: "Add Card",
+                  ),
+                ],
               ),
             ),
-            MorrfButton(
-              onPressed: _onValidate,
-              fullWidth: true,
-              text: "Add Card",
-            ),
-          ],
-        ),
-      ),
     );
   }
 
