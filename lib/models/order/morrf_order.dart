@@ -1,4 +1,4 @@
-import 'package:morrf/models/morrf_rating.dart';
+import 'package:morrf/models/service/morrf_rating.dart';
 
 class MorrfOrder {
   String id;

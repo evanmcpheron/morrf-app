@@ -11,6 +11,9 @@ import 'package:morrf/core/enums/font_size.dart';
 import 'package:morrf/core/enums/severity.dart';
 import 'package:morrf/core/widgets/morff_text.dart';
 import 'package:morrf/core/widgets/morrf_button.dart';
+import 'package:morrf/features/services/controller/service_controller.dart';
+import 'package:morrf/features/splash_screen/screens/redirect_splash_screen.dart';
+import 'package:morrf/models/service/morrf_service.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:reorderables/reorderables.dart';
 import 'package:uuid/uuid.dart';
@@ -104,8 +107,6 @@ class _CreateNewServiceTabThreeState
 
   void _onSubmit() async {
     try {
-      ref.read(loadingProvider.notifier).startLoader();
-
       for (var i = 0; i < files.length; i++) {
         var storageRef = FirebaseStorage.instance
             .ref()
@@ -122,16 +123,16 @@ class _CreateNewServiceTabThreeState
         'photoUrls': imageList,
       };
 
-      ref.read(newServiceProvider.notifier).updateNewService(data);
+      ref.read(serviceControllerProvider.notifier).updateNewService(data);
       ref
-          .read(newServiceProvider.notifier)
-          .updateNewService({'trainerName': user.uid});
-      MorrfService morrfService = ref.watch(newServiceProvider);
-      ref.read(newServiceProvider.notifier).createService(morrfService);
-      ref.read(loadingProvider.notifier).stopLoader();
-      ref.read(newServiceProvider.notifier).disposeNewService();
+          .read(serviceControllerProvider.notifier)
+          .updateNewService({'trainerId': user.uid});
+      MorrfService morrfService = ref.watch(serviceControllerProvider);
+      print("MorrfService: ${morrfService?.toJson()}");
+      // ref.read(serviceControllerProvider.notifier).createService(morrfService);
+      // ref.read(serviceControllerProvider.notifier).disposeNewService();
       Get.offAll(
-        () => TrainerHome(),
+        () => RedirectSplashScreen(),
       );
     } catch (e) {
       rethrow;
@@ -140,8 +141,6 @@ class _CreateNewServiceTabThreeState
 
   @override
   Widget build(BuildContext context) {
-    MorrfService morrfService = ref.watch(newServiceProvider);
-
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.max,

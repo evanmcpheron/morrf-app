@@ -8,6 +8,7 @@ import 'package:morrf/core/enums/severity.dart';
 import 'package:morrf/core/widgets/morff_text.dart';
 import 'package:morrf/core/widgets/morrf_button.dart';
 import 'package:morrf/core/widgets/morrf_input_field.dart';
+import 'package:morrf/features/services/controller/service_controller.dart';
 import 'package:morrf/models/service/morrf_service.dart';
 import 'package:nb_utils/nb_utils.dart';
 
@@ -77,7 +78,7 @@ class _CreateNewServiceTabTwoState
           tiers[tier]!.deliveryTime = value!;
         });
 
-        ref.read(newServiceProvider.notifier).updateTiers(tiers);
+        ref.read(serviceControllerProvider.notifier).updateTiers(tiers);
       },
     );
   }
@@ -99,8 +100,8 @@ class _CreateNewServiceTabTwoState
 
   @override
   Widget build(BuildContext context) {
-    MorrfService morrfService = ref.watch(newServiceProvider);
-
+    MorrfService morrfService = ref.watch(serviceControllerProvider);
+    print(tiers['basic']?.toJson());
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -134,7 +135,7 @@ class _CreateNewServiceTabTwoState
                           });
                         }
                         ref
-                            .read(newServiceProvider.notifier)
+                            .read(serviceControllerProvider.notifier)
                             .updateTiers(tiers);
                       },
                     ),
@@ -158,7 +159,7 @@ class _CreateNewServiceTabTwoState
                           });
                         }
                         ref
-                            .read(newServiceProvider.notifier)
+                            .read(serviceControllerProvider.notifier)
                             .updateTiers(tiers);
                       },
                     ),
@@ -184,7 +185,7 @@ class _CreateNewServiceTabTwoState
                         }
 
                         ref
-                            .read(newServiceProvider.notifier)
+                            .read(serviceControllerProvider.notifier)
                             .updateTiers(tiers);
                       },
                     ),

@@ -1,11 +1,13 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:morrf/core/constants/constants.dart';
 import 'package:morrf/core/enums/font_size.dart';
 import 'package:morrf/core/widgets/morff_text.dart';
 import 'package:morrf/core/widgets/morrf_button.dart';
 import 'package:morrf/core/widgets/morrf_dropdown.dart';
 import 'package:morrf/core/widgets/morrf_input_field.dart';
+import 'package:morrf/features/services/controller/service_controller.dart';
 import 'package:morrf/models/service/morrf_faq.dart';
 import 'package:morrf/models/service/morrf_service.dart';
 import 'package:nb_utils/nb_utils.dart';
@@ -96,7 +98,8 @@ class _CreateNewServiceTabOneState
 
   @override
   Widget build(BuildContext context) {
-    MorrfService morrfService = ref.watch(newServiceProvider);
+    MorrfService morrfService = ref.watch(serviceControllerProvider);
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -119,7 +122,7 @@ class _CreateNewServiceTabOneState
         const SizedBox(height: 20.0),
         MorrfDrowpdown(
             label: "Category",
-            list: availableCategories,
+            list: Constants.availableCategories,
             initialValue: morrfService.category,
             onChange: (value) => setState(() {
                   createServiceMap['category'] = value;
@@ -128,7 +131,7 @@ class _CreateNewServiceTabOneState
         const SizedBox(height: 20.0),
         MorrfDrowpdown(
             label: "Subcategory",
-            list: availableSubcategories,
+            list: Constants.availableSubcategories,
             initialValue: morrfService.subcategory,
             onChange: (value) => setState(() {
                   createServiceMap['subcategory'] = value;
@@ -137,7 +140,7 @@ class _CreateNewServiceTabOneState
         const SizedBox(height: 20.0),
         MorrfDrowpdown(
             label: "Service Type",
-            list: availableServiceTypes,
+            list: Constants.availableServiceTypes,
             initialValue: morrfService.serviceType,
             onChange: (value) => setState(() {
                   createServiceMap['serviceType'] = value;
@@ -286,7 +289,7 @@ class _CreateNewServiceTabOneState
             text: "Next",
             onPressed: () {
               ref
-                  .read(newServiceProvider.notifier)
+                  .read(serviceControllerProvider.notifier)
                   .updateNewService(createServiceMap);
               widget.pageChange(1);
             },

@@ -5,9 +5,10 @@ import 'package:morrf/core/constants/constants.dart';
 import 'package:morrf/core/enums/font_size.dart';
 import 'package:morrf/core/widgets/morff_text.dart';
 import 'package:morrf/core/widgets/morrf_scaffold.dart';
-import 'package:morrf/features/trainer/screens/create_new_service_tab_one.dart';
-import 'package:morrf/features/trainer/screens/create_new_service_tab_three.dart';
-import 'package:morrf/features/trainer/screens/create_new_service_tab_two.dart';
+import 'package:morrf/features/services/controller/service_controller.dart';
+import 'package:morrf/features/services/screens/create_new_service_tab_one.dart';
+import 'package:morrf/features/services/screens/create_new_service_tab_three.dart';
+import 'package:morrf/features/services/screens/create_new_service_tab_two.dart';
 import 'package:morrf/models/service/morrf_service.dart';
 import 'package:step_progress_indicator/step_progress_indicator.dart';
 
@@ -42,7 +43,7 @@ class _CreateNewServiceState extends ConsumerState<CreateNewService> {
 
   @override
   Widget build(BuildContext context) {
-    MorrfService morrfService = ref.watch(newServiceProvider);
+    MorrfService morrfService = ref.watch(serviceControllerProvider);
     return MorrfScaffold(
       title: 'Create New Service',
       body: SizedBox(

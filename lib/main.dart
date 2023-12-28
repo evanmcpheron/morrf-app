@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -14,7 +13,6 @@ import 'package:morrf/features/auth/controller/auth_controller.dart';
 import 'package:morrf/features/splash_screen/screens/redirect_splash_screen.dart';
 import 'package:morrf/features/splash_screen/screens/splash_screen.dart';
 import 'package:morrf/firebase_options.dart';
-import 'package:morrf/models/user/morrf_user.dart';
 import 'package:morrf/providers/theme_provider.dart';
 
 Future<void> main() async {

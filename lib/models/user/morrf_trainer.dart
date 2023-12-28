@@ -1,6 +1,6 @@
-import 'package:morrf/models/morrf_rating.dart';
-import 'package:morrf/models/morrf_service.dart';
 import 'package:morrf/models/order/morrf_order.dart';
+import 'package:morrf/models/service/morrf_rating.dart';
+import 'package:morrf/models/service/morrf_service.dart';
 
 class MorrfTrainer {
   final String id;

@@ -79,7 +79,6 @@ class AuthService {
         photoURL: photoUrl,
         isOnline: true,
       );
-      print(user.toJson());
       await firestore.collection('users').doc(uid).set(user.toJson());
 
       Get.back();

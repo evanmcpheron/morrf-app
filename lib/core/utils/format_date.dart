@@ -13,6 +13,7 @@ String capitalize(String string) {
 }
 
 double getLowestPrice(Map<String, Tier> tier) {
+  print(tier['basic']?.isVisible);
   if (tier['basic']!.isVisible) {
     return formatPrice(tier['basic']!.price);
   } else if (tier['standard']!.isVisible) {

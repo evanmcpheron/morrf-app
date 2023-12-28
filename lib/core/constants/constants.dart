@@ -27,6 +27,10 @@ class Constants {
 
   static String currencySign = '\$';
 
+  static List<String> availableCategories = ["Personal Training", "Nutrition"];
+  static List<String> availableSubcategories = ["Something", "else"];
+  static List<String> availableServiceTypes = ["Online", "In Person"];
+
 //__________Gender______________________________________________________
   static List<String> gender = [
     "",
