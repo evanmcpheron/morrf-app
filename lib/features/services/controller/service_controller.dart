@@ -30,26 +30,13 @@ class MorrfServiceNotifier extends StateNotifier<MorrfService> {
           serviceType: "",
           description: "",
           faq: [],
-          tiers: {
-            "basic": Tier(
-                deliveryTime: 3,
-                options: [],
-                title: "",
-                revisions: 3,
-                isVisible: true),
-            "standard": Tier(
-                deliveryTime: 3,
-                options: [],
-                title: "",
-                revisions: 3,
-                isVisible: true),
-            "premium": Tier(
-                deliveryTime: 3,
-                options: [],
-                title: "",
-                revisions: 3,
-                isVisible: true)
-          },
+          serviceQuestion: [],
+          tier: Tier(
+            deliveryTime: 3,
+            options: [],
+            title: "",
+            revisions: 3,
+          ),
           photoUrls: [],
           tags: [],
           heroUrl: "",
@@ -68,26 +55,8 @@ class MorrfServiceNotifier extends StateNotifier<MorrfService> {
       serviceType: "",
       description: "",
       faq: [],
-      tiers: {
-        "basic": Tier(
-            deliveryTime: 3,
-            options: [],
-            title: "",
-            revisions: 3,
-            isVisible: true),
-        "standard": Tier(
-            deliveryTime: 3,
-            options: [],
-            title: "",
-            revisions: 3,
-            isVisible: true),
-        "premium": Tier(
-            deliveryTime: 3,
-            options: [],
-            title: "",
-            revisions: 3,
-            isVisible: true)
-      },
+      serviceQuestion: [],
+      tier: Tier(deliveryTime: 3, options: [], title: "", revisions: 3),
       photoUrls: [],
       tags: [],
       heroUrl: "",
@@ -102,8 +71,8 @@ class MorrfServiceNotifier extends StateNotifier<MorrfService> {
     state = MorrfService.fromPartialData(data, state);
   }
 
-  void updateTiers(Map<String, Tier> tiers) {
-    state = MorrfService.fromTierData(tiers, state);
+  void updateTiers(Tier tier) {
+    state = MorrfService.fromTierData(tier, state);
   }
 
   Future<void> createService(MorrfService morrfService) async {

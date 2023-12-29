@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:morrf/core/constants/constants.dart';
 import 'package:morrf/core/enums/font_size.dart';
-import 'package:morrf/core/utils/format_date.dart';
 import 'package:morrf/core/widgets/morff_text.dart';
 import 'package:morrf/models/service/morrf_service.dart';
 
@@ -59,7 +57,7 @@ class _MorrfServiceWidgetState extends State<MorrfServiceWidget> {
                       const MorrfText(text: 'Price ', size: FontSize.p),
                       MorrfText(
                         text:
-                            '${Constants.currencySign}${getLowestPrice(widget.morrfService.tiers)}',
+                            '${Constants.currencySign}${widget.morrfService.tier.price}0',
                         size: FontSize.p,
                         style: TextStyle(
                           color: Theme.of(context).colorScheme.primary,

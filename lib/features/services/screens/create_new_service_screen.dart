@@ -6,9 +6,12 @@ import 'package:morrf/core/enums/font_size.dart';
 import 'package:morrf/core/widgets/morff_text.dart';
 import 'package:morrf/core/widgets/morrf_scaffold.dart';
 import 'package:morrf/features/services/controller/service_controller.dart';
-import 'package:morrf/features/services/screens/create_new_service_tab_one.dart';
-import 'package:morrf/features/services/screens/create_new_service_tab_three.dart';
-import 'package:morrf/features/services/screens/create_new_service_tab_two.dart';
+import 'package:morrf/features/services/screens/create_new_service_description_screen.dart';
+import 'package:morrf/features/services/screens/create_new_service_images_screen.dart';
+import 'package:morrf/features/services/screens/create_new_service_overview_screen.dart';
+import 'package:morrf/features/services/screens/create_new_service_pricing_screen.dart';
+import 'package:morrf/features/services/screens/create_new_service_publish_screen.dart';
+import 'package:morrf/features/services/screens/create_new_service_questions_screen.dart';
 import 'package:morrf/models/service/morrf_service.dart';
 import 'package:step_progress_indicator/step_progress_indicator.dart';
 
@@ -41,10 +44,34 @@ class _CreateNewServiceState extends ConsumerState<CreateNewService> {
     super.initState();
   }
 
+  String get stepTitle {
+    switch (currentIndexPage) {
+      case 0:
+        return "Overview";
+      case 1:
+        return "Pricing";
+      case 2:
+        return "Descriptions";
+      case 3:
+        return "Questions";
+      case 4:
+        return "Images";
+      case 5:
+        return "Publish";
+      default:
+        return "";
+    }
+  }
+
+  void updateService(Map<String, dynamic> data) {
+    ref.read(serviceControllerProvider.notifier).updateNewService(data);
+  }
+
   @override
   Widget build(BuildContext context) {
     MorrfService morrfService = ref.watch(serviceControllerProvider);
     return MorrfScaffold(
+      backButton: false,
       title: 'Create New Service',
       body: SizedBox(
         width: MediaQuery.of(context).size.width,
@@ -54,44 +81,58 @@ class _CreateNewServiceState extends ConsumerState<CreateNewService> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const SizedBox(height: 20.0),
-              Row(
+              Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  MorrfText(
-                      text: currentIndexPage == 0
-                          ? 'Step 1 of 3'
-                          : currentIndexPage == 1
-                              ? 'Step 2 of 3'
-                              : 'Step 3 of 3',
-                      size: FontSize.p),
-                  const SizedBox(width: 10.0),
-                  Expanded(
-                    child: StepProgressIndicator(
-                      totalSteps: 3,
-                      currentStep: currentIndexPage + 1,
-                      size: 8,
-                      padding: 0,
-                      roundedEdges: const Radius.circular(10),
-                    ),
+                  StepProgressIndicator(
+                    totalSteps: 6,
+                    currentStep: currentIndexPage + 1,
+                    size: 8,
+                    padding: 0,
+                    roundedEdges: const Radius.circular(10),
                   ),
+                  const SizedBox(height: 10.0),
+                  MorrfText(text: stepTitle, size: FontSize.h6),
                 ],
               ),
-              CreateNewServiceTabOne(
-                isVisible: currentIndexPage == 0,
-                morrfService: morrfService,
-                pageChange: (page) {
-                  updatePage(page);
-                },
-              ),
-              CreateNewServiceTabTwo(
+              CreateNewServiceOverviewScreen(
+                  isVisible: currentIndexPage == 0,
+                  morrfService: morrfService,
+                  pageChange: (page) {
+                    updatePage(page);
+                  },
+                  updateService: (value) => updateService(value)),
+              CreateNewServicePricingScreen(
                 isVisible: currentIndexPage == 1,
                 morrfService: morrfService,
                 pageChange: (page) {
                   updatePage(page);
                 },
               ),
-              CreateNewServiceTabThree(
+              CreateNewServiceDescriptionScreen(
                 isVisible: currentIndexPage == 2,
+                morrfService: morrfService,
+                pageChange: (page) {
+                  updatePage(page);
+                },
+              ),
+              CreateNewServiceQuestionsScreen(
+                isVisible: currentIndexPage == 3,
+                morrfService: morrfService,
+                pageChange: (page) {
+                  updatePage(page);
+                },
+              ),
+              CreateNewServiceImagesScreen(
+                isVisible: currentIndexPage == 4,
+                morrfService: morrfService,
+                pageChange: (page) {
+                  updatePage(page);
+                },
+              ),
+              CreateNewServicePublishScreen(
+                isVisible: currentIndexPage == 5,
+                morrfService: morrfService,
                 pageChange: (page) {
                   updatePage(page);
                 },

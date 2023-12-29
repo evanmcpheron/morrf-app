@@ -10,7 +10,7 @@ import 'package:morrf/core/widgets/morrf_service.dart';
 import 'package:morrf/features/services/controller/services_controller.dart';
 import 'package:morrf/models/service/morrf_service.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'create_new_service.dart';
+import 'create_new_service_screen.dart';
 
 class MyServicesScreen extends ConsumerStatefulWidget {
   const MyServicesScreen({super.key});
@@ -32,9 +32,8 @@ class _MyServicesScreenState extends ConsumerState<MyServicesScreen> {
   @override
   Widget build(BuildContext context) {
     List<MorrfService?> morrfServices = ref.watch(servicesControllerProvider);
-    print(morrfServices);
     return MorrfScaffold(
-      title: 'My Services',
+      title: '',
       trailing: const FaIcon(FontAwesomeIcons.plus),
       trailingPressed: () {
         Get.to(() => const CreateNewService());
@@ -61,7 +60,7 @@ class _MyServicesScreenState extends ConsumerState<MyServicesScreen> {
                   ),
                   const SizedBox(height: 20.0),
                   const MorrfText(
-                    text: 'Empty Service',
+                    text: 'You haven\'t created any services yet.',
                     size: FontSize.h5,
                   ),
                 ],

@@ -8,12 +8,11 @@ import 'package:morrf/core/widgets/morrf_button.dart';
 import 'package:morrf/core/widgets/morrf_dropdown.dart';
 import 'package:morrf/core/widgets/morrf_input_field.dart';
 import 'package:morrf/features/services/controller/service_controller.dart';
+import 'package:morrf/features/services/screens/add_faq.dart';
 import 'package:morrf/models/service/morrf_faq.dart';
 import 'package:morrf/models/service/morrf_service.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:textfield_tags/textfield_tags.dart';
-
-import 'add_faq.dart';
 
 class CreateNewServiceTabOne extends ConsumerStatefulWidget {
   final bool isVisible;
