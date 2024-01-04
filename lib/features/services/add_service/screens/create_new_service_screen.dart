@@ -1,17 +1,16 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:morrf/core/constants/constants.dart';
 import 'package:morrf/core/enums/font_size.dart';
 import 'package:morrf/core/widgets/morff_text.dart';
 import 'package:morrf/core/widgets/morrf_scaffold.dart';
-import 'package:morrf/features/services/controller/service_controller.dart';
-import 'package:morrf/features/services/screens/create_new_service_description_screen.dart';
-import 'package:morrf/features/services/screens/create_new_service_images_screen.dart';
-import 'package:morrf/features/services/screens/create_new_service_overview_screen.dart';
-import 'package:morrf/features/services/screens/create_new_service_pricing_screen.dart';
-import 'package:morrf/features/services/screens/create_new_service_publish_screen.dart';
-import 'package:morrf/features/services/screens/create_new_service_questions_screen.dart';
+import 'package:morrf/features/services/add_service/controller/service_controller.dart';
+import 'package:morrf/features/services/add_service/screens/create_new_service_description_screen.dart';
+import 'package:morrf/features/services/add_service/screens/create_new_service_images_screen.dart';
+import 'package:morrf/features/services/add_service/screens/create_new_service_overview_screen.dart';
+import 'package:morrf/features/services/add_service/screens/create_new_service_pricing_screen.dart';
+import 'package:morrf/features/services/add_service/screens/create_new_service_publish_screen.dart';
+import 'package:morrf/features/services/add_service/screens/create_new_service_questions_screen.dart';
 import 'package:morrf/models/service/morrf_service.dart';
 import 'package:step_progress_indicator/step_progress_indicator.dart';
 

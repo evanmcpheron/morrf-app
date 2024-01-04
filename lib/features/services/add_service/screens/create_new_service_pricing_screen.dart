@@ -8,7 +8,7 @@ import 'package:morrf/core/enums/severity.dart';
 import 'package:morrf/core/widgets/morff_text.dart';
 import 'package:morrf/core/widgets/morrf_button.dart';
 import 'package:morrf/core/widgets/morrf_input_field.dart';
-import 'package:morrf/features/services/controller/service_controller.dart';
+import 'package:morrf/features/services/add_service/controller/service_controller.dart';
 import 'package:morrf/models/service/morrf_service.dart';
 import 'package:nb_utils/nb_utils.dart';
 

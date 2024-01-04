@@ -1,6 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:morrf/features/services/service/service_service.dart';
+import 'package:morrf/features/services/add_service/service/service_service.dart';
 import 'package:morrf/models/service/morrf_service.dart';
 import 'package:uuid/uuid.dart';
 
