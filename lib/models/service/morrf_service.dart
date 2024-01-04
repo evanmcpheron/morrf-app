@@ -3,26 +3,8 @@ import 'dart:core';
 import 'morrf_faq.dart';
 import 'morrf_rating.dart';
 
-class Option {
-  String title;
-  bool isSelected;
-
-  Option(this.title, this.isSelected);
-
-  Map<String, dynamic> toJson() {
-    return {
-      "title": title,
-      "isSelected": isSelected,
-    };
-  }
-
-  Option.fromMap(Map<String, dynamic> data)
-      : title = data['title'],
-        isSelected = data['isSelected'];
-}
-
 class Tier {
-  List<Option?> options;
+  List<String?> options;
   double? price;
   int deliveryTime;
   int revisions;
@@ -37,12 +19,8 @@ class Tier {
   });
 
   Map<String, dynamic> toJson() {
-    List<Map<String, dynamic>> optionsList = [];
-    for (Option? option in options) {
-      optionsList.add(option!.toJson());
-    }
     return {
-      "options": optionsList,
+      "options": options,
       "price": price,
       "title": title,
       "revisions": revisions,
@@ -51,9 +29,7 @@ class Tier {
   }
 
   Tier.fromMap(Map<String, dynamic> data)
-      : options = (data['options'] as List).map<Option?>((item) {
-          return Option.fromMap(item);
-        }).toList(),
+      : options = (data['options']),
         price = data['price'],
         revisions = data['revisions'],
         title = data['title'],
@@ -115,7 +91,7 @@ class MorrfService {
         serviceQuestion = data['serviceQuestion'] != null
             ? data['serviceQuestion'].cast<MorrfFaq>()
             : service.serviceQuestion,
-        tier = data['tier'] != null ? data['tier'].cast<Tier>() : service.tier,
+        tier = data['tier'] ?? service.tier,
         tags =
             data['tags'] != null ? data['tags'].cast<String>() : service.tags;
 

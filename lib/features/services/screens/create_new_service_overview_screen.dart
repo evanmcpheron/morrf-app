@@ -54,17 +54,10 @@ class _CreateNewServiceOverviewScreenState
     super.initState();
   }
 
-  Map<String, dynamic> createServiceMap = {
-    'trainerName': "",
-    'title': "",
-    'category': "",
-    'subcategory': "",
-    'serviceType': "",
+  List<String> tags = [];
+  Map<String, dynamic> serviceTags = {
     'tags': [],
-    'faq': [],
   };
-
-  Map<String, dynamic> formState = {};
 
   @override
   Widget build(BuildContext context) {
@@ -90,6 +83,7 @@ class _CreateNewServiceOverviewScreenState
               severity: Severity.success,
               onPressed: () {
                 widget.pageChange(1);
+                widget.updateService({"tags": _controller.getTags});
               },
               width: MediaQuery.of(context).size.width / 2 - 23,
               text: "Next",
@@ -102,7 +96,7 @@ class _CreateNewServiceOverviewScreenState
           maxLength: 60,
           initialValue: morrfService.title,
           onChanged: (value) => setState(() {
-            createServiceMap['title'] = value;
+            widget.updateService({"title": value});
           }),
           placeholder: 'Service Title',
           hint: 'Enter service title',
@@ -113,7 +107,7 @@ class _CreateNewServiceOverviewScreenState
             list: Constants.availableCategories,
             initialValue: morrfService.category,
             onChange: (value) => setState(() {
-                  createServiceMap['category'] = value;
+                  widget.updateService({"category": value});
                 }),
             selected: "Personal Training"),
         const SizedBox(height: 20.0),
@@ -122,7 +116,7 @@ class _CreateNewServiceOverviewScreenState
             list: Constants.availableSubcategories,
             initialValue: morrfService.subcategory,
             onChange: (value) => setState(() {
-                  createServiceMap['subcategory'] = value;
+                  widget.updateService({"subcategory": value});
                 }),
             selected: "Something"),
         const SizedBox(height: 20.0),
@@ -131,7 +125,7 @@ class _CreateNewServiceOverviewScreenState
             list: Constants.availableServiceTypes,
             initialValue: morrfService.serviceType,
             onChange: (value) => setState(() {
-                  createServiceMap['serviceType'] = value;
+                  widget.updateService({"serviceType": value});
                 }),
             selected: "Online"),
         const SizedBox(height: 20.0),
@@ -148,7 +142,7 @@ class _CreateNewServiceOverviewScreenState
             }
 
             setState(() {
-              createServiceMap['tags'] = [...createServiceMap['tags'], tag];
+              tags = [...tags, tag];
             });
             return null;
           },

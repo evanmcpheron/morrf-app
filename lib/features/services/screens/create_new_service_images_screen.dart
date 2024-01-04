@@ -22,11 +22,13 @@ class CreateNewServiceImagesScreen extends ConsumerStatefulWidget {
   final bool isVisible;
   final MorrfService morrfService;
   final Function(int page) pageChange;
+  final Function(Map<String, dynamic> data) updateService;
   const CreateNewServiceImagesScreen({
     super.key,
     required this.isVisible,
     required this.pageChange,
     required this.morrfService,
+    required this.updateService,
   });
 
   @override
@@ -128,11 +130,8 @@ class _CreateNewServiceImagesScreenState
         'photoUrls': imageList,
       };
 
-      ref.read(serviceControllerProvider.notifier).updateNewService(data);
-      ref
-          .read(serviceControllerProvider.notifier)
-          .updateNewService({'trainerId': user.uid});
-      MorrfService morrfService = ref.watch(serviceControllerProvider);
+      widget.updateService(data);
+
       // ref.read(serviceControllerProvider.notifier).createService(morrfService);
       // ref.read(serviceControllerProvider.notifier).disposeNewService();
       Get.offAll(
@@ -150,21 +149,6 @@ class _CreateNewServiceImagesScreenState
       mainAxisSize: MainAxisSize.max,
       children: [
         const SizedBox(height: 20.0),
-        const MorrfText(text: 'Images (Up to 6)', size: FontSize.h6),
-        const SizedBox(height: 8.0),
-        const MorrfText(
-            text: '960 x 540px for best results', size: FontSize.h6),
-        const SizedBox(height: 15.0),
-        buildImageDisplay(context),
-        MorrfButton(
-            onPressed: () {
-              pickImage();
-            },
-            disabled: _tiles.length > 5,
-            severity: Severity.success,
-            fullWidth: true,
-            text: "Add Images"),
-        const SizedBox(height: 16.0),
         Row(
           children: [
             MorrfButton(
@@ -189,6 +173,22 @@ class _CreateNewServiceImagesScreenState
             ),
           ],
         ),
+        const SizedBox(height: 20.0),
+        const MorrfText(text: 'Images (Up to 6)', size: FontSize.h6),
+        const SizedBox(height: 8.0),
+        const MorrfText(
+            text: '960 x 540px for best results', size: FontSize.h6),
+        const SizedBox(height: 15.0),
+        buildImageDisplay(context),
+        MorrfButton(
+            onPressed: () {
+              pickImage();
+            },
+            disabled: _tiles.length > 5,
+            severity: Severity.success,
+            fullWidth: true,
+            text: "Add Images"),
+        const SizedBox(height: 16.0),
       ],
     ).visible(widget.isVisible);
   }

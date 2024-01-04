@@ -15,13 +15,15 @@ import 'package:nb_utils/nb_utils.dart';
 class CreateNewServicePricingScreen extends ConsumerStatefulWidget {
   final bool isVisible;
   final Function(int page) pageChange;
+  final Function(Map<String, dynamic> data) updateService;
   final MorrfService morrfService;
 
   const CreateNewServicePricingScreen(
       {super.key,
       required this.isVisible,
       required this.pageChange,
-      required this.morrfService});
+      required this.morrfService,
+      required this.updateService});
 
   @override
   ConsumerState<CreateNewServicePricingScreen> createState() =>
@@ -31,14 +33,6 @@ class CreateNewServicePricingScreen extends ConsumerStatefulWidget {
 class _CreateNewServicePricingScreenState
     extends ConsumerState<CreateNewServicePricingScreen> {
   final TextEditingController _optionController = TextEditingController();
-
-  Tier tier = Tier(
-    deliveryTime: 3,
-    price: 0.00,
-    title: "",
-    options: [],
-    revisions: 3,
-  );
 
   //__________DeliveryTime____________________________________________________________
   DropdownButton<int> getDeliveryTime(Tier tier) {
@@ -84,6 +78,8 @@ class _CreateNewServicePricingScreenState
 
   @override
   Widget build(BuildContext context) {
+    Tier tier = widget.morrfService.tier;
+    print(tier.options);
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -91,15 +87,37 @@ class _CreateNewServicePricingScreenState
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const SizedBox(height: 20.0),
+            Row(
+              children: [
+                MorrfButton(
+                  onPressed: () {
+                    widget.pageChange(0);
+                  },
+                  width: MediaQuery.of(context).size.width / 2 - 23,
+                  text: "Back",
+                ),
+                const SizedBox(
+                  width: 16,
+                ),
+                MorrfButton(
+                  severity: Severity.success,
+                  onPressed: () {
+                    widget.pageChange(2);
+                  },
+                  width: MediaQuery.of(context).size.width / 2 - 23,
+                  text: "Next",
+                ),
+              ],
+            ),
+            const SizedBox(height: 20.0),
             KeyboardListener(
               onKeyEvent: (value) {
                 if (value.logicalKey.keyLabel == ",") {
                   bool doesOptionExist = tier.options
                       .where((element) =>
-                          element?.title ==
+                          element ==
                           _optionController.text.replaceAll(RegExp(','), ''))
                       .isEmpty;
-
                   _optionController.text.replaceAll(RegExp(','), '');
                   if (_optionController.text.replaceAll(RegExp(','), '') !=
                           "" &&
@@ -107,12 +125,10 @@ class _CreateNewServicePricingScreenState
                     setState(() {
                       tier.options = [
                         ...tier.options,
-                        Option(
-                          _optionController.text.replaceAll(RegExp(','), ''),
-                          false,
-                        )
+                        _optionController.text.replaceAll(RegExp(','), ''),
                       ];
-
+                      print("JSON: ${tier.toJson()}");
+                      widget.updateService({"tier": tier}); // CAUSING ERROR
                       _optionController.clear();
                     });
                   } else {
@@ -249,30 +265,6 @@ class _CreateNewServicePricingScreenState
                 const SizedBox(height: 15.0),
               ],
             ),
-            SafeArea(
-              child: Row(
-                children: [
-                  MorrfButton(
-                    onPressed: () {
-                      widget.pageChange(0);
-                    },
-                    width: MediaQuery.of(context).size.width / 2 - 23,
-                    text: "Back",
-                  ),
-                  const SizedBox(
-                    width: 16,
-                  ),
-                  MorrfButton(
-                    severity: Severity.success,
-                    onPressed: () {
-                      widget.pageChange(2);
-                    },
-                    width: MediaQuery.of(context).size.width / 2 - 23,
-                    text: "Next",
-                  ),
-                ],
-              ),
-            )
           ],
         ).visible(widget.isVisible),
       ],
@@ -287,7 +279,7 @@ class _CreateNewServicePricingScreenState
     } else {
       return ListTile(
         contentPadding: EdgeInsets.zero,
-        title: MorrfText(text: tier.options[index]!.title, size: FontSize.p),
+        title: MorrfText(text: tier.options[index]!, size: FontSize.p),
         trailing: const Icon(
           Icons.check_outlined,
           color: Colors.green,

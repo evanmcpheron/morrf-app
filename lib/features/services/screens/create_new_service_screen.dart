@@ -96,18 +96,20 @@ class _CreateNewServiceState extends ConsumerState<CreateNewService> {
                 ],
               ),
               CreateNewServiceOverviewScreen(
-                  isVisible: currentIndexPage == 0,
-                  morrfService: morrfService,
-                  pageChange: (page) {
-                    updatePage(page);
-                  },
-                  updateService: (value) => updateService(value)),
+                isVisible: currentIndexPage == 0,
+                morrfService: morrfService,
+                pageChange: (page) {
+                  updatePage(page);
+                },
+                updateService: (value) => updateService(value),
+              ),
               CreateNewServicePricingScreen(
                 isVisible: currentIndexPage == 1,
                 morrfService: morrfService,
                 pageChange: (page) {
                   updatePage(page);
                 },
+                updateService: (value) => updateService(value),
               ),
               CreateNewServiceDescriptionScreen(
                 isVisible: currentIndexPage == 2,
@@ -115,6 +117,7 @@ class _CreateNewServiceState extends ConsumerState<CreateNewService> {
                 pageChange: (page) {
                   updatePage(page);
                 },
+                updateService: (value) => updateService(value),
               ),
               CreateNewServiceQuestionsScreen(
                 isVisible: currentIndexPage == 3,
@@ -122,6 +125,7 @@ class _CreateNewServiceState extends ConsumerState<CreateNewService> {
                 pageChange: (page) {
                   updatePage(page);
                 },
+                updateService: (value) => updateService(value),
               ),
               CreateNewServiceImagesScreen(
                 isVisible: currentIndexPage == 4,
@@ -129,6 +133,7 @@ class _CreateNewServiceState extends ConsumerState<CreateNewService> {
                 pageChange: (page) {
                   updatePage(page);
                 },
+                updateService: (value) => updateService(value),
               ),
               CreateNewServicePublishScreen(
                 isVisible: currentIndexPage == 5,
@@ -141,26 +146,6 @@ class _CreateNewServiceState extends ConsumerState<CreateNewService> {
           ),
         ),
       ),
-    );
-  }
-
-  Widget titleList(String name, bool isSelected, int index) {
-    return ListTile(
-      contentPadding: EdgeInsets.zero,
-      title: MorrfText(text: name, size: FontSize.p),
-      trailing: isSelected
-          ? const Icon(
-              Icons.radio_button_checked_outlined,
-            )
-          : const Icon(
-              Icons.radio_button_off_outlined,
-              color: Colors.grey,
-            ),
-      onTap: () {
-        setState(() {
-          Constants.list[index].isSelected = !Constants.list[index].isSelected;
-        });
-      },
     );
   }
 }

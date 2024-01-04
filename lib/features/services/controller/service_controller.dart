@@ -65,10 +65,12 @@ class MorrfServiceNotifier extends StateNotifier<MorrfService> {
   }
 
   void updateNewService(Map<String, dynamic> data) async {
-    data['trainerName'] = user!.displayName;
-    data['trainerId'] = user!.uid;
-    data['trainerProfileImage'] = user!.photoURL;
+    // data['trainerName'] = user!.displayName;
+    // data['trainerId'] = user!.uid;
+    // data['trainerProfileImage'] = user!.photoURL;
+    print("Data: $data");
     state = MorrfService.fromPartialData(data, state);
+    print(state.toJson());
   }
 
   void updateTiers(Tier tier) {
@@ -76,6 +78,13 @@ class MorrfServiceNotifier extends StateNotifier<MorrfService> {
   }
 
   Future<void> createService(MorrfService morrfService) async {
+    morrfService = MorrfService.fromPartialData(
+        {"trainerName": user!.displayName}, morrfService);
+    morrfService =
+        MorrfService.fromPartialData({"trainerId": user!.uid}, morrfService);
+    morrfService = MorrfService.fromPartialData(
+        {"trainerProfileImage": user!.photoURL}, morrfService);
+
     try {
       await _serviceService.createService(morrfService);
     } catch (e, stacktrace) {

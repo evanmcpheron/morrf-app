@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:morrf/core/enums/font_size.dart';
 import 'package:morrf/core/enums/severity.dart';
 import 'package:morrf/core/widgets/morff_text.dart';
@@ -13,12 +14,15 @@ class CreateNewServiceQuestionsScreen extends ConsumerStatefulWidget {
   final bool isVisible;
   final Function(int page) pageChange;
   final MorrfService morrfService;
+  final Function(Map<String, dynamic> data) updateService;
 
-  const CreateNewServiceQuestionsScreen(
-      {super.key,
-      required this.isVisible,
-      required this.pageChange,
-      required this.morrfService});
+  const CreateNewServiceQuestionsScreen({
+    super.key,
+    required this.isVisible,
+    required this.pageChange,
+    required this.morrfService,
+    required this.updateService,
+  });
 
   @override
   ConsumerState<CreateNewServiceQuestionsScreen> createState() =>
@@ -40,13 +44,7 @@ class _CreateNewServiceQuestionsScreenState
   }
 
   Map<String, dynamic> createServiceMap = {
-    'trainerName': "",
-    'title': "",
-    'category': "",
-    'subcategory': "",
-    'serviceType': "",
     'description': "",
-    'tags': [],
     'question': [],
   };
 
@@ -58,6 +56,7 @@ class _CreateNewServiceQuestionsScreenState
     questionList.add(question);
     setState(() {
       createServiceMap['question'] = questionList;
+      widget.updateService({'question': questionList});
     });
   }
 
@@ -91,6 +90,29 @@ class _CreateNewServiceQuestionsScreenState
         const SizedBox(height: 20.0),
         Row(
           children: [
+            MorrfButton(
+              onPressed: () {
+                widget.pageChange(2);
+              },
+              width: MediaQuery.of(context).size.width / 2 - 23,
+              text: "Back",
+            ),
+            const SizedBox(
+              width: 16,
+            ),
+            MorrfButton(
+              severity: Severity.success,
+              onPressed: () {
+                widget.pageChange(4);
+              },
+              width: MediaQuery.of(context).size.width / 2 - 23,
+              text: "Next",
+            ),
+          ],
+        ),
+        const SizedBox(height: 20.0),
+        Row(
+          children: [
             GestureDetector(
               onTap: () {
                 showAddFAQPopUp();
@@ -101,60 +123,45 @@ class _CreateNewServiceQuestionsScreenState
         ),
         const SizedBox(height: 10.0),
         const Divider(thickness: 1.0),
-        Column(
-          children: buildQuestions(),
+        ListView.builder(
+          itemCount: buildQuestions.length,
+          physics: const NeverScrollableScrollPhysics(),
+          shrinkWrap: true,
+          padding: const EdgeInsets.only(bottom: 10.0),
+          itemBuilder: (_, i) {
+            return Padding(
+              padding: const EdgeInsets.only(bottom: 15.0),
+              child: ListTile(
+                shape: RoundedRectangleBorder(
+                  side: const BorderSide(color: Colors.black, width: 1),
+                  borderRadius: BorderRadius.circular(5),
+                ),
+                title: MorrfText(
+                  text: buildQuestions[i],
+                  size: FontSize.p,
+                  textAlign: TextAlign.left,
+                ),
+                trailing: const FaIcon(FontAwesomeIcons.trashCan),
+              ),
+            );
+          },
         ),
         const SizedBox(height: 20),
-        SafeArea(
-          child: Row(
-            children: [
-              MorrfButton(
-                onPressed: () {
-                  widget.pageChange(2);
-                },
-                width: MediaQuery.of(context).size.width / 2 - 23,
-                text: "Back",
-              ),
-              const SizedBox(
-                width: 16,
-              ),
-              MorrfButton(
-                severity: Severity.success,
-                onPressed: () {
-                  widget.pageChange(4);
-                },
-                width: MediaQuery.of(context).size.width / 2 - 23,
-                text: "Next",
-              ),
-            ],
-          ),
-        )
       ],
     ).visible(widget.isVisible);
   }
 
-  List<Widget> buildQuestions() {
-    List<Widget> questionEntries = [];
+  List<String> get buildQuestions {
+    List<String> questionEntries = [];
 
     if (questionList.isEmpty) {
       return [
-        const MorrfText(
-          text: "You haven't listed any questions yet",
-          size: FontSize.h4,
-          textAlign: TextAlign.center,
-        )
+        "You haven't listed any questions yet",
       ];
     }
 
     for (String question in questionList) {
-      questionEntries.add(
-        Theme(
-            data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
-            child: MorrfText(
-              text: question,
-              size: FontSize.p,
-            )),
-      );
+      questionEntries.add(question);
     }
 
     return questionEntries;

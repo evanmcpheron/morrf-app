@@ -121,16 +121,4 @@ class Constants {
   static bool isFavorite = false;
 
   static String selectedRevisionTime = '1 time';
-
-  static List<Option> list = [
-    Option("Responsive design", false),
-    Option("Responsive design", false),
-    Option("Responsive design", false),
-    Option("Prototype", false),
-    Option("Prototype", false),
-    Option("Prototype", false),
-    Option("Source file", false),
-    Option("Source file", false),
-    Option("Source file", false),
-  ];
 }

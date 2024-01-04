@@ -16,12 +16,14 @@ class CreateNewServiceDescriptionScreen extends ConsumerStatefulWidget {
   final bool isVisible;
   final Function(int page) pageChange;
   final MorrfService morrfService;
+  final Function(Map<String, dynamic> data) updateService;
 
   const CreateNewServiceDescriptionScreen(
       {super.key,
       required this.isVisible,
       required this.pageChange,
-      required this.morrfService});
+      required this.morrfService,
+      required this.updateService});
 
   @override
   ConsumerState<CreateNewServiceDescriptionScreen> createState() =>
@@ -43,13 +45,7 @@ class _CreateNewServiceDescriptionScreenState
   }
 
   Map<String, dynamic> createServiceMap = {
-    'trainerName': "",
-    'title': "",
-    'category': "",
-    'subcategory': "",
-    'serviceType': "",
     'description': "",
-    'tags': [],
     'faq': [],
   };
 
@@ -62,6 +58,7 @@ class _CreateNewServiceDescriptionScreenState
     setState(() {
       createServiceMap['faq'] = faqList;
     });
+    widget.updateService({"faq": faqList});
   }
 
   //__________Create_FAQ_PopUP________________________________________________
@@ -92,6 +89,29 @@ class _CreateNewServiceDescriptionScreenState
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const SizedBox(height: 20.0),
+        Row(
+          children: [
+            MorrfButton(
+              onPressed: () {
+                widget.pageChange(1);
+              },
+              width: MediaQuery.of(context).size.width / 2 - 23,
+              text: "Back",
+            ),
+            const SizedBox(
+              width: 16,
+            ),
+            MorrfButton(
+              severity: Severity.success,
+              onPressed: () {
+                widget.pageChange(3);
+              },
+              width: MediaQuery.of(context).size.width / 2 - 23,
+              text: "Next",
+            ),
+          ],
+        ),
+        const SizedBox(height: 20.0),
         SizedBox(
           height: 150,
           child: MorrfInputField(
@@ -101,6 +121,7 @@ class _CreateNewServiceDescriptionScreenState
             expands: true,
             onChanged: (value) => setState(() {
               createServiceMap['description'] = value;
+              widget.updateService({"description": value});
             }),
             maxLength: 800,
             placeholder: 'Service Description',
@@ -127,30 +148,6 @@ class _CreateNewServiceDescriptionScreenState
           children: buildFaqTile(),
         ),
         const SizedBox(height: 15),
-        SafeArea(
-          child: Row(
-            children: [
-              MorrfButton(
-                onPressed: () {
-                  widget.pageChange(1);
-                },
-                width: MediaQuery.of(context).size.width / 2 - 23,
-                text: "Back",
-              ),
-              const SizedBox(
-                width: 16,
-              ),
-              MorrfButton(
-                severity: Severity.success,
-                onPressed: () {
-                  widget.pageChange(3);
-                },
-                width: MediaQuery.of(context).size.width / 2 - 23,
-                text: "Next",
-              ),
-            ],
-          ),
-        )
       ],
     ).visible(widget.isVisible);
   }
