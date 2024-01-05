@@ -9,7 +9,6 @@ import 'package:morrf/features/services/add_service/screens/create_new_service_d
 import 'package:morrf/features/services/add_service/screens/create_new_service_images_screen.dart';
 import 'package:morrf/features/services/add_service/screens/create_new_service_overview_screen.dart';
 import 'package:morrf/features/services/add_service/screens/create_new_service_pricing_screen.dart';
-import 'package:morrf/features/services/add_service/screens/create_new_service_publish_screen.dart';
 import 'package:morrf/features/services/add_service/screens/create_new_service_questions_screen.dart';
 import 'package:morrf/models/service/morrf_service.dart';
 import 'package:step_progress_indicator/step_progress_indicator.dart';

@@ -29,7 +29,7 @@ class Tier {
   }
 
   Tier.fromMap(Map<String, dynamic> data)
-      : options = (data['options']),
+      : options = data['options'].cast<String?>(),
         price = data['price'],
         revisions = data['revisions'],
         title = data['title'],
@@ -109,8 +109,8 @@ class MorrfService {
         ratings = data['ratings'].cast<MorrfRating>(),
         serviceType = data['serviceType'],
         faq = data['faq'].cast<MorrfFaq>(),
-        serviceQuestion = data['serviceQuestion'].cast<MorrfServiceQuestion>(),
-        tier = data['tier'].cast<Tier>(),
+        serviceQuestion = data['serviceQuestion'].cast<String>(),
+        tier = Tier.fromMap(data['tier']),
         tags = data['tags'] != null ? data['tags'].cast<String>() : [];
 
   Map<String, dynamic> toJson() {

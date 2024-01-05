@@ -31,7 +31,10 @@ class _MyServicesScreenState extends ConsumerState<MyServicesScreen> {
 
   @override
   Widget build(BuildContext context) {
-    List<MorrfService?> morrfServices = ref.watch(servicesControllerProvider);
+    String userId = FirebaseAuth.instance.currentUser!.uid;
+    List<MorrfService?> morrfServices = ref
+        .watch(servicesControllerProvider.notifier)
+        .getServicesByTrainer(userId);
     return MorrfScaffold(
       title: '',
       trailing: const FaIcon(FontAwesomeIcons.plus),
