@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:morrf/core/constants/constants.dart';
 import 'package:morrf/core/enums/font_size.dart';
 import 'package:morrf/core/enums/severity.dart';
@@ -33,6 +34,7 @@ class CreateNewServicePricingScreen extends ConsumerStatefulWidget {
 class _CreateNewServicePricingScreenState
     extends ConsumerState<CreateNewServicePricingScreen> {
   final TextEditingController _optionController = TextEditingController();
+  late Tier tier = widget.morrfService.tier;
 
   //__________DeliveryTime____________________________________________________________
   DropdownButton<int> getDeliveryTime(Tier tier) {
@@ -78,8 +80,6 @@ class _CreateNewServicePricingScreenState
 
   @override
   Widget build(BuildContext context) {
-    Tier tier = widget.morrfService.tier;
-    print(tier.options);
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -102,7 +102,17 @@ class _CreateNewServicePricingScreenState
                 MorrfButton(
                   severity: Severity.success,
                   onPressed: () {
-                    widget.pageChange(2);
+                    if (tier.price == null) {
+                      const snackBar = SnackBar(
+                        content: MorrfText(
+                            text: 'Don\'t forget to add a price',
+                            size: FontSize.h5,
+                            textAlign: TextAlign.center),
+                      );
+                      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                    } else {
+                      widget.pageChange(2);
+                    }
                   },
                   width: MediaQuery.of(context).size.width / 2 - 23,
                   text: "Next",
@@ -127,7 +137,6 @@ class _CreateNewServicePricingScreenState
                         ...tier.options,
                         _optionController.text.replaceAll(RegExp(','), ''),
                       ];
-                      print("JSON: ${tier.toJson()}");
                       widget.updateService({"tier": tier}); // CAUSING ERROR
                       _optionController.clear();
                     });
@@ -277,13 +286,31 @@ class _CreateNewServicePricingScreenState
           text: "Enter some special options to sell higher packages!",
           size: FontSize.h5);
     } else {
-      return ListTile(
-        contentPadding: EdgeInsets.zero,
-        title: MorrfText(text: tier.options[index]!, size: FontSize.p),
-        trailing: const Icon(
-          Icons.check_outlined,
-          color: Colors.green,
-        ),
+      return Row(
+        children: [
+          GestureDetector(
+            onTap: () {
+              setState(() {
+                tier.options = tier.options
+                    .where((element) => element != tier.options[index])
+                    .toList();
+                widget.updateService({"tier": tier});
+              });
+            },
+            child: const FaIcon(FontAwesomeIcons.trashCan),
+          ),
+          SizedBox(width: 10),
+          Expanded(
+            child: ListTile(
+              contentPadding: EdgeInsets.zero,
+              title: MorrfText(text: tier.options[index]!, size: FontSize.p),
+              trailing: const Icon(
+                Icons.check_outlined,
+                color: Colors.green,
+              ),
+            ),
+          ),
+        ],
       );
     }
   }

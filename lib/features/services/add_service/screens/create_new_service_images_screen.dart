@@ -11,6 +11,7 @@ import 'package:morrf/core/enums/font_size.dart';
 import 'package:morrf/core/enums/severity.dart';
 import 'package:morrf/core/widgets/morff_text.dart';
 import 'package:morrf/core/widgets/morrf_button.dart';
+import 'package:morrf/features/services/add_service/controller/service_controller.dart';
 import 'package:morrf/features/splash_screen/screens/redirect_splash_screen.dart';
 import 'package:morrf/models/service/morrf_service.dart';
 import 'package:nb_utils/nb_utils.dart';
@@ -121,7 +122,6 @@ class _CreateNewServiceImagesScreenState
         await storageRef.putFile(files[i]);
         imageUrl = await storageRef.getDownloadURL();
         imageList = [...imageList, imageUrl];
-        print(imageUrl);
       }
 
       Map<String, dynamic> data = {
@@ -130,9 +130,16 @@ class _CreateNewServiceImagesScreenState
       };
 
       widget.updateService(data);
-
-      // ref.read(serviceControllerProvider.notifier).createService(morrfService);
-      // ref.read(serviceControllerProvider.notifier).disposeNewService();
+      ref
+          .read(serviceControllerProvider.notifier)
+          .createService(widget.morrfService);
+      const snackBar = SnackBar(
+        content: MorrfText(
+            text: 'Published Successfully!',
+            size: FontSize.h5,
+            textAlign: TextAlign.center),
+      );
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
       Get.offAll(
         () => const RedirectSplashScreen(),
       );
@@ -162,13 +169,21 @@ class _CreateNewServiceImagesScreenState
             ),
             MorrfButton(
               severity: Severity.success,
-              disabled: _tiles.isEmpty,
               onPressed: () {
-                widget.pageChange(5);
-                // _onSubmit();
+                if (_tiles.isEmpty) {
+                  const snackBar = SnackBar(
+                    content: MorrfText(
+                        text: 'Don\'t forget to add at least one image',
+                        size: FontSize.h5,
+                        textAlign: TextAlign.center),
+                  );
+                  ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                } else {
+                  _onSubmit();
+                }
               },
               width: MediaQuery.of(context).size.width / 2 - 23,
-              text: "Next",
+              text: "Publish",
             ),
           ],
         ),

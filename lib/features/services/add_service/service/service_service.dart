@@ -23,9 +23,8 @@ class ServiceService {
       firestore.collection(FirebaseConstants.servicesCollection);
 
   Future createService(MorrfService service) async {
-    print(service.toJson());
     try {
-      // await _service.doc(service.id).set(service.toJson());
+      await _service.doc(service.id).set(service.toJson());
     } catch (e, stacktrace) {
       print(e);
       print(stacktrace);

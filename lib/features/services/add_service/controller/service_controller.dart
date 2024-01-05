@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:morrf/core/constants/constants.dart';
 import 'package:morrf/features/services/add_service/service/service_service.dart';
 import 'package:morrf/models/service/morrf_service.dart';
 import 'package:uuid/uuid.dart';
@@ -25,9 +26,9 @@ class MorrfServiceNotifier extends StateNotifier<MorrfService> {
           trainerId: '',
           trainerProfileImage: "",
           title: "",
-          category: "",
-          subcategory: "",
-          serviceType: "",
+          category: Constants.availableCategories[0],
+          subcategory: Constants.availableSubcategories[0],
+          serviceType: Constants.availableServiceTypes[0],
           description: "",
           faq: [],
           serviceQuestion: [],
@@ -50,9 +51,9 @@ class MorrfServiceNotifier extends StateNotifier<MorrfService> {
       trainerId: '',
       trainerProfileImage: "",
       title: "",
-      category: "",
-      subcategory: "",
-      serviceType: "",
+      category: Constants.availableCategories[0],
+      subcategory: Constants.availableSubcategories[0],
+      serviceType: Constants.availableServiceTypes[0],
       description: "",
       faq: [],
       serviceQuestion: [],
@@ -65,12 +66,7 @@ class MorrfServiceNotifier extends StateNotifier<MorrfService> {
   }
 
   void updateNewService(Map<String, dynamic> data) async {
-    // data['trainerName'] = user!.displayName;
-    // data['trainerId'] = user!.uid;
-    // data['trainerProfileImage'] = user!.photoURL;
-    print("Data: $data");
     state = MorrfService.fromPartialData(data, state);
-    print(state.toJson());
   }
 
   void updateTiers(Tier tier) {

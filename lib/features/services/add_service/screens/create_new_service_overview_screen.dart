@@ -55,9 +55,6 @@ class _CreateNewServiceOverviewScreenState
   }
 
   List<String> tags = [];
-  Map<String, dynamic> serviceTags = {
-    'tags': [],
-  };
 
   @override
   Widget build(BuildContext context) {
@@ -71,6 +68,9 @@ class _CreateNewServiceOverviewScreenState
           children: [
             MorrfButton(
               onPressed: () {
+                ref
+                    .read(serviceControllerProvider.notifier)
+                    .disposeNewService();
                 Get.back();
               },
               width: MediaQuery.of(context).size.width / 2 - 23,
@@ -82,8 +82,18 @@ class _CreateNewServiceOverviewScreenState
             MorrfButton(
               severity: Severity.success,
               onPressed: () {
-                widget.pageChange(1);
-                widget.updateService({"tags": _controller.getTags});
+                if (widget.morrfService.title.trim() == "") {
+                  const snackBar = SnackBar(
+                    content: MorrfText(
+                        text: 'Don\'t forget to add a title',
+                        size: FontSize.h5,
+                        textAlign: TextAlign.center),
+                  );
+                  ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                } else {
+                  widget.pageChange(1);
+                  widget.updateService({"tags": _controller.getTags});
+                }
               },
               width: MediaQuery.of(context).size.width / 2 - 23,
               text: "Next",
@@ -96,7 +106,7 @@ class _CreateNewServiceOverviewScreenState
           maxLength: 60,
           initialValue: morrfService.title,
           onChanged: (value) => setState(() {
-            widget.updateService({"title": value});
+            widget.updateService({"title": value.trim()});
           }),
           placeholder: 'Service Title',
           hint: 'Enter service title',
@@ -143,6 +153,7 @@ class _CreateNewServiceOverviewScreenState
 
             setState(() {
               tags = [...tags, tag];
+              widget.updateService({"tags": tags});
             });
             return null;
           },

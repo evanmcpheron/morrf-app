@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:morrf/models/service/morrf_service.dart';
 
 class Constants {
   static const logoPath = 'assets/images/logo.png';
@@ -27,7 +26,11 @@ class Constants {
 
   static String currencySign = '\$';
 
-  static List<String> availableCategories = ["Personal Training", "Nutrition"];
+  static List<String> availableCategories = [
+    "Personal Training",
+    "Nutrition",
+    'Life Coach'
+  ];
   static List<String> availableSubcategories = ["Something", "else"];
   static List<String> availableServiceTypes = ["Online", "In Person"];
 
@@ -39,7 +42,7 @@ class Constants {
   ];
   static String selectedGender = '';
 
-  static List<String> catName = [
+  static List<String> category = [
     'Personal Trainer',
     'Nutritionist',
     'Life Coach',

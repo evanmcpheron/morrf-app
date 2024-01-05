@@ -55,8 +55,6 @@ class _CreateNewServiceState extends ConsumerState<CreateNewService> {
         return "Questions";
       case 4:
         return "Images";
-      case 5:
-        return "Publish";
       default:
         return "";
     }
@@ -69,6 +67,7 @@ class _CreateNewServiceState extends ConsumerState<CreateNewService> {
   @override
   Widget build(BuildContext context) {
     MorrfService morrfService = ref.watch(serviceControllerProvider);
+    print(morrfService.toJson());
     return MorrfScaffold(
       backButton: false,
       title: 'Create New Service',
@@ -84,7 +83,7 @@ class _CreateNewServiceState extends ConsumerState<CreateNewService> {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   StepProgressIndicator(
-                    totalSteps: 6,
+                    totalSteps: 5,
                     currentStep: currentIndexPage + 1,
                     size: 8,
                     padding: 0,
@@ -133,13 +132,6 @@ class _CreateNewServiceState extends ConsumerState<CreateNewService> {
                   updatePage(page);
                 },
                 updateService: (value) => updateService(value),
-              ),
-              CreateNewServicePublishScreen(
-                isVisible: currentIndexPage == 5,
-                morrfService: morrfService,
-                pageChange: (page) {
-                  updatePage(page);
-                },
               ),
             ],
           ),

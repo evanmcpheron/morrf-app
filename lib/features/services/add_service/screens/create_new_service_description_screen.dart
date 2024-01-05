@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:morrf/core/enums/font_size.dart';
 import 'package:morrf/core/enums/severity.dart';
 import 'package:morrf/core/widgets/morff_text.dart';
@@ -44,20 +45,13 @@ class _CreateNewServiceDescriptionScreenState
     super.initState();
   }
 
-  Map<String, dynamic> createServiceMap = {
-    'description': "",
-    'faq': [],
-  };
-
-  Map<String, dynamic> formState = {};
+  List<MorrfFaq> faqEntries = [];
 
   late List<MorrfFaq> faqList = widget.morrfService.faq;
 
   void addFaq(MorrfFaq faq) {
     faqList.add(faq);
-    setState(() {
-      createServiceMap['faq'] = faqList;
-    });
+    setState(() {});
     widget.updateService({"faq": faqList});
   }
 
@@ -104,7 +98,17 @@ class _CreateNewServiceDescriptionScreenState
             MorrfButton(
               severity: Severity.success,
               onPressed: () {
-                widget.pageChange(3);
+                if (morrfService.description.trim() == "") {
+                  const snackBar = SnackBar(
+                    content: MorrfText(
+                        text: 'Don\'t forget to add a description',
+                        size: FontSize.h5,
+                        textAlign: TextAlign.center),
+                  );
+                  ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                } else {
+                  widget.pageChange(3);
+                }
               },
               width: MediaQuery.of(context).size.width / 2 - 23,
               text: "Next",
@@ -120,7 +124,6 @@ class _CreateNewServiceDescriptionScreenState
             initialValue: morrfService.description,
             expands: true,
             onChanged: (value) => setState(() {
-              createServiceMap['description'] = value;
               widget.updateService({"description": value});
             }),
             maxLength: 800,
@@ -134,62 +137,75 @@ class _CreateNewServiceDescriptionScreenState
             const MorrfText(
                 text: 'Frequently Asked Question', size: FontSize.h6),
             const Spacer(),
-            GestureDetector(
-              onTap: () {
-                showAddFAQPopUp();
-              },
-              child: const MorrfText(text: 'Add FAQ', size: FontSize.p),
+            CircleAvatar(
+              radius: 20,
+              backgroundColor: Theme.of(context).colorScheme.primary,
+              child: IconButton(
+                icon: FaIcon(
+                  FontAwesomeIcons.plus,
+                  color: Theme.of(context).colorScheme.onPrimary,
+                ),
+                onPressed: () {
+                  showAddFAQPopUp();
+                },
+              ),
             ),
           ],
         ),
         const SizedBox(height: 10.0),
         const Divider(thickness: 1.0),
-        Column(
-          children: buildFaqTile(),
-        ),
+        faqList.isEmpty
+            ? const MorrfText(
+                text: "You haven't listed an FAQ yet",
+                size: FontSize.h4,
+                textAlign: TextAlign.center,
+              )
+            : ListView.builder(
+                itemCount: faqList.length,
+                physics: const NeverScrollableScrollPhysics(),
+                shrinkWrap: true,
+                padding: const EdgeInsets.only(bottom: 10.0),
+                itemBuilder: (_, i) {
+                  MorrfFaq currentFaq = faqList[i];
+                  return Row(
+                    children: [
+                      GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            faqList = faqList
+                                .where((element) =>
+                                    element.answer != currentFaq.answer &&
+                                    element.question == currentFaq.question)
+                                .toList();
+                            widget.updateService({"faq": faqList});
+                          });
+                        },
+                        child: const FaIcon(FontAwesomeIcons.trashCan),
+                      ),
+                      const SizedBox(width: 10),
+                      Expanded(
+                        child: ExpansionTile(
+                          tilePadding: EdgeInsets.zero,
+                          childrenPadding: EdgeInsets.zero,
+                          title: MorrfText(
+                            text: currentFaq.question,
+                            size: FontSize.p,
+                          ),
+                          children: [
+                            MorrfText(
+                              text: currentFaq.answer,
+                              size: FontSize.p,
+                              textAlign: TextAlign.left,
+                            )
+                          ],
+                        ),
+                      ),
+                    ],
+                  );
+                },
+              ),
         const SizedBox(height: 15),
       ],
     ).visible(widget.isVisible);
-  }
-
-  List<Widget> buildFaqTile() {
-    List<Widget> faqEntries = [];
-
-    if (faqList.isEmpty) {
-      return [
-        const MorrfText(
-          text: "You haven't listed an FAQ yet",
-          size: FontSize.h4,
-          textAlign: TextAlign.center,
-        )
-      ];
-    }
-
-    for (MorrfFaq faq in faqList) {
-      String question = faq.question;
-      String answer = faq.answer;
-
-      faqEntries.add(
-        Theme(
-          data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
-          child: ExpansionTile(
-            tilePadding: EdgeInsets.zero,
-            childrenPadding: EdgeInsets.zero,
-            title: MorrfText(
-              text: question,
-              size: FontSize.p,
-            ),
-            children: [
-              MorrfText(
-                text: answer,
-                size: FontSize.p,
-              )
-            ],
-          ),
-        ),
-      );
-    }
-
-    return faqEntries;
   }
 }

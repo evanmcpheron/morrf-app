@@ -27,6 +27,7 @@ class MorrfServicesNotifier extends StateNotifier<List<MorrfService>> {
           await _servicesService.getServicesByTrainer(trainerId);
 
       state = services;
+      print(state);
     } catch (e, stacktrace) {
       print(e);
       print(stacktrace);

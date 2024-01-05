@@ -60,8 +60,8 @@ class _CreateNewServiceQuestionsScreenState
     });
   }
 
-  //__________Create_FAQ_PopUP________________________________________________
-  void showAddFAQPopUp() {
+  //__________Create_Question_PopUP________________________________________________
+  void showAddQuestionPopUp() {
     showDialog(
       barrierDismissible: false,
       context: context,
@@ -113,39 +113,54 @@ class _CreateNewServiceQuestionsScreenState
         const SizedBox(height: 20.0),
         Row(
           children: [
-            GestureDetector(
-              onTap: () {
-                showAddFAQPopUp();
-              },
-              child: const MorrfText(text: 'Add question', size: FontSize.p),
+            CircleAvatar(
+              radius: 20,
+              backgroundColor: Theme.of(context).colorScheme.primary,
+              child: IconButton(
+                icon: FaIcon(
+                  FontAwesomeIcons.plus,
+                  color: Theme.of(context).colorScheme.onPrimary,
+                ),
+                onPressed: () {
+                  showAddQuestionPopUp();
+                },
+              ),
             ),
           ],
         ),
         const SizedBox(height: 10.0),
         const Divider(thickness: 1.0),
-        ListView.builder(
-          itemCount: buildQuestions.length,
-          physics: const NeverScrollableScrollPhysics(),
-          shrinkWrap: true,
-          padding: const EdgeInsets.only(bottom: 10.0),
-          itemBuilder: (_, i) {
-            return Padding(
-              padding: const EdgeInsets.only(bottom: 15.0),
-              child: ListTile(
-                shape: RoundedRectangleBorder(
-                  side: const BorderSide(color: Colors.black, width: 1),
-                  borderRadius: BorderRadius.circular(5),
+        questionList.isEmpty
+            ? const Center(
+                child: MorrfText(
+                  text: "You haven't listed any questions yet.",
+                  size: FontSize.lp,
+                  textAlign: TextAlign.center,
                 ),
-                title: MorrfText(
-                  text: buildQuestions[i],
-                  size: FontSize.p,
-                  textAlign: TextAlign.left,
-                ),
-                trailing: const FaIcon(FontAwesomeIcons.trashCan),
+              )
+            : ListView.builder(
+                itemCount: buildQuestions.length,
+                physics: const NeverScrollableScrollPhysics(),
+                shrinkWrap: true,
+                padding: const EdgeInsets.only(bottom: 10.0),
+                itemBuilder: (_, i) {
+                  return Padding(
+                    padding: const EdgeInsets.only(bottom: 15.0),
+                    child: ListTile(
+                      shape: RoundedRectangleBorder(
+                        side: const BorderSide(color: Colors.black, width: 1),
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                      title: MorrfText(
+                        text: buildQuestions[i],
+                        size: FontSize.p,
+                        textAlign: TextAlign.left,
+                      ),
+                      trailing: const FaIcon(FontAwesomeIcons.trashCan),
+                    ),
+                  );
+                },
               ),
-            );
-          },
-        ),
         const SizedBox(height: 20),
       ],
     ).visible(widget.isVisible);
@@ -153,12 +168,6 @@ class _CreateNewServiceQuestionsScreenState
 
   List<String> get buildQuestions {
     List<String> questionEntries = [];
-
-    if (questionList.isEmpty) {
-      return [
-        "You haven't listed any questions yet",
-      ];
-    }
 
     for (String question in questionList) {
       questionEntries.add(question);

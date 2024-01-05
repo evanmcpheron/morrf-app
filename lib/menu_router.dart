@@ -42,7 +42,7 @@ final List<MenuItem> mainTrainerProfileMenu = [
       icon: FontAwesomeIcons.userAstronaut),
   MenuItem(
       destination: const MyServicesScreen(),
-      title: "Add Service",
+      title: "My Services",
       icon: FontAwesomeIcons.moneyBill1Wave),
   MenuItem(
       destination: const PaymentMethodsScreen(),
