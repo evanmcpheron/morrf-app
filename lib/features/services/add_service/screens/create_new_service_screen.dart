@@ -66,7 +66,6 @@ class _CreateNewServiceState extends ConsumerState<CreateNewService> {
   @override
   Widget build(BuildContext context) {
     MorrfService morrfService = ref.watch(serviceControllerProvider);
-    print(morrfService.toJson());
     return MorrfScaffold(
       backButton: false,
       title: 'Create New Service',

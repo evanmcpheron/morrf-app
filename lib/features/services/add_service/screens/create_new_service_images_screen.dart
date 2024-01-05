@@ -43,6 +43,7 @@ class _CreateNewServiceImagesScreenState
   List<File> files = [];
   String imageUrl = "";
   List<String> imageList = [];
+  bool isLoading = false;
 
   void removeImage(UniqueKey key, File file) {
     List<Widget> updatedWidgets =
@@ -114,11 +115,14 @@ class _CreateNewServiceImagesScreenState
 
   void _onSubmit() async {
     try {
+      setState(() {
+        isLoading = true;
+      });
       for (var i = 0; i < files.length; i++) {
         var storageRef = FirebaseStorage.instance
             .ref()
             .child('service_images')
-            .child("${const Uuid().v4()}.jpg");
+            .child("${widget.morrfService.id}-$i.jpg");
         await storageRef.putFile(files[i]);
         imageUrl = await storageRef.getDownloadURL();
         imageList = [...imageList, imageUrl];
@@ -128,21 +132,27 @@ class _CreateNewServiceImagesScreenState
         'heroUrl': imageList[0],
         'photoUrls': imageList,
       };
-
       widget.updateService(data);
+
       ref
           .read(serviceControllerProvider.notifier)
-          .createService(widget.morrfService);
-      const snackBar = SnackBar(
-        content: MorrfText(
-            text: 'Published Successfully!',
-            size: FontSize.h5,
-            textAlign: TextAlign.center),
-      );
-      ScaffoldMessenger.of(context).showSnackBar(snackBar);
-      Get.offAll(
-        () => const RedirectSplashScreen(),
-      );
+          .createService()
+          .then((value) {
+        const snackBar = SnackBar(
+          content: MorrfText(
+              text: 'Published Successfully!',
+              size: FontSize.h5,
+              textAlign: TextAlign.center),
+        );
+        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+        ref.read(serviceControllerProvider.notifier).disposeNewService();
+        setState(() {
+          isLoading = false;
+        });
+        Get.offAll(
+          () => const RedirectSplashScreen(),
+        );
+      });
     } catch (e) {
       rethrow;
     }
@@ -150,61 +160,65 @@ class _CreateNewServiceImagesScreenState
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      mainAxisSize: MainAxisSize.max,
-      children: [
-        const SizedBox(height: 20.0),
-        Row(
-          children: [
-            MorrfButton(
-              onPressed: () {
-                widget.pageChange(3);
-              },
-              width: MediaQuery.of(context).size.width / 2 - 23,
-              text: "Back",
-            ),
-            const SizedBox(
-              width: 16,
-            ),
-            MorrfButton(
-              severity: Severity.success,
-              onPressed: () {
-                if (_tiles.isEmpty) {
-                  const snackBar = SnackBar(
-                    content: MorrfText(
-                        text: 'Don\'t forget to add at least one image',
-                        size: FontSize.h5,
-                        textAlign: TextAlign.center),
-                  );
-                  ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                } else {
-                  _onSubmit();
-                }
-              },
-              width: MediaQuery.of(context).size.width / 2 - 23,
-              text: "Publish",
-            ),
-          ],
-        ),
-        const SizedBox(height: 20.0),
-        const MorrfText(text: 'Images (Up to 6)', size: FontSize.h6),
-        const SizedBox(height: 8.0),
-        const MorrfText(
-            text: '960 x 540px for best results', size: FontSize.h6),
-        const SizedBox(height: 15.0),
-        buildImageDisplay(context),
-        MorrfButton(
-            onPressed: () {
-              pickImage();
-            },
-            disabled: _tiles.length > 5,
-            severity: Severity.success,
-            fullWidth: true,
-            text: "Add Images"),
-        const SizedBox(height: 16.0),
-      ],
-    ).visible(widget.isVisible);
+    return isLoading
+        ? const Center(
+            child: CircularProgressIndicator(),
+          )
+        : Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.max,
+            children: [
+              const SizedBox(height: 20.0),
+              Row(
+                children: [
+                  MorrfButton(
+                    onPressed: () {
+                      widget.pageChange(3);
+                    },
+                    width: MediaQuery.of(context).size.width / 2 - 23,
+                    text: "Back",
+                  ),
+                  const SizedBox(
+                    width: 16,
+                  ),
+                  MorrfButton(
+                    severity: Severity.success,
+                    onPressed: () {
+                      if (_tiles.isEmpty) {
+                        const snackBar = SnackBar(
+                          content: MorrfText(
+                              text: 'Don\'t forget to add at least one image',
+                              size: FontSize.h5,
+                              textAlign: TextAlign.center),
+                        );
+                        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                      } else {
+                        _onSubmit();
+                      }
+                    },
+                    width: MediaQuery.of(context).size.width / 2 - 23,
+                    text: "Publish",
+                  ),
+                ],
+              ),
+              const SizedBox(height: 20.0),
+              const MorrfText(text: 'Images (Up to 6)', size: FontSize.h6),
+              const SizedBox(height: 8.0),
+              const MorrfText(
+                  text: '960 x 540px for best results', size: FontSize.h6),
+              const SizedBox(height: 15.0),
+              buildImageDisplay(context),
+              MorrfButton(
+                  onPressed: () {
+                    pickImage();
+                  },
+                  disabled: _tiles.length > 5,
+                  severity: Severity.success,
+                  fullWidth: true,
+                  text: "Add Images"),
+              const SizedBox(height: 16.0),
+            ],
+          ).visible(widget.isVisible);
   }
 
   Widget buildImageDisplay(BuildContext context) {

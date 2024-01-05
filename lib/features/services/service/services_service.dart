@@ -22,21 +22,41 @@ class ServicesService {
   CollectionReference get _services =>
       firestore.collection(FirebaseConstants.servicesCollection);
 
-  Stream<List<MorrfService>> getServicesByTrainer(String trainerId) {
-    return _services
-        .withConverter<MorrfService>(
-          fromFirestore: (snapshot, options) {
-            return MorrfService.fromMap(snapshot.data()!);
-          },
-          toFirestore: (value, options) {
-            return value.toJson();
-          },
-        )
-        .snapshots()
-        .map(
-          (query) => query.docs.map((snapshot) => snapshot.data()).toList(),
-        );
+  Future<List<MorrfService>> getServicesByTrainer(String trainerId) async {
+    try {
+      List<MorrfService> morrfServices = [];
+      await _services
+          .where("trainerId", isEqualTo: trainerId)
+          .get()
+          .then((QuerySnapshot doc) {
+        for (var service in doc.docs) {
+          morrfServices.add(
+              MorrfService.fromMap(service.data() as Map<String, dynamic>));
+        }
+      });
+      return morrfServices;
+    } catch (e, stacktrace) {
+      print(e);
+      print(stacktrace);
+      rethrow;
+    }
   }
+
+  // Stream<List<MorrfService>> getServicesByTrainer(String trainerId) {
+  //   return _services
+  //       .withConverter<MorrfService>(
+  //         fromFirestore: (snapshot, options) {
+  //           return MorrfService.fromMap(snapshot.data()!);
+  //         },
+  //         toFirestore: (value, options) {
+  //           return value.toJson();
+  //         },
+  //       )
+  //       .snapshots()
+  //       .map(
+  //         (query) => query.docs.map((snapshot) => snapshot.data()).toList(),
+  //       );
+  // }
 
   CollectionReference get _users =>
       firestore.collection(FirebaseConstants.usersCollection);

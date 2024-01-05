@@ -36,6 +36,7 @@ class MorrfServiceNotifier extends StateNotifier<MorrfService> {
             deliveryTime: 3,
             options: [],
             title: "",
+            price: null,
             revisions: 3,
           ),
           photoUrls: [],
@@ -57,7 +58,13 @@ class MorrfServiceNotifier extends StateNotifier<MorrfService> {
       description: "",
       faq: [],
       serviceQuestion: [],
-      tier: Tier(deliveryTime: 3, options: [], title: "", revisions: 3),
+      tier: Tier(
+        deliveryTime: 3,
+        options: [],
+        title: "",
+        price: null,
+        revisions: 3,
+      ),
       photoUrls: [],
       tags: [],
       heroUrl: "",
@@ -73,16 +80,14 @@ class MorrfServiceNotifier extends StateNotifier<MorrfService> {
     state = MorrfService.fromTierData(tier, state);
   }
 
-  Future<void> createService(MorrfService morrfService) async {
-    morrfService = MorrfService.fromPartialData(
-        {"trainerName": user!.displayName}, morrfService);
-    morrfService =
-        MorrfService.fromPartialData({"trainerId": user!.uid}, morrfService);
-    morrfService = MorrfService.fromPartialData(
-        {"trainerProfileImage": user!.photoURL}, morrfService);
-
+  Future<void> createService() async {
+    state =
+        MorrfService.fromPartialData({"trainerName": user!.displayName}, state);
+    state = MorrfService.fromPartialData({"trainerId": user!.uid}, state);
+    state = MorrfService.fromPartialData(
+        {"trainerProfileImage": user!.photoURL}, state);
     try {
-      await _serviceService.createService(morrfService);
+      await _serviceService.createService(state);
     } catch (e, stacktrace) {
       print(stacktrace);
       rethrow;

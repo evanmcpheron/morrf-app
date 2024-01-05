@@ -10,12 +10,6 @@ final servicesControllerProvider =
   ),
 );
 
-final getServicesByUserIdDataProvider =
-    StreamProvider.family((ref, String uid) {
-  final servicesController = ref.watch(servicesControllerProvider.notifier);
-  return servicesController.getServicesByTrainer(uid);
-});
-
 class MorrfServicesNotifier extends StateNotifier<List<MorrfService>> {
   ServicesService _servicesService;
   MorrfServicesNotifier(
@@ -27,7 +21,15 @@ class MorrfServicesNotifier extends StateNotifier<List<MorrfService>> {
     state = [];
   }
 
-  Stream<List<MorrfService>> getServicesByTrainer(String trainerId) {
-    return _servicesService.getServicesByTrainer(trainerId);
+  Future<void> getServicesByTrainer(String trainerId) async {
+    try {
+      List<MorrfService> services =
+          await _servicesService.getServicesByTrainer(trainerId);
+
+      state = services;
+    } catch (e, stacktrace) {
+      print(e);
+      print(stacktrace);
+    }
   }
 }
