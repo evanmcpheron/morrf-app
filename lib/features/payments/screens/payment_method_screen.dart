@@ -144,28 +144,26 @@ class _PaymentMethodsScreenState extends ConsumerState<PaymentMethodsScreen> {
                                           );
                                         },
                                         background: Container(
-                                            color: Colors.red,
-                                            child: const Row(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.center,
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
-                                              children: [
-                                                Padding(
-                                                    padding: EdgeInsets.only(
-                                                        left: 8.0),
-                                                    child: FaIcon(
-                                                        FontAwesomeIcons
-                                                            .trashCan)),
-                                                Padding(
-                                                    padding: EdgeInsets.only(
-                                                        right: 8.0),
-                                                    child: FaIcon(
-                                                        FontAwesomeIcons
-                                                            .trashCan)),
-                                              ],
-                                            )),
+                                          color: Colors.red,
+                                          child: const Row(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.center,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Padding(
+                                                  padding: EdgeInsets.only(
+                                                      left: 8.0),
+                                                  child: FaIcon(FontAwesomeIcons
+                                                      .trashCan)),
+                                              Padding(
+                                                  padding: EdgeInsets.only(
+                                                      right: 8.0),
+                                                  child: FaIcon(FontAwesomeIcons
+                                                      .trashCan)),
+                                            ],
+                                          ),
+                                        ),
                                         child: ListTile(
                                           leading: SvgPicture.asset(
                                             getLogo(card.brand),

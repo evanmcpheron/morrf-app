@@ -11,6 +11,7 @@ class MorrfScaffold extends ConsumerStatefulWidget {
   final Widget? trailing;
   final void Function()? trailingPressed;
   final Widget body;
+  final bool backButton;
   const MorrfScaffold(
       {super.key,
       required this.title,
@@ -18,7 +19,8 @@ class MorrfScaffold extends ConsumerStatefulWidget {
       this.leading,
       this.trailing,
       this.trailingPressed,
-      this.leadingPressed});
+      this.leadingPressed,
+      this.backButton = true});
 
   @override
   ConsumerState<MorrfScaffold> createState() => _MorrfScaffoldState();
@@ -29,6 +31,7 @@ class _MorrfScaffoldState extends ConsumerState<MorrfScaffold> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: widget.backButton,
         title: widget.leading != null || widget.trailing != null
             ? ListTile(
                 contentPadding: const EdgeInsets.only(bottom: 10),

@@ -23,4 +23,105 @@ class Constants {
   static const awardsPath = 'assets/images/awards';
 
   static const availableGenders = ["", "Male", "Female"];
+
+  static String currencySign = '\$';
+
+  static List<String> availableCategories = [
+    "Personal Training",
+    "Nutrition",
+    'Life Coach'
+  ];
+  static List<String> availableSubcategories = ["Something", "else"];
+  static List<String> availableServiceTypes = ["Online", "In Person"];
+
+//__________Gender______________________________________________________
+  static List<String> gender = [
+    "",
+    'Male',
+    'Female',
+  ];
+  static String selectedGender = '';
+
+  static List<String> category = [
+    'Personal Trainer',
+    'Nutritionist',
+    'Life Coach',
+    '',
+  ];
+//__________performance_period___________________________________________________
+  static List<String> period = [
+    'Last Month',
+    'This Month',
+  ];
+  static String selectedPeriod = 'Last Month';
+
+//__________statistics_period___________________________________________________
+  static List<String> staticsPeriod = [
+    'Last Month',
+    'This Month',
+  ];
+  static String selectedStaticsPeriod = 'Last Month';
+
+//__________statistics_period___________________________________________________
+  static List<String> earningPeriod = [
+    'Last Month',
+    'This Month',
+  ];
+  static String selectedEarningPeriod = 'Last Month';
+
+//__________SubCategory______________________________________________________
+  static List<String> subcategory = [
+    'Flutter',
+    'React Native',
+    'Java',
+  ];
+
+  static String selectedSubCategory = 'Flutter';
+
+//__________ServiceType______________________________________________________
+  static List<String> serviceType = [
+    'Online',
+    'Offline',
+  ];
+
+  String selectedServiceType = 'Online';
+
+//__________time______________________________________________________
+  static List<int> deliveryTime = [
+    3,
+    5,
+    7,
+    12,
+    15,
+    20,
+  ];
+
+  static List<String> titleList = [
+    'Active',
+    'Pending',
+    'Completed',
+    'Cancelled',
+  ];
+
+  static List<String> deliveryTimeList = [
+    '3 days',
+    '5 days',
+    '7 days',
+    '12 days',
+    '15 days',
+    '20 days',
+  ];
+
+  static String selectedDeliveryTimeList = '3 days';
+
+  static List<String> revisionTime = [
+    '1 time',
+    '2 time',
+    '3 time',
+    '4 time',
+  ];
+
+  static bool isFavorite = false;
+
+  static String selectedRevisionTime = '1 time';
 }

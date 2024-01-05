@@ -1,4 +1,5 @@
-import 'package:morrf/models/morrf_rating.dart';
+import 'package:morrf/models/service/morrf_faq.dart';
+import 'package:morrf/models/service/morrf_rating.dart';
 
 class MorrfOrder {
   String id;
@@ -9,6 +10,7 @@ class MorrfOrder {
   bool delivered;
   MorrfRating rating;
   bool wasOnTime;
+  List<MorrfServiceQuestion> serviceQuestion;
 
   MorrfOrder({
     required this.id,
@@ -19,6 +21,7 @@ class MorrfOrder {
     required this.delivered,
     required this.rating,
     required this.wasOnTime,
+    required this.serviceQuestion,
   });
 
   MorrfOrder.fromMap(Map<String, dynamic> data)
@@ -29,6 +32,7 @@ class MorrfOrder {
         clientLeftReview = data['clientLeftReview'],
         delivered = data['delivered'],
         rating = data['rating'].cast<MorrfRating>(),
+        serviceQuestion = data['serviceQuestion'].cast<MorrfServiceQuestion>(),
         wasOnTime = data['wasOnTime'];
 
   Map<String, dynamic> toJson() {
@@ -41,6 +45,16 @@ class MorrfOrder {
       'delivered': delivered,
       'rating': rating.toJson(),
       'wasOnTime': wasOnTime,
+      "serviceQuestion": getServiceQuestionJson(serviceQuestion),
     };
+  }
+
+  List<Map<String, dynamic>> getServiceQuestionJson(
+      List<MorrfServiceQuestion> data) {
+    List<Map<String, dynamic>> list = [];
+    for (var i in data) {
+      list.add(i.toJson());
+    }
+    return list;
   }
 }

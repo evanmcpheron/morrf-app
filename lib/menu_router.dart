@@ -5,6 +5,7 @@ import 'package:morrf/features/auth/screens/signin_screen.dart';
 import 'package:morrf/features/auth/screens/signup_screen.dart';
 import 'package:morrf/features/auth/screens/user_profile_screen.dart';
 import 'package:morrf/features/payments/screens/payment_method_screen.dart';
+import 'package:morrf/features/services/add_service/screens/my_services_screen.dart';
 import 'package:morrf/features/settings/screens/settings_screen.dart';
 import 'package:morrf/features/splash_screen/screens/redirect_splash_screen.dart';
 import 'package:morrf/models/general/menu_item.dart';
@@ -40,10 +41,9 @@ final List<MenuItem> mainTrainerProfileMenu = [
       title: "My Profile",
       icon: FontAwesomeIcons.userAstronaut),
   MenuItem(
-      destination:
-          UserProfileScreen(userId: FirebaseAuth.instance.currentUser!.uid),
-      title: "Add Service",
-      icon: FontAwesomeIcons.userAstronaut),
+      destination: const MyServicesScreen(),
+      title: "My Services",
+      icon: FontAwesomeIcons.moneyBill1Wave),
   MenuItem(
       destination: const PaymentMethodsScreen(),
       title: "Add Payment Method",

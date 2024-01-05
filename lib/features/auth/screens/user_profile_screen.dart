@@ -9,7 +9,6 @@ import 'package:morrf/core/utils.dart';
 import 'package:morrf/core/widgets/error.dart';
 import 'package:morrf/core/widgets/morff_text.dart';
 import 'package:morrf/core/widgets/morrf_button.dart';
-import 'package:morrf/core/widgets/morrf_dropdown.dart';
 import 'package:morrf/core/widgets/morrf_input_field.dart';
 import 'package:morrf/core/widgets/morrf_scaffold.dart';
 import 'package:morrf/features/auth/controller/auth_controller.dart';
@@ -63,7 +62,6 @@ class _UserProfileScreenState extends ConsumerState<UserProfileScreen> {
   Widget build(BuildContext context) {
     bool isSignedInUser =
         widget.userId == FirebaseAuth.instance.currentUser?.uid;
-    final size = MediaQuery.of(context).size;
 
     return ref.watch(getUserDataProvider(widget.userId)).when(
         data: (morrfUser) => MorrfScaffold(

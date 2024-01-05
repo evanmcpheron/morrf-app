@@ -3,64 +3,37 @@ import 'dart:core';
 import 'morrf_faq.dart';
 import 'morrf_rating.dart';
 
-class Option {
-  String title;
-  bool isSelected;
-
-  Option(this.title, this.isSelected);
-
-  Map<String, dynamic> toJson() {
-    return {
-      "title": title,
-      "isSelected": isSelected,
-    };
-  }
-
-  Option.fromMap(Map<String, dynamic> data)
-      : title = data['title'],
-        isSelected = data['isSelected'];
-}
-
 class Tier {
-  List<Option?> options;
+  List<String?> options;
   double? price;
   int deliveryTime;
-  bool isVisible;
   int revisions;
   String title;
 
-  Tier(
-      {required this.options,
-      required this.title,
-      this.price,
-      required this.revisions,
-      required this.deliveryTime,
-      required this.isVisible});
+  Tier({
+    required this.options,
+    required this.title,
+    this.price,
+    required this.revisions,
+    required this.deliveryTime,
+  });
 
   Map<String, dynamic> toJson() {
-    List<Map<String, dynamic>> optionsList = [];
-    for (Option? option in options) {
-      optionsList.add(option!.toJson());
-    }
     return {
-      "options": optionsList,
+      "options": options,
       "price": price,
       "title": title,
       "revisions": revisions,
       "deliveryTime": deliveryTime,
-      "isVisible": isVisible
     };
   }
 
   Tier.fromMap(Map<String, dynamic> data)
-      : options = (data['options'] as List).map<Option?>((item) {
-          return Option.fromMap(item);
-        }).toList(),
+      : options = data['options'].cast<String?>(),
         price = data['price'],
         revisions = data['revisions'],
         title = data['title'],
-        deliveryTime = data['deliveryTime'],
-        isVisible = data['isVisible'];
+        deliveryTime = data['deliveryTime'];
 }
 
 class MorrfService {
@@ -78,7 +51,8 @@ class MorrfService {
   final List<MorrfRating> ratings;
   final List<String>? tags;
   final List<MorrfFaq> faq;
-  final Map<String, Tier> tiers;
+  final List<String> serviceQuestion;
+  final Tier tier;
 
   MorrfService({
     required this.id,
@@ -90,12 +64,13 @@ class MorrfService {
     required this.subcategory,
     required this.serviceType,
     required this.description,
-    this.tags,
+    required this.serviceQuestion,
     required this.faq,
-    required this.tiers,
+    required this.tier,
     required this.photoUrls,
     required this.heroUrl,
     required this.ratings,
+    this.tags,
   });
 
   MorrfService.fromPartialData(Map<String, dynamic> data, MorrfService service)
@@ -113,8 +88,10 @@ class MorrfService {
         ratings = data['ratings'] ?? service.ratings,
         serviceType = data['serviceType'] ?? service.serviceType,
         faq = data['faq'] != null ? data['faq'].cast<MorrfFaq>() : service.faq,
-        tiers =
-            data['tiers'] != null ? data['tiers'].cast<Tier>() : service.tiers,
+        serviceQuestion = data['serviceQuestion'] != null
+            ? data['serviceQuestion'].cast<MorrfFaq>()
+            : service.serviceQuestion,
+        tier = data['tier'] ?? service.tier,
         tags =
             data['tags'] != null ? data['tags'].cast<String>() : service.tags;
 
@@ -132,29 +109,9 @@ class MorrfService {
         ratings = data['ratings'].cast<MorrfRating>(),
         serviceType = data['serviceType'],
         faq = data['faq'].cast<MorrfFaq>(),
-        tiers = {
-          'basic': Tier.fromMap(data['tiers']['basic']),
-          'standard': Tier.fromMap(data['tiers']['standard']),
-          'premium': Tier.fromMap(data['tiers']['premium'])
-        },
+        serviceQuestion = data['serviceQuestion'].cast<String>(),
+        tier = Tier.fromMap(data['tier']),
         tags = data['tags'] != null ? data['tags'].cast<String>() : [];
-
-  MorrfService.fromTierData(Map<String, Tier> data, MorrfService service)
-      : id = service.id,
-        trainerName = service.trainerName,
-        trainerId = service.trainerId,
-        trainerProfileImage = service.trainerProfileImage,
-        title = service.title,
-        description = service.description,
-        subcategory = service.subcategory,
-        photoUrls = service.photoUrls,
-        heroUrl = service.heroUrl,
-        category = service.category,
-        ratings = service.ratings,
-        serviceType = service.serviceType,
-        faq = service.faq,
-        tiers = data,
-        tags = service.tags;
 
   Map<String, dynamic> toJson() {
     return {
@@ -171,14 +128,29 @@ class MorrfService {
       "ratings": getRatingJson(ratings),
       "serviceType": serviceType,
       "faq": getFaqJson(faq),
-      "tiers": {
-        'basic': tiers['basic']!.toJson(),
-        'standard': tiers['standard']!.toJson(),
-        'premium': tiers['premium']!.toJson(),
-      },
+      "serviceQuestion": serviceQuestion,
+      "tier": tier.toJson(),
       "tags": tags,
     };
   }
+
+  MorrfService.fromTierData(Tier data, MorrfService service)
+      : id = service.id,
+        trainerName = service.trainerName,
+        trainerId = service.trainerId,
+        trainerProfileImage = service.trainerProfileImage,
+        title = service.title,
+        description = service.description,
+        subcategory = service.subcategory,
+        photoUrls = service.photoUrls,
+        heroUrl = service.heroUrl,
+        category = service.category,
+        ratings = service.ratings,
+        serviceType = service.serviceType,
+        faq = service.faq,
+        serviceQuestion = service.serviceQuestion,
+        tier = data,
+        tags = service.tags;
 
   List<Map<String, dynamic>> getFaqJson(List<MorrfFaq> data) {
     List<Map<String, dynamic>> list = [];
