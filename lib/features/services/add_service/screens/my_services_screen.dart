@@ -50,6 +50,8 @@ class _MyServicesScreenState extends ConsumerState<MyServicesScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
+            const MorrfText(text: "My Services", size: FontSize.h5),
+            const SizedBox(height: 20.0),
             Column(
               children: [
                 const SizedBox(height: 50.0),
@@ -74,7 +76,6 @@ class _MyServicesScreenState extends ConsumerState<MyServicesScreen> {
                 onRefresh: () => _pullRefresh(),
                 child: ListView.builder(
                   itemCount: morrfServices.length,
-                  shrinkWrap: true,
                   physics: const AlwaysScrollableScrollPhysics(),
                   itemBuilder: (_, index) {
                     MorrfService morrfService = morrfServices[index]!;
@@ -106,7 +107,7 @@ class _MyServicesScreenState extends ConsumerState<MyServicesScreen> {
   }
 
   NetworkImage getHeroImage(MorrfService morrfService) {
-    return NetworkImage(
+    return const NetworkImage(
         // morrfService.heroUrl,
         "https://firebasestorage.googleapis.com/v0/b/mickiefitness.appspot.com/o/service_images%2F02f83a7d-b16f-4dc8-a61e-415fbef4daa6.jpg?alt=media&token=0914c5dc-d846-493b-a3d1-2f233cde2809");
   }

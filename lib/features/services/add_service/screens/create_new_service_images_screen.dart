@@ -16,7 +16,6 @@ import 'package:morrf/features/splash_screen/screens/redirect_splash_screen.dart
 import 'package:morrf/models/service/morrf_service.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:reorderables/reorderables.dart';
-import 'package:uuid/uuid.dart';
 
 class CreateNewServiceImagesScreen extends ConsumerStatefulWidget {
   final bool isVisible;
