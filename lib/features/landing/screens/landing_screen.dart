@@ -7,6 +7,7 @@ import 'package:morrf/core/widgets/error.dart';
 import 'package:morrf/core/widgets/morff_text.dart';
 import 'package:morrf/features/auth/controller/auth_controller.dart';
 import 'package:morrf/features/auth/screens/menu_screen.dart';
+import 'package:morrf/features/services/all_services/screens/all_services_screen.dart';
 import 'package:morrf/features/splash_screen/screens/splash_screen.dart';
 
 class LandingScreen extends ConsumerStatefulWidget {
@@ -52,7 +53,7 @@ class _LandingScreenState extends ConsumerState<LandingScreen>
   }
 
   static const List<Widget> _widgetOptions = <Widget>[
-    Text("Auth 1"),
+    AllServicesScreen(),
     Text("Auth 2"),
     MenuScreen(),
   ];

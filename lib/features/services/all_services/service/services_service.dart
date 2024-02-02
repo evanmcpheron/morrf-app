@@ -42,6 +42,23 @@ class ServicesService {
     }
   }
 
+  Future<List<MorrfService>> getAllServices() async {
+    try {
+      List<MorrfService> morrfServices = [];
+      await _services.get().then((QuerySnapshot doc) {
+        for (var service in doc.docs) {
+          morrfServices.add(
+              MorrfService.fromMap(service.data() as Map<String, dynamic>));
+        }
+      });
+      return morrfServices;
+    } catch (e, stacktrace) {
+      print(e);
+      print(stacktrace);
+      rethrow;
+    }
+  }
+
   CollectionReference get _users =>
       firestore.collection(FirebaseConstants.usersCollection);
 }

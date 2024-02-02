@@ -1,5 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:morrf/features/services/service/services_service.dart';
+import 'package:morrf/features/services/all_services/service/services_service.dart';
 import 'package:morrf/models/service/morrf_service.dart';
 
 final servicesControllerProvider =
@@ -25,6 +25,17 @@ class MorrfServicesNotifier extends StateNotifier<List<MorrfService>> {
     try {
       List<MorrfService> services =
           await _servicesService.getServicesByTrainer(trainerId);
+
+      state = services;
+    } catch (e, stacktrace) {
+      print(e);
+      print(stacktrace);
+    }
+  }
+
+  Future<void> getAllServices() async {
+    try {
+      List<MorrfService> services = await _servicesService.getAllServices();
 
       state = services;
     } catch (e, stacktrace) {
